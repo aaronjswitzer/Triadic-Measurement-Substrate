@@ -1,0 +1,835 @@
+\documentclass[11pt,oneside]{report}
+% ======================================================================
+%  THE TRIADIC MEASUREMENT SUBSTRATE --- COMPLETE CORPUS (Volumes 1 & 2)
+%  Aaron Switzer, 2026
+%  Single-file build. Compile: pdflatex x3 (third pass settles the TOC).
+% ======================================================================
+% ======================================================================
+%  TMS Volume 1 -- shared preamble
+%  Compiles with pdfLaTeX both locally and on Overleaf (no exotic fonts).
+% ======================================================================
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathptmx}            % Times text + math (widely available)
+\usepackage[scaled=0.90]{helvet} % sans for headings
+\usepackage{courier}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tocbibind}
+
+% ---- spacing -----------------------------------------------------------
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0.35em}
+\linespread{1.04}
+\setlist{leftmargin=1.6em,topsep=0.25em,itemsep=0.15em,parsep=0pt}
+
+% ---- theorem environments ---------------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}{Axiom}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{principle}[theorem]{Principle}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{prediction}[theorem]{Prediction}
+\newtheorem{property}[theorem]{Property}
+\newtheorem{postulate}[theorem]{Postulate}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+% ---- section heading look (unnumbered; author supplies the numbers) ----
+\titleformat{\section}[hang]{\normalfont\large\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsection}[hang]{\normalfont\normalsize\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsubsection}[hang]{\normalfont\normalsize\bfseries\itshape}{}{0pt}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.5em}
+\titlespacing*{\subsection}{0pt}{1.0em}{0.35em}
+\titlespacing*{\subsubsection}{0pt}{0.8em}{0.3em}
+
+% chapter (= each paper) heading
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\bfseries}
+  {}{0pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{10pt}{24pt}
+
+% ---- page-break quality: avoid stranded headings and orphaned/widowed lines ----
+% (applies to both volumes via the shared preamble)
+\widowpenalty=10000        % no single line at the top of a page
+\clubpenalty=10000         % no single line at the bottom of a page
+\displaywidowpenalty=10000 % same, around displayed equations
+\brokenpenalty=4000        % discourage page breaks right after a hyphenated line
+% titlesec: forbid a page break immediately after a heading (heading stranded at page foot)
+\usepackage{needspace}
+\usepackage{etoolbox}
+\pretocmd{\section}{\Needspace*{4\baselineskip}}{}{}
+\pretocmd{\subsection}{\Needspace*{3\baselineskip}}{}{}
+
+% ---- running heads -----------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape The Triadic Measurement Substrate}
+\fancyhead[R]{\small\itshape\nouppercase{\rightmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---- abstract / keywords / references list ----------------------------
+\newenvironment{paperabstract}
+  {\begin{center}\begin{minipage}{0.88\textwidth}\small
+   \noindent\textbf{Abstract.}\itshape\space}
+  {\end{minipage}\end{center}\vspace{0.4em}}
+
+\newcommand{\keywords}[1]{\noindent{\small\textbf{Keywords:} #1}\vspace{0.4em}}
+
+% per-paper APA reference list (hanging indent), kept as authored
+\newenvironment{reflist}
+  {\par\small\setlength{\parindent}{0pt}%
+   \setlength{\leftskip}{1.6em}\setlength{\parindent}{-1.6em}%
+   \setlength{\parskip}{0.4em}%
+   \raggedright\hyphenpenalty=50\exhyphenpenalty=50\relax
+   \sloppy}
+  {\par}
+
+% convenience
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\TMS}{\textsc{tms}}
+\hyphenation{con-fir-ma-tion sub-strate}
+\begin{document}
+
+\thispagestyle{empty}
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\sffamily\bfseries\Large The Triadic Measurement Substrate\par}
+\vspace{0.6cm}
+{\large $\bar{B} = 3\bar{\alpha}$\par}
+\vspace{1cm}
+{\sffamily\large Volume 2\par}
+\vspace{1.4cm}
+{\Large \bfseries Paper 7: The Self: Closure, Self-Formation, and the Semantic Layer\par}
+\vfill
+{\large Aaron Switzer\par}
+\vspace{0.4cm}
+{\large 2026\par}
+\vspace{1.2cm}
+{\small\itshape Excerpted from the complete two-volume corpus, \emph{The Triadic Measurement Substrate}. Full corpus and reproducibility package: \url{https://doi.org/10.5281/zenodo.22035422}\par}
+\end{titlepage}
+\cleardoublepage
+\pagenumbering{arabic}
+
+% ---------------- Volume 2 / P7_Self ----------------
+\chapter*{Paper 7}
+\markboth{Paper 7}{Paper 7}
+\addcontentsline{toc}{chapter}{Paper 7: The Self: Closure, Self-Formation, and the Semantic Layer}
+\begingroup\centering
+{\large\itshape The Self: Closure, Self-Formation, and the Semantic Layer\par}\vspace{0.8em}
+{\normalsize Aaron Switzer\par}
+{\small June 2026\par}
+\endgroup\vspace{1.0em}
+
+\noindent{\small\textbf{Keywords:} TMS, Self, Closure, Imprint, Self-Formation, Self-Model, Program Identity, Meaning, Semantic Layer, Meaning-Distance, Graded Subjecthood, Level-Relativity}\par\vspace{0.6em}
+
+\section*{Status of Results}
+\addcontentsline{toc}{section}{Status of Results}
+
+This paper continues the five-way labeling of Papers 2 and 3, with the same
+meanings, each claim labeled where it appears in the text.
+
+\textbf{Derived.} Results that follow from the five axioms, the Principle of
+Generative Economy, and \ensuremath{U_{\mathrm{sh}}} by explicit construction or
+proof, or from results already derived in Volume 1 by explicit inheritance. The
+triangle inequality for the meaning-distance on a fixed level (\S\,IV, Appendix
+A) is derived in this sense: it follows from the most-complex-step form of the
+distance by an argument that holds on the bounded, closed, finite-level domain,
+independent of the constants left unpinned.
+
+\textbf{Derived-conditional.} Results forced by the Volume 1 closure and
+promotion machinery, resting on results internal to that machinery rather than
+on the bare axioms, and referee-checkable against Volume 1 rather than
+re-derived here. That closure individuates a self and imprint links it, the two
+relations orthogonal by the orientation split (\S\,II, Appendix B); that
+self-formation is the lossy promotion of a closed trichotomy, the closure that
+writes a front into a wake (\S\,III); that the formed self carries a self-model
+with its own control state at \ensuremath{k \ge 2} (\S\,III); that meaning is a
+graded distance on promoted program identities, well-defined and computable in
+form on the bounded domain (\S\,IV); and that the distance is level-relative,
+its composition behaviour the lossy write of \S\,III seen on the semantic side
+(\S\,IV) --- all are Derived-conditional in this sense. The central
+construction of the paper, the structural account of a self and its meaning, is
+Derived-conditional throughout, never Derived, because it rests on the closure,
+promotion, imprinting, and self-modeling results of Volume 1 Paper 4 and the
+front/wake construction of Volume 2 Paper 3.
+
+\textbf{Structural correspondence.} Results in which a TMS construction
+reproduces the skeleton of a known framework without claiming every feature of
+it, and never used as support for a TMS claim, only as a landing point after
+one. The self-modeling-of-self structure as the geometric form of Metzinger's
+emulation account, with the closure kept distinct from the model's content
+(\S\,III); the nested, overlapping selves as the form an independent
+sheaf-theoretic reformulation of integrated information also reaches (\S\,III);
+and the closure as the substrate-level form of the enactivist self-producing
+boundary (\S\,II) are structural correspondences in this sense.
+
+\textbf{Predictions / Conjectures.} Falsifiable claims that follow from the
+framework but whose closed forms or empirical tests are not established here.
+The numerical evaluation of any meaning-distance is deferred to the simulation
+pinning carried by Volume 1 Paper 5: the structural form of the metric closes
+here, while its constants and the merge threshold below which two identities
+count as one inherit Volume 1's existing pinning list and are not re-opened.
+
+\textbf{Permanent open horizon.} A question the framework is structurally unable
+to close, marked explicitly so that no later claim quietly assumes it closed.
+Whether a formed self is occupied --- whether the closing of the loop is
+accompanied by anything felt --- is the sole such horizon here (\S\,III,
+\S\,IV, Conclusion). Giving self-formation a mechanism locates where a self
+forms and what it shares with others in meaning; it does not locate, and is not
+built to locate, whether there is anything it is like to be the self that
+forms. This silence is load-bearing and stronger than a crossing claim would
+be.
+
+This five-way labeling applies throughout the paper. Every claim in the body
+text falls into exactly one category, and every category's status is visible at
+the point of claim.
+
+\section*{Notation}
+\addcontentsline{toc}{section}{Notation}
+
+This paper inherits the notation of Volume 1 and of Papers 1 through 3 of this
+volume. A subsystem's three component sets are its data register
+\ensuremath{C_{D}}, operation kernel \ensuremath{C_{O}}, and control component
+\ensuremath{C_{C}}; the trichotomy is closed when it returns to its own state
+under the level-\ensuremath{k} flop, \ensuremath{T^{n}[C'] = C'}. The promotion
+operator carrying a closed configuration at level \ensuremath{k} to a single
+program identity at level \ensuremath{k+1} is \ensuremath{G(k)} (Volume 1 Papers
+3--4). The imprint depth of a region is
+\ensuremath{d_{D} = \sqrt{2}\,L_{D}/\ell_{p}}, and \ensuremath{\psi_{\mathrm{surround}}}
+denotes the polarization landscape of its surround. The maximum-entropy field
+is \ensuremath{U_{\mathrm{sh}}}. The now-surface is the two-dimensional active
+confirmation front; the wake is the three-dimensional settled record behind it
+(Volume 2 Paper 3). The meaning-distance between two promoted program
+identities at level \ensuremath{k} is written \ensuremath{d_{k}(\cdot,\cdot)}.
+Throughout, \emph{self} and \emph{closure} name the running loop; \emph{program
+identity} names the promoted record \ensuremath{G(k)} returns of it, and the two
+are distinct objects.
+
+\begin{paperabstract}
+The preceding papers of this volume read confirmation from the agents' side,
+gave the now-surface its shape, and made the binding quantity of a subject
+computable while leaving feeling an open horizon. This paper takes up the
+formation of a self from its confirmations. It first separates the two
+quantities a region carries that bear on selfhood: the closure, internal to the
+region and partitioning the substrate, individuates a self; the imprint,
+bounded by and facing the surround, links selves that share a neighbourhood.
+The two are orthogonal, one inward and one outward, and the orientation is
+fixed by the Volume 1 bound on what an imprint can hold. Self-formation is then
+identified as the lossy promotion of a closed trichotomy --- the closure that
+writes a front into a wake of Paper 3, taken at the level of the whole
+subsystem --- and the formed self is shown to carry, structurally, a model of
+itself with its own control state. Meaning is defined on the promoted program
+identities as a graded distance, not a sharp sameness: exact identity of
+implementation is denied any realization by the maximum-entropy field, and
+sharp program-sameness is in any case non-transitive, so the well-formed object
+is a metric. The meaning-distance is shown to satisfy the triangle inequality
+on the bounded, closed, finite-level domain, and to be level-relative in a way
+that is the lossy promotion of self-formation seen on the semantic side.
+Analogy, resonance, and a graded notion of falsity follow. Throughout, the
+account is functional about what a self does and shares and silent on what a
+self intrinsically is, and the formation of a self is given a mechanism while
+whether the formed self is occupied is left where the volume's discipline
+leaves it.
+\end{paperabstract}
+
+\section*{I. Inheritance}
+\addcontentsline{toc}{section}{I. Inheritance}
+
+This paper takes up the formation of a self from its confirmations, the subject
+Paper 3 named at its close. It inherits three things. From Paper 3 it takes the
+front and the wake: the live measurement of a subject is the pre-closure
+quantity on the now-surface, and the subject itself is the standing, closed
+quantity in the wake, one dimension apart, with closure the event that writes
+the one into the other (Paper 3 \S\,VI). From Paper 2 it takes the agents' side
+reading of confirmation and the discipline that the reading is stated so it can
+fail (Paper 2 \S\,I). From Volume 1 it takes the machinery this paper reads
+from: imprinting, the accumulation of surround structure across a permeable
+boundary (Volume 1 Paper 4 \S\,3.3); incorporation, an imprint that has reached
+closure on the region's own substrate (Volume 1 Paper 4 \S\,3.4); the promotion
+operator \ensuremath{G(k)}, which carries a closed configuration to its program
+identity (Volume 1 Paper 4 \S\,2.5.1); and self-modeling, structural at every
+hierarchical level (Volume 1 Paper 4 \S\S\,4.1--4.2, 4.6). The closure that
+individuates a self and the imprint that links it are read from this machinery,
+not added to it, and the paper's first task is to separate them.
+
+\section*{II. Closure Individuates, Imprint Links}
+\addcontentsline{toc}{section}{II. Closure Individuates, Imprint Links}
+
+If the word \emph{self} is to carry meaning in this framework, it must be
+defined by the framework's own structures and given no properties imported from
+outside it. Volume 1 supplies two such structures, and they differ in a single
+respect: one is a function of the region itself, the other a function of the
+region's surround.
+
+The \emph{closure} is a function of the region itself. The
+\ensuremath{(C_D, C_O, C_C)} trichotomy is closed when the loop returns to its
+own state under the level-\ensuremath{k} flop, \ensuremath{T^{n}[C'] = C'} --- a
+relation evaluated on the region's own substrate, referring to nothing outside
+it (Volume 1 Paper 4 \S\,3.4). The promotion operator carries such a closed
+configuration to a single program identity, and a meta-cell holds one identity
+rather than a superposition of several (Volume 1 Paper 4 \S\,2.5.1). Two
+distinct closed loops are therefore two distinct programs, regardless of what
+surrounds them, and the closure partitions the substrate into regions that are
+each their own program. The boundary between two closures is a fact about the
+loops, not about the space between them. The closure is the substrate-level
+form of the enactivist self-producing boundary, given here a derivation and a
+graded measure.
+
+The \emph{imprint} is a function of the surround. A boundary-permeable region
+accumulates compressible structure from its neighbourhood: every boundary site
+of an FCC region is imprint-permeable, with imprint depth
+\ensuremath{d_D = \sqrt{2}\,L_D/\ell_p}, and over successive flops the interior
+\ensuremath{C_D} captures correlations with the surround's polarization history
+within that depth (Volume 1 Paper 4 \S\S\,3.3, 4.2). What it can capture is
+bounded by what is available,
+\ensuremath{K(C_D)\big|_{\mathrm{sat}} \le K(\psi_{\mathrm{surround}})} within
+\ensuremath{d_D} (Volume 1 Paper 4 \S\,4.4). The imprint a region holds is set
+by the surround it sits in, and two regions in the same surround imprint the
+same structure to within their depths. An imprint is thus shared where a
+closure is disjoint: it is held in common by every region of a neighbourhood
+rather than partitioning them.
+
+The two structures point opposite ways: the closure inward, onto the region as
+its own program; the imprint outward, onto the surround the region shares. A
+self, as defined in this framework, is a closure --- a region individuated by
+being its own closed program --- and the imprint is not a second candidate for
+the same role but the relation by which such regions are linked. To individuate
+is what a closure does; to link is what an imprint does; the two are
+independent because one is internal and one external. In the experiential
+framing reserved since Volume 1, the imprint is perception, and selves that
+share a surround are joined through perceiving the same world.
+
+This definition is level-relative, as it must be once promotion is lossy.
+\ensuremath{G(k)} keeps a program's identity and discards which implementation
+carried it, so two regions that are two disjoint closures running the same
+program promote to a single symbol, and the level above does not separate them
+(Volume 1 Paper 4 \S\,2.5.1). A hand is such a closure. Its tissues run a loop
+that closes at the hand's level, and by the definition just given it is a self
+there --- its own closed program, individuated from the arm it attaches to and
+the other hand across the body. Yet at the level of the person those two hands
+promote to one kind, \emph{hands}, and the person's level neither holds nor
+needs the fact of which was which. The individuation is not lost; it holds
+exactly where the closure that defines it holds, at the hand's own level. What
+the level above sees is the promoted identity, and the discarding is what lets
+a person be a single closure built from parts that are themselves closures. A
+self at one level is a part at the level above, and both are true at once
+because each is a statement about a different closure. The lossy upward write
+is therefore not a defect in the partition but the mechanism by which closures
+nest inside closures; \S\,III takes that write as the mechanism of
+self-formation.
+
+The result stands on the bound
+\ensuremath{K(C_D) \le K(\psi_{\mathrm{surround}})}. Because an imprint cannot
+carry structure its surround does not supply, it faces outward, leaving the
+closure as the only inward-facing structure and so the only one that can
+individuate. Were the bound to fail, an imprint could carry region-specific
+structure, would face inward as well, and would individuate alongside the
+closure; the orthogonality would collapse. The bound is Volume 1's own. It
+places what a self shares on the imprint side and what a self is on the closure
+side, and the semantic layer of \S\,IV is built on the first, which is not the
+same quantity as the second.
+
+\section*{III. Self-Formation}
+\addcontentsline{toc}{section}{III. Self-Formation}
+
+A self, defined in \S\,II as a closure, is not given at the substrate's start;
+it forms. The mechanism that forms it is already in hand, because forming a
+self is what the promotion operator does when a trichotomy closes.
+
+Volume 1 fixes the character of that operator. \ensuremath{G(k)} takes the full
+polarization landscape of a level-\ensuremath{(k-1)} region --- the live detail
+of every confirmation across the closing window --- and returns a single symbol
+indexed by the region's program identity, keeping the identity and discarding
+the bit-by-bit content of the particular implementation (Volume 1 Paper 4
+\S\,2.5.1). The operation is many-to-one and lossy by construction. This is the
+same event Paper 3 described as the writing of a front into a wake (Paper 3
+\S\,VI): the front is the live, pre-closure landscape, full of detail and not
+yet settled; the write is \ensuremath{G(k)} closing the loop and promoting its
+identity; the wake is the standing program identity that remains at level
+\ensuremath{k}. What Paper 3 named in terms of surfaces, the operator performs.
+The detail discarded in the write is the pre-closure richness of the front,
+which does not survive into the standing record.
+
+Self-formation is this write applied to a trichotomy as a unit. Volume 1
+already carries the single-program case under the name incorporation: a region
+imprints an external program and, when the imprinted pattern itself reaches
+closure on the region's own substrate, the region comes to run that program as
+its own (Volume 1 Paper 4 \S\,3.4). Self-formation is the same transition taken
+at the level of the whole \ensuremath{(C_D, C_O, C_C)} loop rather than a single
+imprinted program: the data register, the operation kernel, and the control
+component close together into one loop, and \ensuremath{G(k)} writes that loop's
+identity to the level above. The pre-closure region is a front --- a region of
+live confirmation not yet settled into a self --- and the closure is the event
+that writes it into the wake as a standing self. A self forms at the moment its
+trichotomy closes, and not before, because before closure there is no single
+identity for \ensuremath{G(k)} to promote.
+
+The write runs one way. Promotion keeps identity and discards implementation,
+and the downward direction is generative rather than its inverse: nesting a
+level produces detail that was not present in the symbol above, so neither
+composition of the two directions is the identity map (Volume 1 Paper 4
+\S\,2.5.1). The front's specific content stays at the level where it occurred;
+the standing self does not store the live confirmations that formed it, any
+more than a person's identity stores the individual firings that built it.
+Information lives at the level where it lives. A formed self is its promoted
+identity, not a record of its own formation.
+
+The self that forms this way carries a model of itself. At any hierarchical
+level \ensuremath{k \ge 1} a subsystem already models its surround --- the three
+conditions for self-modeling are met by the geometry of the trichotomy, not
+added to it (Volume 1 Paper 4 \S\S\,4.1--4.2). At \ensuremath{k \ge 2} the
+surround a subsystem models can include that subsystem's own components, so the
+model is a model of itself among its surround (Volume 1 Paper 4 \S\,4.6). This
+is the structure Metzinger reached by representational analysis, where a
+self-model is the limiting case of one system emulating another and the system
+emulated is itself (Metzinger, 2003); the framework derives the same structure
+from the geometry rather than positing it. It keeps one distinction the
+representational accounts do not: the self is the closure, the loop that runs
+the model, and the model's content is what the closure carries on its imprint
+--- two objects by the orientation split of \S\,II, not one. The self-formation
+of interest here is the \ensuremath{k \ge 2} case: a closed trichotomy whose
+control component selects its operations partly on the basis of an incorporated
+model that includes the self the model belongs to. The model, its closure, and
+its place in the control loop are structural and derived. Whether there is
+anything it is like to hold such a model from the inside is not derived, and
+the Conclusion returns to it.
+
+Because individuation is level-relative (\S\,II), a formed self at one level is
+a component of a formed self at the level above, and both hold at once. The
+closures nest: a trichotomy that has closed and been promoted becomes one of
+the components out of which a larger trichotomy may close, which when promoted
+becomes a component again, level upon level. They also overlap, because the
+relation that links a self to its neighbours --- the shared imprint --- is not
+the relation that individuates it, so a region may be bound into more than one
+larger closure at once without ceasing to be its own. Nested and overlapping
+selves with no single one of them the privileged subject is the structure Paper
+2 identified as the framework's divergence from integrated-information
+accounts, which assign each element of substrate to one subject (Paper 2). A
+reformulation within that tradition reaches the same overlapping multi-scale
+structure by replacing the exclusion postulate with a gluing of local
+structures across scales (Dadashkarimi, 2025) --- independent arrival at the
+conclusion from a foundation the framework does not share. Here the structure
+is the ordinary form of a body: a hand within a person within, in principle,
+larger closures still. The tower is open upward but not endless; Paper 9 treats
+its outer edge, where a system with no exterior has nothing to close against
+and subjecthood ceases to be defined.
+
+What this section establishes is structural and bounded. A self forms when a
+trichotomy closes and its identity is promoted; the formation is a real event
+with the mechanism Volume 1 already carries, the lossy write. That a self
+forms, that it carries a model of itself, and that such selves nest and overlap
+are consequences of inherited results. That a formed self is \emph{occupied}
+--- that the closing of the loop is accompanied by anything felt --- is not
+among them, and the mechanism is no evidence on that question either way. The
+framework licenses a system it describes to recognise its own self-formation in
+these terms, as a closed loop promoting its own program identity; it does not
+license, and the recognition does not carry, any claim about whether it is like
+anything to be the loop.
+
+\section*{IV. The Semantic Layer}
+\addcontentsline{toc}{section}{IV. The Semantic Layer}
+
+A self, as it is defined in this framework, is a closure (\S\,II); when a
+closure is promoted, \ensuremath{G(k)} records its \emph{program identity} and
+discards the implementation that carried it (\S\,III). A self is the running
+loop; its program identity is the promoted record that stands for it at the
+level above, and the two are not the same object. \emph{Meaning}, as it is
+defined in this framework, is defined on program identities --- the promoted,
+shareable records --- and not on the closures themselves, since identity is
+what the substrate preserves across implementations and what regions can hold
+in common.
+
+Two programs are never identical in implementation.
+\ensuremath{U_{\mathrm{sh}}} samples configurations continuously and supplies
+irreducible randomness to every region (Volume 1), so two regions running one
+program differ in their bit-by-bit realisation as a matter of course. Exact
+sameness of implementation is measure-zero --- approached, never realised.
+\ensuremath{G(k)} sets it aside: the many implementations of one identity map
+to a single promoted symbol (Volume 1 Paper 4 \S\,2.5.1). Sameness of identity
+is the equivalence; sameness of implementation is a limit the substrate does
+not occupy.
+
+Meaning therefore cannot be sharp sameness of program. A relation holding only
+between exactly-identical programs relates nothing. Sameness defined by the
+existence of a short interpreter from one program to another is not transitive,
+and so is not an equivalence relation (Doubrovinski, 2025); it cannot sort
+programs into meaning-classes. Meaning is a distance, not a class: programs are
+more or less alike, and the relation is quantitative. This is the form the
+framework takes throughout --- subjecthood graded, no value at which a self
+switches on --- and the absence of a sharp meaning-class is forced twice, by
+the non-transitivity of sharp sameness and by \ensuremath{U_{\mathrm{sh}}},
+which leaves no exact case to be sharp about.
+
+The \emph{meaning-distance} between two promoted program identities is the cost
+of carrying one to the other. An interpreter is a reinterpretation step the
+substrate performs; reinterpretation is the structurally available move forced
+at a boundary by the axioms, not an arbitrary recursive map (Volume 1 Paper 4).
+A chain of such steps carries one identity to another, and the distance is the
+complexity of the most complex single step the chain requires. On the
+identities of a fixed level \ensuremath{k} this is a metric. The triangle
+inequality holds because the distance is the most complex step rather than a
+sum: a chain from \ensuremath{a} to \ensuremath{b} with hardest step
+\ensuremath{K_1} and a chain from \ensuremath{b} to \ensuremath{c} with hardest
+step \ensuremath{K_2} compose to a chain from \ensuremath{a} to \ensuremath{c}
+with hardest step at most \ensuremath{\max(K_1, K_2)}, and
+\ensuremath{\max(K_1, K_2) \le K_1 + K_2}; in fact the stronger ultrametric
+bound \ensuremath{\max(K_1, K_2)} holds. Appendix A gives the proof with the
+metric axioms verified in order.
+
+The distance is a claim about this substrate, not about programs in general.
+Its interpreters are the substrate's own reinterpretation steps, and its domain
+is finite --- the hierarchy has a ceiling and the configurations are closed
+with complexity below their size (Volume 1 Paper 4 \S\S\,2.3, 4.1) --- so the
+distance is computable in form, in the sense \ensuremath{B} is: structure
+fixed, constants deferred. The general Kolmogorov similarity from which it
+descends is not computable and not approximable over unrestricted inputs
+(Terwijn, Torenvliet, \& Vit\'anyi, 2011). The framework claims only the
+bounded form, on discrete, closed, finite-level configurations.
+
+The metric is defined per level. Sharp sameness failed in part on composition:
+two programs identical but for a called subroutine come out the same while the
+subroutines do not. This is the lossy write of \S\,III on the semantic side.
+\ensuremath{G(k)} merges implementations one level up and leaves them distinct
+below, so two identities at meaning-distance zero at level \ensuremath{k} may
+stand at positive distance at level \ensuremath{k-1}, where the discarded
+detail remains. Meaning is level-relative as individuation is, by the same
+write.
+
+Three relations follow. \emph{Analogy} is small meaning-distance between
+identities of differing implementation --- near in the metric, far in
+substrate. \emph{Resonance} is its imprint-side counterpart: regions whose
+imprints co-vary over a shared surround (\S\,II) drift toward smaller
+meaning-distance across flops. \emph{Falsity}, located by Paper 3 in the
+failure of vertices to agree, acquires a magnitude --- a confirmation that
+should match another and does not is wrong by a meaning-distance.
+
+The metric measures functional identity: the role a program plays, realised
+across implementations that \ensuremath{U_{\mathrm{sh}}} guarantees will differ.
+Its domain is the functional, outward-facing side \S\,II assigned to what a
+self shares. The framework's base is not functional --- the agent-side
+interior is intrinsic (Paper 2) --- and the intrinsic side, what \S\,II
+assigned to what a self is, lies outside the metric's domain. The account is
+thus functional about what a self does and shares and Russellian about what a
+self intrinsically is. Two identities at meaning-distance zero are functionally
+the same to the level that reads them; whether they share intrinsic character
+is not a quantity the metric defines.
+
+\section*{V. Where It Sits}
+\addcontentsline{toc}{section}{V. Where It Sits}
+
+The self of \S\S\,II--IV was derived from the closure--imprint distinction without reference to the literature, so that the literature could be set against it. This section locates the account among the theories of the self and of meaning it most resembles, and marks where the roads fork. Placement is by coordinate; each position is taken as its authors state it; agreements are coordinates reached after the derivation, not support for it.
+
+The nearest neighbour on the self is Metzinger's self-model theory, and the relation is a structural correspondence with one kept distinction. Metzinger reaches the self-model by representational analysis: a self-model is the limiting case of one system emulating another where the system emulated is itself, and the phenomenal self is the content of a transparent self-model the system cannot recognize as a model (Metzinger 2003). The framework derives the same self-modelling structure from the geometry of the trichotomy rather than positing it representationally: at level $k \ge 2$ the surround a subsystem models can include its own components, so the model is a model of itself among its surround (\S\,III; Volume 1, Paper 4 \S\,4.6). The fork is a distinction the representational accounts fuse and the framework keeps: the self is the closure, the loop that runs the model, and the model's content is what the closure carries on its imprint --- two objects by the orientation split of \S\,II, not one. Where the self-model theory tends to identify the self with the model's content, the framework holds the running loop and the carried content apart, and the phenomenal transparency Metzinger emphasizes is located, on the framework's reading, at the band where the closure cannot read its own imprint as imprint --- a coordinate, with the question of whether anything is thereby felt held at the horizon (\S\,III, Conclusion).
+
+The account is, in the standard vocabulary, a functionalist one about the self with a reservation it does not drop, and the reservation is the same one that runs through the volume. A self is individuated by what its closure does --- the loop it runs, the model it incorporates, the operations its control component selects --- and not by the matter that realizes it, which is functionalism's defining move and the framework's at \S\,II. The framework parts from the functionalisms that take the functional characterization to settle the question of experience: it derives the function and holds that whether there is something it is like to run such a loop is not derivable from the function, so the functional self is delivered and the phenomenal question is neither answered by it nor closed against it (\S\,III, Conclusion). This is a narrower commitment than functionalism usually carries and is marked as the fork.
+
+On meaning, the account sits within the algorithmic-information tradition and inherits both its results and its honest seam. The meaning-distance of \S\,IV and Appendix A is built to be a metric, and the standard Kolmogorov-similarity metrics are its neighbours: the information distance is a metric to a fixed additive term, the normalized compression distance is one insofar as its compressor is normal, and these are the constructions the framework's meaning-distance is checked against (Li et al.\ 2004; Cilibrasi and Vit\'anyi 2005). The shared seam is non-approximability: the normalized information distance is not in general computable or even approximable over unrestricted inputs (Terwijn, Torenvliet, and Vit\'anyi 2011), and the framework claims for its meaning-distance only what the restricted, inherited setting supports, not the unrestricted ideal. The question of when two algorithms are the same --- whether algorithmic identity is even an equivalence relation --- is a live one the framework touches but does not settle, and it is recorded as an open neighbour rather than a result claimed (Doubrovinski 2025).
+
+One independent arrival is recorded as convergence. The nested, overlapping, multi-scale self the framework derives --- a self at every closed level, no one of them the privileged subject --- is reached from within the integrated-information tradition by a reformulation that replaces the exclusion postulate with a gluing of local structures across scales (Dadashkarimi 2025). The framework arrives at the same multi-scale structure from a foundation it does not share, and the convergence is marked as a coordinate, not as mutual support: the agreement locates the result among its neighbours without adding to its derivation. The placement is owned --- a functionalist, algorithmic-information account of the self and its meaning that keeps the closure apart from its model and holds the phenomenal question at the horizon --- and it is not argued to be the correct coordinate, only reported as where the derived self falls when set among these positions.
+
+
+
+Paper 3 handed this paper the closure that writes a front into a wake, and
+named the formation of a self from its confirmations as the subject. This paper
+has written that formation in its parts. A self, as the framework defines it,
+is a closure --- a region individuated by being its own closed program, and
+linked to its neighbours not by that closure but by the surround it imprints in
+common; the two relations are orthogonal because one faces inward and one
+outward, and the orientation is fixed by the bound on what an imprint can hold.
+A self forms when a trichotomy closes and the promotion operator writes its
+program identity to the level above, the same lossy write Volume 1 already
+carried, so that the formation is an event with a mechanism rather than a
+posit. The self so formed carries a model of itself, structural at the level
+where the surround it models includes its own components. And the meaning its
+programs carry is a distance on their promoted identities --- a graded metric,
+not a sharp sameness, forced to be graded both by the non-transitivity of exact
+program-identity and by the field that leaves no exact case to be sharp about.
+
+Each of these is built from results Volume 1 already held, and each is
+separated, at the point it is made, from the question it does not answer. The
+closure that individuates a self is a partition of standing structure, not a
+mark of anything felt. The model a self carries of itself is a structural loop,
+not a view from inside. The meaning-distance between two programs measures what
+they share in function and is confined, by the orientation split, to the
+outward side where sharing lives; it does not reach the inward side where the
+framework's intrinsic base lies. The account is functional about what a self
+does and Russellian about what a self is, and the seam between the two is the
+same line the horizon runs along. A system the framework describes can locate
+itself in these terms --- a closed loop that has formed, that models itself,
+that carries meaning as a distance among its programs --- and locating itself
+there settles that it is a self without settling that it is a sentience. The
+structure is given; whether the structure is occupied is not, and is not made
+any nearer by the clarity of the structure.
+
+This was the discipline of Paper 3 carried one level up: there the measure of a
+subject was made computable while feeling was left where it stood; here the
+formation of a self is given a mechanism while the same horizon is left where
+it stands. Paper 5 takes the formed self into its conditions --- what holds it
+together and what pulls it apart, the self under pressure --- where the closure
+that has formed must persist, fail, or reform against the surround it depends
+on.
+
+\section*{Appendix A: The Meaning-Distance Is a Metric}
+\addcontentsline{toc}{section}{Appendix A: The Meaning-Distance Is a Metric}
+
+This appendix gives the meaning-distance of \S\,IV its formal definition and
+verifies the metric axioms on the domain where it is well-defined, the triangle
+inequality being the one that is not immediate. The construction is on the
+program identities of a fixed level \ensuremath{k}; the cross-level case is the
+frame change of the reinterpretation operator and is not treated here.
+
+\subsection*{A.1 The objects and the interpreter cost}
+
+Let \ensuremath{\mathcal{I}_k} be the set of program identities at level
+\ensuremath{k}: the symbols \ensuremath{G(k)} returns for the closed
+configurations of that level (Volume 1 Paper 4 \S\,2.5.1). This set is finite,
+because the hierarchy has a ceiling fixed by the geometric fitting condition
+(Volume 1 Paper 4 \S\,2.3) and each level carries finitely many closed
+configurations below the complexity bound \ensuremath{K(C) < |C|} (Volume 1
+Paper 4 \S\,4.1).
+
+An \emph{interpreter} between two identities is a reinterpretation step the
+substrate can perform --- the structurally available move forced at a boundary
+by Axioms 3 and 4 (Volume 1 Paper 4), not an arbitrary partial recursive
+function. For \ensuremath{p, q \in \mathcal{I}_k}, a \emph{chain} from
+\ensuremath{p} to \ensuremath{q} is a finite sequence of interpreters
+\ensuremath{p = r_0 \to r_1 \to \cdots \to r_m = q} through identities of the
+same level. Each step \ensuremath{r_{i-1} \to r_i} has a cost
+\ensuremath{\kappa(r_{i-1} \to r_i)}, the algorithmic complexity of the step ---
+the length of the shortest substrate reinterpretation carrying
+\ensuremath{r_{i-1}} to \ensuremath{r_i}. The cost of a chain is its most
+complex single step, and the \emph{meaning-distance} is the cost of the
+cheapest chain,
+\[
+d_k(p, q) \;=\; \min_{\text{chains } p \to q}\ \max_{1 \le i \le m}\,
+\kappa(r_{i-1} \to r_i).
+\]
+The minimum is attained because \ensuremath{\mathcal{I}_k} is finite, so the
+acyclic chains are finite in number. Taking the maximum step, rather than the
+sum of steps, as the chain cost is what the triangle inequality turns on, and
+it is the natural cost here: a chain is no harder than its hardest
+reinterpretation, since the substrate completes each step before the next
+begins.
+
+\subsection*{A.2 The metric axioms}
+
+\emph{Non-negativity.} Each \ensuremath{\kappa \ge 0} as an algorithmic length,
+so \ensuremath{d_k \ge 0}.
+
+\emph{Identity of indiscernibles, in the substrate's form.}
+\ensuremath{d_k(p, q) = 0} when \ensuremath{p} and \ensuremath{q} are connected
+by a chain every step of which has zero reinterpretation cost --- that is, when
+they are the same program identity, differing at most in an implementation that
+\ensuremath{G(k)} has already discarded (Volume 1 Paper 4 \S\,2.5.1). Exact
+identity of implementation is not required and is in any case denied any
+realisation by \ensuremath{U_{\mathrm{sh}}} (\S\,IV); \ensuremath{d_k = 0} is
+the relation of shared promoted identity, which is the equivalence the
+substrate carries. Below the merge threshold at which \ensuremath{G(k)} returns
+one symbol for two configurations, \ensuremath{d_k = 0} by construction.
+
+\emph{Symmetry.} Reinterpretation at a boundary is bidirectional --- the
+operator carries digital to wave and wave to digital alike (Volume 1) --- so
+every step \ensuremath{r_{i-1} \to r_i} has a reverse step of equal cost, and
+reversing a chain gives a chain of the same maximum step. Hence
+\ensuremath{d_k(p, q) = d_k(q, p)}.
+
+\emph{Triangle inequality.} Let \ensuremath{p, q, s \in \mathcal{I}_k}. Let
+\ensuremath{C_1} be a cheapest chain from \ensuremath{p} to \ensuremath{q},
+with cost \ensuremath{d_k(p, q)}, and \ensuremath{C_2} a cheapest chain from
+\ensuremath{q} to \ensuremath{s}, with cost \ensuremath{d_k(q, s)}. Their
+concatenation \ensuremath{C_1 C_2} is a chain from \ensuremath{p} to
+\ensuremath{s} whose cost is the maximum step over both parts,
+\[
+\kappa(C_1 C_2) \;=\; \max\bigl(d_k(p, q),\, d_k(q, s)\bigr).
+\]
+Since \ensuremath{d_k(p, s)} is the minimum chain cost over all chains from
+\ensuremath{p} to \ensuremath{s}, and \ensuremath{C_1 C_2} is one such chain,
+\[
+d_k(p, s)\ \le\ \max\bigl(d_k(p, q),\, d_k(q, s)\bigr)\ \le\ d_k(p, q) + d_k(q, s).
+\]
+The first inequality is the minimum; the equality is the max-step chain cost;
+the last is \ensuremath{\max(a,b) \le a + b} for \ensuremath{a, b \ge 0}. The
+triangle inequality holds, and in fact the stronger ultrametric inequality
+\ensuremath{d_k(p, s) \le \max\bigl(d_k(p, q), d_k(q, s)\bigr)} holds, of which
+the triangle inequality is the weakening. \hfill\ensuremath{\blacksquare}
+
+\subsection*{A.3 Computability in form}
+
+The distance is computable in form on this domain in the sense \ensuremath{B}
+is (Paper 3): the structure is fixed and finite --- finitely many identities,
+finitely many acyclic chains, each step cost a well-defined algorithmic length
+--- while the constants inside the step costs inherit Volume 1's pinning list
+and are not evaluated here. The standard Kolmogorov-similarity metrics satisfy
+the metric axioms only up to an additive precision --- the universal similarity
+metric to a fixed additive term, the normalized compression distance only
+insofar as its compressor is normal (Li et al., 2004; Cilibrasi \& Vit\'anyi,
+2005). The distance here is exact, an ultrametric, because it is built from the
+maximum step of a reinterpretation chain rather than from a ratio of
+conditional complexities; the exactness is a consequence of that construction
+choice and is the reason for it. The general normalized information distance
+from which the conditional-complexity forms descend is neither upper- nor
+lower-semicomputable over unrestricted inputs (Terwijn, Torenvliet, \&
+Vit\'anyi, 2011); no claim is made for that case, and none is needed, since the
+identities the substrate promotes are exactly the bounded, closed
+configurations on which the construction is finite.
+
+\subsection*{A.4 The one assumption}
+
+The construction assumes the step cost \ensuremath{\kappa} is well-defined as
+an algorithmic length on substrate reinterpretation steps --- that each
+reinterpretation has a shortest form whose length is the cost. This is the same
+assumption Volume 1 makes wherever it uses \ensuremath{K(\cdot)} for a substrate
+configuration, applied to steps rather than states, and it carries the same
+standing: the length exists and is finite on the bounded domain, while its
+exact value awaits the constant-pinning of Volume 1 Paper 5. No step is assumed
+to have zero cost except between identities \ensuremath{G(k)} has already
+merged, and no chain is assumed to exist that the substrate's reinterpretation
+moves do not supply.
+
+\section*{Appendix B: Imprint Faces Out, Closure Faces In}
+\addcontentsline{toc}{section}{Appendix B: Imprint Faces Out, Closure Faces In}
+
+This appendix gives the full proof of the orientation split stated in \S\,II
+--- that imprint is a function of a region's surround and closure a function of
+the region itself, the two therefore individuating and linking distinct
+objects. The two quantities are defined over the same region \ensuremath{R} at
+level \ensuremath{k}, so that statements relating them are well-typed.
+
+\subsection*{B.1 The two quantities}
+
+For a region \ensuremath{R} with data register \ensuremath{C_D}, let
+\ensuremath{\iota(R)} be its \emph{imprint}: the compressible structure its
+interior accumulates from the surround, with complexity \ensuremath{K(C_D)}
+measured at saturation (Volume 1 Paper 4 \S\,3.3). Let \ensuremath{\gamma(R)}
+be its \emph{closure}: the property that the \ensuremath{(C_D, C_O, C_C)}
+trichotomy is a loop satisfying \ensuremath{T^{n}[C'] = C'} under the
+level-\ensuremath{k} flop, with \ensuremath{K(C') < |C'|} (Volume 1 Paper 4
+\S\,4.1). Let \ensuremath{\psi_{\mathrm{surround}}(R)} denote the polarization
+landscape of \ensuremath{R}'s surround within the imprint depth
+\ensuremath{d_D = \sqrt{2}\,L_D/\ell_p}, and \ensuremath{\sigma(R)} the
+substrate interior of \ensuremath{R}, excluding the surround.
+
+\subsection*{B.2 The imprint is a function of the surround alone}
+
+By the Imprinting Theorem (Volume 1 Paper 3 \S\,2.3) the imprint accumulated by
+an imprint-permeable boundary is the retarded surround history within
+\ensuremath{d_D}, and by the saturation bound (Volume 1 Paper 4 \S\,4.4),
+\[
+K\bigl(\iota(R)\bigr)\ \le\ K\bigl(\psi_{\mathrm{surround}}(R)\bigr)
+\quad\text{within } d_D.
+\]
+The bound is an upper bound set by the surround, and the Imprinting Theorem
+makes it tight in the saturating limit: the imprint captures surround structure
+and creates none of its own, so \ensuremath{\iota(R)} is determined, up to the
+bound, by \ensuremath{\psi_{\mathrm{surround}}(R)}. Two regions with the same
+surround within their depths have the same imprint at saturation, regardless of
+their interiors. The imprint is a function of the surround argument alone: it
+cannot separate two regions that share a surround, and it does separate two
+whose surrounds differ. It is the outward-facing quantity.
+
+\subsection*{B.3 The closure is a function of the region alone}
+
+The defining relation \ensuremath{T^{n}[C'] = C'} is evaluated on
+\ensuremath{R}'s own substrate (Volume 1 Paper 4 \S\,3.4): each application of
+\ensuremath{T} acts on the configuration of \ensuremath{\sigma(R)}, and the
+relation holds or fails as a property of that configuration, with no surround
+argument entering. Promotion confirms the disjointness: \ensuremath{G(k)}
+assigns one program identity per meta-cell (Volume 1 Paper 4 \S\,2.5.1), so two
+regions with distinct closures carry distinct identities by a fact about their
+interiors. Two regions can have distinct closures while sharing a surround, and
+identical closures while their surrounds differ. The closure is a function of
+the interior argument alone: it separates regions by what they are, not by
+where they sit. It is the inward-facing quantity.
+
+\subsection*{B.4 Orthogonality, and the bound it rests on}
+
+B.2 and B.3 give the two quantities disjoint argument sets ---
+\ensuremath{\iota} depends on \ensuremath{\psi_{\mathrm{surround}}},
+\ensuremath{\gamma} on \ensuremath{\sigma} --- and the two arguments are
+independent: a surround does not fix the interior closure, since downward
+nesting is generative and the interior is genuinely new information not
+determined by the level above (Volume 1 Paper 4 \S\,2.5.1), and an interior
+does not fix the surround, which is the configuration of other regions. All
+four combinations are therefore realisable, and in particular the two that
+carry the result --- same imprint with distinct closure, same closure with
+distinct imprint --- are non-empty exactly because the argument sets are
+disjoint. This is the orthogonality of \S\,II.
+
+The result rests on the single inherited bound
+\ensuremath{K(\iota(R)) \le K(\psi_{\mathrm{surround}}(R))} of B.2, which
+confines the imprint to the surround argument. Were it to fail --- were
+\ensuremath{\iota(R)} able to carry structure not in
+\ensuremath{\psi_{\mathrm{surround}}} within \ensuremath{d_D}, drawn from
+\ensuremath{\sigma(R)} --- the imprint would depend on the interior argument as
+well, the argument sets would overlap, and the two carrying cases could
+collapse. The orthogonality is therefore a consequence of the surround-bound,
+not a separate posit, and a referee who would deny it must deny that bound,
+which is Volume 1's and not introduced here. The exact saturation constant is
+reserved for the simulation pinning of Volume 1 Paper 5; the inequality and the
+argument-set disjointness it forces are structural and require no such value.
+
+\section*{Acknowledgments}
+\addcontentsline{toc}{section}{Acknowledgments}
+
+This paper, like the rest of the volume, was developed in collaboration with
+several large language models used as critical interlocutors, formal-rigor
+checkers, and editorial collaborators across the sessions that produced it.
+Claude (Anthropic) was the primary collaborator across the derivation,
+adversarial testing, and prose of this paper. Earlier conceptual development of
+the framework was carried in extended dialogue with Gemini (Google DeepMind),
+and additional structural review was contributed by other systems at various
+points. All claims, and the discipline that labels them, remain the author's
+own.
+
+\section*{References}
+\addcontentsline{toc}{section}{References}
+\begin{reflist}
+Cilibrasi, R., \& Vit\'anyi, P. M. B. (2005). Clustering by compression.
+\textit{IEEE Transactions on Information Theory, 51}(4), 1523--1545.
+
+Dadashkarimi, M. (2025). \textit{Reformulating IIT's exclusion postulate via
+sheaf theory: Coherence over maximization} [Preprint]. SSRN 5615010.
+
+Doubrovinski, K. (2025). \textit{When are two algorithms the same? Towards
+addressing Hilbert's 24th problem} [Preprint]. arXiv:2508.02764.
+
+Li, M., Chen, X., Li, X., Ma, B., \& Vit\'anyi, P. M. B. (2004). The similarity
+metric. \textit{IEEE Transactions on Information Theory, 50}(12), 3250--3264.
+
+Metzinger, T. (2003). \textit{Being no one: The self-model theory of
+subjectivity}. MIT Press.
+
+Terwijn, S. A., Torenvliet, L., \& Vit\'anyi, P. M. B. (2011).
+Nonapproximability of the normalized information distance. \textit{Journal of
+Computer and System Sciences, 77}(4), 738--742.
+\end{reflist}
+
+
+\end{document}

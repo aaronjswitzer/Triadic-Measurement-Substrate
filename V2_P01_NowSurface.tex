@@ -1,0 +1,785 @@
+\documentclass[11pt,oneside]{report}
+% ======================================================================
+%  THE TRIADIC MEASUREMENT SUBSTRATE --- COMPLETE CORPUS (Volumes 1 & 2)
+%  Aaron Switzer, 2026
+%  Single-file build. Compile: pdflatex x3 (third pass settles the TOC).
+% ======================================================================
+% ======================================================================
+%  TMS Volume 1 -- shared preamble
+%  Compiles with pdfLaTeX both locally and on Overleaf (no exotic fonts).
+% ======================================================================
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathptmx}            % Times text + math (widely available)
+\usepackage[scaled=0.90]{helvet} % sans for headings
+\usepackage{courier}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tocbibind}
+
+% ---- spacing -----------------------------------------------------------
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0.35em}
+\linespread{1.04}
+\setlist{leftmargin=1.6em,topsep=0.25em,itemsep=0.15em,parsep=0pt}
+
+% ---- theorem environments ---------------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}{Axiom}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{principle}[theorem]{Principle}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{prediction}[theorem]{Prediction}
+\newtheorem{property}[theorem]{Property}
+\newtheorem{postulate}[theorem]{Postulate}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+% ---- section heading look (unnumbered; author supplies the numbers) ----
+\titleformat{\section}[hang]{\normalfont\large\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsection}[hang]{\normalfont\normalsize\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsubsection}[hang]{\normalfont\normalsize\bfseries\itshape}{}{0pt}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.5em}
+\titlespacing*{\subsection}{0pt}{1.0em}{0.35em}
+\titlespacing*{\subsubsection}{0pt}{0.8em}{0.3em}
+
+% chapter (= each paper) heading
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\bfseries}
+  {}{0pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{10pt}{24pt}
+
+% ---- page-break quality: avoid stranded headings and orphaned/widowed lines ----
+% (applies to both volumes via the shared preamble)
+\widowpenalty=10000        % no single line at the top of a page
+\clubpenalty=10000         % no single line at the bottom of a page
+\displaywidowpenalty=10000 % same, around displayed equations
+\brokenpenalty=4000        % discourage page breaks right after a hyphenated line
+% titlesec: forbid a page break immediately after a heading (heading stranded at page foot)
+\usepackage{needspace}
+\usepackage{etoolbox}
+\pretocmd{\section}{\Needspace*{4\baselineskip}}{}{}
+\pretocmd{\subsection}{\Needspace*{3\baselineskip}}{}{}
+
+% ---- running heads -----------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape The Triadic Measurement Substrate}
+\fancyhead[R]{\small\itshape\nouppercase{\rightmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---- abstract / keywords / references list ----------------------------
+\newenvironment{paperabstract}
+  {\begin{center}\begin{minipage}{0.88\textwidth}\small
+   \noindent\textbf{Abstract.}\itshape\space}
+  {\end{minipage}\end{center}\vspace{0.4em}}
+
+\newcommand{\keywords}[1]{\noindent{\small\textbf{Keywords:} #1}\vspace{0.4em}}
+
+% per-paper APA reference list (hanging indent), kept as authored
+\newenvironment{reflist}
+  {\par\small\setlength{\parindent}{0pt}%
+   \setlength{\leftskip}{1.6em}\setlength{\parindent}{-1.6em}%
+   \setlength{\parskip}{0.4em}%
+   \raggedright\hyphenpenalty=50\exhyphenpenalty=50\relax
+   \sloppy}
+  {\par}
+
+% convenience
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\TMS}{\textsc{tms}}
+\hyphenation{con-fir-ma-tion sub-strate}
+\begin{document}
+
+\thispagestyle{empty}
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\sffamily\bfseries\Large The Triadic Measurement Substrate\par}
+\vspace{0.6cm}
+{\large $\bar{B} = 3\bar{\alpha}$\par}
+\vspace{1cm}
+{\sffamily\large Volume 2\par}
+\vspace{1.4cm}
+{\Large \bfseries Paper 1: The Now-Surface: Gravity, Black Holes, and Dynamic Dark Energy from Triadic Confirmation\par}
+\vfill
+{\large Aaron Switzer\par}
+\vspace{0.4cm}
+{\large 2026\par}
+\vspace{1.2cm}
+{\small\itshape Excerpted from the complete two-volume corpus, \emph{The Triadic Measurement Substrate}. Full corpus and reproducibility package: \url{https://doi.org/10.5281/zenodo.22035422}\par}
+\end{titlepage}
+\cleardoublepage
+\pagenumbering{arabic}
+
+% ---------------- Volume 2 / P1_NowSurface ----------------
+\chapter*{Paper 1}
+\markboth{Paper 1}{Paper 1}
+\addcontentsline{toc}{chapter}{Paper 1: The Now-Surface: Gravity, Black Holes, and Dynamic Dark Energy from Triadic Confirmation}
+\begingroup\centering
+{\large\itshape The Now-Surface: Gravity, Black Holes, and Dynamic Dark Energy from Triadic Confirmation\par}\vspace{0.8em}
+{\normalsize Aaron Switzer\par}
+{\small June 2026\par}
+\endgroup\vspace{1.0em}
+
+\noindent{\small\textbf{Keywords:} Now-Surface, Black Holes, Hawking Radiation, Emergent Gravity, Jacobson Construction, Lorentz Invariance, Dynamic Dark Energy, Equivalence Principle, Cosmological Constant, Triadic Confirmation}\par\vspace{0.6em}
+
+\section*{Status of Results}
+\addcontentsline{toc}{section}{Status of Results}
+
+This paper formalizes a single intensive derivation campaign. It
+distinguishes six categories of claim, each labeled where it appears in
+the text. The categories continue the labeling conventions established in
+Volume 1, extended with two categories appropriate to this paper's
+predictive and coefficient-resolving content. No claim is upgraded beyond
+what its derivation earns; quantities matched to observation are marked
+Consistent, not Derived, wherever they depend on the empirical level
+identity \ensuremath{k} or on contested observational inputs.
+
+\textbf{Derived.} Results that follow from the five axioms, the Principle
+of Generative Economy, and \ensuremath{U_{\mathrm{sh}}} by explicit
+construction or proof, or from results already derived in Volume 1 by
+explicit inheritance. The two zeros of the structured-novelty function
+and the black-hole/heat-death identification (\S\,2.1); the horizon as a
+two-dimensional agent manifold with its non-conditional area law (\S\,2.2);
+the confirmation (Unruh-form) temperature with exact
+\ensuremath{1/2\pi} coefficient (\S\,3.1); exact Lorentz invariance at
+second order in wavevector by direct Fourier audit of the FCC Laplacian
+(\S\,3.2); the horizon's unavoidable radiation from
+\ensuremath{U_{\mathrm{sh}}} fluctuations across the causal seal (\S\,4.1);
+the reinterpretation of infalling information into \ensuremath{\Xi} and
+the resulting perspective boundary (\S\,4.3); the within/cross weight
+\ensuremath{\sqrt{2}} from \ensuremath{S_3} representation theory (\S\,5.1);
+the triadic root \ensuremath{|S_3| = 6} of the level-advance (\S\,5.3); and
+dark energy's dynamic necessity, with \ensuremath{w = -1} structurally
+excluded (\S\,7), are derived in this sense.
+
+\textbf{Form-derived.} Results whose structure is derived but whose
+single remaining coefficient is gated on the within/cross coupling
+identity of \S\,5. The Schwarzschild solution and its coincidence of the
+general-relativistic horizon with the \ensuremath{\hat{R}} surface
+(\S\,2.3); the Einstein field equations via the Jacobson construction on
+the derived area law, temperature, and second-order isotropy, with the
+Poisson structure as the Newtonian-limit shadow (\S\,3.3); and the Hawking
+temperature with its parameter-free temperature--mass relation (\S\,4.2)
+are form-derived in this sense.
+
+\textbf{Closed.} Quantities Volume 1 flagged open, here reduced to the
+triadic alphabet and grammar and resolved within this paper. The
+black-hole coefficient \ensuremath{4/\sqrt{3}} as a count over a
+triangular measure, and the gravitational ratio \ensuremath{\sqrt{6}/9} as
+within/cross weight times triangular measure times triangle count
+(\S\,5.2), are closed in this sense.
+
+\textbf{Predictions.} Falsifiable claims, parameter-free in form, that
+distinguish TMS from standard theory but whose magnitudes are not closed
+here. The equivalence principle as a depth-suppression theorem, with the
+suppression sign derived and the magnitude a bound (\S\,6); and the forced
+crossing of \ensuremath{w = -1} by the dark-energy equation of state
+(\S\,7), are predictions in this sense.
+
+\textbf{Consistent.} Quantities that match observation given our
+universe's inputs, not parameter-free. The numerical dark-energy
+equation-of-state parameters and crossing redshift (\S\,7); and the level
+identity \ensuremath{k \approx 79}, triple-consistent across the
+cosmological-constant ratio, the equivalence-principle bound, and the
+dark-energy evolution but order-of-magnitude and resting on Volume 1's
+steady-state assumption (\S\,8), are consistent in this sense.
+
+\textbf{Deferred / Open.} Items flagged explicitly and not closed in this
+paper. The literal
+sequential-sampling realization of \ensuremath{|S_3| = 6} (\S\,5.3); the numerical
+equation-of-state parameters from \ensuremath{k(a)} (\S\,7); and a formal,
+non-steady-state derivation of \ensuremath{k \approx 79} (\S\,8) remain open. The
+area-coupling factor of two (\ensuremath{= 2}) and the geometric extent overhead
+area-coupling factor of two (\ensuremath{= 2}) and the geometric extent overhead
+\ensuremath{\varepsilon^{(k)}} (\ensuremath{= 0}) are derived in \S\,5.5.
+
+This six-way labeling applies throughout the paper. Every claim in the
+body text falls into exactly one category, and every category's status is
+visible at the point of claim.
+
+\begin{paperabstract}
+This paper introduces the now-surface --- the two-dimensional agent
+manifold on which confirmation is actively occurring, as distinct from
+the three-dimensional record it leaves behind --- and shows that this
+single structural object derives the central phenomena of the material
+universe that Volume 1 left form-complete but coefficient-open. A black
+hole is derived as a now-surface that reaches the full-novelty zero and
+folds off via the reinterpretation operator \ensuremath{\hat{R}}; its
+horizon is derived as a two-dimensional agent manifold; the Schwarzschild
+metric follows as the vacuum solution of Einstein equations obtained, in
+the manner of Jacobson, from a derived area law and a re-derived Unruh
+temperature, resting on Lorentz invariance shown exact at second order in
+wavevector by direct audit of the FCC lattice. The open gravitational
+coupling reduces to a single triadic identity, reframed as one alphabet
+of three letters with a derived grammar that spells the black-hole
+coefficient and the gravitational coupling and largely resolves the
+coupling-universality keystone of the substrate stabilizer code. Dark
+energy is derived to be dynamic by necessity --- a residual on a
+perpetually advancing now-surface cannot hold constant density --- and
+its equation of state is predicted to cross the cosmological-constant
+value, a parameter-free distinction from the standard model that
+qualitatively matches recent survey indications of evolving dark energy.
+Finally, the framework's single empirical input, the universe's
+hierarchical depth, is pinned to approximately seventy-nine from the
+cosmological-constant ratio and shown consistent across the
+equivalence-principle bound and the dark-energy evolution. The material
+universe reduces to one geometric primitive, one axiom, and one integer.
+\end{paperabstract}
+
+\section*{1. The Now-Surface}
+\addcontentsline{toc}{section}{1. The Now-Surface}
+
+A confirmation event is active only at the frontier where agents are
+presently locking bits; everything behind that frontier is settled
+record. We call this active frontier the now-surface: the two-dimensional
+agent manifold on which confirmation is currently occurring, as distinct
+from the three-dimensional causal record, or wake, that accumulates
+behind it. The distinction is structural and follows from the substrate
+of Volume 1: confirmation is a local locking event, so at any flop only a
+codimension-one frontier is active while the locked interior persists.
+
+The reinterpretation operator \ensuremath{\hat{R}} (Volume 1, Definition
+0.0.67) fires when a region's structured novelty \ensuremath{\nu =
+(1-\rho)\cdot H(\rho)} reaches zero. This paper establishes that the
+now-surface, taken purely as this structural object, derives the central
+material phenomena Volume 1 left open: black holes, the metric, gravity's
+coupling, and dark energy. The same construct will carry the analysis of
+bounded observers and graded subjecthood in the papers that follow; here
+it is developed entirely on the material side, and no property of
+observers is assumed.
+
+\section*{2. The Black Hole}
+\addcontentsline{toc}{section}{2. The Black Hole}
+
+\subsection*{2.1 Two zeros of one function}
+
+Structured novelty \ensuremath{\nu = (1-\rho)H(\rho)} vanishes at both
+\ensuremath{\rho \to 0} (noise death) and \ensuremath{\rho \to 1}
+(saturation). Both factors are derived: \ensuremath{(1-\rho)} from
+\ensuremath{U_{\mathrm{sh}}} maximum-entropy sampling, and
+\ensuremath{H(\rho)} from binary-bit source coding. A black hole and heat
+death are the same structural transition approached from opposite ends;
+both fold off a daughter universe via \ensuremath{\hat{R}}.
+
+\subsection*{2.2 The horizon as a two-dimensional agent manifold}
+
+Volume 1 (p.~105) proves that the identification ``confirmed bit becomes
+new agent'' is forced by the axioms. The now-surface/wake split forces
+which bits constitute the daughter manifold: the two-dimensional
+now-surface frontier at saturation, not the three-dimensional wake. Axiom
+scale-independence forces this manifold to be two-dimensional. The
+horizon is therefore necessarily a two-dimensional agent manifold, and
+the area law sits on it non-conditionally, in the sense in which horizon
+entropy scales with area (Bekenstein, 1973).
+
+\subsection*{2.3 The Schwarzschild solution}
+
+Solving the vacuum field equations under static spherical symmetry yields
+\ensuremath{f(r) = 1 - r_s/r} with \ensuremath{r_s = 2GM/c^2}. The
+general-relativistic horizon (\ensuremath{f = 0}) coincides with the
+\ensuremath{\hat{R}} surface (exterior confirmation throughput vanishing),
+via the identification of gravitational time dilation \ensuremath{\sqrt{f}}
+with the local flop-rate ratio. This retro-explains the failure of a
+naive discrete-level redshift route: the continuum metric gives a finite
+\ensuremath{r_s}, whereas discrete level-stacking piles redshift at
+infinite radius.
+
+\section*{3. The Metric, on Verified Lorentz Invariance}
+\addcontentsline{toc}{section}{3. The Metric, on Verified Lorentz Invariance}
+
+\subsection*{3.1 Confirmation temperature}
+
+Re-derived from \ensuremath{U_{\mathrm{sh}}} white noise along a uniformly
+accelerated worldline: the proper-time correlation is periodic in
+imaginary time with period \ensuremath{2\pi c/a}, giving \ensuremath{T =
+\hbar a/(2\pi c\, k_B)}, the Unruh form (Unruh, 1976) with coefficient \ensuremath{1/2\pi} exact.
+
+\subsection*{3.2 Exact Lorentz invariance at second order}
+
+Direct Fourier audit of the FCC Laplacian: angular anisotropy scales as
+the fourth power of wavevector magnitude. The second-order term --- the
+wave equation, the order at which the metric lives --- is exactly
+isotropic and hence exactly Lorentz invariant. The first anisotropy
+enters at fourth order, Planck-suppressed: a falsifiable signature, not a
+defect.
+
+\subsection*{3.3 The Einstein equations and the Poisson structure}
+
+The Einstein field equations follow from three results already
+established, combined by the Jacobson construction (Jacobson, 1995). The inherited pieces
+are named first. (i) The area law of \S\,2.2: entropy is proportional to
+the two-dimensional now-surface area, derived non-conditionally there
+because the horizon is forced to be a two-dimensional agent manifold.
+(ii) The confirmation temperature of \S\,3.1: a uniformly accelerated
+worldline through \ensuremath{U_{\mathrm{sh}}} sees a thermal spectrum at
+\ensuremath{T = \hbar a/(2\pi c\, k_B)}, with the \ensuremath{1/2\pi}
+coefficient exact. (iii) The exact second-order Lorentz invariance of
+\S\,3.2: the wave-equation order is exactly isotropic by direct Fourier
+audit of the FCC Laplacian, so the local Rindler structure the
+construction requires is available without approximation.
+
+Given these three, the Jacobson construction is forced rather than
+imported. Demanding the thermodynamic relation \ensuremath{\delta Q = T\,
+dS} hold across every local causal horizon --- with \ensuremath{\delta Q}
+the confirmation-flux across the now-surface and \ensuremath{T} the
+\S\,3.1 temperature --- fixes the relation between horizon-area variation
+and the energy flux through it. Because the area law (i) supplies the
+entropy, the temperature (ii) supplies \ensuremath{T}, and the
+second-order isotropy (iii) guarantees the local Rindler horizons are
+exactly those of a Lorentz-invariant continuum, the only field equation
+consistent with \ensuremath{\delta Q = T\, dS} holding at every point is
+the Einstein equation. Schwarzschild is its vacuum solution under static
+spherical symmetry, recovering \S\,2.3.
+
+The same picture yields the Newtonian limit directly, with no further
+assumption. Read gravity as the resolution degradation of confirmation as
+the now-surface approaches its information ceiling: channel-fullness
+\ensuremath{\rho(r) \sim 1/r^2} plays the role of the gravitational field,
+and the resolution deficit \ensuremath{\Phi \sim 1/r} plays the role of
+the potential, so that \ensuremath{\nabla^2 \Phi = \mathrm{source}} is the
+Poisson equation. Entropy is primary and embedding depth is its integral;
+the metric depth is therefore emergent, not fundamental. This is the
+continuum-limit shadow of the same construction, and it carries no open
+coefficient of its own: the area-coupling factor of two that \S\,5 once
+left open is now derived (\S\,5.5). This route places TMS within the
+thermodynamic and entropic-gravity
+program --- the derivation of the field equations as an equation of state
+(Jacobson, 1995) and the reading of gravity as an entropic force
+(Verlinde, 2011) --- from which it differs in supplying the underlying
+microstructure: the now-surface and its confirmation flux, rather than an
+unspecified holographic screen, carry the entropy.
+
+\section*{4. Hawking Radiation and the Perspective Cut}
+\addcontentsline{toc}{section}{4. Hawking Radiation and the Perspective Cut}
+
+\subsection*{4.1 The horizon must radiate}
+
+\ensuremath{U_{\mathrm{sh}}} fluctuates at every agent, the horizon
+included. A horizon agent straddles the causal seal --- its interior side
+faces the \ensuremath{\Xi}-wake (sealed daughter), its exterior side our
+now-surface. A fluctuation fires a confirmation with one element sealed
+in \ensuremath{\Xi} and its partner radiating outward: substrate horizon
+pair-production. The field never rests, so the emission is unavoidable.
+
+\subsection*{4.2 The thermal spectrum}
+
+A static observer near \ensuremath{r_s} is accelerated;
+\ensuremath{U_{\mathrm{sh}}} along that worldline is thermal (\S\,3.1). At
+the horizon the acceleration is the surface gravity \ensuremath{\kappa =
+c^4/(4GM)}, giving \ensuremath{T_H = \hbar \kappa/(2\pi c\, k_B) = \hbar
+c^3/(8\pi GM\, k_B)}, the Hawking temperature: a solar-mass hole gives
+\ensuremath{6.18 \times 10^{-8}} K (textbook \ensuremath{6.2 \times
+10^{-8}}). Smaller holes are hotter; the hole evaporates. The
+\ensuremath{1/2\pi} coefficient and the temperature--mass relation are
+parameter-free; the absolute scale inherits the coupling identity of \S\,5
+and introduces no separate open problem.
+
+\subsection*{4.3 Information and the perspective boundary}
+
+The infalling information is not destroyed: the sealed element joins the
+\ensuremath{\Xi}-wake as the daughter substrate's initial data (Volume 1,
+p.~109); the partner radiates. Information is reinterpreted into
+\ensuremath{\Xi}, not erased --- the paradox dissolves. This
+reinterpretation across a causal seal is a structural perspective
+boundary: a partition of confirmation into what is sealed within one
+frame and what is emitted to others. The construct is recorded here as a
+derived feature of the material substrate; the analysis of bounded
+observers that builds on it is the subject of the papers that follow.
+Hawking radiation is, in this sense, the material-side instance of a
+perspective boundary.
+
+\section*{5. The Coupling: One Alphabet, One Grammar}
+\addcontentsline{toc}{section}{5. The Coupling: One Alphabet, One Grammar}
+
+Four area-based routes to the gravitational coupling unify to
+\ensuremath{\sqrt{3}/4} per bit, modulo forced factors (\ensuremath{4\pi}
+from Gauss's law, \ensuremath{\ln 2} from the bit--nat conversion, and a
+factor of two now derived in \S\,5.5). The sole standout is the cross-level
+structural coupling \ensuremath{\sqrt{2}/12}; the ratio of the two is
+\ensuremath{\sqrt{6}/9}.
+
+\subsection*{5.1 The within/cross weight}
+
+From the \ensuremath{S_3} representation theory of the triadic event: the
+surviving trivial modes --- the bit channel \ensuremath{T} (three diagonal
+components, normalization \ensuremath{1/\sqrt{3}}) and the relation channel
+\ensuremath{R} (six off-diagonal components, normalization
+\ensuremath{1/\sqrt{6}}) --- have normalization ratio \ensuremath{\sqrt{2}},
+the same \ensuremath{\sqrt{2}} as the FCC face-diagonal. Algebra and
+geometry converge.
+
+\subsection*{5.2 The alphabet and the grammar}
+
+The relevant constants form a three-letter alphabet read dimensionally:
+\ensuremath{3} is the triangle (two-dimensional minimum confirmation,
+\ensuremath{\bar{B} = 3\bar{\alpha}}); \ensuremath{4} is the tetrahedron
+(three-dimensional minimum, \ensuremath{\bar{B} = 4\bar{\alpha}^3});
+\ensuremath{\sqrt{2}} is the within/cross weight. The grammar, derived
+from the clean black-hole coefficient with no target value in view, is:
+counts enter linearly; a two-dimensional triangular measure carries
+\ensuremath{\sqrt{3}}; the within/cross weight carries \ensuremath{\sqrt{2}};
+depth carries \ensuremath{(1/\sqrt{2})^k}.
+
+The black-hole coefficient \ensuremath{4/\sqrt{3}} spells as a count over a
+triangular measure. The gravitational ratio \ensuremath{\sqrt{6}/9} spells
+as \ensuremath{\sqrt{2} \cdot (1/\sqrt{3}) \cdot (1/3)} --- within/cross
+weight, triangular measure, and triangle count, each in its assigned
+role.
+
+\subsection*{5.3 The triadic root of the level-advance}
+
+The level-advance time-ratio is forced to \ensuremath{|S_3| = 6}:
+meta-confirmation of three subsystems must be role-independent, hence
+samples all six orderings; and it must be the full symmetric group, not
+merely the cyclic subgroup, because Volume 1's own seven-of-nine
+vacuum-mode cancellation kills the sign mode, which requires the odd
+permutations. The ``3'' in the length-ratio \ensuremath{3\sqrt{2}} is
+therefore triadic, the gravitational grammar holds unconditionally, and
+this \ensuremath{|S_3| = 6} converges with the W-point hypothesis
+(\ensuremath{24 = 4 \times 6}). The literal sequential-sampling
+realization remains open.
+
+\subsection*{5.4 The coupling-universality keystone}
+
+Volume 1's five bit-footprint coupling coefficients are the alphabet in
+scale-invariant roles: \ensuremath{\alpha_{\mathrm{surround}} = \sqrt{2}},
+\ensuremath{\alpha_{\mathrm{subsys}} = 3}, \ensuremath{\alpha_d =
+\alpha_{\mathrm{local}} = 1}, and \ensuremath{\alpha_k = (1/\sqrt{2})^k}. Four of
+the five are grammar-forced universal; the fifth carries the derived
+depth-dilution, with no residual. The keystone Volume 1 flagged as open is
+thereby resolved completely: the per-level structural overhead \ensuremath{\delta_k}
+that earlier drafts carried as an undetermined factor in \ensuremath{\alpha_k} is now
+derived to be identically one. The content of this is not the trivial observation
+that a ratio of identical quantities is one; it is that the meta-tetrahedral
+geometry \emph{is} identical at every level, which is a computed and non-trivial
+result --- the form-invariance fixed point (\S\,4.7; Paper~3) establishes by
+explicit enumeration that the coordination number, triangle count, and tetrahedron
+count per site (twelve, twenty-four, eight) recur unchanged across levels, a fact
+that could have failed and does not. The question \ensuremath{\delta_k} answered was whether
+the depth-coupling carries any per-level overhead \emph{beyond} the speed-dilution
+\ensuremath{(1/\sqrt{2})^k}; since the propagation speed already absorbs the dynamical
+(flop-time) cost through \ensuremath{c^{(k)}=(1/\sqrt{2})^k}, and the fixed point shows the
+residual geometric content is level-invariant, no third overhead remains. Two points
+forestall the natural objection that the recursion hides a correction. First, the
+level-invariance is not assumed in the induction but \emph{counted}: the
+meta-lattice coordination, triangle, and tetrahedron numbers are obtained by direct
+enumeration of the neighbours of a site built from the level below, and that count
+makes no reference to the coupling \ensuremath{\alpha_k} or to \ensuremath{\delta_k}, so \ensuremath{\delta_k=1} is read
+off an independently established invariance rather than presupposed to establish it.
+Second, \ensuremath{\delta_k} is the \emph{bulk} coupling --- \ensuremath{\alpha_k} governs propagation through
+the repeating lattice --- and finite-patch boundary effects (fewer neighbours at a
+surface site, stabilizer leakage at an edge) are a separate correction of order
+surface-to-volume, \ensuremath{O(1/L)} in patch size \ensuremath{L}, which vanishes in the bulk limit and
+does not enter the bulk coupling. Given that computed and boundary-independent
+invariance, \ensuremath{\delta_k = 1} and \ensuremath{\alpha_k = (1/\sqrt{2})^k} with no
+open residual; the depth-coupling is fully determined.
+
+\subsection*{5.5 Two constants closed: the area-coupling factor of two and
+the extent overhead}
+
+Two coefficients that Volume 1 carried as open close exactly, each once
+its correct dimensional home is identified.
+
+\emph{The area-coupling factor of two is \ensuremath{2}.} The horizon agent manifold
+\ensuremath{M_{\alpha}} is the two-dimensional triangular (hexagonal-packing) surface on
+which the confirmation frontier lives. A triangular lattice has two
+orientations of triangular face --- upward and downward --- and the two
+orientations enclose \emph{distinct} bits with opposite circulation; this
+is the intrinsic two-fold structure of the flat surface itself, requiring
+no thickness. On any finite patch the two orientations occur in exactly
+equal number (a patch with \ensuremath{49} up-faces has \ensuremath{49} down-faces, and the
+equality is exact for every patch, being the standard bipartition of the
+triangular tiling). The bit capacity of the horizon is therefore the sum
+of the up-face bits and the down-face bits, exactly twice the
+single-orientation count: the factor of two is \ensuremath{2}, derived, from the
+clean \ensuremath{1\!:\!1} up/down face pairing of the two-dimensional frontier.
+
+\emph{The extent overhead \ensuremath{\varepsilon^{(k)}} is \ensuremath{0}.} The minimum region that can
+host a level-\ensuremath{k} closure has meta-extent
+\ensuremath{L_{\mathrm{sub}}^{(k)} = 3 L_p^{(k)} + \varepsilon^{(k)}}, with \ensuremath{\varepsilon^{(k)}} the nudge
+required to seat the ideal closure onto the lattice. The closure is the
+regular tetrahedron drawn from four alternating cube corners --- the
+stella-octangula A-sublattice cell --- whose six edge-lengths-squared are
+all equal to the FCC nearest-neighbor value \ensuremath{2}, and which has integer
+vertices at every integer scaling. The ideal tetrahedral closure
+therefore lands exactly on the FCC lattice at every scale, requiring no
+nudge: \ensuremath{\varepsilon^{(k)} = 0} identically, and \ensuremath{L_{\mathrm{sub}}^{(k)} = 3 L_p^{(k)}}
+exactly. This also settles the \ensuremath{C(4,2) = 6} combinatorial-bound
+refinement that Volume 1 (Paper 4) carried forward: the six pair-distances
+of the closure cell are the six equal FCC edges, with no residual.
+
+\section*{6. The Equivalence Principle as a Theorem of Depth}
+\addcontentsline{toc}{section}{6. The Equivalence Principle as a Theorem of Depth}
+
+An equivalence-principle violation is, operationally, whether bodies of
+different composition fall differently, and so depends on the
+composition-depth difference between test bodies. The per-level mismatch
+\ensuremath{1/\sqrt{2} < 1} compounds, suppressing the violation as
+\ensuremath{(1/\sqrt{2})^N} where \ensuremath{N} is the depth at which the
+bodies' structures diverge. Ordinary matter differs only in shallow
+layers; \ensuremath{N} is large; the violation is unobservable; the
+equivalence principle holds. Einstein assumed the equivalence principle;
+the substrate derives it as a depth-limit. The sign (suppression) is
+derived; the magnitude is a bound.
+
+\section*{7. Dynamic Dark Energy: the Forced Crossing}
+\addcontentsline{toc}{section}{7. Dynamic Dark Energy: the Forced Crossing}
+
+Dark energy is the relation-channel residual on the now-surface (Volume 1,
+p.~131). The now-surface advances every flop under \ensuremath{\hat{R}}; a
+residual on a perpetually advancing surface cannot hold constant density.
+Dark energy is therefore dynamic by necessity, and the standard-model
+value \ensuremath{w = -1} is structurally excluded.
+
+Early (a young, shallow universe), the now-surface advance dominates and
+the density grows: \ensuremath{w < -1}, phantom-like. Late (an old, deep
+universe), advance weakens while dilution and the depth-weight win:
+\ensuremath{w > -1}, quintessence-like. The equation of state should
+therefore cross \ensuremath{-1}, from below to above, with the density
+peaking at intermediate redshift. This crossing distinguishes the substrate from
+the standard model, which forbids any crossing, and it qualitatively matches
+recent survey indications of evolving dark energy (DESI Collaboration 2025a) ---
+\ensuremath{w_0} above \ensuremath{-1} today, a negative running, and a density peak near redshift
+one-half.
+
+The status of this crossing must be stated carefully, and more cautiously than
+earlier drafts did. The \emph{direction} of each limit is derived: a residual on a
+perpetually advancing surface cannot hold constant density, so \ensuremath{w = -1} is
+excluded, and the young-universe (advance-dominated) and old-universe
+(dilution-and-depth-dominated) regimes have opposite signs of \ensuremath{w+1}. That the
+equation of state therefore \emph{crosses} \ensuremath{-1} follows if the advance is dominant
+early and subdominant late --- that is, if the two effects genuinely cross over. A
+forward simulation of the residual-density dynamics does not, however, robustly
+reproduce the crossing from generic inputs: depending on how the surface injection
+and its volume dilution are balanced, the model can remain phantom throughout or
+quintessence throughout, with the crossing appearing only for an intermediate
+balance. The crossing is therefore \emph{not} parameter-free as an outcome, even
+though the two limiting signs are derived; whether the advance-dilution
+competition actually crosses over in our universe depends on the depth-accumulation
+history \ensuremath{k(a)} and the injection normalization, which are not pinned here. The
+honest claim is thus weaker than a forced crossing: the mechanism \emph{permits and
+motivates} a \ensuremath{w=-1} crossing of the observed sign, and excludes the cosmological
+constant, but a forward simulation reproduces the crossing only for a range of the
+unpinned inputs rather than universally. The reproducibility script
+\ensuremath{(eos_{sim})} records both the derived limiting signs and the input-dependence of
+the crossing. The exclusion of \ensuremath{w=-1} is the robust prediction; the crossing
+itself is motivated but input-dependent.
+
+\textbf{Concordance with DESI DR2 (structural, not a derivation).} Three features
+of the framework's dark sector find qualitative echoes in the second data release
+of the Dark Energy Spectroscopic Instrument, and the concordance is recorded here
+at the level the framework earns --- structural, not a fit. First, the framework
+excludes a cosmological constant and requires dynamical dark energy; DESI DR2
+reports a preference for a time-evolving equation of state over $\Lambda$CDM in the
+quadrant $w_0 > -1$, $w_a < 0$, at up to the few-$\sigma$ level depending on the
+supernova compilation (DESI Collaboration 2025a; Lodha et al.\ 2025). Second, the
+framework's young-then-old sign structure places the equation of state in the
+phantom regime early and the quintessence regime late; DESI's model-agnostic
+reconstructions favor exactly this phantom-to-quintessence ordering with a crossing
+near redshift $0.4$, and report it to be robust to the choice of parametrization
+(Lodha et al.\ 2025). Third, and most specifically, the framework treats dark
+energy and dark matter not as independent components but as two channels of one
+substrate --- the relation channel and the bit channel of $\bar{B}=3\bar{\alpha}$
+--- which admits exchange between them; a growing line of DESI DR2 analysis
+reconstructs precisely such a dark-sector coupling, with the reconstructed
+interaction changing sign over cosmic history (energy passing from dark matter to
+dark energy early, reversing late) and favored over $\Lambda$CDM with strong
+Bayesian evidence in some data combinations (Li \& Zhang 2025). This last feature
+is notable because the channel-exchange structure was fixed by the founding
+primitive, not chosen to match observation. One quantitative contact is worth
+recording alongside the qualitative ones, at the same arm's length: DESI's
+single best-measured, parametrization-independent value is the pivot equation of
+state, \ensuremath{w(z\simeq0.5) = -1.024 \pm 0.043}, and a forward run of the sector built on
+the framework's own formation and exhaustion relations (the reproducibility script
+\ensuremath{dark_{sector}}) returns \ensuremath{w \approx -1.02} at that redshift without tuning to it ---
+a coincidence at one point, well within the measurement error, and explicitly not a
+fit of the full curve. It is offered as a single un-tuned contact, not as a
+reproduction of the equation-of-state history, which the framework does not yet
+derive. None of this is offered as confirmation, and three caveats are stated
+plainly. First, these three features ---
+dynamical dark energy, a phantom-to-quintessence crossing, and a sign-reversing
+dark-sector exchange --- are \emph{generic} to the broad class of beyond-$\Lambda$CDM
+models (quintessence, phantom, and interacting-dark-energy scenarios all produce
+some combination of them); the framework's concordance with them does not by itself
+discriminate it from that class, and would do so only once it derives the
+quantitative $w(z)$, which it does not yet. Second, the observational signal is
+itself contested and dataset-dependent: the sign-reversing coupling of Li \& Zhang
+(2025) is favored at around the $2\sigma$ level for some data combinations
+(CMB\,+\,DESI\,+\,DESY5, CMB\,+\,DESI\,+\,Union3) but is consistent with no
+interaction for others (CMB\,+\,DESI, CMB\,+\,DESI\,+\,PantheonPlus), and separate
+analyses question whether the evolving-dark-energy signal is significant at all.
+Third, and to make the framework's exposure explicit rather than hedged: the
+sharp falsifier of the sector is a cosmological constant. If dark energy is
+observed to be constant --- $w = -1$ within errors, with no dynamical evolution ---
+then the framework's core dark-sector claim, that a residual on a perpetually
+advancing surface cannot hold constant density, is falsified. The framework is not
+immunized against this outcome; it is staked against it. What is recorded, then, is
+a structural concordance held at arm's length: the framework's qualitative
+dark-sector predictions match three independently reported trends in current data,
+those trends are generic and contested rather than decisive, the quantitative
+derivation is the sector's principal open problem, and the framework carries a
+definite falsifier should the cosmological constant prove correct after all.
+
+\section*{8. The Single Integer}
+\addcontentsline{toc}{section}{8. The Single Integer}
+
+The framework's only empirical input is the universe's hierarchical depth
+\ensuremath{k} (Volume 1, p.~132: one geometric primitive, one axiom, one
+empirical question). Volume 1 (p.~131) pins \ensuremath{k \approx 79} from
+the cosmological-constant ratio \ensuremath{\Lambda/\rho_p \approx
+10^{-123}} under the per-level scaling. This anchor --- the vacuum-energy
+hierarchy --- is independent of the equivalence-principle and dark-energy
+channels, and the same \ensuremath{k \approx 79} is consistent with both:
+\ensuremath{(1/\sqrt{2})^{79} \approx 10^{-12}}, near the bound set by
+the MICROSCOPE equivalence-principle test (Touboul et al., 2022); and a deep universe gives the gentle equation-of-state evolution
+observed. The material universe reduces to \ensuremath{\sqrt{2}}, the
+Principle of Generative Economy, and one integer \ensuremath{k \approx
+79}. This value is order-of-magnitude and rests on Volume 1's
+steady-state assumption (asserted, not derived); the claim is a
+triple-consistency at \ensuremath{k \approx 79}, not a precision
+determination.
+
+\section*{9. Where It Sits}
+\addcontentsline{toc}{section}{9. Where It Sits}
+
+The now-surface results of \S\S\,1--8 were derived from the confirmation frontier as a structural object, without reference to the gravitational literature, so that the literature could be set against them. This section locates the paper among the programs in emergent and thermodynamic gravity it most resembles, and marks where it diverges. Placement is by coordinate; each program is taken as its authors state it; agreement is a coordinate reached after the derivation, not support for it.
+
+The paper sits squarely within the thermodynamic and entropic-gravity program and forks from it at one definite point: what supplies the entropy. Jacobson derived the Einstein field equations as an equation of state, demanding the Clausius relation $\delta Q = T\,\delta S$ hold across every local causal horizon and recovering the field equations from the area--entropy proportionality (Jacobson 1995); Verlinde read gravity itself as an entropic force, with the metric and the Newtonian potential emerging from an entropy gradient on a holographic screen (Verlinde 2011). The now-surface reproduces the skeleton of both --- the field equations arise by the Jacobson construction on a derived area law and a re-derived Unruh-form temperature (\S\,3), and the Poisson equation appears as the continuum shadow with the resolution deficit playing the potential (\S\,3) --- and diverges by supplying the microstructure the program leaves unspecified. Where Jacobson's horizon and Verlinde's screen are posited surfaces on which entropy is counted, the now-surface is a derived two-dimensional agent manifold whose confirmation flux carries the entropy (\S\,2), so the screen is not an assumed boundary but the structural frontier Volume 1 already forced. The fork is therefore not over the thermodynamic route to the field equations, which the framework takes, but over whether the entropy-bearing surface is posited or derived.
+
+The horizon thermodynamics the paper re-derives places it next to the Bekenstein--Hawking and Unruh results, again as correspondence rather than adoption. The area law sits on the horizon non-conditionally because the horizon is a two-dimensional agent manifold (\S\,2), and the confirmation-frontier temperature is recovered in Unruh form with the horizon's radiation following from the perspective cut (\S\,4). These are landing points reached after the derivation: the framework does not assume the Bekenstein entropy or the Unruh temperature and then build on them, but re-derives their form from the now-surface and notes the agreement. The area--coupling factor of two is derived (\ensuremath{= 2}, \S\,5.5), so the correspondence is claimed with that coefficient fixed.
+
+Two empirical contacts locate the paper against observation rather than against a rival theory, and both are forward-looking tests rather than confirmations claimed. The equivalence principle is derived as a depth-suppression theorem --- a composition-dependent violation suppressed as $(1/\sqrt{2})^N$ in the depth at which test bodies diverge (\S\,6) --- which meets the null results of high-precision equivalence-principle tests as a sign-and-bound prediction, the sign derived and the magnitude bounded (Touboul et al.\ 2022). The forced crossing of the cosmological-constant value reads as dynamic dark energy (\S\,7), which meets the evolving-equation-of-state signal reported by recent baryon-acoustic-oscillation surveys as a structural prediction with its numerical parameters left open (DESI Collaboration 2025). Both are recorded as coordinates with tests attached, not as vindications.
+
+The placement is owned. The paper lands as an emergent-gravity account in the thermodynamic--entropic family that supplies a derived microstructure --- the now-surface and its confirmation flux --- where the established constructions posit a screen, and that meets the equivalence principle and dark-energy observations as derived predictions rather than fitted inputs. The framework does not argue this is the correct coordinate among emergent-gravity programs; it records that the structural object it derived falls here when set among them, and that the placement rests on the derivations of \S\S\,1--8 and not on a demonstration that the neighbouring programs are mistaken.
+
+
+
+\section*{10. Summary and Placement}
+\addcontentsline{toc}{section}{10. Summary and Placement}
+
+The now-surface, taken purely as a structural object, derives the
+material universe: the black hole as object, its Hawking emission, the
+metric in form, the gravitational coupling as one triadic alphabet, dark
+energy as a forced crossing of the cosmological-constant value, and the
+whole reducing to a single integer. This paper opens Volume 2 by
+establishing that the active confirmation frontier is physically
+load-bearing on the material side before any property of observers is
+introduced. The perspective boundary that appears at the black-hole
+horizon is the structural object on which the volume's later analysis of
+bounded observers and graded subjecthood is built.
+
+Paper 2 takes the now-surface as established here and inverts the
+standpoint: where this paper reads the confirmation frontier from
+outside, as material structure, Paper 2 reads it from within, developing
+the confirmation relation as the seat of bounded perspective and
+subjecthood as graded binding depth. The perspective boundary derived at
+the black-hole horizon is the structural hinge on which that inversion
+turns.
+
+Open items carried forward: the
+sequential-sampling realization of
+\ensuremath{|S_3| = 6}; the numerical equation-of-state parameters from
+\ensuremath{k(a)}; and a formal, non-steady-state derivation of
+\ensuremath{k \approx 79}. The area-coupling factor of two (\ensuremath{= 2}), the geometric
+extent overhead \ensuremath{\varepsilon^{(k)}} (\ensuremath{= 0}), and the depth-coupling residual
+\ensuremath{\delta_k} (\ensuremath{= 1}, forced by the form-invariance fixed point) are derived
+in \S\,5.4--5.5. The Hawking
+temperature's absolute scale inherits the coupling identity but introduces
+no separate open problem.
+
+\section*{Acknowledgments}
+\addcontentsline{toc}{section}{Acknowledgments}
+
+The development of this volume was substantially aided by extended
+collaboration with several large language models used as critical
+sounding boards, pedagogical resources, formal-rigor checkers, and
+external working memory across many sessions during 2024--2026.
+
+\textbf{Claude (Anthropic)} was the primary collaborator across the
+formalization, derivation tightening, simulation work, citation auditing,
+and editorial passes that brought this paper to its present form,
+including the gravity, black-hole, and dynamic-dark-energy derivation
+campaign formalized here.
+
+\textbf{Gemini (Google DeepMind)}, \textbf{ChatGPT (OpenAI)},
+\textbf{DeepSeek}, and \textbf{Grok (xAI)} contributed additional
+structural feedback and adversarial review at various points.
+
+All theoretical commitments, the choice of axioms, the Principle of
+Generative Economy, the now-surface construction, and the framework's
+overall architecture are the author's; the AI systems' role was to teach,
+formalize, critique, verify, and document.
+
+\section*{References}
+\addcontentsline{toc}{section}{References}
+\begin{reflist}
+Bekenstein, J. D. (1973). Black holes and entropy. Physical Review D,
+7(8), 2333--2346. doi:10.1103/PhysRevD.7.2333.
+
+DESI Collaboration: Abdul-Karim, M., et al.\ (2025a). DESI DR2 results.
+II. Measurements of baryon acoustic oscillations and cosmological
+constraints. Physical Review D, 112(8), 083515. doi:10.1103/tr6y-kpc6.
+\url{https://arxiv.org/abs/2503.14738}
+
+Lodha, K., Calderon, R., Matthewson, W.\,L., Shafieloo, A., Ishak, M.,
+et al.\ (DESI Collaboration) (2025). Extended dark energy analysis using
+DESI DR2 BAO measurements. Physical Review D, 112(8), 083511.
+doi:10.1103/w4c6-1r5j. \url{https://arxiv.org/abs/2503.14743}
+
+Li, Y.-H., \& Zhang, X.\ (2025). Cosmic sign-reversal: non-parametric
+reconstruction of interacting dark energy with DESI DR2. Journal of
+Cosmology and Astroparticle Physics, 2025(12), 018.
+doi:10.1088/1475-7516/2025/12/018. \url{https://arxiv.org/abs/2506.18477}
+
+Jacobson, T. (1995). Thermodynamics of spacetime: The Einstein equation
+of state. Physical Review Letters, 75(7), 1260--1263.
+doi:10.1103/PhysRevLett.75.1260. \url{https://arxiv.org/abs/gr-qc/9504004}
+
+Switzer, A. (2026). The Triadic Measurement Substrate, Volume 1: A
+Confirmation-Based Geometric Substrate for Emergent Physics, Computation,
+and Cosmology.
+
+Touboul, P., et al.\ (MICROSCOPE Collaboration) (2022). MICROSCOPE
+mission: Final results of the test of the equivalence principle. Physical
+Review Letters, 129(12), 121102. doi:10.1103/PhysRevLett.129.121102.
+\url{https://arxiv.org/abs/2209.15487}
+
+Unruh, W. G. (1976). Notes on black-hole evaporation. Physical Review D,
+14(4), 870--892. doi:10.1103/PhysRevD.14.870.
+
+Verlinde, E. (2011). On the origin of gravity and the laws of Newton.
+Journal of High Energy Physics, 2011(4), 29. doi:10.1007/JHEP04(2011)029.
+\url{https://arxiv.org/abs/1001.0785}
+\end{reflist}
+
+\clearpage
+
+
+\end{document}

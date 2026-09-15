@@ -1,0 +1,1415 @@
+\documentclass[11pt,oneside]{report}
+% ======================================================================
+%  THE TRIADIC MEASUREMENT SUBSTRATE --- COMPLETE CORPUS (Volumes 1 & 2)
+%  Aaron Switzer, 2026
+%  Single-file build. Compile: pdflatex x3 (third pass settles the TOC).
+% ======================================================================
+% ======================================================================
+%  TMS Volume 1 -- shared preamble
+%  Compiles with pdfLaTeX both locally and on Overleaf (no exotic fonts).
+% ======================================================================
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathptmx}            % Times text + math (widely available)
+\usepackage[scaled=0.90]{helvet} % sans for headings
+\usepackage{courier}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tocbibind}
+
+% ---- spacing -----------------------------------------------------------
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0.35em}
+\linespread{1.04}
+\setlist{leftmargin=1.6em,topsep=0.25em,itemsep=0.15em,parsep=0pt}
+
+% ---- theorem environments ---------------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}{Axiom}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{principle}[theorem]{Principle}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{prediction}[theorem]{Prediction}
+\newtheorem{property}[theorem]{Property}
+\newtheorem{postulate}[theorem]{Postulate}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+% ---- section heading look (unnumbered; author supplies the numbers) ----
+\titleformat{\section}[hang]{\normalfont\large\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsection}[hang]{\normalfont\normalsize\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsubsection}[hang]{\normalfont\normalsize\bfseries\itshape}{}{0pt}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.5em}
+\titlespacing*{\subsection}{0pt}{1.0em}{0.35em}
+\titlespacing*{\subsubsection}{0pt}{0.8em}{0.3em}
+
+% chapter (= each paper) heading
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\bfseries}
+  {}{0pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{10pt}{24pt}
+
+% ---- page-break quality: avoid stranded headings and orphaned/widowed lines ----
+% (applies to both volumes via the shared preamble)
+\widowpenalty=10000        % no single line at the top of a page
+\clubpenalty=10000         % no single line at the bottom of a page
+\displaywidowpenalty=10000 % same, around displayed equations
+\brokenpenalty=4000        % discourage page breaks right after a hyphenated line
+% titlesec: forbid a page break immediately after a heading (heading stranded at page foot)
+\usepackage{needspace}
+\usepackage{etoolbox}
+\pretocmd{\section}{\Needspace*{4\baselineskip}}{}{}
+\pretocmd{\subsection}{\Needspace*{3\baselineskip}}{}{}
+
+% ---- running heads -----------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape The Triadic Measurement Substrate}
+\fancyhead[R]{\small\itshape\nouppercase{\rightmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---- abstract / keywords / references list ----------------------------
+\newenvironment{paperabstract}
+  {\begin{center}\begin{minipage}{0.88\textwidth}\small
+   \noindent\textbf{Abstract.}\itshape\space}
+  {\end{minipage}\end{center}\vspace{0.4em}}
+
+\newcommand{\keywords}[1]{\noindent{\small\textbf{Keywords:} #1}\vspace{0.4em}}
+
+% per-paper APA reference list (hanging indent), kept as authored
+\newenvironment{reflist}
+  {\par\small\setlength{\parindent}{0pt}%
+   \setlength{\leftskip}{1.6em}\setlength{\parindent}{-1.6em}%
+   \setlength{\parskip}{0.4em}%
+   \raggedright\hyphenpenalty=50\exhyphenpenalty=50\relax
+   \sloppy}
+  {\par}
+
+% convenience
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\TMS}{\textsc{tms}}
+\hyphenation{con-fir-ma-tion sub-strate}
+\begin{document}
+
+\thispagestyle{empty}
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\sffamily\bfseries\Large The Triadic Measurement Substrate\par}
+\vspace{0.6cm}
+{\large $\bar{B} = 3\bar{\alpha}$\par}
+\vspace{1cm}
+{\sffamily\large Volume 1\par}
+\vspace{1.4cm}
+{\Large \bfseries Paper 2: Computational Dynamics of the Binary Alphabet: The Polarization Field, the Born-Rule Structural Correspondence, and the Emergence of Universal Computation\par}
+\vfill
+{\large Aaron Switzer\par}
+\vspace{0.4cm}
+{\large 2026\par}
+\vspace{1.2cm}
+{\small\itshape Excerpted from the complete two-volume corpus, \emph{The Triadic Measurement Substrate}. Full corpus and reproducibility package: \url{https://doi.org/10.5281/zenodo.22035422}\par}
+\end{titlepage}
+\cleardoublepage
+\pagenumbering{arabic}
+
+% ---------------- Volume 1 / paper2 ----------------
+\chapter*{Paper 2}
+\markboth{Paper 2}{Paper 2}
+\addcontentsline{toc}{chapter}{Paper 2: Computational Dynamics of the Binary Alphabet: The Polarization Field, the Born-Rule Structural Correspondence, and the Emergence of Universal Computation}
+\begingroup\centering
+{\large\itshape Computational Dynamics of the Binary Alphabet: The Polarization Field, the Born-Rule Structural Correspondence, and the Emergence of Universal Computation\par}\vspace{0.8em}
+{\normalsize Aaron Switzer\par}
+{\small May 2026\par}
+\endgroup\vspace{1.0em}
+
+\noindent{\small\textbf{Keywords:} TMS, Binary Alphabet, Polarization Field, Born Rule, Majority Gate, Universal Computation, Programs, Stabilizer Dynamics, Computational Irreducibility}\par\vspace{0.6em}
+
+\section*{Status of Results}
+\addcontentsline{toc}{section}{Status of Results}
+
+This paper distinguishes four categories of claim, each labeled where it
+appears in the text.
+
+\textbf{Derived.} Results that follow from the five axioms, the
+Principle of Generative Economy, and the structures established in Paper
+1 by explicit construction or proof. The polarization conjugate pair \ensuremath{(\psi ,}
+\ensuremath{\Pi_{\psi})} and the polarization wave equation \ensuremath{\partial ^{2}\psi /\partial t^{2}} \ensuremath{-} \ensuremath{c^{2}\nabla ^{2}\psi} = 0 (\S\,II), the
+propagation speed \ensuremath{c_{\mathrm{TMS}}} = \ensuremath{1/\sqrt{2}} for \ensuremath{\psi} inherited from FCC geometry (\S\,2.3),
+the three-way logical distinction among possibilities for synthetic-bit
+valuation and the selection of polarization-biased stochastic resolution
+(\S\,1.2, \S\,3.3), the linear amplitude-to-probability mapping \ensuremath{P(\bar{B}} = 1
+\textbar{} \ensuremath{\Pi_{\psi})} = (1 + \ensuremath{\Pi_{\psi})/2} from four geometric constraints (\S\,4.1),
+the 3-input majority gate at every confirmation event (\S\,5.1), and
+universal classical computation from \{MAJ, constant\} (\S\,5.3) are
+derived in this sense. The PGE-Forced Wave-Form Theorem (\S\,VII):
+higher-order reinterpretation at any hierarchical boundary is wave-form
+by structural necessity, not by additional axiom. Used in Paper 5 \S\,III
+to resolve the two-waves problem and in Paper 5 \S\,IV for the QCA-to-QFT
+correspondence. The formal definition of a program as a configuration
+causally closed under T with K(C) \textless{} \textbar C\textbar{}
+(\S\,6.2) is a definition; the existence of programs is established by
+construction in Paper 3.
+
+\textbf{Structural correspondence.} Results in which a TMS construction
+faithfully reproduces the skeleton of a known framework without claiming
+reproduction of every feature. The Born-rule correspondence of \S\,4.2 is
+the central case: the skeleton of ``deterministic wave evolution between
+events plus amplitude-biased projective measurement at each event'' is
+reproduced exactly; the linear mapping (1 + \ensuremath{\Pi_{\psi})/2} is the unique
+geometrically-forced form for two-outcome real-valued projective
+measurement. The full quadratic \textbar\ensuremath{\cdot}\textbar\ensuremath{^{2}} mapping requires
+complex amplitudes and phase coherence, which are expected to arise from
+the macroscopic interference behavior of coupled \ensuremath{(\psi ,} \ensuremath{\Pi_{\psi})} propagation
+and are deferred. The label ``structural correspondence'' matches the
+[[4,2,2]] correspondence of Paper 1: skeleton reproduced, full
+formalism deferred.
+
+\textbf{Predictions / Conjectures.} Falsifiable claims that follow from
+the framework but whose closed forms are not derived within this paper.
+The refinement \ensuremath{\beta} = f(d, \ensuremath{K_{\psi})} where \ensuremath{K_{\psi}} is the Kolmogorov complexity of
+the program running through the bit's causal history (\S\,6.4) is a
+sharpening of the Paper 1 conjecture, not a derivation of f.~The
+empirical signatures of polarization refraction (\S\,7.1) and the
+prediction that GUP corrections vary with a particle's preparation
+history rather than being a fixed property of a species (\S\,7.2) are
+consequences of the framework's architecture; the explicit functional
+forms and falsification thresholds are deferred to Paper 3's refinements
+and Paper 5's simulation work.
+
+\textbf{Deferred derivations carried into Paper 3.} Three results are
+stated in this paper and closed by derivation in Paper 3: the
+dissolution rate of non-T-closed configurations (\S\,6.3, closed in Paper 3
+\S\,2.5 as \ensuremath{\sqrt{2}} \ensuremath{\cdot} \ensuremath{L_{R}/\ell_{p}} flops); the effective error-rate decay with
+coherence depth (\S\,5.2, closed in Paper 3 \S\,2.5 as \ensuremath{(1/3)^{d}} in the
+large-coherence limit); and the explicit conditions under which the
+stabilizer dynamics select program-bearing configurations against \ensuremath{U_{\mathrm{sh}}}
+disruption (\S\,6.3, closed in Paper 3 \S\,3.3 as the coherence bistability
+threshold). These are flagged here as deferrals rather than completed
+derivations.
+
+This four-way labeling applies throughout the paper. Every claim in the
+body text falls into exactly one category.
+
+\section*{Preface to Paper 2}
+\addcontentsline{toc}{section}{Preface to Paper 2}
+
+This paper is the second installment in Volume 1 of the Triadic
+Measurement Substrate program. Volume 1, Paper 1 established the
+geometric and ontological architecture of the TMS: the agent manifold
+\ensuremath{M\alpha ,} the triadic confirmation rule, the \ensuremath{1\to 4} multiplier, FCC necessity,
+the identification of the agent spacing with the Planck length, the
+conjugate field structure \ensuremath{(\varphi ,} \ensuremath{\Pi ),} the [[4,2,2]] structural
+correspondence, the binary alphabet \ensuremath{\bar{B}} \ensuremath{\in} \{0, 1\} as the irreducible
+computational content of every confirmed bit, and the polarization field
+\ensuremath{\psi} as a parallel object propagating across the same FCC lattice. Paper 2
+takes that architecture as given and develops its computational
+dynamics. No new axioms are introduced. No new free parameters are
+introduced. The Principle of Generative Economy continues to govern
+every selection.
+
+Paper 2's central claim is that the same primitives that generate wave
+dynamics in Paper 1 --- by geometric necessity --- also generate biased
+stochastic measurement, universal computation, and stabilizer-protected
+programs. The Born rule, the majority gate, and computational
+irreducibility all emerge from the interaction of the polarization field
+\ensuremath{\psi} with the triadic confirmation rule and the maximum-entropy substrate
+\ensuremath{U_{\mathrm{sh}}.} Computation in the TMS is not designed. It is the inevitable
+consequence of confirming a binary outcome against a
+polarization-modulated wave field.
+
+\begin{paperabstract}
+Building on the binary alphabet \ensuremath{\bar{B}} \ensuremath{\in} \{0, 1\} and the parallel
+polarization field \ensuremath{\psi} established in Volume 1, Paper 1, we develop the
+computational dynamics of the TMS substrate. Three principal results are
+derived. First, the polarization field \ensuremath{\psi} obeys a homogeneous wave
+equation on the FCC lattice identical in form and propagation speed to
+that of the confirmation density \ensuremath{\varphi ,} establishing \ensuremath{\psi} as a fully-fledged
+conjugate-pair dynamical object propagating at \ensuremath{c_{\mathrm{TMS}}} = \ensuremath{1/\sqrt{2}} lattice
+spacings per flop. Second, at every confirmation event the resolution of
+a synthetic bit position into a binary value \ensuremath{\bar{B}} \ensuremath{\in} \{0, 1\} is biased by
+the local incoming polarization wave amplitude against the unbiased
+stochastic kick from \ensuremath{U_{\mathrm{sh}}} --- yielding a linear amplitude-to-probability
+mapping \ensuremath{P(\bar{B}} = 1 \textbar{} \ensuremath{\Pi_{\psi})} = (1 + \ensuremath{\Pi_{\psi})/2} that constitutes a
+structural correspondence to the Born rule for projective measurement.
+Third, the geometric structure of triadic confirmation makes every
+confirmation event a probabilistic 3-input majority gate over the
+polarizations of its parent confirmations; the [[4,2,2]]
+stabilizer dynamics from Paper 1 correct local errors and project the
+effective behavior toward deterministic majority logic at scale.
+Universal computation follows. We define a program as a configuration of
+the polarization landscape that reproduces itself under the flop
+operator T while remaining algorithmically compressible (K(C)
+\textless{} \textbar C\textbar), and show that the stabilizer dynamics
+provide an automatic selection mechanism: configurations that satisfy
+stabilizer parity and reproduce under T persist; configurations that do
+not dissolve into \ensuremath{U_{\mathrm{sh}}-\text{like}} noise. The \ensuremath{\beta (d,} \ensuremath{K_{\psi})} prediction sharpened in
+Paper 1 acquires its computational meaning here: the depth and
+polarization-complexity of a bit's causal history is the depth and
+complexity of the program running through it. As in Paper 1, no free
+numerical parameters are introduced; every result follows by geometric
+and informational necessity from the axioms.
+
+Paper 2 engages directly with two active programs deriving quantum
+mechanics from substrate dynamics: 't Hooft's Cellular Automaton
+Interpretation, which derives apparent quantum stochasticity from a
+deterministic underlying automaton observed in the wrong basis ('t
+Hooft, 2016), and Gorard's derivation of quantum measurement from causal
+invariance and multiway-graph collapse in the Wolfram model (Gorard,
+2020). The distinctive move of TMS relative to these programs is the
+polarization-biased resolution rule on a single confirmed lattice, which
+derives the linear amplitude-to-probability mapping from signal
+conservation and the maximum-entropy character of \ensuremath{U_{\mathrm{sh}}} without invoking
+either superposition over multiway branches or a hidden deterministic
+preferred basis.
+\end{paperabstract}
+
+\section*{I. Foundations from Paper 1 and the Computational Program}
+\addcontentsline{toc}{section}{I. Foundations from Paper 1 and the Computational Program}
+
+\subsection*{1.1 Inherited Structure}
+
+Paper 1 establishes the following structures, which Paper 2 takes as
+given without re-derivation:
+
+\begin{itemize}
+\item
+  The agent manifold \ensuremath{M\alpha} with agent spacing \ensuremath{\ell_{0}} \ensuremath{\equiv} \ensuremath{\ell_{p}} (Axiom 2; Section 3.2
+  of Paper 1).
+\item
+  The FCC causal stack with face-diagonal nearest-neighbor connectivity
+  (Section 2.4 of Paper 1).
+\item
+  The triadic actualization rule \ensuremath{\bar{B}} = \ensuremath{3\bar{\alpha}_{2}} in 2D and \ensuremath{\bar{B}} = \ensuremath{4\bar{\alpha}_{3}} in 3D
+  (Sections 2.1, 2.5 of Paper 1).
+\item
+  The \ensuremath{1\to 4} multiplier with informational closure (Section 4 of Paper 1).
+\item
+  The binary alphabet \ensuremath{\bar{B}} \ensuremath{\in} \{0, 1\} with polarization \ensuremath{\chi} \ensuremath{\equiv} \ensuremath{2\bar{B}} \ensuremath{-} 1 \ensuremath{\in} \{\ensuremath{-1,}
+  +1\} (Section 1.4 of Paper 1).
+\item
+  Polarization-carrying touch vector signals (Section 1.3 of Paper 1).
+\item
+  The flop as the atomic unit of state change with no sub-flop time
+  (Section 1.5 of Paper 1).
+\item
+  The conjugate field structure \ensuremath{(\varphi ,} \ensuremath{\Pi )} and the wave equation for \ensuremath{\varphi} at
+  \ensuremath{c_{\mathrm{TMS}}} = \ensuremath{1/\sqrt{2}} (Section 6 of Paper 1).
+\item
+  The [[4,2,2]] structural correspondence with logical qubit LQ1
+  = bit value, LQ2 = causal-history inheritance, jointly protected by \ensuremath{S_{x}}
+  and \ensuremath{S_{Z}} (Section 5 of Paper 1).
+\item
+  The polarization field \ensuremath{\psi} as parallel propagating object on the same
+  FCC lattice (Section 6.8 of Paper 1).
+\item
+  \ensuremath{U_{\mathrm{sh}}} as the maximum-entropy substrate from which both latent bits and
+  stochastic disruptions arise, with no preferred direction, scale, or
+  target (Axiom 0; Section 6.6 of Paper 1).
+\end{itemize}
+
+These structures are the entirety of the foundation. Paper 2 introduces
+no further primitives.
+
+\begin{remark}[Forward-Compatibility with the Sublattice Bifurcation]
+At every
+hierarchical level k \ensuremath{\geq} 1, the meta-FCC splits into two interpenetrating
+sublattices A and B running independent [[4,2,2]] dynamics
+(Paper 1 \S\,2.4 corollary, full development in Paper 5 \S\,6.1.3 and \S\,5.3).
+This affects no Paper 2 derivations at the substrate level but is
+relevant when the polarization-field and Born-rule arguments are
+recursively applied at meta-levels.
+\end{remark}
+
+\subsection*{1.2 The Computational Question}
+
+Paper 1 closed by establishing that every confirmed bit carries a binary
+value. It deferred the question of how that value is determined at the
+moment of confirmation. Paper 2 answers it.
+
+The question is sharper than it first appears. The synthetic bit
+positions of the next layer \ensuremath{S_{n+1}} are geometrically fixed by the \ensuremath{1\to 4}
+multiplier acting on the parent confirmations in \ensuremath{S_{n}.} Every synthetic bit
+position is a geometric appointment --- a location where a confirmation
+event must occur at the next flop. The question is not whether the
+appointment is kept (informational closure forces it to be) but with
+what value.
+
+Three logically distinct possibilities exist:
+
+\begin{itemize}
+\item
+  Inherited value. The synthetic bit takes a deterministic function of
+  its parents' values. This requires specifying that function --- a rule
+  mapping \ensuremath{(\chi_{1},} \ensuremath{\chi_{2},} \ensuremath{\chi_{3})} \ensuremath{\to} \ensuremath{\chi_{\mathrm{child}}} --- which is an external program
+  imposed on the substrate. It violates the Principle of Generative
+  Economy.
+\item
+  Independent randomness. The synthetic bit takes an unbiased random
+  value from \ensuremath{U_{\mathrm{sh}},} with no influence from the parents. This violates
+  Axiom 3 (signal conservation): the polarizations carried by the 12
+  outgoing signals from the parent confirmations are then dissipated
+  rather than expressed in the next layer's confirmations.
+\item
+  Polarization-biased stochastic resolution. The synthetic bit's
+  resolution is stochastic, but the probability distribution is biased
+  by the local incoming polarization carried by its parents' touch
+  vector signals. The bias is geometric. The randomness is the residual
+  contribution from \ensuremath{U_{\mathrm{sh}}.}
+\end{itemize}
+
+Possibility 3 is the unique selection under the joint constraints of
+Axiom 3 and the Principle of Generative Economy. Polarization signals
+are conserved by being expressed as bias, not dissipated; no external
+rule is imposed; \ensuremath{U_{\mathrm{sh}}} provides the stochastic component as it does at
+every scale of the TMS. Sections III and IV formalize this resolution
+mechanism and identify it as a structural correspondence to the Born
+rule for projective measurement.
+
+\section*{II. The Polarization Field \ensuremath{\psi} and its Wave Equation}
+\addcontentsline{toc}{section}{II. The Polarization Field \ensuremath{\psi} and its Wave Equation}
+
+\subsection*{2.1 Definition of the Polarization Field}
+
+\begin{definition}[Polarization Field]
+Let \ensuremath{\psi (\bar{r},} \ensuremath{\tau )} denote the local
+coarse-grained polarization --- the scalar field representing the mean
+polarization of confirmed bits at any point in the FCC lattice:
+\end{definition}
+
+\begin{equation*}
+\psi (\bar{r}, \tau ) = \langle \chi \rangle (\bar{r}, \tau ) = \langle 2\bar{B} - 1\rangle (\bar{r}, \tau )
+\end{equation*}
+
+averaged over a region containing many lattice sites but small compared
+to wave scales. \ensuremath{\psi} ranges over \ensuremath{[-1,} +1]. \ensuremath{\psi} = +1 corresponds to a
+region of pure confirmed-presence; \ensuremath{\psi} = \ensuremath{-1} corresponds to a region of
+pure confirmed-absence; \ensuremath{\psi} = 0 corresponds to a region of balanced binary
+content. \ensuremath{\psi} is defined wherever the confirmation density \ensuremath{\varphi} is non-zero;
+in regions of vanishing \ensuremath{\varphi ,} \ensuremath{\psi} is undefined.
+
+The polarization field is distinct from the confirmation field. \ensuremath{\varphi} counts
+whether interstices are confirmed; \ensuremath{\psi} records the binary content of those
+confirmations. The two fields are independent in the bulk: any value of
+\ensuremath{\psi} \ensuremath{\in} \ensuremath{[-1,} +1] is compatible with any value of \ensuremath{\varphi} \ensuremath{\in} (0, 1].
+
+\subsection*{2.2 The Conjugate Excitation \ensuremath{\Pi_{\psi}}}
+
+By the same argument as Section 6.3 of Paper 1, the FCC cascade applied
+to the polarization field generates a forward-propagating excitation
+that must be tracked separately from the field itself. Define:
+
+\begin{equation*}
+\Pi_{\psi}(S_{n}) = \text{the} \text{inherited} \text{polarization} \text{pressure} \text{being} \text{driven}
+\text{forward} \text{into} S_{n+1}
+\end{equation*}
+
+\ensuremath{\psi} records the polarization that has locked in past layers; \ensuremath{\Pi_{\psi}} records
+the polarization that the touch vector network is carrying forward to
+the next layer. The pair \ensuremath{(\psi ,} \ensuremath{\Pi_{\psi})} is the polarization analogue of the
+\ensuremath{(\varphi ,} \ensuremath{\Pi )} pair from Paper 1.
+
+\begin{lemma}[Polarization Conjugacy]
+The polarization field \ensuremath{\psi} and the
+forward-propagating polarization excitation \ensuremath{\Pi_{\psi}} constitute a
+co-generated conjugate pair, arising necessarily from the interaction
+between the polarization-carrying \ensuremath{1\to 4} cascade and \ensuremath{U_{\mathrm{sh}}} disruption.
+\end{lemma}
+
+\begin{proof}
+The argument of Paper 1 Lemma (Field Conjugacy) applies in full,
+with three substitutions: (a) confirmation events become polarized
+confirmation events; (b) signals become polarized signals; (c) the
+conserved quantity is not the count of signals but the signed sum of
+their polarizations. Step 1 (2D first-order closure), Step 2 \ensuremath{(1\to 4}
+cascade), Step 3 \ensuremath{(U_{\mathrm{sh}}} regulation produces dynamic stability), and Step 4
+(signal conservation forces conjugate coupling) carry through unchanged.
+By signal conservation applied to polarization content:
+
+\begin{equation*}
+\partial \psi / \partial \tau = \Pi_{\psi}
+\end{equation*}
+
+\begin{equation*}
+\partial \Pi_{\psi} / \partial \tau = c^{2} \Delta_{\mathrm{FCC}} \psi
+\end{equation*}
+
+Step 5 (elimination) yields:
+
+\begin{equation*}
+\partial ^{2}\psi / \partial \tau^{2} = c^{2} \Delta_{\mathrm{FCC}} \psi
+\end{equation*}
+
+The conjugate-pair structure is not an analogy. It is the same theorem
+applied to a different conserved quantity.
+
+\end{proof}
+
+\subsection*{2.3 The Wave Equation for \ensuremath{\psi}}
+
+\begin{theorem}[Polarization Wave Equation]
+The polarization field \ensuremath{\psi} satisfies
+the discrete wave equation on the FCC lattice:
+\end{theorem}
+
+\begin{equation*}
+\partial ^{2}\psi_{i} / \partial \tau^{2} = c^{2}_{\mathrm{TMS}} \Delta_{\mathrm{FCC}} \psi_{i}
+\end{equation*}
+
+with propagation speed \ensuremath{c_{\mathrm{TMS}}} = \ensuremath{1/\sqrt{2}} lattice spacings per flop. In the
+continuum limit:
+
+\begin{equation*}
+\partial ^{2}\psi / \partial t^{2} - c^{2}\nabla ^{2}\psi = 0
+\end{equation*}
+
+\begin{proof}
+The propagation-speed argument of Paper 1 Section 6.5 depends
+only on the FCC lattice geometry --- specifically, on the second-order
+tensor \ensuremath{\Sigma_{j}} \ensuremath{r_{j}\mu} \ensuremath{r_{j}\nu} = \ensuremath{4\ell^{2}_{p}} \ensuremath{\delta \mu \nu} computed over the 12 nearest neighbors.
+This tensor is a property of the lattice, not of the field being
+propagated. The same argument applies to any scalar field that
+propagates by nearest-neighbor coupling on the FCC lattice. Therefore
+\ensuremath{c_{\mathrm{TMS}}} = \ensuremath{1/\sqrt{2}} for \ensuremath{\psi .} The continuum limit follows by the Laplacian
+convergence argument of Paper 1 Section 6.6, again depending only on
+lattice geometry.
+
+\end{proof}
+
+\begin{corollary}[No New Parameter]
+The polarization field introduces no new
+propagation speed, no new coupling constant, and no new length scale. It
+inherits \ensuremath{\ell_{p},} \ensuremath{t_{p},} and c from Paper 1 without modification.
+\end{corollary}
+
+\subsection*{2.4 Independence of \ensuremath{\varphi} and \ensuremath{\psi} in the Bulk}
+
+The confirmation field and the polarization field share a substrate but
+propagate independently in the bulk. A wave in \ensuremath{\varphi} describes how
+confirmation density propagates regardless of binary content; a wave in
+\ensuremath{\psi} describes how polarization content propagates regardless of
+confirmation density. The two fields couple only at confirmation events
+themselves --- the moments at which a new bit is added to the causal
+record. The coupling mechanism is the subject of Section III.
+
+\section*{III. Confirmation Events: The Coupling of \ensuremath{\varphi} and \ensuremath{\psi}}
+\addcontentsline{toc}{section}{III. Confirmation Events: The Coupling of \ensuremath{\varphi} and \ensuremath{\psi}}
+
+\subsection*{3.1 The Atomicity of the Flop Revisited}
+
+Paper 1 Section 1.5 established that a flop is indivisible: the locking
+of a bit, the firing of 12 outgoing signals, the consumption of those
+signals as 4 synthetic bit positions, and the Z-displacement to the next
+layer all occur as a single act with no sub-flop time. Paper 2 examines
+the substructure of this single act with respect to the polarization
+landscape --- not by subdividing the flop temporally (which is
+forbidden) but by identifying the geometric components present at the
+instant the flop occurs.
+
+At the moment a confirmation event occurs at synthetic bit position x in
+layer \ensuremath{S_{n+1}:}
+
+\begin{itemize}
+\item
+  Three touch vector signals are arriving at x, one from each of the
+  three confirming agents in the parent layer \ensuremath{S_{n}.} Each signal carries
+  the polarization of its source confirmation: \ensuremath{\chi_{1},} \ensuremath{\chi_{2},} \ensuremath{\chi_{3}} \ensuremath{\in} \{\ensuremath{-1,} +1\}.
+\item
+  \ensuremath{U_{\mathrm{sh}}} contributes its standard unbiased stochastic input --- the same
+  maximum-entropy field that supplies latent bits across the substrate
+  (Axiom 0; Paper 1 Section 1.4).
+\item
+  The triadic agreement rule fires, locking the synthetic bit position
+  into a confirmed state and selecting its binary value \ensuremath{\bar{B}} \ensuremath{\in} \{0, 1\}.
+\end{itemize}
+
+These components are not temporally sequential --- they are the
+geometric content of the single indivisible act.
+
+\subsection*{3.2 The Local Polarization Amplitude}
+
+\begin{definition}[Local Polarization Amplitude]
+At a synthetic bit position x
+in layer \ensuremath{S_{n+1},} the local polarization amplitude is the average of the
+polarizations carried by the three incoming touch vector signals from
+x's parent agents in \ensuremath{S_{n}:}
+\end{definition}
+
+\begin{equation*}
+\Pi_{\psi}(x) = (\chi_{1} + \chi_{2} + \chi_{3}) / 3
+\end{equation*}
+
+\ensuremath{\Pi_{\psi}(x)} ranges over the four discrete values \{\ensuremath{-1,} \ensuremath{-1/3,} +1/3, +1\},
+corresponding to the four possible parent configurations under the
+symmetry of the three input slots.
+
+\ensuremath{\Pi_{\psi}(x)} is the same \ensuremath{\Pi_{\psi}} that propagates as the conjugate excitation of
+\ensuremath{\psi} in Section II --- measured at the specific synthetic-bit position x.
+The bulk wave equation describes how \ensuremath{\Pi_{\psi}} evolves across the lattice
+between confirmation events; the local polarization amplitude at x is
+its value at the moment a confirmation occurs there.
+
+\subsection*{3.3 Synthetic Bits Carry Position, Not Value}
+
+\begin{proposition}
+A synthetic bit, prior to its confirmation event, is a
+geometric appointment --- a position in \ensuremath{S_{n+1}} at which a confirmation
+must occur --- and does not carry a binary value of its own. Its value
+is determined at the moment of confirmation by the joint action of
+incoming polarization and \ensuremath{U_{\mathrm{sh}}.}
+\end{proposition}
+
+\begin{proof}
+By the \ensuremath{1\to 4} multiplier (Paper 1 Section 4.2), each primary
+confirmation produces 4 synthetic bit positions through the geometric
+consumption of its 12 outgoing signals. The geometric act that produces
+a synthetic bit position is the projection of touch vectors forward
+through the FCC lattice; this projection determines location but does
+not by itself determine binary value. Conferring a value on the
+synthetic bit at the moment of its production would require selecting
+between Possibility 1 (inherited value rule, violating Generative
+Economy) and Possibility 2 (independent randomness at production,
+violating Axiom 3) from Section 1.2. Possibility 3 --- biased stochastic
+resolution at the moment of confirmation --- is the unique geometrically
+consistent option.
+
+\end{proof}
+
+This distinction between geometric appointment and valued outcome
+resolves an apparent ambiguity in the substrate's dynamics: synthetic
+bits and confirmed bits are the same physical event seen at
+production-time and stabilization-time respectively. The \ensuremath{1\to 4} multiplier
+produces appointments; the confirmation event produces values.
+
+\section*{IV. The Born-Rule Structural Correspondence}
+\addcontentsline{toc}{section}{IV. The Born-Rule Structural Correspondence}
+
+\subsection*{4.1 The Resolution Probability}
+
+\begin{theorem}[Polarization-Biased Resolution]
+Given a synthetic bit position
+x with local polarization amplitude \ensuremath{\Pi_{\psi}(x)} \ensuremath{\in} \ensuremath{[-1,} +1], the
+probability that the confirmation event at x resolves as \ensuremath{\bar{B}} = 1 is:
+\end{theorem}
+
+\emph{\ensuremath{P(\bar{B}} = 1 \textbar{} \ensuremath{\Pi_{\psi})} = (1 + \ensuremath{\Pi_{\psi})} / 2}
+
+and equivalently the probability of \ensuremath{\bar{B}} = 0 is:
+
+\emph{\ensuremath{P(\bar{B}} = 0 \textbar{} \ensuremath{\Pi_{\psi})} = (1 \ensuremath{-} \ensuremath{\Pi_{\psi})} / 2}
+
+These probabilities sum to unity by construction and are non-negative
+for all \ensuremath{\Pi_{\psi}} \ensuremath{\in} \ensuremath{[-1,} +1].
+
+\begin{proof}
+The resolution probability must satisfy four constraints, each
+forced by a primitive of the TMS:
+
+\begin{itemize}
+\item
+  \ensuremath{\Pi_{\psi}} = +1 (all parents confirmed \ensuremath{\bar{B}} = 1) \ensuremath{\to} \ensuremath{P(\bar{B}} = 1) = 1. Required by
+  Axiom 3: if all three incoming signals carry \ensuremath{\chi} = +1, dissipating any
+  of that polarization through a non-certain resolution would violate
+  signal conservation in the polarization content.
+\item
+  \ensuremath{\Pi_{\psi}} = \ensuremath{-1} (all parents confirmed \ensuremath{\bar{B}} = 0) \ensuremath{\to} \ensuremath{P(\bar{B}} = 1) = 0. Required by
+  the same argument with the opposite polarization.
+\item
+  \ensuremath{\Pi_{\psi}} = 0 (no net bias) \ensuremath{\to} \ensuremath{P(\bar{B}} = 1) = 1/2. Required by the
+  maximum-entropy character of \ensuremath{U_{\mathrm{sh}}} (Axiom 0): in the absence of bias,
+  the stochastic kick from \ensuremath{U_{\mathrm{sh}}} resolves the synthetic bit with equal
+  probability between its two possible values.
+\item
+  Monotonicity and continuity in \ensuremath{\Pi_{\psi}.} Required by the Principle of
+  Generative Economy: any non-monotonic or discontinuous dependence on
+  \ensuremath{\Pi_{\psi}} would introduce structure beyond what is forced by (i)--(iii),
+  violating the minimum-sufficient selection criterion.
+\end{itemize}
+
+The unique function satisfying (i), (ii), (iii), and (iv) is the linear
+map \ensuremath{P(\bar{B}} = 1 \textbar{} \ensuremath{\Pi_{\psi})} = (1 + \ensuremath{\Pi_{\psi})/2.} No alternative mapping
+satisfies all four constraints without an additional parameter (such as
+a non-linear curve shape).
+
+\end{proof}
+
+\subsection*{4.2 Connection to the Born Rule}
+
+The resolution probability \ensuremath{P(\bar{B}} = 1 \textbar{} \ensuremath{\Pi_{\psi})} = (1 + \ensuremath{\Pi_{\psi})/2} is
+structurally analogous to the Born rule for projective measurement in
+quantum mechanics (Born, 1926). The correspondence consists of three
+parallel components:
+
+\begin{itemize}
+\item
+  Unitary propagation between measurements \ensuremath{\leftrightarrow} wave propagation between
+  confirmation events. In QM, the state evolves deterministically via
+  the Schrödinger equation between measurements. In TMS, the
+  polarization field \ensuremath{\psi} and its excitation \ensuremath{\Pi_{\psi}} evolve deterministically
+  via the FCC wave equation between confirmation events.
+\item
+  Measurement outcome biased by amplitude \ensuremath{\leftrightarrow} resolution outcome biased by
+  \ensuremath{\Pi_{\psi}.} In QM, the outcome of a projective measurement is stochastic but
+  its probability is determined by the local wave amplitude. In TMS, the
+  outcome of a confirmation event is stochastic but its probability is
+  determined by the local polarization amplitude.
+\item
+  Born probability rule \ensuremath{\leftrightarrow} linear polarization-to-probability mapping. In
+  QM, P(outcome) = \textbar\ensuremath{\langle \text{outcome}} \textbar{} \ensuremath{\psi \rangle}\textbar\ensuremath{^{2}} --- a
+  quadratic mapping from complex amplitude to probability. In TMS, \ensuremath{P(\bar{B}} =
+  1) = (1 + \ensuremath{\Pi_{\psi})/2} --- a linear mapping from real polarization to
+  probability.
+\end{itemize}
+
+Status of the Correspondence. The mapping (1 + \ensuremath{\Pi_{\psi})/2} is the Born rule
+restricted to two-outcome projective measurement on real-valued
+amplitudes with no phase information. The recovery of the full quadratic
+\textbar\ensuremath{\cdot}\textbar\ensuremath{^{2}} mapping requires complex amplitudes and phase
+coherence --- structures that the TMS does not yet exhibit at the level
+of the polarization field \ensuremath{\psi} alone. Phase information in the TMS is
+carried by the time-evolution of the \ensuremath{(\psi ,} \ensuremath{\Pi_{\psi})} pair across many flops,
+not by an instantaneous complex amplitude at any single lattice site.
+The derivation of the full complex Born rule from the macroscopic
+interference behavior of the polarization wave equation is reserved for
+subsequent work. The present claim is one of structural correspondence
+--- the same skeleton of ``deterministic wave evolution +
+amplitude-biased projective measurement'' --- exactly parallel in status
+to the [[4,2,2]] structural correspondence of Paper 1, where the
+stabilizer algebra is faithfully reproduced but the full quantum
+amplitude formalism is deferred. \hfill\ensuremath{\square}
+
+\begin{remark}
+This identification dissolves the standard interpretive
+distinction between unitary evolution and measurement collapse. In the
+TMS, both are aspects of the same substrate dynamics. The wave equation
+governs propagation; the confirmation event resolves the value; \ensuremath{U_{\mathrm{sh}}}
+supplies the irreducible stochasticity. No additional postulate is
+required to separate the two regimes. The ``collapse'' of standard
+quantum mechanics is, in TMS terms, the per-flop projection of
+polarization amplitude onto the binary alphabet.
+\end{remark}
+
+\subsection*{4.3 Positioning Against Parallel Programs}
+
+Several active programs aim to derive quantum measurement from
+substrate-level dynamics, and the polarization-biased resolution rule of
+\S\,4.1 should be situated explicitly against the two most directly
+comparable proposals.
+
+'t Hooft's Cellular Automaton Interpretation of quantum mechanics ('t
+Hooft, 2016) proposes that the apparent randomness of quantum
+measurement is the consequence of observing a deterministic underlying
+cellular automaton in the ``wrong basis'' --- a basis in which the
+deterministic dynamics appear as superposition and the deterministic
+resolution appears as stochastic collapse. The CAI's deterministic
+ontology is realized in TMS in a partial sense: the polarization-biased
+resolution rule fixes the probability of each outcome from the local
+polarization amplitude, so the substrate is deterministic in its bias
+but stochastic in its residual selection. The residual stochasticity
+comes from \ensuremath{U_{\mathrm{sh}},} which by Axiom 0 is algorithmically incompressible ---
+not a hidden deterministic dynamic but an irreducible source. TMS is
+therefore neither a hidden-variable theory in the strict CAI sense nor a
+Copenhagen-style ontological collapse theory; it is a third option in
+which the bias is geometric and the residual randomness is forced by the
+maximum-entropy substrate.
+
+Gorard's derivation of quantum measurement in the Wolfram model (Gorard,
+2020) proceeds through the multiway evolution graph: a single substrate
+state evolves into many possible successors under non-confluent
+hypergraph rewriting, and observers impose effective causal invariance
+via a Knuth-Bendix completion that collapses distinct multiway branches
+into a single observed thread. TMS achieves a similar outcome through a
+different mechanism. There is no multiway evolution graph --- every flop
+produces a single confirmed configuration on a single FCC lattice,
+determined by the polarization-biased resolution rule with \ensuremath{U_{\mathrm{sh}}} supplying
+the stochastic component. The substrate of TMS is not a superposition of
+histories projected onto a single observed branch; it is a single
+history whose per-event outcomes are stochastic by the maximum-entropy
+properties of \ensuremath{U_{\mathrm{sh}}.} The two pictures converge on the operational
+appearance of quantum measurement --- wave-like evolution between
+events, probabilistic resolution at each event --- while disagreeing on
+whether the substrate carries one history or many.
+
+The decisive structural difference common to both contrasts is that TMS
+derives the linear amplitude-to-probability mapping (1 + \ensuremath{\Pi_{\psi})/2} from
+signal conservation and the maximum-entropy character of \ensuremath{U_{\mathrm{sh}}} alone,
+without invoking either a hidden deterministic basis ('t Hooft) or a
+multiway branching structure (Gorard). The mapping is the unique
+function satisfying the four geometric constraints of \S\,4.1, and its
+emergence requires no additional ontological machinery beyond what was
+already established in Paper 1.
+
+\section*{V. Universal Computation from Triadic Confirmation}
+\addcontentsline{toc}{section}{V. Universal Computation from Triadic Confirmation}
+
+\subsection*{5.1 The 3-Input Majority Gate}
+
+\begin{theorem}[Majority Gate Emergence]
+Every confirmation event in the TMS
+implements a probabilistic 3-input majority gate over the polarizations
+of its parent confirmations, with the bias toward the deterministic
+majority outcome set by the magnitude of the polarization amplitude
+\textbar \ensuremath{\Pi_{\psi}}\textbar.
+\end{theorem}
+
+\begin{proof}
+From Section 3.2, the local polarization amplitude at synthetic
+bit position x is the average of three parent polarizations: \ensuremath{\Pi_{\psi}(x)} =
+\ensuremath{(\chi_{1}} + \ensuremath{\chi_{2}} + \ensuremath{\chi_{3})/3.} The four possible parent configurations (up to
+permutation) and their resolution probabilities are:
+
+\begin{itemize}
+\item
+  (+1, +1, +1): \ensuremath{\Pi_{\psi}} = +1, \ensuremath{P(\bar{B}} = 1) = 1, \ensuremath{P(\bar{B}} = 0) = 0.
+\item
+  (+1, +1, \ensuremath{-1):} \ensuremath{\Pi_{\psi}} = +1/3, \ensuremath{P(\bar{B}} = 1) = 2/3, \ensuremath{P(\bar{B}} = 0) = 1/3.
+\item
+  (+1, \ensuremath{-1,} \ensuremath{-1):} \ensuremath{\Pi_{\psi}} = \ensuremath{-1/3,} \ensuremath{P(\bar{B}} = 1) = 1/3, \ensuremath{P(\bar{B}} = 0) = 2/3.
+\item
+  \ensuremath{(-1,} \ensuremath{-1,} \ensuremath{-1):} \ensuremath{\Pi_{\psi}} = \ensuremath{-1,} \ensuremath{P(\bar{B}} = 1) = 0, \ensuremath{P(\bar{B}} = 0) = 1.
+\end{itemize}
+
+In the deterministic limit \textbar \ensuremath{\Pi_{\psi}}\textbar{} \ensuremath{\to} 1 (achieved when
+all three parents agree), the resolution is certain to match the
+parents. In the intermediate cases, the resolution is biased toward the
+majority value with probability 2/3. This is the canonical probabilistic
+majority function on three binary inputs.
+
+\end{proof}
+
+\subsection*{5.2 Stabilizer Repair and Effective Determinism}
+
+The 1/3 probability of ``minority'' resolutions in the intermediate
+cases is not noise to be ignored. It is a single-bit error rate. By
+Paper 1 Section 5, every tetrahedral confirmation unit detects and
+repairs single-bit errors within the same flop via the [[4,2,2]]
+stabilizer dynamics. The synthetic bits produced at the current flop
+repair the missing or anomalous confirmation, restoring stabilizer
+parity.
+
+\begin{theorem}[Effective Determinism at Scale]
+When the [[4,2,2]]
+stabilizer repair mechanism is applied across a connected region of the
+lattice in which polarizations are coherent, the effective behavior of
+the substrate at scale is deterministic 3-input majority computation.
+\end{theorem}
+
+Proof sketch. The single-bit error rate per confirmation in the
+intermediate cases is 1/3. The [[4,2,2]] code has distance 2 ---
+any single-bit error is detected, and the synthetic repair process
+applied at the next flop projects the local configuration toward the
+nearest stabilizer-satisfying state. In a coherent region (where the
+polarization landscape varies slowly on the scale of single confirmation
+events), the nearest stabilizer-satisfying state is the deterministic
+majority result. Therefore the effective per-confirmation error rate
+after stabilizer projection decays geometrically with depth into the
+coherent region. At causal depth d, the effective probability of an
+erroneous resolution is bounded above by \ensuremath{(1/3)^{d},} which vanishes
+rapidly. The substrate's macroscopic behavior is therefore effectively
+deterministic majority computation in any coherent region. A complete
+derivation of the decay rate and the exact dependence on
+coherence-region geometry is provided in Paper 3 \S\,2.5. \hfill\ensuremath{\square}
+
+\subsection*{5.3 Universality}
+
+\begin{corollary}[Computational Universality]
+The TMS substrate supports
+universal classical computation.
+\end{corollary}
+
+\begin{proof}
+The 3-input majority gate is universal in combination with a
+constant input. Specifically, MAJ(x, y, 0) = AND(x, y), MAJ(x, y, 1) =
+OR(x, y), and NOT can be implemented by polarization inversion --- a
+physical reflection of the polarization landscape across the \ensuremath{\chi} = 0 axis,
+achievable in TMS by routing through a confirmation region whose parent
+polarizations are uniformly opposite to the input. The set \{AND, OR,
+NOT\} is functionally complete (Shannon, 1948).
+
+\end{proof}
+
+The substrate is therefore a universal computer by geometric necessity.
+No additional design is required --- the triadic confirmation rule,
+applied to a binary alphabet on a fault-tolerant FCC lattice, is
+sufficient.
+
+\section*{VI. Programs, Selection, and Computational Irreducibility}
+\addcontentsline{toc}{section}{VI. Programs, Selection, and Computational Irreducibility}
+
+\subsection*{6.1 The Flop Operator and Configurations}
+
+\begin{definition}[Flop Operator]
+The flop operator T maps the polarization
+landscape at layer \ensuremath{S_{n}} to the (probabilistic) polarization landscape at
+layer \ensuremath{S_{n+1}:}
+\end{definition}
+
+\begin{equation*}
+T: \psi (S_{n}) \mapsto \psi (S_{n+1})
+\end{equation*}
+
+T is defined by the local resolution rule of Section IV combined with
+the global geometric projection of the \ensuremath{1\to 4} multiplier from \ensuremath{S_{n}} into \ensuremath{S_{n+1}.}
+T is probabilistic in general (due to the \ensuremath{U_{\mathrm{sh}}} contribution) and becomes
+effectively deterministic in coherent regions (per Section 5.2).
+
+\begin{definition}[Configuration]
+A configuration C is a finite spatial
+pattern of confirmed polarizations across some bounded region of the
+lattice extending across a causal depth window d:
+\end{definition}
+
+\emph{C = \{\ensuremath{\chi (x,} \ensuremath{\tau )} : x \ensuremath{\in} R, \ensuremath{\tau} \ensuremath{\in} \ensuremath{[\tau_{0},} \ensuremath{\tau_{0}} + d]\}}
+
+where R is the spatial support of the configuration.
+
+\subsection*{6.2 Programs}
+
+\begin{definition}[Program]
+A configuration C is a program of period n iff:
+\end{definition}
+
+\begin{itemize}
+\item
+  Causal closure under T: \ensuremath{T^{n}[C]} = C with probability approaching
+  1 in the limit of large coherent surround. The configuration's
+  polarization landscape reproduces itself, possibly up to lattice
+  translation, after n flops.
+\item
+  Algorithmic compressibility: K(C) \textless{} \textbar C\textbar.
+  There exists a description of C shorter than its raw enumeration.
+\end{itemize}
+
+Programs of period 1 are static patterns. Programs of period n
+\textgreater{} 1 are oscillators or propagating patterns. A program of
+period n that translates by some lattice vector v under \ensuremath{T^{n}} is a
+propagating program --- the TMS analogue of a particle, though the
+connection to physical matter is deferred to subsequent work.
+
+\begin{remark}
+Condition (b) is the formal criterion that distinguishes a
+program from a coincidence in \ensuremath{U_{\mathrm{sh}}.} Random configurations drawn directly
+from the maximum-entropy substrate satisfy K(C) \ensuremath{\approx} \textbar C\textbar{}
+almost surely (Kolmogorov, 1965; Axiom 0). Only configurations with K(C)
+\textless{} \textbar C\textbar{} have structure beyond noise --- beyond
+what \ensuremath{U_{\mathrm{sh}}} would produce by accident. Programs in the TMS are not
+configurations that ``look organized'' by inspection; they are
+configurations that are organized in the strict Kolmogorov sense.
+\end{remark}
+
+\begin{remark}[Status of K(C) in the Program Definition]
+The
+Kolmogorov complexity K(C) is not computable in general (Kolmogorov,
+1965). The definition of a program via K(C) \textless{}
+\textbar C\textbar{} therefore raises an apparent question: how does the
+substrate select program-bearing configurations if it cannot compute the
+criterion that defines them?
+\end{remark}
+
+The answer is that the substrate does not compute K(C). K(C) appears
+here as a property of configurations selected by the substrate's
+geometric dynamics, not as a criterion the substrate evaluates and
+applies. The selection mechanism is the stabilizer dynamics plus
+T-closure plus the coherence threshold --- all of which are local
+geometric operations on the polarization landscape, computable at every
+flop by the substrate's own update rule. Configurations that survive
+this selection happen to satisfy K(C) \textless{} \textbar C\textbar{}
+as a consequence of two structural facts: (a) random samples drawn
+directly from \ensuremath{U_{\mathrm{sh}}} have K(C) \ensuremath{\approx} \textbar C\textbar{} almost surely by
+Kolmogorov's incompressibility theorem; (b) configurations that survive
+geometric selection are by definition not random samples from \ensuremath{U_{\mathrm{sh}},} since
+they exhibit the structural regularities required by T-closure and
+stabilizer parity.
+
+The implication runs in one direction only. Geometric selection implies
+K(C) \textless{} \textbar C\textbar{} as an emergent property of the
+survivors. K(C) \textless{} \textbar C\textbar{} does not need to be
+checked, computed, or enforced --- it is what the selected
+configurations turn out to have. The substrate operates entirely on
+local geometric criteria; the algorithmic-compressibility
+characterization is the external observer's description of what those
+criteria pick out.
+
+This distinction matters for the exhaustion analysis of Paper 4 \S\,VI.
+Exhaustion is not a substrate event triggered by the substrate
+``noticing'' that novelty has run out; it is a property of the
+configuration space that emerges from the finite size of \ensuremath{\Sigma (R).} The
+substrate continues operating throughout. The transition to
+reinterpretation at \ensuremath{\tau} \textgreater{} \ensuremath{\tau *(R)} is forced by the structural
+situation (Axiom 4 forbids overwriting the confirmed bits; Axiom 3
+forbids losing the signals that produced them; direct sampling extracts
+no further novelty from a saturated configuration space) --- not by the
+substrate computing anything about K(C).
+
+\subsection*{6.3 The Selection Mechanism}
+
+The TMS provides an automatic selection mechanism that separates
+programs from noise without any external evaluator.
+
+\begin{theorem}[Stabilizer Selection]
+Configurations that satisfy
+[[4,2,2]] stabilizer parity and are causally closed under T
+persist across flops with probability approaching 1 in the limit of
+large coherent surround. Configurations that violate stabilizer parity
+are repaired toward the nearest parity-satisfying configuration.
+Configurations that are not causally closed dissolve into \ensuremath{U_{\mathrm{sh}}-\text{like}} noise
+across O(d) flops, where d is the causal depth across which they would
+need to maintain coherence.
+\end{theorem}
+
+Proof sketch. By Paper 1 Section 5, single-bit deviations from any
+locally stabilizer-satisfying configuration are detected and repaired
+within the same flop. Configurations that satisfy stabilizer parity are
+local fixed points of the repair process. Configurations that violate
+parity are projected by repair toward the nearest stabilizer-satisfying
+state. For a configuration to persist as a program, it must additionally
+close under T --- i.e., the natural forward evolution of its
+polarization landscape must reproduce its current state. Configurations
+that satisfy stabilizer parity but not causal closure under T are
+repaired in place but drift under wave dynamics, dissolving across O(d)
+flops where d is the spatial extent of the configuration relative to the
+wave propagation speed \ensuremath{c_{\mathrm{TMS}}} = \ensuremath{1/\sqrt{2}.} A complete derivation of the
+dissolution rate is provided in Paper 3 \S\,2.5. \hfill\ensuremath{\square}
+
+\begin{remark}
+This is selection without natural selection. The TMS substrate
+distinguishes programs from noise by the same mechanism it distinguishes
+confirmed states from unconfirmed states: stabilizer projection. There
+is no separate evaluator, no fitness function, no environmental judge.
+The geometry is the selector. Configurations that compute persist;
+configurations that do not compute dissolve.
+\end{remark}
+
+\subsection*{6.4 Computational Irreducibility of Programs}
+
+The arc from Axiom 0 to programs is a continuation of the arc that Paper
+1 traced from Axiom 0 to the GUP. A program of causal depth d is a
+configuration whose existence requires d flops of confirmation to be
+specified. By Axiom 0, the \ensuremath{U_{\mathrm{sh}}} substrate from which each layer's
+contribution to the program is drawn is algorithmically incompressible:
+K(n) \ensuremath{\approx} n.~The down-vector chain encoding a program of depth d therefore
+has a lower bound on its compressibility set by the \ensuremath{U_{\mathrm{sh}}} contributions at
+each layer.
+
+For programs (configurations with K(C) \textless{} \textbar C\textbar),
+this lower bound is non-trivial but non-vanishing: programs compress
+because of their internal structure, but they do not compress
+arbitrarily because their causal history records irreducible
+contributions from \ensuremath{U_{\mathrm{sh}}} at every layer.
+
+\begin{proposition}[Program Irreducibility]
+A program of causal depth d has
+minimum description length bounded below by \ensuremath{K_{\psi}(d)} --- the algorithmic
+complexity of its polarization history along the depth axis. This bound
+is strictly positive for all programs and grows monotonically with d for
+non-trivial programs.
+\end{proposition}
+
+This bound is the computational content of the \ensuremath{\beta} = f(d, \ensuremath{K_{\psi})} prediction
+sharpened in Paper 1 Section 7.2. The function f, refined to its full
+functional dependences in Paper 3 \S\,6.2, has its physical meaning fixed
+by Paper 2: \ensuremath{K_{\psi}} is the algorithmic complexity of the program running
+through the bit's causal history, and the GUP correction at the bit's
+position is set by the irreducibility of that program. Position
+measurement of a deeply embedded bit requires reading out its program,
+which by definition cannot be compressed below \ensuremath{K_{\psi}(d).}
+
+\subsection*{6.5 The Role of Volume 1, Paper 3}
+
+The selection mechanism described in Section 6.3 is the substrate-level
+prerequisite for learning, hierarchy, and the emergence of subsystems
+with internal organization. Paper 3 develops the macroscopic
+consequences: how programs of increasing causal depth come to dominate
+the polarization landscape over the long flop-time history of a stable
+cascade instance, how the substrate concentrates computation into
+coherent regions through the bistability mechanism established there,
+how nested programs (programs running inside the spatial support of
+other programs) produce hierarchical structure, and how the first
+subsystem --- the smallest configuration that transforms patterns rather
+than merely persisting them --- emerges from the same axioms. The
+dissolution rate of non-closed configurations and the effective
+error-rate decay with coherence depth are both closed in Paper 3 \S\,2.5 by
+derivations consistent with the bounds noted above.
+
+\section*{VII. The PGE-Forced Wave-Form of Higher-Order Reinterpretation}
+\addcontentsline{toc}{section}{VII. The PGE-Forced Wave-Form of Higher-Order Reinterpretation}
+
+The substrate's first-order dynamics are wave propagation --- the wave
+equation derived in Paper 1 \S\,VI on the FCC confirmation field is the
+substrate-level mechanism by which information propagates across the
+agent manifold. The structurally prior question we address here is: when
+reinterpretation at any hierarchical level introduces a higher-order
+dynamical phase, what form does that higher-order dynamics take, and
+why?
+
+We show that higher-order reinterpretation is \emph{wave-form by
+structural necessity}, not by additional axiom. The argument is four
+steps under PGE. The theorem developed here is invoked by Paper 5 \S\,III
+to resolve the apparent tension between the first-order substrate wave
+equation and the second-order wave structure that reinterpretation
+produces.
+
+\subsection*{7.1 The Four-Step Argument}
+
+\begin{theorem}[PGE-Forced Wave-Form of Reinterpretation]
+The
+Principle-of-Generative-Economy-selected continuation of the substrate
+at any reinterpretation boundary takes wave-form dynamics.
+\end{theorem}
+
+\begin{proof}
+Four steps.
+
+\emph{(i) First-order substrate behavior is wave propagation.} By Paper
+1 \S\,VI, the confirmation field \ensuremath{\varphi} on the FCC agent manifold satisfies the
+wave equation \ensuremath{\partial ^{2}\varphi /\partial t^{2}} \ensuremath{-} \ensuremath{c^{2}\nabla ^{2}\varphi} = 0 in the continuum limit, with c = \ensuremath{c_{\mathrm{TMS}}}
+= \ensuremath{1/\sqrt{2}} lattice spacings per flop. Wave propagation is the substrate's
+native vocabulary for moving information across the agent manifold.
+
+\emph{(ii) PGE forbids importing mechanisms outside the substrate's
+vocabulary.} The Principle of Generative Economy, as developed in Paper
+1 \S\,1.3 and applied throughout this volume, selects the minimum
+sufficient closure at every scale. A continuation that requires a new
+propagation mechanism --- one that does not already operate at the
+substrate level --- adds structure beyond what the existing geometry
+forces. PGE excludes this. Any higher-order dynamics that PGE selects
+must reuse the substrate's existing propagation vocabulary.
+
+\emph{(iii) The substrate's only propagation vocabulary is wave
+propagation.} The FCC geometry, the triadic confirmation rule, and the
+[[4,2,2]] stabilizer structure collectively determine the
+substrate's repertoire of information-moving operations. The wave
+equation is the unique continuum-limit propagation rule that this
+geometry supports --- first established at substrate level in Paper 1,
+and shown to be form-invariant under recursive coarse-graining (G
+operator) in \S\,IV of this paper. There is no second native propagation
+mechanism. The substrate's vocabulary contains exactly one verb for
+moving information through agent space: the wave.
+
+\emph{(iv) Therefore higher-order reinterpretation is wave-form.}
+Combining (ii) and (iii): since PGE forbids importing new mechanisms and
+the only available mechanism is wave propagation, the PGE-selected
+continuation at a reinterpretation boundary uses wave propagation at the
+new scale. The recursion is therefore a \emph{wave hierarchy}. Each
+order of wave reads the structure left by the previous orders,
+propagating in the level-k flop time at the level-k propagation speed
+\ensuremath{c^{(k)}.}
+
+\end{proof}
+
+\textbf{Status of this result.} \emph{Derived.} The four-step argument
+follows from the wave equation of Paper 1 \S\,VI, the PGE statement of
+Paper 1 \S\,1.3, and the form-invariance of the wave equation under G that
+we established earlier in this paper. No additional structure is
+introduced.
+
+\subsection*{7.2 Quantization and the Erosion Picture (Previews of Paper 5 \S\,3.5)}
+
+\textbf{Remark on quantization (preview of Paper 5 \S\,3.5).} A wave
+hierarchy with closure constraints at each level forces a specific
+mechanism for stable excitations: packets must settle into
+configurations where the wave geometry permits standing-wave closure ---
+wave troughs in the accumulated wake of prior propagation. Quantization
+is not a separate axiom; it is what falls out of having a recursive wave
+hierarchy at all. This is developed structurally in Paper 5 \S\,3.5 and
+applied to field content in Paper 5 \S\,IV.
+
+\textbf{Remark on the erosion picture.} The recursive wave hierarchy is,
+equivalently, an accumulating wake: every prior propagation event leaves
+a residue in the substrate's effective topography, and new propagation
+events ride atop the topography that prior events have already carved.
+At any given moment, the substrate's working geometry is a superposition
+of an ancient layer (deep channels carved by very early dynamics,
+effectively rigid at any subsystem-accessible timescale), an
+intermediate layer (ongoing dynamics across the current epoch), and a
+transient layer (flash-flood channels carved by recent events that have
+not yet relaxed). This picture is developed for cosmological purposes in
+Paper 5 \S\,3.5 and \S\,V; the bare structural claim --- that field-effective
+stability is an erosion property of the wave hierarchy rather than a
+fundamental axiom --- is what the four-step theorem above establishes.
+
+\section*{VIII. Predictions and Directions for Subsequent Work}
+\addcontentsline{toc}{section}{VIII. Predictions and Directions for Subsequent Work}
+
+\subsection*{8.1 Empirical Signatures of Polarization Refraction}
+
+Although the polarization field \ensuremath{\psi} propagates at \ensuremath{c_{\mathrm{TMS}}} = \ensuremath{1/\sqrt{2}} across the
+bulk lattice (Section 2.3) --- the same speed as \ensuremath{\varphi} --- its interaction
+with the confirmation density at the leading edge of a cascade can
+produce apparent variations in effective propagation velocity. In
+regions where \ensuremath{\varphi} is rapidly varying (sharp confirmation gradients) and
+the polarization landscape is structured, coherent interference between
+the \ensuremath{\varphi} and \ensuremath{\psi} wave fields produces what an external observer would
+interpret as a position-dependent index of refraction.
+
+This is not a modification of the underlying wave speed. It is
+interference between two independent fields on the same lattice,
+observed at coarse-grained scale. The phenomenon is parallel to real
+optical refraction in standard physics, where the underlying
+electromagnetic field travels at c everywhere and the apparent slowdown
+in a dielectric medium is interference with the medium's polarization
+response. The TMS provides a geometric microstructure for this same
+phenomenon.
+
+A specific prediction: the apparent variation in effective propagation
+velocity scales with the local polarization gradient
+\textbar\ensuremath{\nabla \psi}\textbar{} and the local confirmation density \ensuremath{\varphi .} Regions with
+steep \ensuremath{\psi -\text{gradients}} (sharp boundaries between coherent polarization
+domains) act as effective interfaces. Regions with shallow \ensuremath{\psi -\text{gradients}}
+propagate signals at the bare lattice speed. The functional form is
+derivable from the coupled wave equations of \ensuremath{(\varphi ,} \ensuremath{\psi )} and is developed
+further in Paper 3 alongside the related dissolution-rate and
+error-decay results.
+
+\subsection*{8.2 The Sharpened GUP Prediction}
+
+Paper 1 Section 7.2 introduced the prediction \ensuremath{\beta} = f(d, \ensuremath{K_{\psi}).} Paper 2
+has filled in the meaning of \ensuremath{K_{\psi}:} it is the Kolmogorov complexity of
+the program running through the bit's causal history, where ``program''
+has the formal definition of Section 6.2. The prediction therefore
+acquires its computational content here. Bits embedded in deep,
+computationally rich programs (high \ensuremath{K_{\psi}} at high d) exhibit measurably
+larger GUP corrections than bits in shallow, computationally trivial
+configurations at comparable energy scales.
+
+This is a falsifiable prediction with two empirical correlates. First,
+quantum systems with rich internal computational structure (highly
+entangled, deeply prepared states) should exhibit measurably larger
+minimum-uncertainty floors than systems with trivial internal structure
+at the same total energy. Second, the GUP correction should not be a
+fixed property of a particle species but should vary with the particle's
+preparation history. Both are accessible in principle to Planck-scale
+phenomenology programs (Hossenfelder, 2013) and to next-generation
+quantum optomechanics experiments. Paper 3 \S\,6.2 further refines f to
+account for surround-imprinting and subsystem context, broadening the
+empirical correlates further.
+
+\subsection*{8.3 The Born Rule from Coarse-Graining}
+
+The full quadratic Born rule of standard quantum mechanics is a target
+for subsequent work. The structural correspondence of Section IV
+establishes a linear amplitude-to-probability mapping for two-outcome
+projective measurement with real polarization amplitudes. The recovery
+of the quadratic \textbar\ensuremath{\cdot}\textbar\ensuremath{^{2}} mapping requires complex amplitudes,
+which in the TMS are expected to arise from the phase structure of
+coupled \ensuremath{(\psi ,} \ensuremath{\Pi_{\psi})} propagation across many flops. The precise derivation
+is deferred. The key conceptual claim has already been established: the
+substrate provides a single mechanism --- polarization-biased
+confirmation against \ensuremath{U_{\mathrm{sh}}} --- that unifies what standard quantum
+mechanics treats as two separate postulates (unitary evolution and
+measurement collapse).
+
+\subsection*{8.4 Programs, Particles, and Subsequent Volumes}
+
+The propagating programs of Section 6.2 --- periodic polarization
+configurations that translate under \ensuremath{T^{n}} --- are the substrate-level
+structures from which physical matter is expected to emerge in
+subsequent volumes. The connection is anticipated rather than asserted
+here. The substrate-level claim is independently meaningful: the TMS
+supports a discrete spectrum of stable propagating computational
+patterns. Whether and how these correspond to the particle spectrum of
+the Standard Model is the subject of later work in Volume 1 and Volume
+2.
+
+\section*{Conclusion: A Complete Computational Substrate}
+\addcontentsline{toc}{section}{Conclusion: A Complete Computational Substrate}
+
+Building on the geometric and ontological architecture of Paper 1, Paper
+2 has shown that the TMS substrate supports computation by geometric
+necessity, with no additional axioms or free parameters. The following
+results emerge from the primitives of Paper 1 alone:
+
+\begin{itemize}
+\item
+  The polarization field \ensuremath{\psi} propagates by a homogeneous wave equation on
+  the FCC lattice at \ensuremath{c_{\mathrm{TMS}}} = \ensuremath{1/\sqrt{2},} identical in form to the confirmation
+  field \ensuremath{\varphi} --- the propagation speed and lattice structure are inherited,
+  not re-derived.
+\item
+  The conjugate pair \ensuremath{(\psi ,} \ensuremath{\Pi_{\psi})} emerges from the same conservation
+  argument that produced \ensuremath{(\varphi ,} \ensuremath{\Pi )} in Paper 1, applied to polarization
+  content rather than confirmation count.
+\item
+  Synthetic bits are geometric appointments rather than valued outcomes
+  --- a distinction forced by Axiom 3 (no value can be inherited without
+  a rule; no value can be independent without dissipating polarization
+  signals) and the Principle of Generative Economy.
+\item
+  Confirmation events resolve synthetic bit positions into binary values
+  via a linear polarization-to-probability mapping \ensuremath{P(\bar{B}} = 1 \textbar{}
+  \ensuremath{\Pi_{\psi})} = (1 + \ensuremath{\Pi_{\psi})/2} --- the unique mapping consistent with signal
+  conservation, the maximum-entropy character of \ensuremath{U_{\mathrm{sh}},} and Generative
+  Economy.
+\item
+  This mapping constitutes a structural correspondence to the Born rule
+  for two-outcome projective measurement, paralleling the
+  [[4,2,2]] structural correspondence of Paper 1 in status.
+\item
+  Each confirmation event is a probabilistic 3-input majority gate; the
+  [[4,2,2]] stabilizer repair mechanism projects local errors
+  toward stabilizer-satisfying configurations; the effective behavior in
+  coherent regions is deterministic majority computation.
+\item
+  The substrate supports universal classical computation by the
+  universality of \{MAJ, constant\}.
+\item
+  Programs --- configurations causally closed under the flop operator
+  with K(C) \textless{} \textbar C\textbar{} --- are selected
+  automatically by the stabilizer repair mechanism. Configurations that
+  compute persist; configurations that do not compute dissolve into
+  \ensuremath{U_{\mathrm{sh}}-\text{like}} noise.
+\item
+  The \ensuremath{\beta} = f(d, \ensuremath{K_{\psi})} prediction from Paper 1 acquires its computational
+  meaning: \ensuremath{K_{\psi}} is the Kolmogorov complexity of the program running
+  through a bit's causal history, and the GUP correction at the bit's
+  position is the irreducibility of that program made geometrically
+  visible.
+\end{itemize}
+
+The arc from Paper 1 to Paper 2 is a single unbroken chain: \ensuremath{U_{\mathrm{sh}}} provides
+the maximum-entropy substrate; triadic confirmation pulls binary
+outcomes from it; the FCC lattice carries those outcomes forward as wave
+dynamics; the polarization field encodes their computational content;
+the Born-rule structural correspondence governs their per-event
+resolution; the majority gate is the irreducible computational
+primitive; the stabilizer dynamics select programs from noise. No new
+axioms. No new parameters. No new mechanisms.
+
+The remaining derivations of Volume 1 --- learning and hierarchy (Paper
+3), subsystem emergence (Paper 4), and simulation (Paper 5) --- proceed
+from this computational substrate. The agent-side complement of the
+framework, addressing the relationship between substrate-level
+computation and observer experience, is the subject of Volume 2.
+
+\section*{Acknowledgments}
+\addcontentsline{toc}{section}{Acknowledgments}
+
+The development of this volume was substantially aided by extended
+collaboration with several large language models used as critical
+sounding boards, pedagogical resources, formal-rigor checkers, and
+external working memory across many sessions during 2024--2026.
+
+\textbf{Gemini (Google DeepMind)} was the long-running primary
+collaborator across the framework's conceptual development, providing
+physics pedagogy, structural critique, and ongoing review of the ideas
+that became Volume 1. The author's path into the technical literature,
+and the working-out of the framework's core conceptual moves over a long
+period preceding formalization, were carried by extended dialogue with
+Gemini.
+
+\textbf{Claude (Anthropic)} was the primary collaborator across the
+formalization, derivation tightening, simulation work, citation
+auditing, and editorial passes that brought the volume to its present
+form, including the sublattice bifurcation analysis empirically verified
+in Paper 5 Appendix E.
+
+\textbf{ChatGPT (OpenAI)}, \textbf{DeepSeek}, \textbf{Grok (xAI)}, and
+\textbf{Granite (IBM)} contributed additional structural feedback and
+review at various points.
+
+All theoretical commitments, the choice of axioms, the Principle of
+Generative Economy, the sublattice bifurcation insight, and the
+framework's overall architecture are the author's; the AI systems' role
+was to teach, formalize, critique, verify, and document.
+
+\section*{References}
+\addcontentsline{toc}{section}{References}
+\begin{reflist}
+Almheiri, A., Dong, X., \& Harlow, D. (2015). Bulk locality and quantum
+error correction in AdS/CFT. Journal of High Energy Physics, 2015(4),
+163. doi:10.1007/JHEP04(2015)163. \url{https://arxiv.org/abs/1411.7041}
+
+Bombelli, L., Lee, J., Meyer, D., \& Sorkin, R. D. (1987). Space-time as
+a causal set. Physical Review Letters, 59(5), 521--524.
+doi:10.1103/PhysRevLett.59.521.
+
+Born, M. (1926). Zur Quantenmechanik der Stoßvorgänge. Zeitschrift für
+Physik, 37(12), 863--867. doi:10.1007/BF01397477.
+
+Goldstein, H., Poole, C., \& Safko, J. (2002). Classical Mechanics (3rd
+ed.). Addison-Wesley.
+
+Gorard, J. (2020). Some Quantum Mechanical Properties of the Wolfram
+Model. Complex Systems, 29(2), 537--598.
+doi:10.25088/ComplexSystems.29.2.537.
+
+Gottesman, D. (1997). Stabilizer Codes and Quantum Error Correction.
+Ph.D.~Thesis, California Institute of Technology.
+\url{https://arxiv.org/abs/quant-ph/9705052}
+
+Hoffman, D. D., Prakash, C., \& Prentner, R. (2023). Fusions of
+Consciousness. Entropy, 25(1), 129. doi:10.3390/e25010129.
+
+Hossenfelder, S. (2013). Minimal Length Scale Scenarios for Quantum
+Gravity. Living Reviews in Relativity, 16(1), 2.
+doi:10.12942/lrr-2013-2.
+
+Kauffman, S. (1993). The Origins of Order. Oxford University Press.
+
+Kolmogorov, A. N. (1965). Three approaches to the quantitative
+definition of information. Problems of Information Transmission, 1(1),
+1--7.
+
+Pastawski, F., Yoshida, B., Harlow, D., \& Preskill, J. (2015).
+Holographic quantum error-correcting codes: toy models for the
+bulk/boundary correspondence. Journal of High Energy Physics, 2015(6),
+149. doi:10.1007/JHEP06(2015)149. \url{https://arxiv.org/abs/1503.06237}
+
+Shannon, C. E. (1948). A mathematical theory of communication. Bell
+System Technical Journal, 27(3), 379--423.
+doi:10.1002/j.1538-7305.1948.tb01338.x.
+
+Surya, S. (2019). The causal set approach to quantum gravity. Living
+Reviews in Relativity, 22(1), 5. doi:10.1007/s41114-019-0023-1.
+
+Switzer, A. (2026a). The Triadic Measurement Substrate (TMS), Volume 1,
+Paper 1: Emergent 3D Information Topology and the Binary Alphabet via
+[[4,2,2]] Quantum Error Detection Structural Correspondence.
+
+Takayanagi, T. (2025). Emergent Holographic Spacetime from Quantum
+Information. Physical Review Letters, 134, 240001.
+doi:10.1103/pg4r-fy8n.
+
+'t Hooft, G. (2016). The Cellular Automaton Interpretation of Quantum
+Mechanics. Fundamental Theories of Physics 185. Springer.
+doi:10.1007/978-3-319-41285-6.
+
+Wolfram, S. (2002). A New Kind of Science. Wolfram Media.
+
+Wolfram, S. (2020). A Class of Models with the Potential to Represent
+Fundamental Physics. Complex Systems, 29(2), 107--536.
+doi:10.25088/ComplexSystems.29.2.107.
+
+Zurek, W. H. (2003). Decoherence, einselection, and the quantum origins
+of the classical. Reviews of Modern Physics, 75(3), 715--775.
+doi:10.1103/RevModPhys.75.715.
+\end{reflist}
+
+\clearpage
+
+
+\end{document}

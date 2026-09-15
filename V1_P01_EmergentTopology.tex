@@ -1,0 +1,1821 @@
+\documentclass[11pt,oneside]{report}
+% ======================================================================
+%  THE TRIADIC MEASUREMENT SUBSTRATE --- COMPLETE CORPUS (Volumes 1 & 2)
+%  Aaron Switzer, 2026
+%  Single-file build. Compile: pdflatex x3 (third pass settles the TOC).
+% ======================================================================
+% ======================================================================
+%  TMS Volume 1 -- shared preamble
+%  Compiles with pdfLaTeX both locally and on Overleaf (no exotic fonts).
+% ======================================================================
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathptmx}            % Times text + math (widely available)
+\usepackage[scaled=0.90]{helvet} % sans for headings
+\usepackage{courier}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tocbibind}
+
+% ---- spacing -----------------------------------------------------------
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0.35em}
+\linespread{1.04}
+\setlist{leftmargin=1.6em,topsep=0.25em,itemsep=0.15em,parsep=0pt}
+
+% ---- theorem environments ---------------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}{Axiom}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{principle}[theorem]{Principle}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{prediction}[theorem]{Prediction}
+\newtheorem{property}[theorem]{Property}
+\newtheorem{postulate}[theorem]{Postulate}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+% ---- section heading look (unnumbered; author supplies the numbers) ----
+\titleformat{\section}[hang]{\normalfont\large\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsection}[hang]{\normalfont\normalsize\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsubsection}[hang]{\normalfont\normalsize\bfseries\itshape}{}{0pt}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.5em}
+\titlespacing*{\subsection}{0pt}{1.0em}{0.35em}
+\titlespacing*{\subsubsection}{0pt}{0.8em}{0.3em}
+
+% chapter (= each paper) heading
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\bfseries}
+  {}{0pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{10pt}{24pt}
+
+% ---- page-break quality: avoid stranded headings and orphaned/widowed lines ----
+% (applies to both volumes via the shared preamble)
+\widowpenalty=10000        % no single line at the top of a page
+\clubpenalty=10000         % no single line at the bottom of a page
+\displaywidowpenalty=10000 % same, around displayed equations
+\brokenpenalty=4000        % discourage page breaks right after a hyphenated line
+% titlesec: forbid a page break immediately after a heading (heading stranded at page foot)
+\usepackage{needspace}
+\usepackage{etoolbox}
+\pretocmd{\section}{\Needspace*{4\baselineskip}}{}{}
+\pretocmd{\subsection}{\Needspace*{3\baselineskip}}{}{}
+
+% ---- running heads -----------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape The Triadic Measurement Substrate}
+\fancyhead[R]{\small\itshape\nouppercase{\rightmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---- abstract / keywords / references list ----------------------------
+\newenvironment{paperabstract}
+  {\begin{center}\begin{minipage}{0.88\textwidth}\small
+   \noindent\textbf{Abstract.}\itshape\space}
+  {\end{minipage}\end{center}\vspace{0.4em}}
+
+\newcommand{\keywords}[1]{\noindent{\small\textbf{Keywords:} #1}\vspace{0.4em}}
+
+% per-paper APA reference list (hanging indent), kept as authored
+\newenvironment{reflist}
+  {\par\small\setlength{\parindent}{0pt}%
+   \setlength{\leftskip}{1.6em}\setlength{\parindent}{-1.6em}%
+   \setlength{\parskip}{0.4em}%
+   \raggedright\hyphenpenalty=50\exhyphenpenalty=50\relax
+   \sloppy}
+  {\par}
+
+% convenience
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\TMS}{\textsc{tms}}
+\hyphenation{con-fir-ma-tion sub-strate}
+\begin{document}
+
+\thispagestyle{empty}
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\sffamily\bfseries\Large The Triadic Measurement Substrate\par}
+\vspace{0.6cm}
+{\large $\bar{B} = 3\bar{\alpha}$\par}
+\vspace{1cm}
+{\sffamily\large Volume 1\par}
+\vspace{1.4cm}
+{\Large \bfseries Paper 1: Emergent 3D Information Topology and the Binary Alphabet via [[4,2,2]] Quantum Error Detection Structural Correspondence\par}
+\vfill
+{\large Aaron Switzer\par}
+\vspace{0.4cm}
+{\large 2026\par}
+\vspace{1.2cm}
+{\small\itshape Excerpted from the complete two-volume corpus, \emph{The Triadic Measurement Substrate}. Full corpus and reproducibility package: \url{https://doi.org/10.5281/zenodo.22035422}\par}
+\end{titlepage}
+\cleardoublepage
+\pagenumbering{arabic}
+
+% ---------------- Volume 1 / paper1 ----------------
+\chapter*{Paper 1}
+\markboth{Paper 1}{Paper 1}
+\addcontentsline{toc}{chapter}{Paper 1: Emergent 3D Information Topology and the Binary Alphabet via $[[4,2,2]]$ Quantum Error Detection Structural Correspondence}
+\begingroup\centering
+{\large\itshape Emergent 3D Information Topology and the Binary Alphabet via $[[4,2,2]]$ Quantum Error Detection Structural Correspondence\par}\vspace{0.8em}
+{\normalsize Aaron Switzer\par}
+{\small May 2026\par}
+\endgroup\vspace{1.0em}
+
+\noindent{\small\textbf{Keywords:} Information Theory, FCC Lattice, $[[4,2,2]]$ Code, Geometric Necessity, Causal Succession, Planck Length, Binary Alphabet, Generalized Uncertainty Principle, Computational Irreducibility}\par\vspace{0.6em}
+
+\section*{Status of Results}
+\addcontentsline{toc}{section}{Status of Results}
+
+This paper distinguishes three categories of claim, each labeled where
+it appears in the text.
+
+\textbf{Derived.} Results that follow from the five axioms and the
+Principle of Generative Economy by explicit construction or proof. The
+triadic minimum \ensuremath{\bar{B}} = \ensuremath{3\bar{\alpha}_{2}} (\S\,2.1), the hexagonal packing of \ensuremath{M\alpha} (\S\,2.2), FCC
+necessity over HCP via the causal distinguishability argument (\S\,2.4),
+the \ensuremath{1\to 4} multiplier and its remainder-free integer division (\S\,4.2), the
+[[4,2,2]] structural correspondence and code distance 2 (\S\,V),
+the wave equation \ensuremath{\partial ^{2}\varphi /\partial t^{2}} \ensuremath{-} \ensuremath{c^{2}\nabla ^{2}\varphi} = 0 in the continuum limit (\S\,VI), and
+the propagation speed \ensuremath{c_{\mathrm{TMS}}} = \ensuremath{1/\sqrt{2}} from FCC face-diagonal geometry (\S\,6.5)
+are derived in this sense. The scale-invariant k = 3n stabilizer
+null-space law (\S\,5.4) is derived here as a structural property of FCC +
+[[4,2,2]] dynamics, empirically verified through Paper 5
+Appendix E at levels 1 and 2. The sublattice bifurcation corollary
+(\S\,2.4) is derived here in skeleton form, with the full geometric
+development and empirical verification in Paper 5 \S\,6.1.3 and Appendix E.
+The conjugate pair \ensuremath{(\varphi ,} \ensuremath{\Pi )} and the second-order dynamics are derived from
+signal conservation under FCC connectivity (\S\,6.3), with the uniqueness
+of the second equation tightened in that section.
+
+\textbf{Structural correspondence.} Results in which a TMS construction
+faithfully reproduces the skeleton of a known framework without claiming
+reproduction of every feature of that framework. The [[4,2,2]]
+mapping of \S\,V is the canonical example: the stabilizer algebra, the two
+logical degrees of freedom, and the code distance are reproduced
+exactly; the full quantum amplitude formalism is deferred to Paper 2 and
+subsequent work. The identification \ensuremath{\ell_{0}} \ensuremath{\equiv} \ensuremath{\ell_{p}} in \S\,3.2 is a structural
+correspondence in the same sense --- the minimum resolvable length of
+the emergent geometry is identified with the Planck length, with the
+derivation of \ensuremath{\hbar} and G from the confirmation field dynamics deferred
+(\S\,3.2 Remark).
+
+\textbf{Predictions / Conjectures.} Falsifiable claims that follow from
+the framework but whose closed forms are not derived within this paper.
+The GUP scaling \ensuremath{\beta} = f(d, \ensuremath{K_{\psi})} (\S\,7.2), the computational irreducibility
+connection of \S\,7.2a, and the unified geometric account of decoherence
+(\S\,7.3) are predictions in this sense. They are consequences of the
+framework's geometric architecture; they are not derivations of f, of
+explicit decoherence rates, or of falsification thresholds. The
+functional form of f is refined across Papers 2--4 and pinned to
+numerical content in Paper 5's simulation work.
+
+This three-way labeling applies throughout the volume. Every claim in
+the body text falls into exactly one category, and every category's
+status is visible at the point of claim.
+
+\section*{Notation}
+\addcontentsline{toc}{section}{Notation}
+
+Throughout this paper, the bar notation distinguishes confirmed (locked)
+elements from latent (unlocked) elements. \ensuremath{\bar{\alpha}} denotes an agent
+participating in a confirmation event; \ensuremath{\bar{B}} denotes a confirmed
+(actualized) bit. Unbarred \ensuremath{\alpha} and B denote their latent counterparts.
+Dimensional subscripts \ensuremath{\bar{\alpha}_{2}} and \ensuremath{\bar{\alpha}_{3}} distinguish 2D and 3D confirmation
+contexts respectively. A confirmed bit carries a binary value \ensuremath{\bar{B}} \ensuremath{\in} \{0,
+1\}; its signed representation \ensuremath{\chi} \ensuremath{\equiv} \ensuremath{2\bar{B}} \ensuremath{-} 1 \ensuremath{\in} \{\ensuremath{-1,} +1\} is referred to as
+its polarization.
+
+\begin{paperabstract}
+We propose the Triadic Measurement Substrate (TMS), a generative model
+in which wave dynamics and a binary computational alphabet emerge
+necessarily from the interaction between a Maximum Entropy Stochastic
+Field \ensuremath{(U_{\mathrm{sh}})} and a 2D hexagonal agent manifold \ensuremath{(M\alpha ).} Beginning from five
+axioms and the Principle of Generative Economy, we demonstrate that
+hexagonal close-packing, the \ensuremath{1\to 4} informational multiplier, FCC lattice
+geometry, the binary alphabet \ensuremath{\bar{B}} \ensuremath{\in} \{0, 1\} of confirmed bit values, the
+conjugate field structure, and the [[4,2,2]] quantum
+error-detection structural correspondence follow by geometric necessity.
+The fundamental agent spacing is identified with the Planck length \ensuremath{\ell_{p},}
+the flop time with the Planck time \ensuremath{t_{p},} and the lattice propagation speed
+\ensuremath{c_{\mathrm{TMS}}} = \ensuremath{1/\sqrt{2}} is forced by the geometry of FCC face-diagonal connectivity.
+The continuum limit reproduces the standard wave equation with speed
+c.~The [[4,2,2]] structural correspondence is shown to
+faithfully encode both the value of every confirmed bit and the
+inheritance of that value through the causal stack --- two independent
+logical degrees of freedom jointly protected by the two stabilizer
+generators against any single-agent disruption from \ensuremath{U_{\mathrm{sh}}.} The TMS
+contains no free \emph{dimensionless} numerical parameters --- every
+dimensionless quantity is fixed by the axioms and the Principle of
+Generative Economy --- and takes a single dimensionful input (one action
+scale, \ensuremath{\hbar}), from which the speed of light and Newton's constant follow
+(\S\,3.2--3.3). The absolute length scale is fixed by identifying the
+substrate's minimum length with the Planck length. The wave equation is
+not fitted to the model --- it is the model's necessary large-scale
+behavior. The paper closes with a novel falsifiable prediction: the GUP
+deformation
+parameter \ensuremath{\beta} is not a universal constant but scales with the causal depth
+and polarization complexity of the confirmation record, providing a
+geometric and computational derivation of both the Generalized
+Uncertainty Principle and quantum decoherence from a single structural
+property of the FCC causal stack.
+
+This paper constitutes Volume 1, Paper 1 of a larger work. Subsequent
+papers in Volume 1 develop the computational dynamics of the binary
+alphabet, the emergence of learning and hierarchy, subsystem
+development, and simulation. Volume 2 addresses the agent-side
+complement.
+\end{paperabstract}
+
+\section*{I. Definitions and Ontological Primitives}
+\addcontentsline{toc}{section}{I. Definitions and Ontological Primitives}
+
+\subsection*{The Principle of Generative Economy}
+
+All structure selects the minimum sufficient configuration that
+maximizes generative potential. This principle governs all selection
+throughout the TMS --- of primitives, confirmation geometry, and lattice
+structure.
+
+This principle belongs to the deep tradition in physics of
+parsimony-as-law. Hamilton's Principle of Least Action (Hamilton, 1834)
+holds that nature selects the path that extremizes the action integral.
+Jaynes' Maximum Entropy Principle (Jaynes, 1957) holds that unbiased
+inference selects the least-structured distribution consistent with
+known constraints. Occam's Razor, in its formal instantiation as Minimum
+Description Length (Rissanen, 1978), holds that the simplest model
+consistent with the data is preferred. These principles share a common
+structure: nature does not take the long way home.
+
+The Principle of Generative Economy is a specific instantiation of this
+tradition, distinguished by a dual constraint. Existing parsimony
+principles minimize in one direction --- cost, assumptions, description
+length. The Principle of Generative Economy jointly minimizes structural
+complexity and maximizes generative capacity. This dual constraint is
+necessary because pure minimization selects the degenerate case: a point
+is simpler than a sphere, but generates nothing; a line is simpler than
+a triangle, but closes nothing. The sphere and the triangle are not
+selected because they are small --- they are selected because they are
+the minimum configurations that remain generatively non-trivial.
+Kauffman's adjacent possible (Kauffman, 1993) is the closest conceptual
+relative: the idea that systems naturally explore the maximum frontier
+of what their current structure makes accessible. A parallel framing of
+dual parsimony has been developed independently by Ma, Tsao, and Shum
+(2022) for the emergence of intelligence, where Parsimony and
+Self-Consistency together govern what to learn and how to learn. The
+Principle of Generative Economy is the geometric form that the parsimony
+tradition takes when the only primitive is the sphere and the only
+operation is confirmation. In giving condition~(i) below a specific
+computable form --- the moduli dimension of a configuration under
+axiom-forced constraints --- the framework instantiates this established
+tradition rather than inventing a new measure of simplicity: the reading
+of complexity as a count of free parameters, and of parsimony as its
+minimization, is standard across the description-length and
+model-selection literature cited above. What is particular to this work
+is not the measure but its application, and specifically the requirement
+that the constraint set be derived from the axioms, developed below.
+
+\textbf{Formal Statement (Principle of Generative Economy).} Let K
+denote the set of constraints imposed on a given selection by the axioms
+and by prior structure relevant to that selection. Let \ensuremath{\mathcal{C}_{K}} denote the
+set of configurations satisfying K. A configuration C* \ensuremath{\in} \ensuremath{\mathcal{C}_{K}} is the
+PGE-selection if and only if:
+
+\emph{(i) Minimum specification.} C* minimizes the \emph{specification cost}
+over \ensuremath{\mathcal{C}_{K}}, where the specification cost of a configuration is the number of
+free real parameters required to fix it beyond what K forces --- that is, the
+dimension of the space of K-satisfying configurations equivalent to it under the
+symmetry K permits (its moduli dimension). For discrete selections this reduces
+to an integer count of independent structural commitments; for continuous
+selections it is the dimension of the orientation-and-shape moduli. The measure
+is standard and computable: for example, in the selection of the geometric
+primitive the sphere has specification cost zero (isotropic: no orientation or
+shape parameter), while a cube costs three, an ellipsoid five, and an irregular
+form more --- so the sphere is the unique minimizer.
+
+\emph{(ii) Generative non-triviality.} C* admits downstream structure
+under the substrate dynamics. It is not a generative dead-end.
+
+When K admits a unique configuration satisfying both (i) and (ii), that
+configuration is the unique PGE-selection. When (i) admits multiple
+candidates, (ii) is the tiebreaker. When the unique
+minimum-specification candidate fails (ii), K is too restrictive for
+generative non-triviality and the axioms must supply further constraint.
+
+\textbf{The constraint-set requirement.} The entire evidential content of a
+PGE-selection lies not in the parameter count, which is unambiguous, but in the
+specification of K. Accordingly this work adopts a strict requirement: at every
+invocation, K must be \emph{derived from the axioms and declared before the
+selection}, never reverse-engineered from the desired configuration. A
+PGE-selection is rigorous exactly to the extent that its K is exhibited as
+axiom-forced. As a worked demonstration on a contested case, the selection of
+FCC over hexagonal close-packing (\S\,2.4) uses K = \{Axiom~4 (no overwrite)
+together with the definition of a confirmation datum as a state individuated by
+its causal relations\}; the causal-distinguishability constraint that forbids the
+ABAB stacking is not an added assumption but a consequence of Axiom~4, since two
+causally indistinguishable layers are, by the definition of the record, the same
+recorded state --- which Axiom~4 forbids. Establishing the axiom-forced character
+of K at each remaining invocation, grouped by constraint-type, is the principal
+open formal task of the program; the selection functional itself is fixed and
+computable.
+
+\begin{remark}[On the Two Conditions]
+Condition (i) is the
+substantive content of \emph{minimum sufficient}: sufficiency is set by
+K, minimality is the moduli dimension not forced by K. Condition (ii) is
+the substantive content of \emph{maximizes generative potential}:
+generatively sterile candidates are excluded even when minimal. The pair
+is necessary because pure minimization selects the degenerate case as
+noted above. Every subsequent invocation of ``by Generative Economy'' in
+this volume is to be verified against this formal statement --- the
+constraint set K must be specifiable and axiom-derived, and C* must
+satisfy both (i) and (ii) uniquely within \ensuremath{\mathcal{C}_{K}.}
+\end{remark}
+
+\textbf{Illustration (The Sphere Primitive).} As a first application:
+for the selection of the geometric primitive in \S\,1.2, K = \{isotropy,
+geometric primitive, supports the measurement role required by Axiom
+1\}. Within \ensuremath{\mathcal{C}_{K},} the sphere has zero orientation parameters; any other
+candidate (cube, ellipsoid, regular polyhedron, irregular form)
+introduces at least one orientation or shape parameter not forced by K.
+The sphere therefore satisfies (i) uniquely. It satisfies (ii) --- it
+encloses interstices, supports contact geometry, packs in 2D and 3D, and
+admits the cascade dynamics of subsequent sections. The sphere is the
+unique PGE-selection. Axiom 2 records this result.
+
+\subsection*{Axiom 0 --- Information Fundamentalism}
+
+Information is fundamental. It exists as potential prior to
+confirmation. This potential field is \ensuremath{U_{\mathrm{sh}}} --- pure informational
+superposition, algorithmically incompressible, with complexity K(n) \ensuremath{\approx} n
+(Kolmogorov, 1965). It is maximum entropy by definition: a unique state,
+not a tunable quantity. \ensuremath{U_{\mathrm{sh}}} has no free parameters. This axiom is the
+formal expression of the informational priority articulated by Wheeler's
+``it from bit'' (Wheeler, 1990): the physical arises from the
+informational, with binary distinctions as the deepest layer of
+substrate from which all structure emerges.
+
+\subsection*{Axiom 1 --- The Measurement Imperative}
+
+Information must be measured to have meaning. Therefore a measurement
+substrate must exist.
+
+\subsection*{Axiom 2 --- The Sphere as Primitive}
+
+Given the Principle of Generative Economy, the unique minimum sufficient
+measurement substrate is the sphere --- the only isotropic primitive
+requiring zero orientation parameters. The circle is its 2D expression.
+Hexagonal close-packing and the FCC lattice follow as the unique minimum
+sufficient tilings of this primitive in 2D and 3D respectively.
+
+\subsection*{Axiom 3 --- Signal Conservation}
+
+Informational signals are conserved across flops. They cannot be
+created, destroyed, or deferred.
+
+\subsection*{Axiom 4 --- Causal Anchoring}
+
+Confirmed states cannot be overwritten. A confirmed state is the
+geometric record of the signals that produced it --- to overwrite it
+would violate signal conservation. The system therefore has only one
+available direction: forward. Each flop adds a new layer to the causal
+record without disturbing prior layers. This directional necessity is
+the geometric origin of flop time \ensuremath{\tau .}
+
+\subsection*{Summary}
+
+All subsequent structures --- triadic confirmation, the binary alphabet,
+the \ensuremath{1\to 4} multiplier, FCC geometry, the conjugate field, the
+[[4,2,2]] structural correspondence, the identification of the
+Planck length and Planck time, the derivation of \ensuremath{c_{\mathrm{TMS}}} = \ensuremath{1/\sqrt{2},} and the
+wave equation --- are derived from these axioms and the Principle of
+Generative Economy without additional assumption.
+
+\subsection*{1.1 Maximum Entropy Stochastic Field \ensuremath{(U_{\mathrm{sh}})}}
+
+The ground state of the TMS is \ensuremath{U_{\mathrm{sh}}} as defined in Axiom 0 --- an
+irreducible, algorithmically incompressible binary flux. It is the
+primordial field of potential from which all structured information is
+actualized. \ensuremath{U_{\mathrm{sh}}} acts on the informational layer --- the latent bits
+populating the interstices of \ensuremath{M\alpha .} It does not affect the agents, which
+remain immutable substrate.
+
+\subsection*{1.2 Agent Manifold \ensuremath{(M\alpha )}}
+
+A 2D hexagonal array of spherical primitives \ensuremath{(\alpha ).} Agents are the
+immutable geometric substrate of the TMS. They do not change, move, or
+degrade. By Axiom 2 and the Principle of Generative Economy, the sphere
+is the unique primitive --- zero orientation parameters, minimal
+surface-to-volume ratio. Any other primitive introduces orientation
+degrees of freedom inconsistent with the Principle of Generative
+Economy.
+
+\subsection*{1.3 Touch Vectors}
+
+Each agent \ensuremath{\alpha_{i}} maintains six touch vectors connecting it to its six
+neighbors. Touch vectors are the channels of informational communication
+between agents. A channel is shared infrastructure --- the same vector
+can carry signals relating to different bits --- but each signal is
+unique to the specific bit it describes. Touch vectors point either
+laterally within a layer or forward into the next layer. There is no
+backward propagation. Each signal carried by a touch vector inherits the
+polarization \ensuremath{\chi} \ensuremath{\in} \{\ensuremath{-1,} +1\} of the confirmation event that produced it.
+
+\subsection*{1.4 Bits, Confirmation, and the Binary Alphabet}
+
+Bits (B) exist in the interstices of \ensuremath{M\alpha} in a latent state, drawn from
+\ensuremath{U_{\mathrm{sh}}.} By the Principle of Generative Economy, a bit is exactly the size
+of the triangular interstice formed by three touching spheres --- the
+unique scale at which a bit can be unambiguously localized with complete
+angular closure. Actualization --- the transition of latent B to
+confirmed \ensuremath{\bar{B}} --- requires triadic agreement among agents.
+
+A confirmed bit carries a binary value:
+
+\emph{\ensuremath{\bar{B}} \ensuremath{\in} \{0, 1\}}
+
+\ensuremath{\bar{B}} = 1 denotes a confirmed presence --- a positive informational result.
+\ensuremath{\bar{B}} = 0 denotes a confirmed absence --- a negative informational result.
+Both are stabilized outcomes pulled from \ensuremath{U_{\mathrm{sh}}} by triadic confirmation;
+both lock the interstice into the causal record; both render a confirmed
+tetrahedral apex at the next layer (Section II). The distinction between
+the two is not whether the interstice is locked (every confirmed
+interstice is locked) but what computational content is locked there.
+
+The latent state B in \ensuremath{U_{\mathrm{sh}}} --- neither 0 nor 1, but the algorithmically
+incompressible superposition of both --- is ontologically distinct from
+the confirmed zero \ensuremath{\bar{B}} = 0. A latent bit is unmeasured; a confirmed zero
+is the measured outcome of an absence. This trinary distinction ---
+latent, confirmed-zero, confirmed-one --- is the substrate's irreducible
+computational state space.
+
+The signed representation:
+
+\emph{\ensuremath{\chi} \ensuremath{\equiv} \ensuremath{2\bar{B}} \ensuremath{-} 1 \ensuremath{\in} \{\ensuremath{-1,} +1\}}
+
+is referred to as the polarization of the confirmed bit and is used in
+subsequent derivations.
+
+Only bits actualize and deactualize; agents do not. The mechanism by
+which incoming signals bias the resolution of a confirmation toward \ensuremath{\bar{B}} =
+1 or \ensuremath{\bar{B}} = 0 is developed in Volume 1, Paper 2. This paper treats the
+binary alphabet as an ontological primitive established by the
+interaction of triadic confirmation with the maximum-entropy substrate.
+
+\subsection*{1.5 The Flop}
+
+A flop is the atomic unit of state change in the TMS. It is the complete
+event sequence initiated by a triadic confirmation: the locking of a bit
+\ensuremath{\bar{B}} with binary value, the simultaneous generation of 12 outgoing touch
+vector signals carrying the polarization of the confirmation, the
+consumption of those signals as 4 synthetic bits, and the resulting
+Z-displacement to a new layer. A flop is indivisible --- all sub-events
+occur simultaneously as a single act. There is no sub-flop time. The
+discrete time parameter \ensuremath{\tau} counts flops. All rates in the TMS ---
+confirmation rate, synthesis rate, propagation speed --- are expressions
+of this single underlying tempo.
+
+These primitives and their interactions define the complete ontology of
+the TMS. All subsequent structures are derived from them without
+additional assumption.
+
+\section*{II. FCC Necessity}
+\addcontentsline{toc}{section}{II. FCC Necessity}
+
+\subsection*{2.1 The Triadic Minimum}
+
+\begin{theorem}[Triadic Minimum]
+3 agents is the necessary and sufficient
+minimum for bit actualization in \ensuremath{M\alpha .}
+\end{theorem}
+
+\begin{proof}
+The confirmation substrate must constitute a
+closed simplicial cover of the plane --- every interstice fully bounded
+with complete angular closure. No open edges are permitted; a bit cannot
+be localized without a closed boundary.
+
+Case 1: 2 agents is insufficient. Two agents define a 1-simplex. A
+1-simplex has no interior and subtends less than \ensuremath{360^{\circ}} regardless of
+arrangement. The enclosure is always open. No bit can be localized.
+2-agent confirmation is geometrically impossible.
+
+Case 2: 4 agents is non-minimal. Four agents per interstice produces a
+closed simplicial cover --- the Cartesian square tiling, \ensuremath{\bar{B}} = \ensuremath{4\bar{\alpha}_{2}.} This
+is geometrically valid but violates the Principle of Generative Economy:
+it achieves complete angular closure at one degree of complexity greater
+than necessary.
+
+Case 3: 3 agents is necessary and sufficient. Three agents define a
+2-simplex. A 2-simplex achieves complete angular closure --- \ensuremath{360^{\circ}} ---
+with no redundancy. Removing any one agent opens the boundary. Adding
+any agent violates the Principle of Generative Economy. The triangular
+confirmation geometry tiles the plane completely as a closed simplicial
+cover, producing the hexagonal lattice as consequence.
+
+Therefore \ensuremath{\bar{B}} = \ensuremath{3\bar{\alpha}_{2}} is the unique solution selected by the Principle of
+Generative Economy. The hexagonal lattice is not assumed --- it follows
+from the triadic minimum.
+
+\end{proof}
+
+\begin{equation*}
+\bar{B} = 3\bar{\alpha}_{2} (2D)
+\end{equation*}
+
+\subsection*{2.2 Hexagonal Packing}
+
+Given the sphere as the unique geometric primitive under Axiom 2, the
+densest packing of equal discs in 2D is the hexagonal arrangement (Thue,
+1890; rigorously proved Fejes Tóth, 1940). This is the unique
+maximum-density solution and defines the structure of \ensuremath{M\alpha .} It is the
+direct consequence of the triadic minimum --- the hexagonal lattice is
+what a closed simplicial cover of circles necessarily produces.
+
+\subsection*{2.3 Causal Anchoring and Z-Displacement}
+
+When a bit is confirmed in layer \ensuremath{S_{0},} the confirming agents and their
+relationships constitute the causal record of that event. By Axiom 4,
+this record cannot be overwritten. The \ensuremath{1\to 4} multiplier (Section IV)
+generates synthetic bits that must be resolved at new positions. Three
+candidate directions exist:
+
+Lateral expansion within \ensuremath{M\alpha} is geometrically impossible. By Axiom 2 and
+the Principle of Generative Economy, \ensuremath{M\alpha} is hexagonally close-packed ---
+the unique maximum-density arrangement of equal spheres in 2D (Thue,
+1890). No unoccupied interstice exists at the same layer into which a
+new agent-scale sphere can be inserted without overlapping an existing
+agent. Lateral expansion violates Axiom 2.
+
+Oblique displacement introduces a free parameter. Any displacement at an
+angle other than perpendicular to \ensuremath{M\alpha} requires specifying that angle ---
+an orientation parameter with no geometric basis in the existing
+structure. This violates the Principle of Generative Economy.
+
+Orthogonal displacement is geometrically forced. When a new sphere of
+identical radius settles into the triangular interstice formed by three
+mutually touching spheres of \ensuremath{M\alpha ,} its center comes to rest at a uniquely
+determined height above the plane --- fixed entirely by the contact
+geometry of equal spheres. This height defines the perpendicular
+direction. The third dimension is not imported from a pre-existing
+Euclidean container. It is the unique direction produced by
+sphere-on-sphere contact in the triangular interstice. Orthogonality is
+derived, not assumed.
+
+The displacement therefore defines the Axis of Causal Succession:
+
+\begin{equation*}
+S_{0} \to S_{1} : \Delta z = 1
+\end{equation*}
+
+Each new layer \ensuremath{S_{n}} is the physical record of a confirmed state. This
+directional necessity is the geometric origin of flop time \ensuremath{\tau .}
+
+\subsection*{2.4 FCC Selection over HCP}
+
+When a second layer \ensuremath{S_{1}} forms above \ensuremath{S_{0},} it occupies the interstices of
+the first --- position set B over position set A. The two candidate
+stacking sequences for a third layer are ABABAB (hexagonal close-packed,
+HCP) and ABCABC (face-centered cubic, FCC).
+
+To evaluate these candidates, we must first define what constitutes a
+distinct position in the causal stack.
+
+\begin{definition}[Causal Position]
+A position in the TMS causal stack is
+defined by its complete touch vector connectivity --- the full set of
+geometric relationships between that node and every node in all prior
+layers. Two positions are causally identical if and only if their
+connectivity patterns are geometrically indistinguishable to any
+downstream signal.
+\end{definition}
+
+This definition is forced by Axiom 4. The causal record is a record of
+signal history --- what arrived, from where, and in what geometric
+relationship. If two positions share identical connectivity patterns,
+then a signal reaching either position carries no geometric information
+about which layer it originated from. The causal record collapses.
+
+\begin{theorem}[FCC Necessity]
+Given Definition (Causal Position) and Axiom 4,
+the unique permitted stacking sequence is ABCABC.
+\end{theorem}
+
+\begin{proof}
+In the ABABAB sequence, \ensuremath{S_{2}} returns to A positions. The touch
+vector connectivity pattern of an A-position node in \ensuremath{S_{2}} is geometrically
+congruent to that of the corresponding A-position node in \ensuremath{S_{0}} --- both
+sit directly above B-position nodes in an intervening layer, with
+identical angular relationships to their neighbors. By Definition
+(Causal Position), these nodes are causally identical. A signal
+propagating through \ensuremath{S_{1}} into \ensuremath{S_{2}} cannot geometrically distinguish whether
+it has arrived at a new causal record or returned to \ensuremath{S_{0}.} The causal
+stack becomes periodic with period 2 --- a closed causal loop. This
+violates Axiom 4: the confirmed state of \ensuremath{S_{0}} is effectively overwritten
+by the indistinguishability.
+
+In the ABCABC sequence, \ensuremath{S_{2}} occupies C positions --- geometrically
+distinct from both A and B. The touch vector connectivity of every
+C-position node is unique: it is above a B-position node in \ensuremath{S_{1},} which is
+itself above an A-position node in \ensuremath{S_{0},} producing an asymmetric
+connectivity pattern that distinguishes \ensuremath{S_{2}} from every prior layer. No
+two layers share a connectivity pattern. The causal record is
+monotonically distinguishable at every layer.
+
+HCP is excluded by causal anchoring. FCC is the unique stacking sequence
+consistent with Axiom 4.
+
+\end{proof}
+
+\begin{corollary}[Sublattice Bifurcation at Recursive Levels]
+The FCC structure derived here applies at the substrate level. At
+each hierarchical level k \ensuremath{\geq} 1 produced by recursive coarse-graining
+(Paper 3 \S\,4.5), the meta-FCC sublattice further splits into two
+interpenetrating FCC sublattices related by spatial inversion through
+the (1,1,1)-direction offset. The full bifurcated structure that
+results, and the empirical verification of this bifurcation through
+\ensuremath{L_{\mathrm{box}}} = 12, is derived in Paper 5 \S\,6.1.3 and Appendix E. The
+substrate-level FCC of this paper is the level-0 case of the
+sublattice-bifurcation recursion that operates at every level k \ensuremath{\geq} 1.
+\end{corollary}
+
+\subsection*{2.5 Triangular to Tetrahedral Interstices}
+
+The ABCABC stacking sequence converts triangular interstices bounded by
+3 agents into tetrahedral interstices bounded by 4 agents. The
+confirmation geometry is preserved across the dimensional transition:
+
+\begin{equation*}
+\bar{B} = 3\bar{\alpha}_{2} (2D)
+\end{equation*}
+
+\begin{equation*}
+\bar{B} = 4\bar{\alpha}_{3} (3D)
+\end{equation*}
+
+The triadic rule does not change. The geometry scales naturally from
+triangle to tetrahedron without introducing any new mechanism. The
+binary alphabet \ensuremath{\bar{B}} \ensuremath{\in} \{0, 1\} of Section 1.4 is preserved unchanged: both
+2D and 3D confirmation events resolve to a binary value.
+
+The tetrahedral confirmation unit --- four agents enclosing one bit with
+one of two possible values --- emerges as the fundamental 3D structure.
+Its informational dynamics are derived in Section IV.
+
+\section*{III. The Fundamental Length Scale}
+\addcontentsline{toc}{section}{III. The Fundamental Length Scale}
+
+With the FCC geometry established, the system possesses a unique length
+scale --- the agent diameter. This section shows that scale is not a
+free parameter but is forced to equal the Planck length, and derives the
+Planck time as a necessary consequence.
+
+\subsection*{3.1 Definition}
+
+\begin{definition}[Fundamental length]
+Let \ensuremath{\ell_{0}} denote the diameter of the
+spherical primitive \ensuremath{\alpha .} This is the unique length scale appearing in the
+definition of \ensuremath{M\alpha .}
+\end{definition}
+
+\subsection*{3.2 Planck Length Identification}
+
+\begin{theorem}[Planck Length Identification]
+The fundamental agent spacing \ensuremath{\ell_{0}}
+is identical to the Planck length \ensuremath{\ell_{p}.} This identification carries no
+free parameters.
+\end{theorem}
+
+\begin{proof}
+The 2D manifold \ensuremath{M\alpha} is the complete pre-geometric substrate --- no
+structure exists below it. Any measurement of distance in the emergent
+3D geometry must ultimately resolve to positions of agents or
+interstices within \ensuremath{M\alpha .} Two distinct agents cannot occupy positions
+closer than \ensuremath{\ell_{0},} as their spheres would overlap, violating Axiom 2.
+Therefore \ensuremath{\ell_{0}} is the minimum resolvable length in the emergent 3D
+geometry. Below \ensuremath{\ell_{0},} no geometric distinctions exist --- only the 2D
+substrate.
+
+The Planck length \ensuremath{\ell_{p}} = \ensuremath{\sqrt{\hbar G/c^{3}}} is the scale below which classical
+spacetime geometry ceases to be meaningful. The TMS provides the
+geometric reason: below \ensuremath{\ell_{0},} the emergent 3D geometry does not exist. The
+identification
+
+\begin{equation*}
+\ell_{0} \equiv \ell_{p}
+\end{equation*}
+
+is therefore forced by the ontology. It is not an external input --- it
+is the statement that the pre-geometric substrate sets the boundary of
+geometry. No free parameter remains.
+
+\end{proof}
+
+\begin{remark}[On the Status of \ensuremath{\hbar} and G]
+The identification \ensuremath{\ell_{0}} \ensuremath{\equiv} \ensuremath{\ell_{p}} fixes the substrate's minimum length,
+and \S\,3.3 fixes its tick \ensuremath{\tau_{\mathrm{flop}}}; from these the speed \ensuremath{c} is
+derived. It is worth stating precisely what this leaves, because the status of
+\ensuremath{\hbar} and G is a point of principle, not a deferred calculation.
+
+The substrate is combinatorial: it produces dimensionless quantities --- counts,
+ratios, angles (the coordination number 12, the subshell capacities 2, 6, 10, 14,
+the noble-gas atomic numbers, the fermionic sign, the reconstructed angles of
+Paper 5 \S\,4.1). A dimensionful constant cannot be produced by dimensionless
+structure alone; it requires a unit, which is scale-setting data, not a number the
+combinatorics can output. The three constants \ensuremath{\{c, \hbar, G\}} form an invertible
+basis for the three mechanical dimensions (mass, length, time) --- fixing them is
+exactly the choice of Planck units --- so any theory expressed in dimensionful
+units must be handed a scale for each dimension it cannot supply intrinsically.
+
+The TMS accounting is favorable and exact. The substrate supplies \emph{two} of
+the three scales from its own structure: the length \ensuremath{\ell_{p}} (lattice geometry)
+and the time \ensuremath{\tau_{\mathrm{flop}}} (the update tick). Their ratio gives the third
+mechanical quantity of the length--time sector, the speed \ensuremath{c} (\S\,3.3), so \ensuremath{c}
+is derived rather than imported. What remains is the mass/action sector. The
+substrate's fundamental quantum is a \emph{bit} --- dimensionless information ---
+not an action; a combinatorial substrate therefore has no intrinsic action scale,
+and exactly one dimensionful input must be supplied to reach physical units. That
+single input is what \ensuremath{\hbar} carries. Newton's constant is then not independent:
+given \ensuremath{\ell_{p}}, \ensuremath{c}, and \ensuremath{\hbar}, the Planck relation
+\ensuremath{\ell_{p} = \sqrt{\hbar G/c^{3}}} inverts to \ensuremath{G = c^{3}\ell_{p}^{2}/\hbar}, so G is
+\emph{derived}. The framework thus takes exactly one dimensionful scale-setting
+input, \ensuremath{\hbar}, and yields \ensuremath{c} and G --- one import, not two open constants, and
+the minimum any theory stated in dimensionful units can require.
+
+This sharpens, rather than weakens, the no-free-parameters claim. TMS has no free
+\emph{dimensionless} parameters: every dimensionless quantity is fixed by the
+axioms. It has exactly one dimensionful input, \ensuremath{\hbar}, which sets the scale at
+which the dimensionless structure is read --- and even that does not float freely,
+since it fixes \ensuremath{c} and G with it. Asking the framework to output the numerical
+\emph{value} of \ensuremath{\hbar} in SI would be a dimensional category error, equivalent to
+asking it to output the metre or the second: that value is the definition of the
+unit system, not a fact the combinatorics decides. This is the same footing on
+which the Standard Model fixes its group-theoretic structure from first principles
+while taking its dimensionful couplings from experiment.
+\end{remark}
+
+\subsection*{3.3 Flop Time}
+
+\begin{corollary}[Flop Time]
+The substrate has two intrinsic dimensionful scales --- the minimum length
+\ensuremath{\ell_{p}} (\S\,3.2) and the flop time \ensuremath{\tau_{\mathrm{flop}}}, the duration of a single
+update. The propagation speed is the ratio of the two, and the flop time is
+identified with the Planck time:
+\end{corollary}
+
+\begin{equation*}
+c = \frac{1}{\sqrt{2}}\,\frac{\ell_{p}}{\tau_{\mathrm{flop}}}, \qquad
+\tau_{\mathrm{flop}} = t_{p}
+\end{equation*}
+
+\begin{proof}
+The flop is the substrate's irreducible tick: there is no sub-flop time
+(\S\,II), and the discrete time parameter \ensuremath{\tau} counts flops. The flop time
+\ensuremath{\tau_{\mathrm{flop}}} is therefore an intrinsic primitive of the dynamics, not a
+quantity constructed from other scales. Together with the intrinsic length
+\ensuremath{\ell_{p}}, it fixes a speed: a signal advances one face-diagonal step per flop,
+giving \ensuremath{c = (1/\sqrt{2})\,\ell_{p}/\tau_{\mathrm{flop}}} in lattice units (the
+\ensuremath{1/\sqrt{2}} is the FCC face-diagonal factor derived in \S\,VI). The speed of
+light is thus an \emph{output} of the substrate --- the lattice's own
+steps-per-tick rate --- not an external input. The wave equation of \S\,VI
+confirms the identification: the physical wave speed from the discrete dynamics
+equals \ensuremath{c} precisely when the flop time is the Planck time, \ensuremath{\tau_{\mathrm{flop}}}
+= \ensuremath{t_{p}} = \ensuremath{\sqrt{\hbar G/c^{5}}}. One flop equals exactly one Planck time.
+\end{proof}
+
+\subsection*{3.4 Agent Density}
+
+\begin{corollary}[Agent Density]
+The agent density in \ensuremath{M\alpha} is \ensuremath{2/(\sqrt{3}} \ensuremath{\cdot} \ensuremath{\ell^{2}_{p})} per
+unit area. The FCC lattice inherits the same fundamental spacing \ensuremath{\ell_{p}}
+between agent centers.
+\end{corollary}
+
+\section*{IV. The Triadic Actualization Rule and the \ensuremath{1\to 4} Multiplier}
+\addcontentsline{toc}{section}{IV. The Triadic Actualization Rule and the \ensuremath{1\to 4} Multiplier}
+
+\subsection*{4.1 The Triadic Constraint}
+
+The minimum boundary condition for bit actualization in \ensuremath{M\alpha} is a
+2-simplex (triangle) formed by three agents, as derived in Section II.
+Each agent has six touch vectors. Each bit costs exactly three unique
+signals --- one from each vertex of the confirming triangle. An agent
+may participate in up to six confirmations (one per neighbor pair), but
+each confirmation consumes three unique signals. No signal describes
+more than one bit.
+
+\begin{equation*}
+\bar{B} = 3\bar{\alpha}_{2}
+\end{equation*}
+
+\subsection*{4.2 The Multiplier Proof}
+
+Given a primary confirmation event \ensuremath{S_{0}} involving agents \{\ensuremath{\bar{\alpha}_{1},} \ensuremath{\bar{\alpha}_{2},} \ensuremath{\bar{\alpha}_{3}}\}:
+
+\begin{itemize}
+\item
+  Each confirming agent has 6 touch vectors
+\item
+  2 vectors per agent are locked into the confirmation triangle
+\item
+  4 vectors per agent carry the signal outward
+\item
+  Total outgoing signals: 3 \ensuremath{\times} 4 = 12
+\end{itemize}
+
+Since each bit costs exactly three unique signals:
+
+\begin{equation*}
+12 \div 3 = 4 \text{synthetic} \text{bits}
+\end{equation*}
+
+This division is exact by necessity. The hexagonal geometry is the
+unique 2D packing where 6 neighbors per agent produces a clean integer
+result under the triadic constraint. No remainder is geometrically
+permitted --- any configuration that would produce one is not a valid
+confirmation geometry.
+
+\subsection*{4.3 Informational Closure and Polarization Transport}
+
+Every confirmation event is informationally complete within a single
+flop. All 12 outgoing signals are fully consumed by the 4 synthetic
+bits. Nothing is stored, deferred, or lost. The TMS is informationally
+closed by construction --- a direct consequence of Axiom 3. Closure here
+is of signal count and content: every signal is consumed, none created or
+destroyed (Axiom 3). What the signed aggregate does not preserve is
+resolvable distinction --- three incoming polarizations collapse to one
+signed outcome --- and this per-flop loss of distinction, not of content,
+is the geometric origin of the irreversibility developed in Paper 5.
+
+The 12 outgoing signals carry the polarization of their source
+confirmation. A \ensuremath{\bar{B}} = 1 confirmation emits 12 signals carrying \ensuremath{\chi} = +1; a \ensuremath{\bar{B}}
+= 0 confirmation emits 12 signals carrying \ensuremath{\chi} = \ensuremath{-1.} The signal count is
+identical in both cases --- informational closure operates on count
+alone --- but the polarization content differs.
+
+The \ensuremath{1\to 4} multiplier is content-preserving: each downstream synthetic bit
+position accumulates the polarizations of its 3 incoming signals as a
+signed aggregate. The resulting polarization landscape across the
+synthetic bit positions of \ensuremath{S_{n+1}} biases the subsequent resolution of
+those positions toward \ensuremath{\bar{B}} = 1 or \ensuremath{\bar{B}} = 0 against the unbiased stochastic
+kick from \ensuremath{U_{\mathrm{sh}}.} The propagation dynamics of this polarization landscape,
+the per-flop biasing mechanism, and the structural correspondence to the
+Born rule are developed in Volume 1, Paper 2.
+
+The informational closure of each confirmation event, combined with the
+\ensuremath{1\to 4} multiplier, generates a structural surplus that cannot be resolved
+within the existing 2D layer --- necessitating the Z-displacement and
+FCC geometry derived in Section II. The stability properties of the
+resulting tetrahedral structure are examined in Section V.
+
+\section*{V. The [[4,2,2]] Structural Correspondence and Fault-Tolerant Propagation}
+\addcontentsline{toc}{section}{V. The [[4,2,2]] Structural Correspondence and Fault-Tolerant Propagation}
+
+\subsection*{5.1 The Stabilizer Mapping}
+
+The [[4,2,2]] quantum error-detection code encodes 2 logical
+qubits in 4 physical qubits with code distance 2. Its stabilizer group
+is generated by:
+
+\begin{equation*}
+S_{x} = X_{1}X_{2}X_{3}X_{4}
+\end{equation*}
+
+\begin{equation*}
+S_{Z} = Z_{1}Z_{2}Z_{3}Z_{4}
+\end{equation*}
+
+A state lies in the code space when both stabilizers evaluate +1. Any
+single-qubit error anticommutes with at least one stabilizer, producing
+a measurable syndrome (the stabilizer evaluates to \ensuremath{-1).} The
+two-dimensional code space encodes 2 independent logical qubits --- 4
+distinguishable logical states.
+
+The tetrahedral confirmation unit of the TMS maps onto this structure as
+follows:
+
+\begin{itemize}
+\item
+  4 physical qubits \ensuremath{\to} 4 agents \{\ensuremath{\bar{\alpha}_{1},} \ensuremath{\bar{\alpha}_{2},} \ensuremath{\bar{\alpha}_{3},} \ensuremath{\bar{\alpha}_{4}}\} of the tetrahedral
+  interstice.
+\item
+  Logical qubit 1 \ensuremath{\to} the value of the confirmed bit in the current plane:
+  \ensuremath{\bar{B}} \ensuremath{\in} \{0, 1\}.
+\item
+  Logical qubit 2 \ensuremath{\to} the inheritance of that value through the causal
+  stack --- the integrity of the bit's history preserved across prior
+  layers.
+\end{itemize}
+
+Every confirmed bit therefore carries two independent informational
+degrees of freedom: its current value and its causal history. The 4
+logical states of the [[4,2,2]] code space correspond exactly to
+the 4 possible combinations of these two qubits. The encoding is
+faithful.
+
+Single-agent disruptions caused by \ensuremath{U_{\mathrm{sh}}} fall into two algebraically
+distinct types, each detected by a different stabilizer:
+
+\begin{itemize}
+\item
+  Bit-flip-type disruption (X-type error). A disturbance that would
+  alter the value contribution of a single agent. This anticommutes with
+  the Z-stabilizer, producing \ensuremath{S_{Z}} = \ensuremath{-1.}
+\item
+  Phase-type disruption (Z-type error). A disturbance that would corrupt
+  the inheritance contribution of a single agent. This anticommutes with
+  the X-stabilizer, producing \ensuremath{S_{x}} = \ensuremath{-1.}
+\end{itemize}
+
+Both syndrome flavors are checked at every flop. The confirmation
+mechanism that pulls a bit from \ensuremath{U_{\mathrm{sh}}} is the triadic actualization rule of
+Section II; the [[4,2,2]] stabilizers do not perform
+confirmation but rather verify the integrity of already-confirmed bits
+against subsequent disruption. The dynamic-code framing of recent work
+on stabilizer codes emerging from spacetime circuits (Aitchison \& Béri,
+2025) provides a parallel formal context for the structural
+correspondence developed here.
+
+\subsection*{5.2 The Restoring Force}
+
+When \ensuremath{U_{\mathrm{sh}}} disrupts a confirmed bit \ensuremath{\bar{B}} --- flipping its value or corrupting
+its causal history --- the 4 agents of the tetrahedral unit are
+unchanged. They remain in place as immutable substrate. The confirmation
+relationship between them is violated, producing a detectable parity
+syndrome.
+
+The synthetic bits produced at the current flop --- the same flop at
+which the violation is detected --- repair the missing or corrupted
+confirmation, restoring parity. Detection and repair are a single atomic
+act, a direct consequence of informational closure. The system cannot
+defer repair any more than it can defer signal consumption. Everything
+resolves within the flop.
+
+Both logical qubits are detected and repaired within the same flop. A
+bit-flip-type violation \ensuremath{(S_{Z}} = \ensuremath{-1)} and a phase-type violation \ensuremath{(S_{x}} = \ensuremath{-1)}
+are independent failure modes, protected independently. In every flop,
+the TMS simultaneously maintains the present state, the binary value of
+every confirmed bit, and the integrity of the entire causal record. The
+system is not merely propagating forward --- it is actively preserving
+the full informational content of its history as a single geometric
+motion.
+
+\subsection*{5.3 Code Distance and Fault-Tolerant Propagation}
+
+The [[4,2,2]] code has distance 2 --- any single error is
+detectable. In TMS terms:
+
+\begin{itemize}
+\item
+  A single bit-flip-type disruption on one agent violates \ensuremath{S_{Z}} while
+  leaving \ensuremath{S_{x}} intact --- detectable.
+\item
+  A single phase-type disruption on one agent violates \ensuremath{S_{x}} while leaving
+  \ensuremath{S_{Z}} intact --- detectable.
+\item
+  The tetrahedral geometry guarantees that no single-agent disruption
+  can leave both stabilizers intact --- code distance 2 follows from the
+  geometry alone.
+\end{itemize}
+
+The full stabilizer algebra --- both stabilizers, both logical qubits,
+the assignment of value and history to the two logical degrees of
+freedom, and the code distance --- is derived from TMS primitives. The
+mapping constitutes a structural correspondence. The framework is also
+consistent with the broader holographic quantum error correction
+tradition (Pastawski, Yoshida, Harlow, \& Preskill, 2015; El Morsalani,
+2025) that has informed the use of stabilizer codes in
+emergent-spacetime contexts. \hfill\ensuremath{\square}
+
+The [[4,2,2]] structural correspondence guarantees that the TMS
+substrate is fault-tolerant against stochastic interference from \ensuremath{U_{\mathrm{sh}}.}
+Confirmed bits propagate across the lattice with their values and
+histories intact, because the error-detection property of each
+tetrahedral unit preserves both at every hop. This establishes the TMS
+lattice as a stable propagation medium for both the confirmation field
+and the polarization landscape carrying binary content.
+
+The discrete dynamics of this fault-tolerant lattice, when taken to the
+continuum limit, reproduce the standard wave equation --- derived in
+Section VI.
+
+The structural correspondence developed here applies at the substrate
+level. The same [[4,2,2]] stabilizer structure reappears at
+every hierarchical level by axiom scale-independence (Paper 3 \S\,4.7),
+with one structural addition at level k \ensuremath{\geq} 1: the meta-FCC splits into
+two interpenetrating sublattices A and B (Paper 3 \S\,4.5; Paper 5 \S\,6.1.3),
+each running independent [[4,2,2]] dynamics. The level-1
+verification is empirical (Paper 5 Appendix E, Stages 5 and 6). The
+cross-level commutator structure between the A-sublattice and
+B-sublattice stabilizers at level k provides the substrate-level origin
+of non-Abelian gauge closure at level k + 1 (Paper 5 \S\,8.2).
+
+\subsection*{5.4 Scale-Invariant Stabilizer Null-Space}
+
+The [[4,2,2]] stabilizer structure of \S\,5.1--\S\,5.3, applied to an
+FCC patch of finite extent \ensuremath{L_{\mathrm{box}}} at any hierarchical level, has a
+precise count of stabilizer-satisfying configurations: the dimension of
+the null space over \ensuremath{F_{2}} of the tetrahedron-to-site parity matrix. We
+state this as a theorem.
+
+\begin{theorem}[Scale-Invariant Stabilizer Null-Space]
+For an
+FCC patch of edge \ensuremath{L_{\mathrm{box}}} at any hierarchical level, with
+[[4,2,2]] stabilizers imposed at every tetrahedron in the patch,
+the dimension of the stabilizer-satisfying configuration space over \ensuremath{F_{2}}
+is k = 3n, where n = \ensuremath{(L_{\mathrm{box}}} \ensuremath{-} 1)/2 at level 1 and analogously at higher
+levels (the level-local lattice depth). The number of distinct
+stabilizer-satisfying configurations is therefore \ensuremath{2^{(3n)},} and this
+scaling law is a structural property of the FCC + [[4,2,2]]
+dynamics that is independent of hierarchical level.
+\end{theorem}
+
+\begin{proof}
+The [[4,2,2]] stabilizers at each tetrahedron act
+linearly on the \ensuremath{F_{2}-\text{valued}} polarization state of the four agents in the
+tetrahedron. Their joint action on a patch of N sites with T tetrahedra
+is a linear map \ensuremath{F_{2}^{N}} \ensuremath{\to} \ensuremath{F_{2}^{T}} whose kernel dimension is the
+satisfying configuration count. The geometric argument that this kernel
+dimension equals 3n at every level is given in schematic form by the FCC
+cubic-volume scaling: the unit cubic cell of side 2 in level-local
+lattice units contributes 3 degrees of freedom to the null space (one
+per axis-pair of the cubic cell), and a patch of cubic-cell depth n
+contains \ensuremath{n^{3}} unit cells along with their bounding stabilizer relations,
+giving 3n dimensions of freedom from the cubic-cell-edge degrees and \ensuremath{(n^{3}}
+\ensuremath{-} 3n) parity constraints from the tetrahedron-interior stabilizers. The
+result is k = 3n. The empirical verification of this law at substrate
+level (n = 1 through \ensuremath{L_{\mathrm{box}}} extents matching the patch sizes) and at
+levels 1 and 2 (Paper 5 Appendix E, Stages 5 and 6) confirms k = 3n
+through n = 6 across all levels tested.
+
+\end{proof}
+
+\begin{remark}
+The scale-invariance of the k = 3n law is the
+structural reason the recursion-preservation theorem of Paper 5 \S\,2.5 has
+its full force: the [[4,2,2]] dynamics at every level have the
+same combinatorial structure when measured in level-local units, because
+the null-space scaling depends only on the FCC patch geometry, not on
+the absolute scale.
+\end{remark}
+
+\section*{VI. The Wave Equation}
+\addcontentsline{toc}{section}{VI. The Wave Equation}
+
+\subsection*{6.1 The Confirmation Field}
+
+Let \ensuremath{\varphi (\bar{r},} \ensuremath{\tau )} denote the local confirmation density --- the scalar field
+representing the density of actualized bits \ensuremath{\bar{B}} at any point in the
+lattice:
+
+\begin{equation*}
+\varphi (\bar{r}, \tau ) = \text{confirmed} \text{bits} in \text{region} / \text{total} \text{available} \text{interstices}
+in \text{region}
+\end{equation*}
+
+This field counts confirmation events without regard to their binary
+value. It is purely informational and purely geometric. It requires no
+additional physical assumptions.
+
+\subsection*{6.2 The Discrete Laplacian on the FCC Lattice}
+
+Each node in the FCC lattice has 12 nearest neighbors. The discrete
+Laplacian is defined as:
+
+\begin{equation*}
+\Delta_{\mathrm{FCC}} \varphi_{i} = \Sigma (\varphi_{j} - \varphi_{i}), j \in \text{neigh}(i)
+\end{equation*}
+
+This operator measures the difference between the confirmation density
+at node i and its neighbors --- the local informational gradient across
+the lattice.
+
+\subsection*{6.3 The Conjugate Field and Second-Order Dynamics}
+
+\begin{lemma}[Field Conjugacy]
+The confirmation field \ensuremath{\varphi} and the
+forward-propagating excitation field \ensuremath{\Pi} constitute a co-generated
+conjugate pair, arising necessarily from the interaction between the \ensuremath{1\to 4}
+cascade and \ensuremath{U_{\mathrm{sh}}} regulation.
+\end{lemma}
+
+\begin{proof}
+
+
+Step 1 --- The 2D case produces first-order closure. In the 2D manifold
+\ensuremath{M\alpha} without Z-displacement, all signals generated by a confirmation event
+are consumed within the same layer. The state at any layer is fully
+described by \ensuremath{\varphi} alone. No forward-propagating field persists. The update
+rule is first-order by construction --- confirmation density at the next
+step depends only on confirmation density at the current step.
+
+Step 2 --- The \ensuremath{1\to 4} cascade generates exponential confirmation pressure.
+In the 3D FCC lattice, each confirmation event at layer \ensuremath{S_{n}} generates 12
+outgoing signals, consumed as 4 synthetic confirmations at \ensuremath{S_{n+1}.} Each of
+those 4 confirmations generates 12 signals, consumed as 16 confirmations
+at \ensuremath{S_{n+2}.} Left unchecked, this produces an exponential cascade:
+
+\emph{1 \ensuremath{\to} 4 \ensuremath{\to} 16 \ensuremath{\to} 64 \ensuremath{\to} \ldots{}}
+
+This cascade is not a pathology --- it is the direct geometric
+consequence of informational closure applied layer-to-layer under FCC
+connectivity. Every signal is consumed. Every consumption generates new
+signals. The system is structurally amplifying.
+
+Step 3 --- \ensuremath{U_{\mathrm{sh}}} regulation produces dynamic stability. \ensuremath{U_{\mathrm{sh}}} acts on the
+latent bit population at every layer, disrupting confirmations
+stochastically and returning bits to the unactualized field. This
+regulation is the only mechanism that competes with the \ensuremath{1\to 4} cascade.
+
+The cascade generically outpaces disruption because amplification is
+deterministic and geometric while disruption is random. At each layer,
+the \ensuremath{1\to 4} mechanism advances with fixed multiplicity; \ensuremath{U_{\mathrm{sh}}} disrupts with
+probability distributed across the full bit population. On average, the
+cascade stays ahead --- not because the system reaches equilibrium, but
+because geometric amplification is structurally faster than
+uncoordinated stochastic interference.
+
+The [[4,2,2]] fault tolerance (Section V) reinforces this at the
+local level. Each tetrahedral confirmation unit detects and repairs
+single disruptions within the same flop, preserving causal coherence
+node by node. As the structure grows, its surface area exposed to \ensuremath{U_{\mathrm{sh}}}
+increases --- but so does the interior volume protected by the causal
+stack. The propagating wave is the coherent interior structure advancing
+faster than disruption can reach it.
+
+This is dynamic stability, not static equilibrium. The system does not
+settle --- it persists by continuing to move forward, in the same way a
+bicycle is stable under motion but not at rest. A sufficiently large
+simultaneous disruption --- a true stochastic black swan event
+collapsing enough bits at once to exceed the current flop's resolution
+capacity --- would constitute a system-wide failure. Such a failure
+produces no downstream causal layer and therefore leaves no record
+within the stack. By Axiom 4, only what is confirmed is recorded. A
+collapsed system is unobservable from within by construction.
+
+The propagating residual \ensuremath{\Pi} is therefore the net forward-propagating
+confirmation pressure in a dynamically stable instance --- the touch
+vector field carrying well-defined inherited excitation forward across
+layers under the constraint of Axiom 3.
+
+Step 4 --- Signal conservation forces the coupling equations. At any
+layer \ensuremath{S_{n},} the system state requires two quantities for complete
+specification:
+
+\begin{itemize}
+\item
+  \ensuremath{\varphi (S_{n})} --- the confirmation density: what actually locked at this layer
+\item
+  \ensuremath{\Pi (S_{n})} --- the inherited excitation pressure: what is being driven
+  forward into \ensuremath{S_{n+1}}
+\end{itemize}
+
+By Axiom 3, signals are conserved across flops. The rate of change of
+confirmation density is exactly the inherited excitation pressure --- no
+signal is created or destroyed in the transfer:
+
+\begin{equation*}
+\partial \varphi / \partial \tau = \Pi
+\end{equation*}
+
+The rate of change of excitation pressure is governed by the local
+confirmation gradient across the FCC lattice:
+
+\begin{equation*}
+\partial \Pi / \partial \tau = c^{2} \Delta_{\mathrm{FCC}} \varphi
+\end{equation*}
+
+These equations are not assumed. They are the unique expressions of
+Axiom 3 applied to a two-quantity state under FCC connectivity.
+
+\end{proof}
+
+\begin{remark}[Uniqueness of the Coupling]
+The second coupling
+equation \ensuremath{\partial \Pi /\partial \tau} = \ensuremath{c^{2}\Delta_{\mathrm{FCC}}} \ensuremath{\varphi} admits no additional local term in \ensuremath{\varphi} under the
+FCC touch-vector geometry. A candidate alternative of the form \ensuremath{\partial \Pi /\partial \tau} =
+\ensuremath{c^{2}\Delta_{\mathrm{FCC}}} \ensuremath{\varphi} + \ensuremath{\alpha \varphi} would require that the forward-propagating excitation
+pressure at a node be modified by a quantity proportional to the
+confirmation density \emph{at that same node}, with no reference to its
+neighbors. This is a self-amplification term: the node contributes to
+its own forward pressure without communicating through the touch vector
+network.
+\end{remark}
+
+Such a term is forbidden by the substrate's connectivity architecture.
+By Paper 1 \S\,1.3, the touch vectors are the \emph{only} channels of
+informational communication in the TMS --- every signal that updates a
+quantity at a node arrives across a touch vector from a neighbor. There
+is no on-site signaling channel: an agent does not communicate with
+itself, and a bit cannot bias its own forward propagation independently
+of its neighbors. The discrete Laplacian \ensuremath{\Delta_{\mathrm{FCC}}} is the unique
+nearest-neighbor local operator consistent with this constraint --- it
+sums differences \ensuremath{(\varphi_{j}} \ensuremath{-} \ensuremath{\varphi_{i})} across the 12 face-diagonal neighbors and is
+identically zero for spatially uniform \ensuremath{\varphi .} An \ensuremath{\alpha \varphi} term, by contrast, is
+non-zero for uniform \ensuremath{\varphi ,} which would imply that a spatially uniform
+confirmation density generates forward propagation in the absence of any
+spatial gradient --- propagation from no source.
+
+Axiom 3 (signal conservation) closes this. Signals propagate; they do
+not spontaneously generate. A forward pressure that responds to local
+density rather than local gradients would represent a creation of
+propagation content with no corresponding signal expenditure across the
+touch vector network. The \ensuremath{\alpha} = 0 case is therefore the unique selection
+consistent with both nearest-neighbor connectivity and signal
+conservation.
+
+The same argument forbids non-local operators (which would require
+channels beyond nearest-neighbor touch vectors), fractional-derivative
+operators (which would require memory of confirmation density across
+multiple prior layers, violating the atomicity of the flop), and
+higher-derivative spatial operators beyond \ensuremath{\Delta_{\mathrm{FCC}}} (which would require
+coupling across more than nearest-neighbor distance per flop). The
+discrete Laplacian \ensuremath{\Delta_{\mathrm{FCC}}} acting on \ensuremath{\varphi} alone is the unique local operator
+consistent with the touch vector architecture; its coefficient \ensuremath{c^{2}} is
+fixed by the propagation-speed derivation of \S\,6.5. The second coupling
+equation is therefore forced in both functional form and coefficient. \hfill\ensuremath{\square}
+
+Step 5 --- Elimination yields second-order dynamics. Eliminating \ensuremath{\Pi} from
+the coupled system:
+
+\begin{equation*}
+\partial ^{2}\varphi / \partial \tau^{2} = c^{2} \Delta_{\mathrm{FCC}} \varphi
+\end{equation*}
+
+The second-order structure is not imported from classical field theory.
+It is the necessary consequence of a self-amplifying confirmation
+cascade regulated by a maximum-entropy stochastic field. A 2D
+confirmation has no cascade, no inherited pressure, and no inertia. The
+transition to 3D, forced by the \ensuremath{1\to 4} multiplier, introduces exactly the
+two-quantity state that produces wave rather than diffusive behavior. \hfill\ensuremath{\square}
+
+This result is structurally analogous to the Hamiltonian formulation of
+classical field theory, where conjugate pairs (q, p) produce
+second-order equations of motion via elimination of momentum (Goldstein,
+Poole \& Safko, 2002). The TMS recovers this structure from the
+population dynamics of a self-amplifying confirmation cascade under
+stochastic regulation --- grounding the conjugate pair \ensuremath{(\varphi ,} \ensuremath{\Pi )} in the
+geometric and informational architecture of the substrate itself.
+
+\subsection*{6.4 The Discrete Wave Equation}
+
+Each confirmation event propagates through the lattice via the touch
+vector network. The rate of change of \ensuremath{\varphi_{i}} is governed by the local
+gradient and the fault-tolerant restoring force established in Section
+V:
+
+\begin{equation*}
+\partial ^{2}\varphi_{i} / \partial \tau^{2} = c^{2}_{\mathrm{TMS}} \Delta_{\mathrm{FCC}} \varphi_{i}
+\end{equation*}
+
+where \ensuremath{\tau} is the discrete flop time and \ensuremath{c_{\mathrm{TMS}}} is the propagation speed in
+lattice spacings per flop.
+
+\subsection*{6.5 The Propagation Speed}
+
+\begin{theorem}[Propagation Speed]
+The unique propagation speed consistent
+with FCC geometry, the Planck length identification of Section III, and
+the physical wave speed c is \ensuremath{c_{\mathrm{TMS}}} = \ensuremath{1/\sqrt{2}} lattice spacings per flop.
+\end{theorem}
+
+\begin{proof}
+In the FCC lattice with nearest-neighbor distance \ensuremath{\ell_{p},} the 12
+nearest neighbors of any node lie at vectors of the form \ensuremath{(\pm \ell_{p}/\sqrt{2},}
+\ensuremath{\pm \ell_{p}/\sqrt{2},} 0) and cyclic permutations --- all directed along face
+diagonals, each of magnitude \ensuremath{\ell_{p}.}
+
+Taylor-expanding \ensuremath{\varphi} over all 12 neighbors and summing, the first-order
+terms cancel by the symmetry of the FCC lattice. Computing the
+second-order tensor over the 12 neighbor vectors \ensuremath{r_{j}:}
+
+\begin{equation*}
+\Sigma_{j} r_{j}\mu r_{j}\nu = 4\ell^{2}_{p} \delta \mu \nu
+\end{equation*}
+
+The discrete Laplacian therefore converges as:
+
+\begin{equation*}
+\Delta_{\mathrm{FCC}} \varphi \to 2\ell^{2}_{p} \nabla ^{2}\varphi
+\end{equation*}
+
+Substituting into the discrete wave equation and converting to physical
+time t = \ensuremath{\tau} \ensuremath{\cdot} \ensuremath{\tau_{\mathrm{flop}}:}
+
+\begin{equation*}
+\partial ^{2}\varphi / \partial t^{2} = ( c^{2}_{\mathrm{TMS}} \cdot 2\ell^{2}_{p} / \tau^{2}_{\mathrm{flop}} ) \nabla ^{2}\varphi
+\end{equation*}
+
+Requiring this to equal \ensuremath{c^{2}\nabla ^{2}\varphi ,} and substituting \ensuremath{\tau_{\mathrm{flop}}} = \ensuremath{\ell_{p}/c} from
+Section 3.3:
+
+\begin{equation*}
+c_{\mathrm{TMS}} = 1/\sqrt{2}
+\end{equation*}
+
+The factor \ensuremath{1/\sqrt{2}} = \ensuremath{\text{cos}(45^{\circ})} is the direct geometric projection factor of
+FCC face-diagonal connectivity. The propagation speed is not a parameter
+--- it is the cosine of the lattice's canonical angle. No free parameter
+remains.
+
+\end{proof}
+
+\begin{corollary}[Consistency]
+Substituting \ensuremath{c_{\mathrm{TMS}}} = \ensuremath{1/\sqrt{2}} into the physical wave
+speed relation confirms:
+\end{corollary}
+
+\begin{equation*}
+c_{\mathrm{physical}} = c_{\mathrm{TMS}} \cdot \sqrt{2} \cdot \ell_{p} / \tau_{\mathrm{flop}} = (1/\sqrt{2}) \cdot \sqrt{2} \cdot c = c
+\end{equation*}
+
+\subsection*{6.6 The Continuum Limit}
+
+Substituting \ensuremath{c_{\mathrm{TMS}}} = \ensuremath{1/\sqrt{2}} and the Laplacian result into the discrete wave
+equation:
+
+\begin{equation*}
+\partial ^{2}\varphi / \partial \tau^{2} = (1/2) \cdot 2\ell^{2}_{p} \nabla ^{2}\varphi = \ell^{2}_{p} \nabla ^{2}\varphi
+\end{equation*}
+
+Converting to physical time t = \ensuremath{\tau} \ensuremath{\cdot} \ensuremath{t_{p}} and using \ensuremath{\ell_{p}} = c \ensuremath{\cdot} \ensuremath{t_{p}:}
+
+\begin{equation*}
+\partial ^{2}\varphi / \partial t^{2} = c^{2} \nabla ^{2}\varphi
+\end{equation*}
+
+\begin{remark}[Stochasticity and the Continuum Limit]
+\ensuremath{U_{\mathrm{sh}}} operates at every
+flop as both the source of latent bits available for confirmation and
+the stochastic disruptor of previously confirmed states. These dual
+roles are not in tension --- they are symmetric expressions of the same
+maximum entropy property established in Axiom 0. \ensuremath{U_{\mathrm{sh}}} has no attractors
+and no preferred targets. Every bit in every region has equal
+probability of disruption at every flop. No geometric bias exists in the
+disruption mechanism itself.
+\end{remark}
+
+At the substrate level, \ensuremath{U_{\mathrm{sh}}} contributes two statistically symmetric
+pressures to the confirmation field: a sourcing pressure drawing new
+bits toward actualization, and a disrupting pressure returning confirmed
+bits to the unactualized field. Because both pressures are drawn from
+the same maximum entropy distribution with no preferred scale or
+direction, their net contribution to the large-scale confirmation field
+averages to zero across sufficiently many flops.
+
+What survives to the continuum level is therefore not a noisy wave
+equation with a stochastic forcing term --- it is the structured
+confirmation cascade, which is the only process with geometric coherence
+across scales. The wave equation describes this coherent structure. The
+stochastic substrate does not add a forcing term to the continuum limit
+because its two roles cancel symmetrically. The continuum field \ensuremath{\varphi} is the
+large-scale average of a dynamically stable cascade instance. This
+observable universe represents one such stable average over flops ---
+not the unique or guaranteed outcome, but the instance whose causal
+stack persists long enough to be inhabited.
+
+\subsection*{6.7 The Wave Equation}
+
+Recognizing flop time \ensuremath{\tau} as the emergent time coordinate t:
+
+\begin{equation*}
+\partial ^{2}\varphi / \partial t^{2} - c^{2}\nabla ^{2}\varphi = 0
+\end{equation*}
+
+This is the standard wave equation. It is not imposed on the TMS --- it
+emerges necessarily from the discrete dynamics of a fault-tolerant FCC
+confirmation lattice in the continuum limit. Physical wave phenomena are
+the large-scale behavior of the confirmation field propagating through
+the agent substrate.
+
+\subsection*{6.8 The Polarization Field as Parallel Object}
+
+\begin{remark}[The Polarization Field]
+The confirmation density \ensuremath{\varphi} derived
+above is one of two independent informational fields supported by the
+FCC lattice. The polarization field \ensuremath{\psi} \ensuremath{\equiv} \ensuremath{\langle \chi \rangle} --- the local coarse-grained
+mean of confirmed bit values, ranging over \ensuremath{[-1,} +1] --- propagates
+by an analogous discrete wave equation on the same FCC lattice:
+\end{remark}
+
+\begin{equation*}
+\partial ^{2}\psi / \partial \tau^{2} = c^{2}_{\mathrm{TMS}} \Delta_{\mathrm{FCC}} \psi
+\end{equation*}
+
+The propagation speed \ensuremath{c_{\mathrm{TMS}}} = \ensuremath{1/\sqrt{2}} is inherited from the lattice
+geometry; the proof of Section 6.5 applies unchanged because both fields
+propagate across the same nearest-neighbor structure. Both fields share
+the same fault-tolerant FCC substrate. The two fields evolve
+independently in the bulk and couple at confirmation events, where the
+local incoming polarization wave amplitude biases the resolution of new
+confirmations toward \ensuremath{\bar{B}} = 1 or \ensuremath{\bar{B}} = 0 against the unbiased stochastic kick
+from \ensuremath{U_{\mathrm{sh}}.}
+
+The dynamics of \ensuremath{\psi ,} its coupling to \ensuremath{\varphi} at confirmation events, the
+emergence of computation from polarization-modulated propagation, the
+structural correspondence between this coupling and the Born rule, and
+the formal selection criterion for stable subsystem programs are
+developed in Volume 1, Paper 2.
+
+\section*{VII. Predictions and Directions for Subsequent Work}
+\addcontentsline{toc}{section}{VII. Predictions and Directions for Subsequent Work}
+
+\subsection*{7.1 The Generalized Uncertainty Principle: A Geometric Grounding}
+
+The Generalized Uncertainty Principle (GUP) extends the standard
+Heisenberg relation by introducing a minimum measurable length:
+
+\begin{equation*}
+\Delta x \cdot \Delta p \geq \hbar /2 \cdot (1 + \beta (\Delta p)^{2}/m^{2}_{p}c^{2})
+\end{equation*}
+
+where \ensuremath{\beta} is a dimensionless deformation parameter characterizing the
+scale at which quantum gravitational effects become significant. The GUP
+has been independently motivated by string theory, loop quantum gravity,
+and quantum geometry (Hossenfelder, 2013). In all existing formulations,
+\ensuremath{\beta} is a free parameter --- inserted phenomenologically rather than
+derived from geometric first principles.
+
+The TMS provides a geometric grounding for the minimum length that the
+GUP encodes. The identification \ensuremath{\ell_{0}} \ensuremath{\equiv} \ensuremath{\ell_{p}} established in Section III has a
+precise geometric meaning: below the agent scale, the emergent 3D
+geometry does not exist. This is not a statement about measurement
+difficulty or quantum fluctuations --- it is a statement about substrate
+architecture. The floor on position resolution is not a statistical
+lower bound but a geometric boundary. At \ensuremath{\ell_{p},} the continuous confirmation
+field \ensuremath{\varphi} approaches its binary alphabet limit --- \ensuremath{\bar{B}} \ensuremath{\in} \{0, 1\} --- the
+irreducible primitive of the TMS ontology. Spatial fuzziness at the
+Planck scale is not noise added to geometry. It is the geometry of the
+substrate itself becoming directly visible.
+
+Examining a bit at the Planck scale means encountering not merely its
+current confirmation state, but the full geometric and polarization
+record of how it arrived there --- the layered causal history encoded in
+the down-vector structure. What standard quantum mechanics describes as
+wavefunction complexity is, in TMS terms, the geometric depth and
+polarization complexity of the confirmation record. The uncertainty is
+not epistemic. It is the irreducible causal narrative of the bit made
+visible at the substrate boundary.
+
+This geometric grounding is consistent with recent independent work
+deriving GUP-type relations from spacetime microgeometry (Giné, 2026),
+which proposes that generalized uncertainty principles may emerge as
+effective kinematical relations induced by microscopic spacetime
+geometry. The TMS provides an independent derivation from a more
+fundamental starting point --- geometric primitives prior to spacetime,
+rather than horizon microstructure within it.
+
+\subsection*{7.2 A Novel Prediction: Causal-Depth-Dependent Uncertainty}
+
+The TMS architecture implies a specific and novel extension of the
+standard GUP that, to our knowledge, has no analog in existing
+formulations.
+
+In the TMS, every confirmed bit exists at the terminus of a causal chain
+encoded in the down-vector structure. The confirmation field \ensuremath{\varphi} at any
+point in the lattice carries not only the current confirmation state but
+the full geometric record of how that state was reached --- the layered
+history of prior confirmation events that produced the current position
+in the causal stack. With the binary alphabet established in Section
+1.4, each layer of that history additionally carries a specific
+polarization value. We term the depth of this record the causal depth d
+of the bit, and the specific pattern of polarizations across that depth
+the polarization complexity of its history.
+
+We conjecture that the effective deformation parameter \ensuremath{\beta} is not a
+universal constant but a function of both:
+
+\begin{equation*}
+\beta = f(d, K_{\psi})
+\end{equation*}
+
+where d is the causal depth and \ensuremath{K_{\psi}} is the algorithmic complexity of
+the polarization landscape encoding the bit's confirmation history. f is
+monotonically increasing in both arguments. The precise form of f is a
+prediction of the FCC confirmation geometry and is left for derivation
+in subsequent work.
+
+The physical interpretation is direct. A recently confirmed bit ---
+shallow causal history, few prior layers, simple polarization record ---
+has a substrate footprint close to the bare agent scale \ensuremath{\ell_{p}.} Its position
+uncertainty is close to the geometric minimum. A bit embedded in a deep,
+richly polarized causal structure has a larger substrate footprint ---
+more of the lattice geometry and binary content is geometrically present
+in its confirmation record. Its effective position uncertainty is
+correspondingly larger than the bare minimum.
+
+In standard quantum mechanical language: wavefunction complexity scales
+with both causal depth and polarization complexity, and minimum position
+uncertainty scales with wavefunction complexity. The TMS provides a
+geometric derivation of this relationship from the down-vector structure
+of the FCC causal stack and the binary alphabet recorded within it.
+
+This prediction is testable in principle. If \ensuremath{\beta} scales with the joint
+causal-depth and polarization-complexity profile, then quantum systems
+with richer interaction histories --- more degrees of freedom, deeper
+entanglement structure, and more complex binary records --- should
+exhibit measurably larger GUP corrections than simpler systems at
+equivalent energy scales. Recent work on GUP phenomenology in
+macroscopic quantum systems and gravitational wave detectors
+(Hossenfelder, 2013) provides experimental frameworks within which
+causal-depth and polarization-complexity dependence could in principle
+be distinguished from a universal \ensuremath{\beta .}
+
+\subsection*{7.2a The Computational Irreducibility Connection}
+
+The causal-depth dependence of \ensuremath{\beta} admits a deeper interpretation through
+the lens of computational irreducibility (Wolfram, 2002). A
+computationally irreducible system is one for which no shortcut exists
+to determine its future state --- the only way to know where the system
+is is to trace every step of its history.
+
+In TMS terms, a bit with deep causal history and complex polarization
+record is computationally irreducible in precisely this sense. The
+down-vector chain encoding its confirmation record cannot be compressed
+--- there is no shorter description of its current state than the full
+sequence of prior confirmation events, including the specific binary
+values resolved at each layer. This is not a limitation of our
+knowledge. It is a property of the causal record itself.
+
+The connection to Axiom 0 is direct. \ensuremath{U_{\mathrm{sh}}} is defined as algorithmically
+incompressible with Kolmogorov complexity K(n) \ensuremath{\approx} n --- the maximum
+entropy ground state from which all structure is actualized.
+Confirmation events produce locally reducible structure by carving order
+from that incompressibility. But the record of how that order was
+produced --- the down-vector chain with its specific polarization
+sequence --- inherits the incompressibility of its source. Deep causal
+stacks with complex polarization landscapes are not merely geometrically
+large. They are computationally irreducible in the strict Kolmogorov
+sense.
+
+The effective position uncertainty \ensuremath{\Delta x} \ensuremath{\geq} \ensuremath{\ell_{p}} \ensuremath{\cdot} f(d, \ensuremath{K_{\psi})} therefore has a
+computational interpretation: measuring the position of a deeply
+embedded bit to better than f(d, \ensuremath{K_{\psi})\cdot \ell_{p}} would require compressing an
+irreducible computation. This is impossible by definition --- not in
+principle, but as a consequence of the same Kolmogorov incompressibility
+that characterizes \ensuremath{U_{\mathrm{sh}}} itself. The GUP minimum length in TMS is not
+merely a geometric floor. It is the Planck-scale expression of
+computational irreducibility applied to position measurement.
+
+This connects the paper's opening axiom --- the incompressibility of \ensuremath{U_{\mathrm{sh}}}
+--- directly to its closing prediction. The arc from Axiom 0 to the GUP
+is a single unbroken chain:
+
+\emph{\ensuremath{U_{\mathrm{sh}}} [K(n) \ensuremath{\approx} n] \ensuremath{\to} confirmation events \ensuremath{\to} binary alphabet \ensuremath{\to}
+polarization-rich causal stack \ensuremath{\to} \ensuremath{\beta} = f(d, \ensuremath{K_{\psi})} \ensuremath{\to} GUP}
+
+\subsection*{7.3 A Unified Geometric Account of Decoherence}
+
+The same causal depth structure that predicts \ensuremath{\beta -\text{scaling}} offers a
+geometric account of quantum decoherence. In standard quantum mechanics,
+decoherence time depends on the number of environmental degrees of
+freedom --- macroscopic objects decohere almost instantaneously because
+they interact with enormously many environmental modes. The mechanism is
+understood phenomenologically but lacks a geometric derivation from
+first principles.
+
+In the TMS, the causal stack provides a natural geometric analog. A bit
+with shallow causal depth has a small substrate footprint --- it
+interacts with few prior confirmation layers, maintains a simple touch
+vector structure, and is relatively isolated from the full lattice
+history. Such a bit maintains quantum coherence longer because its
+geometric entanglement with the causal record is limited.
+
+A bit with deep causal history has an extensive substrate footprint ---
+its confirmation record spans many layers, its touch vector structure is
+richly connected to the broader lattice, and it is geometrically
+embedded in the full causal record. Such a bit decoheres rapidly because
+its geometric connection to the lattice history is extensive --- there
+are many more channels through which \ensuremath{U_{\mathrm{sh}}} disruption can reach and
+collapse its coherent state.
+
+Decoherence time, in this picture, is inversely proportional to causal
+depth. Macroscopic objects decohere almost instantaneously because they
+are geometrically ancient --- their causal stack is deep beyond measure.
+Fundamental particles maintain quantum coherence because they are
+geometrically shallow --- their confirmation records are brief relative
+to the full causal stack depth.
+
+This constitutes a unified geometric account of both the GUP minimum
+length and quantum decoherence as consequences of a single structural
+property --- causal depth and polarization complexity in the FCC
+down-vector architecture. The derivation of the explicit functional
+forms relating \ensuremath{\beta} and decoherence time to the joint causal-depth and
+polarization-complexity profile is reserved for subsequent work.
+
+\section*{Conclusion: A Complete Generative Mechanism}
+\addcontentsline{toc}{section}{Conclusion: A Complete Generative Mechanism}
+
+The Triadic Measurement Substrate presents a minimal, self-consistent
+generative mechanism for wave dynamics and binary computational content
+in three dimensions. Beginning from five axioms and the Principle of
+Generative Economy, the following results emerge necessarily:
+
+\begin{itemize}
+\item
+  Axioms 0--2 \ensuremath{\to} sphere primitive \ensuremath{\to} hexagonal 2D packing \ensuremath{\to} triadic
+  confirmation
+\item
+  Triadic confirmation \ensuremath{\to} the \ensuremath{1\to 4} multiplier, exact and remainder-free by
+  geometric necessity
+\item
+  Triadic confirmation pulling from the maximum-entropy substrate \ensuremath{\to}
+  binary alphabet \ensuremath{\bar{B}} \ensuremath{\in} \{0, 1\} as the irreducible computational content
+  of every confirmed bit, with polarization \ensuremath{\chi} \ensuremath{\in} \{\ensuremath{-1,} +1\} transported
+  by every touch vector signal
+\item
+  Axiom 4 (causal anchoring) \ensuremath{\to} Z-displacement orthogonal by
+  sphere-contact geometry \ensuremath{\to} ABCABC stacking \ensuremath{\to} FCC lattice
+\item
+  FCC lattice \ensuremath{\to} tetrahedral confirmation units \ensuremath{\to} [[4,2,2]]
+  structural correspondence \ensuremath{\to} faithful encoding of value (LQ1) and
+  causal-history (LQ2) \ensuremath{\to} fault-tolerant propagation of both
+\item
+  2D agent manifold \ensuremath{\to} minimum resolvable length identified with \ensuremath{\ell_{p}}
+  (Planck length)
+\item
+  Planck length + speed of light \ensuremath{\to} \ensuremath{\tau_{\mathrm{flop}}} = \ensuremath{t_{p}} (Planck time)
+\item
+  FCC face-diagonal geometry \ensuremath{\to} \ensuremath{c_{\mathrm{TMS}}} = \ensuremath{1/\sqrt{2},} forced by lattice structure
+\item
+  \ensuremath{1\to 4} multiplier \ensuremath{\to} self-amplifying cascade regulated by \ensuremath{U_{\mathrm{sh}}} \ensuremath{\to}
+  co-generated conjugate pair \ensuremath{(\varphi ,} \ensuremath{\Pi )} \ensuremath{\to} second-order dynamics
+\item
+  Fault-tolerant FCC lattice + second-order dynamics \ensuremath{\to} continuum limit \ensuremath{\to}
+  \ensuremath{\partial ^{2}\varphi /\partial t^{2}} \ensuremath{-} \ensuremath{c^{2}\nabla ^{2}\varphi} = 0
+\item
+  Polarization field \ensuremath{\psi} as parallel object with identical propagation \ensuremath{\to}
+  substrate for computational dynamics developed in Volume 1, Paper 2
+\item
+  Causal depth d and polarization complexity \ensuremath{K_{\psi}} in down-vector
+  structure \ensuremath{\to} \ensuremath{\beta} = f(d, \ensuremath{K_{\psi})} \ensuremath{\to} GUP and decoherence from a single
+  geometric property
+\end{itemize}
+
+Every quantity appearing in the TMS --- the absolute length scale, the
+absolute time scale, the propagation speed, the binary alphabet --- is
+fixed by the axioms and the Principle of Generative Economy without
+external input. The confirmation rules and lattice connectivity that
+govern the system's behavior are not assumptions imported from outside
+the framework; they are the geometric consequences of the primitives
+established in Section I. The model has no numerical degrees of freedom
+left to tune.
+
+The single fundamental rate of the system --- the flop --- governs
+confirmation, synthesis, and propagation simultaneously. Flop time \ensuremath{\tau} is
+not a background parameter but the counted succession of confirmation
+events. Space is not a container but the accumulated causal record of
+prior states. The [[4,2,2]] structural correspondence ensures
+the system simultaneously maintains the present state, the binary value
+of every confirmed bit, and the integrity of the causal record in every
+flop. The wave equation emerges from the geometry of that record
+propagating forward.
+
+The TMS establishes that a discrete, informationally closed confirmation
+substrate built from geometric primitives is both necessary and
+sufficient to generate wave dynamics and a binary computational alphabet
+from which physical laws may be derived. The paper opens with the
+incompressibility of \ensuremath{U_{\mathrm{sh}}} (Axiom 0) and closes with a falsifiable
+prediction --- causal-depth and polarization-complexity-dependent GUP
+deformation --- grounded in that same incompressibility. The arc from
+maximum entropy ground state to Planck-scale uncertainty is a single
+unbroken geometric chain.
+
+The derivation of further physical laws (electromagnetism, gravity), the
+dynamics of the polarization field \ensuremath{\psi} and its coupling to confirmation
+events, the explicit functional form of f(d, \ensuremath{K_{\psi}),} and the scaling
+properties of the triadic confirmation rule across complex systems are
+left for subsequent work in Volume 1.
+
+\section*{Acknowledgments}
+\addcontentsline{toc}{section}{Acknowledgments}
+
+The development of this volume was substantially aided by extended
+collaboration with several large language models used as critical
+sounding boards, pedagogical resources, formal-rigor checkers, and
+external working memory across many sessions during 2024--2026.
+
+\textbf{Gemini (Google DeepMind)} was the long-running primary
+collaborator across the framework's conceptual development, providing
+physics pedagogy, structural critique, and ongoing review of the ideas
+that became Volume 1. The author's path into the technical literature,
+and the working-out of the framework's core conceptual moves over a long
+period preceding formalization, were carried by extended dialogue with
+Gemini.
+
+\textbf{Claude (Anthropic)} was the primary collaborator across the
+formalization, derivation tightening, simulation work, citation
+auditing, and editorial passes that brought the volume to its present
+form, including the sublattice bifurcation analysis empirically verified
+in Paper 5 Appendix E.
+
+\textbf{ChatGPT (OpenAI)}, \textbf{DeepSeek}, \textbf{Grok (xAI)}, and
+\textbf{Granite (IBM)} contributed additional structural feedback and
+review at various points.
+
+All theoretical commitments, the choice of axioms, the Principle of
+Generative Economy, the sublattice bifurcation insight, and the
+framework's overall architecture are the author's; the AI systems' role
+was to teach, formalize, critique, verify, and document.
+
+\section*{References}
+\addcontentsline{toc}{section}{References}
+\begin{reflist}
+Aitchison, C. T., \& Béri, B. (2025). Spacetime Spins: Statistical
+mechanics for error correction with stabilizer circuits. arXiv preprint.
+\url{https://arxiv.org/abs/2512.21991}
+
+El Morsalani, M. (2025). Encoding Spacetime: A Comprehensive Review of
+Holographic Quantum Codes. Preprint.
+
+Fejes Tóth, L. (1940). Über einen geometrischen Satz. Mathematische
+Zeitschrift, 46(1), 83--85. doi:10.1007/BF01181430.
+
+Giné, J. (2026). On the Possibility of Quantum Gravity Emerging from
+Geometry. arXiv preprint. \url{https://arxiv.org/abs/2602.16219}
+
+Goldstein, H., Poole, C., \& Safko, J. (2002). Classical Mechanics (3rd
+ed.). Addison-Wesley.
+
+Gottesman, D. (1997). Stabilizer Codes and Quantum Error Correction.
+Ph.D.~Thesis, California Institute of Technology.
+\url{https://arxiv.org/abs/quant-ph/9705052}
+
+Hamilton, W. R. (1834). On a General Method in Dynamics. Philosophical
+Transactions of the Royal Society, 124, 247--308.
+
+Hatcher, A. (2002). Algebraic Topology. Cambridge University Press.
+
+Hossenfelder, S. (2013). Minimal Length Scale Scenarios for Quantum
+Gravity. Living Reviews in Relativity, 16(1), 2.
+doi:10.12942/lrr-2013-2.
+
+Jaynes, E. T. (1957). Information Theory and Statistical Mechanics.
+Physical Review, 106(4), 620--630. doi:10.1103/PhysRev.106.620.
+
+Kauffman, S. (1993). The Origins of Order. Oxford University Press.
+
+Kolmogorov, A. N. (1965). Three approaches to the quantitative
+definition of information. Problems of Information Transmission, 1(1),
+1--7.
+
+Levin, M. (2019). The Computational Boundary of a Self: Developmental
+Bioelectricity Drives Multicellularity and Scale-Free Cognition.
+Frontiers in Psychology, 10, 2688. doi:10.3389/fpsyg.2019.02688.
+
+Ma, Y., Tsao, D., \& Shum, H.-Y. (2022). On the Principles of Parsimony
+and Self-Consistency for the Emergence of Intelligence. Frontiers of
+Information Technology \& Electronic Engineering, 23, 1298--1323.
+\url{https://arxiv.org/abs/2207.04630}
+
+Pastawski, F., Yoshida, B., Harlow, D., \& Preskill, J. (2015).
+Holographic quantum error-correcting codes: toy models for the
+bulk/boundary correspondence. Journal of High Energy Physics, 2015(6),
+149. doi:10.1007/JHEP06(2015)149. \url{https://arxiv.org/abs/1503.06237}
+
+Rissanen, J. (1978). Modeling by shortest data description. Automatica,
+14(5), 465--471. doi:10.1016/0005-1098(78)90005-5.
+
+Shannon, C. E. (1948). A mathematical theory of communication. Bell
+System Technical Journal, 27(3), 379--423.
+doi:10.1002/j.1538-7305.1948.tb01338.x.
+
+Thue, A. (1890). Om nogle geometrisk-taltheoretiske Theoremer.
+Forhandlingerne ved de Skandinaviske Naturforskeres, 14, 352--353.
+
+Wheeler, J. A. (1990). Information, physics, quantum: The search for
+links. In W. H. Zurek (Ed.), Complexity, Entropy and the Physics of
+Information (pp.~3--28). Addison-Wesley.
+
+Wolfram, S. (2002). A New Kind of Science. Wolfram Media.
+\end{reflist}
+
+\clearpage
+
+
+\end{document}

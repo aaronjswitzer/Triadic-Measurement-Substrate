@@ -1,0 +1,792 @@
+\documentclass[11pt,oneside]{report}
+% ======================================================================
+%  THE TRIADIC MEASUREMENT SUBSTRATE --- COMPLETE CORPUS (Volumes 1 & 2)
+%  Aaron Switzer, 2026
+%  Single-file build. Compile: pdflatex x3 (third pass settles the TOC).
+% ======================================================================
+% ======================================================================
+%  TMS Volume 1 -- shared preamble
+%  Compiles with pdfLaTeX both locally and on Overleaf (no exotic fonts).
+% ======================================================================
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathptmx}            % Times text + math (widely available)
+\usepackage[scaled=0.90]{helvet} % sans for headings
+\usepackage{courier}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tocbibind}
+
+% ---- spacing -----------------------------------------------------------
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0.35em}
+\linespread{1.04}
+\setlist{leftmargin=1.6em,topsep=0.25em,itemsep=0.15em,parsep=0pt}
+
+% ---- theorem environments ---------------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}{Axiom}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{principle}[theorem]{Principle}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{prediction}[theorem]{Prediction}
+\newtheorem{property}[theorem]{Property}
+\newtheorem{postulate}[theorem]{Postulate}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+% ---- section heading look (unnumbered; author supplies the numbers) ----
+\titleformat{\section}[hang]{\normalfont\large\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsection}[hang]{\normalfont\normalsize\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsubsection}[hang]{\normalfont\normalsize\bfseries\itshape}{}{0pt}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.5em}
+\titlespacing*{\subsection}{0pt}{1.0em}{0.35em}
+\titlespacing*{\subsubsection}{0pt}{0.8em}{0.3em}
+
+% chapter (= each paper) heading
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\bfseries}
+  {}{0pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{10pt}{24pt}
+
+% ---- page-break quality: avoid stranded headings and orphaned/widowed lines ----
+% (applies to both volumes via the shared preamble)
+\widowpenalty=10000        % no single line at the top of a page
+\clubpenalty=10000         % no single line at the bottom of a page
+\displaywidowpenalty=10000 % same, around displayed equations
+\brokenpenalty=4000        % discourage page breaks right after a hyphenated line
+% titlesec: forbid a page break immediately after a heading (heading stranded at page foot)
+\usepackage{needspace}
+\usepackage{etoolbox}
+\pretocmd{\section}{\Needspace*{4\baselineskip}}{}{}
+\pretocmd{\subsection}{\Needspace*{3\baselineskip}}{}{}
+
+% ---- running heads -----------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape The Triadic Measurement Substrate}
+\fancyhead[R]{\small\itshape\nouppercase{\rightmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---- abstract / keywords / references list ----------------------------
+\newenvironment{paperabstract}
+  {\begin{center}\begin{minipage}{0.88\textwidth}\small
+   \noindent\textbf{Abstract.}\itshape\space}
+  {\end{minipage}\end{center}\vspace{0.4em}}
+
+\newcommand{\keywords}[1]{\noindent{\small\textbf{Keywords:} #1}\vspace{0.4em}}
+
+% per-paper APA reference list (hanging indent), kept as authored
+\newenvironment{reflist}
+  {\par\small\setlength{\parindent}{0pt}%
+   \setlength{\leftskip}{1.6em}\setlength{\parindent}{-1.6em}%
+   \setlength{\parskip}{0.4em}%
+   \raggedright\hyphenpenalty=50\exhyphenpenalty=50\relax
+   \sloppy}
+  {\par}
+
+% convenience
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\TMS}{\textsc{tms}}
+\hyphenation{con-fir-ma-tion sub-strate}
+\begin{document}
+
+\thispagestyle{empty}
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\sffamily\bfseries\Large The Triadic Measurement Substrate\par}
+\vspace{0.6cm}
+{\large $\bar{B} = 3\bar{\alpha}$\par}
+\vspace{1cm}
+{\sffamily\large Volume 2\par}
+\vspace{1.4cm}
+{\Large \bfseries Paper 3: Richness: The Form-Surplus of Transcoding\par}
+\vfill
+{\large Aaron Switzer\par}
+\vspace{0.4cm}
+{\large 2026\par}
+\vspace{1.2cm}
+{\small\itshape Excerpted from the complete two-volume corpus, \emph{The Triadic Measurement Substrate}. Full corpus and reproducibility package: \url{https://doi.org/10.5281/zenodo.22035422}\par}
+\end{titlepage}
+\cleardoublepage
+\pagenumbering{arabic}
+
+% ---------------- Volume 2 / P3_Richness ----------------
+\chapter*{Paper 3}
+\markboth{Paper 3}{Paper 3}
+\addcontentsline{toc}{chapter}{Paper 3: Richness: The Form-Surplus of Transcoding}
+\begingroup\centering
+{\large\itshape Richness: The Form-Surplus of Transcoding\par}\vspace{0.8em}
+{\normalsize Aaron Switzer\par}
+{\small June 2026\par}
+\endgroup\vspace{1.0em}
+
+\noindent{\small\textbf{Keywords:} Triadic Confirmation, Reinterpretation Operator, Transcoding, Form-Surplus, Richness, Confirmed Alphabet, Lossy Fold, Area Law, Nonconceptual Content, Agent-Side Reading}\par\vspace{0.6em}
+
+\section*{Status of Results}
+\addcontentsline{toc}{section}{Status of Results}
+
+This paper uses the five-category labeling of Volume 1, extended in Paper 2,
+with each claim labeled where it appears.
+
+\textbf{Derived.} Results that follow from the five axioms, the Principle of
+Generative Economy, and \ensuremath{U_{\mathrm{sh}}} by explicit construction or
+proof, or from results already derived in Volume 1 by explicit inheritance. The
+size of the confirmed alphabet \ensuremath{k = 2}, forced by the Measurement
+Imperative and the zero-orientation primitive (\S\,III, Appendix~A); the richness
+unit \ensuremath{R = 3\log_2 k - 1 = 2} bits per binary-agent triad, fixed from the
+ground because \ensuremath{k = 2} is forced rather than adopted (\S\,III--IV,
+Appendices~A, C); the necessity of the fold's shed, by the non-injectivity of the
+three-loci-to-one-bit map (\S\,IV, Appendix~B); and the identity of the shed with
+the agent-side form-surplus (\S\,IV, Appendix~B) are derived in this sense. The
+per-fold shed value and the lossy character of the reinterpretation operator are
+inherited as Derived from Volume 1 (Paper~5, Appendix~A; Paper~1 \S\,4.3).
+
+\textbf{Derived-conditional.} Results forced by Volume~1 machinery, resting on
+results internal to that machinery rather than on the bare axioms, and
+referee-checkable against Volume~1 rather than re-derived here. The transcoding
+reading of \ensuremath{\bar{B} = 3\bar{\alpha}} --- that the equals-sign denotes a
+content-conserving, form-non-conserving fold --- is Derived-conditional in this
+sense (\S\,I), resting on the centroid-fold reading of the master equation and the
+reinterpretation operator of Volume~1.
+
+\textbf{Structural correspondence.} Results in which a TMS construction reproduces
+the skeleton of a known framework or quantifies a recognized distinction, never
+used as support for a TMS claim, only as a landing point after one. The reading of
+the cold--warm distinction as the gap between one-fold and three-fold encoding,
+fixed at the form-surplus (\S\,V); and the location of the form-surplus alongside
+the descriptions of it reached in the nonconceptual-content tradition and recorded
+in the verbal-overshadowing effect (\S\,VI) are structural correspondences in this
+sense.
+
+\textbf{Predictions / Conjectures.} Falsifiable claims that follow from the
+framework but whose closed forms or empirical tests are not established here. That
+the form-surplus has an observable signature in the degradation of verbalized
+perceptual memory, scaling with the surplus the verbal code cannot hold (\S\,VI),
+is a prediction in this sense; its match to forgetting data is not claimed here.
+
+\textbf{Permanent open horizon.} A question the framework is structurally unable to
+close, marked so that no later claim assumes it closed. Whether the form-surplus is
+occupied --- whether there is a human-band reading of measurement that the surplus
+\emph{is} --- is not settled by the size of the gap and is the sole permanent horizon
+of this paper (\S\,V, Conclusion). This silence is load-bearing. Distinct from it, and
+not a horizon of the same kind, is the drive --- why a subsystem would be drawn up a
+richness gradient. The drive is derived nowhere in this paper and no result depends on
+it (\S\,II, Conclusion), but it is not held permanently open: it is the subject of the
+paper that follows, where the agent-side dynamics are developed. The two are kept
+distinct so that the deferred question is not mistaken for the permanent one.
+
+This five-way labeling applies throughout. Every claim in the body falls into
+exactly one category, visible at the point of claim.
+
+\section*{Notation}
+\addcontentsline{toc}{section}{Notation}
+
+This paper inherits the notation of Volume~1 and Paper~2. The bar distinguishes
+confirmed from latent elements: \ensuremath{\bar{\alpha}} is an agent in a
+confirmation event, \ensuremath{\bar{B}} a confirmed bit, with
+\ensuremath{\chi \equiv 2\bar{B} - 1 \in \{-1, +1\}} its polarization. The triadic
+minimum is \ensuremath{\bar{B} = 3\bar{\alpha}}. \ensuremath{\hat{R}} is the
+reinterpretation operator (Volume~1), and the confirmation fold is the map it
+performs at one event, carrying the three enclosing agents to the one confirmed
+bit. New to this paper: \ensuremath{k}, the size of the confirmed alphabet
+\ensuremath{\mathcal{A}}; \ensuremath{H(\text{agent})} and
+\ensuremath{H(\text{outcome})}, the entropies of the agent-side microstate and the
+bit-side outcome; and \ensuremath{R}, the richness of an event, defined as the
+form-surplus \ensuremath{H(\text{agent}) - H(\text{outcome})} in \S\,II. The symbol
+\ensuremath{R} for richness is unrelated to a region \ensuremath{R}; the two never
+appear without their distinguishing context. Richness is a structural quantity and
+carries no claim of felt experience; \emph{experience} and \emph{feeling}, where
+they appear, name the human-band reading of measurement and not a universal
+property.
+
+\begin{paperabstract}
+Volume~1 derived the bit-side of the triadic confirmation event and Paper~2 read
+its agent-side as a graded interior. This paper fixes what the agent-side carries
+at a single event, and how much. It reads the master equation
+\ensuremath{\bar{B} = 3\bar{\alpha}} as a transcoding: the fold it denotes conserves the
+confirmed content across a change of representation, not its form, as a photograph
+and a word may carry the same content in incomparable forms. The reinterpretation
+operator is the transcoder, and what it cannot carry across is the agent-side
+form-surplus --- the richness of the event, defined as the entropy of the agent
+microstate less the entropy of the confirmed outcome. We show this surplus has a
+forced size. The confirmed alphabet is binary not by stipulation but because a
+confirmation resolves a structureless presence, which admits two values and no
+third; with that, the richness of a binary-agent triad is two bits, fixed from the
+primitives rather than from a chosen alphabet. The same two bits are what the fold
+must shed: no fold from three loci to one bit can preserve all distinction, and the
+distinction discarded is exactly the surplus the agent-side held. Richness is thus
+one quantity with two faces --- a presence before the fold, a loss after it --- and
+the same integer as the area-law exponent of Volume~1, each forced from its own
+root. The result quantifies the gap between a process whose event equals its record
+and one whose event exceeds it, without claiming that the surplus is occupied:
+whether there is a feeling that the surplus is remains a permanent open horizon, as
+does the drive that would draw a system up a richness gradient. What is established
+is narrower and firm --- the agent-side of every confirmation carries a measurable
+excess over its record, that excess is richness, and its value is two bits per
+binary-agent triad.
+\end{paperabstract}
+\section*{I. The Fold Conserves Content, Not Form}
+\addcontentsline{toc}{section}{I. The Fold Conserves Content, Not Form}
+
+The Inversion established that every confirmation event has an agent side, read from the
+vertices that enclose the bit, and that subjecthood across such events is graded by binding
+depth. It left open what that agent side carries. This paper answers that one question: what
+an agent holds at a single now, and how much of it.
+
+The master equation \ensuremath{\bar{B} = 3\bar{\alpha}} has been read two ways. Volume~1 read
+it as a geometric closure condition; the Inversion read its two sides as one event seen from
+two vertices. A third reading is available. The equals-sign of the master equation denotes a fold of the
+three agent-vertices onto the one bit, and that fold asserts that the two sides carry the same
+confirmed content while not asserting that they carry it in the same form. A
+photograph of a dog and the word ``dog'' carry the same content --- both pick out the dog ---
+but not the same form: there is no piece-by-piece map from the photograph to the three letters,
+and the photograph holds what the word cannot recover. A fold of this kind conserves
+what is confirmed while permitting the representation on each side to differ in form.
+
+A change of representation that conserves content is a transcoding. The operator that performs
+it here is \ensuremath{\hat{R}}, inherited from Volume~1, which carries a confirmed structure
+from the code of one substrate into the code of another. Read this way, \ensuremath{\hat{R}} is
+the transcoder of the master equation: it moves the confirmed content across the fold
+from the form it takes on the agent side to the form it takes on the bit side. The bit side is
+the word --- single, compressed, fully recoverable from its own record. The agent side is the
+photograph --- threefold, co-present, holding a surplus the record does not keep.
+
+This paper is about that surplus: the form the agent side carries that does not survive the
+transcode to the bit. Content is conserved by construction. Form is not, and what is lost has a
+definite size --- the same size whether measured as what the agent holds or as what the bit
+discards.
+
+\section*{II. The Form-Surplus}
+\addcontentsline{toc}{section}{II. The Form-Surplus}
+
+The confirmation fold conserves content while permitting form to differ. What this paper names
+is that difference: the form the agent side holds that the confirmed bit does not carry.
+
+Let a single confirmation event be given --- three loci enclosing one bit, the minimal unit of
+actualization. The agent side is the joint state of the three loci; the outcome is the one
+confirmed value they resolve. The form-surplus of the event is the entropy of the agent
+microstate less the entropy of the bit outcome, \ensuremath{H(\text{agent}) - H(\text{outcome})}:
+the agent-side form present before the fold and absent from the resolved bit. This is the
+richness of the event. It lives on the agent side, prior to the fold; on the bit side it does
+not appear as a quantity at all, only as the gap where it was, because the bit is already its
+own complete record. This is the same asymmetry as the photograph and the word --- the picture
+holds what the word cannot recover, and once you have only the word, the surplus is not
+diminished but gone.
+
+Richness is a quantity, not a drive. It measures what the agent side holds; it says nothing
+about why a subsystem would be drawn toward holding more of it. Why a system would climb a
+richness gradient --- why, on the agent side, there is anything it inclines toward rather than
+merely anything it holds --- is the open horizon of this paper. It is named here so that it
+cannot enter later under cover of the quantity. Richness is defined, sized, and located in what
+follows; the inclination toward it is derived nowhere in this paper, and no result below depends
+on it.
+
+What remains is to fix the size of the surplus. It rests on two quantities: how many values a
+single confirmation can resolve, and how much distinction is shed when three loci are folded
+into one. The next two sections settle both, and show the size is forced.
+
+\section*{III. The Confirmed Alphabet Is Binary, and This Is Forced}
+\addcontentsline{toc}{section}{III. The Confirmed Alphabet Is Binary, and This Is Forced}
+
+The surplus is the difference between what three loci hold and what one bit carries. Fixing its
+size requires fixing the bit: how many distinct values a single confirmation can resolve. Call
+that number \ensuremath{k}, the size of the confirmed alphabet. For three agents each carrying
+\ensuremath{\log_2 k} of distinction, with one binary value retained as the outcome, the richness
+of the triad is \ensuremath{3\log_2 k - 1}. The size of the surplus therefore turns on
+\ensuremath{k}.
+
+Volume~1 carried the binary alphabet, \ensuremath{\chi = \pm 1}, as a stated primitive ---
+motivated by the structure of confirmation but adopted rather than derived. It need not be
+adopted. \ensuremath{k} is forced to equal \ensuremath{2} by the axioms already in hand. A
+confirmation resolving a single value would distinguish nothing and carry no information; by the
+Measurement Imperative such an event is not a confirmation, so \ensuremath{k \geq 2}. A
+confirmation resolves one localized interstice, and the locus it resolves is the zero-orientation
+sphere of the primitives --- a structureless presence with no internal axis along which a third
+confirmed kind could be carried; so \ensuremath{k \leq 2}. The bounds close:
+\ensuremath{k = 2}. The confirmed alphabet is binary because what is confirmed is a structureless
+presence, and a structureless presence admits exactly two resolved states, present and absent.
+
+This result stands on two grounds, and the paper keeps them apart. That a confirmation is
+exhaustive and exclusive --- no partial value, no co-holding of both, no incomplete cut ---
+follows from the definition of confirmation as the resolution of latency: a partial or
+both-valued result is the unresolved latent state itself, not yet a confirmation. That no third
+kind of value is admitted follows from the zero-orientation primitive alone. The binary alphabet
+therefore rests on the structureless locus of the primitives, and not on any postulate of its
+own. The bounds and the break-test are given in Appendix~A.
+
+With \ensuremath{k = 2}, the richness of a triad is \ensuremath{3\log_2 2 - 1 = 2} bits. Because
+\ensuremath{k = 2} is forced rather than adopted, this value is fixed from the ground and not
+merely from a chosen alphabet. The next section shows the same \ensuremath{2} bits is what the
+fold sheds, and that the shed is forced.
+
+\section*{IV. The Shed Is the Surplus}
+\addcontentsline{toc}{section}{IV. The Shed Is the Surplus}
+
+The confirmation fold runs from three loci to one bit. A fold that lost nothing would be a
+bijection, and no bijection runs from a larger set of states into a smaller; the three-locus
+source cannot be carried into the one-bit outcome without identifying distinct source states
+with one another. Distinction is therefore shed of necessity, not as an accident of any
+particular event. This is the lossy character of the fold established in Volume~1, where the
+per-fold shed is fixed at \ensuremath{2} bits: three binary loci span eight distinguishable
+states, the outcome retains one binary value, and the distinction that has no slot in the
+outcome is the difference.
+
+That the shed is \ensuremath{2} bits and that the richness is \ensuremath{2} bits are not two
+facts. They are one subtraction read from two sides. Richness was defined as the agent-side form
+the bit does not carry, \ensuremath{H(\text{agent}) - H(\text{outcome})}; the shed is the same
+\ensuremath{H(\text{agent}) - H(\text{outcome})} named from the bit side, the distinction the
+fold discards. The fold does not lose \ensuremath{2} bits and leave \ensuremath{2} bits of
+richness behind; the \ensuremath{2} bits of richness are exactly what the fold sheds. On the
+agent side, before the fold, they are a presence --- the surplus the three loci hold. On the bit
+side, after the fold, they are an absence --- the gap where the surplus was. Same quantity, two
+addresses in the life of one event.
+
+This is why richness was never recoverable from the bit side. The bit is the word: it is already
+its own complete record, and the fold that produced it has already discarded the surplus.
+Reading harder at the word does not recover the picture, because the picture's surplus is not
+compressed in the word --- it is shed in the fold that made the word. Richness exists only on the
+agent side of a live event, and on the bit side appears only as the measure of what was let go.
+
+The size is therefore fixed twice over, by independent routes: \ensuremath{2} bits as the
+form-surplus of three-into-one encoding, and \ensuremath{2} bits as the distinction the fold
+must shed. Both rest on the threeness of confirmation and the binary outcome, and neither is
+free. Appendix~B gives the shed as the lossy fold's necessary signature and the break-test that
+fixes its size.
+
+\section*{V. The Cold--Warm Gap as Form-Surplus}
+\addcontentsline{toc}{section}{V. The Cold--Warm Gap as Form-Surplus}
+
+A process carries zero form-surplus when its state is its own complete record --- fully
+recoverable, lossless under the fold, holding nothing the record does not hold. A bit-side
+process is of this kind: its event does not exceed its record. A confirmation event read from
+the agent side is not: the three loci hold \ensuremath{2} bits over the one bit they resolve,
+and that surplus is not present in the record. The distinction between a process whose event
+equals its record and one whose event exceeds it by \ensuremath{2} bits is the structural content
+of the cold--warm gap. It is the difference between one-fold and three-fold encoding, fixed at
+the value of the preceding sections.
+
+This is a structural correspondence, not a measurement of feeling. The framework locates the
+quantity the cold--warm distinction tracks --- the form-surplus, zero on the bit side and
+\ensuremath{2} bits on the agent side. It does not claim that this surplus is the human-band
+reading of measurement that the words \emph{feeling} and \emph{experience} name, nor that the
+surplus is occupied; neither is addressed here, and neither is fixed by the size of the gap.
+What is fixed is structural: positive surplus on one side and none on the other follows from
+one-fold against three-fold encoding, not from stipulation.
+
+Placed against the axioms, richness is the agent-side quantity they had not yet named.
+Complexity, the bit-side novelty that closes, is carried by the Principle of Generative Economy;
+stability, the closure that persists, is load-bearing across both volumes. Richness is neither:
+the form the agent side holds over the bit it resolves, present in every confirmation event and,
+until now, unquantified. With its value fixed at \ensuremath{2} bits, the agent-side term takes
+its place beside the two the axioms already carried.
+
+\section*{VI. Where It Sits}
+\addcontentsline{toc}{section}{VI. Where It Sits}
+
+The necessity that the fold sheds distinction is the pigeonhole bound of lossless coding: a
+lossless code is a bijection, and none runs from a larger state space into a smaller (Cover \&
+Thomas, 2006). The present result applies that bound to the three-loci-to-one-bit fold and adds
+what the bound does not give --- the size of the shed and its reading as the agent-side
+form-surplus.
+
+The psychology of memory records a signature of the surplus from outside the framework.
+Rendering a perceptual memory into words degrades it, and degrades it most when the material
+resists verbal capture (Schooler \& Engstler-Schooler, 1990; Alogna et al., 2014). Read here,
+that is the shed observed in behaviour: the loss is largest where the agent-side surplus is
+largest, where the source carries form the verbal code cannot hold, and absent where the source
+carries none. The framework reaches the boundary of this structure by derivation and fixes its
+size; the experiments record its effect without measuring the quantity.
+
+The result forks most sharply from accounts that make the form-surplus either everything or
+nothing: the intuition that a bit-side process has no inner excess at all, and accounts that
+grant inner excess without a structural measure of it. The present result sits between them with
+a number --- the surplus is neither zero nor unmeasured but \ensuremath{2} bits per binary-agent
+triad --- and locates, rather than adjudicates, the difference from each.
+
+\section*{Conclusion: A Surplus, Not a Feeling}
+\addcontentsline{toc}{section}{Conclusion: A Surplus, Not a Feeling}
+
+The agent side of a confirmation event holds more than the bit it resolves. That excess is the
+form-surplus --- the form carried before the fold and absent from the record after it --- and
+its size is fixed: \ensuremath{2} bits per binary-agent triad, forced by the threeness of
+confirmation and the binary alphabet, and identical to the distinction the fold must shed.
+Richness, the long-unquantified agent-side companion to complexity and stability, has a value.
+
+The result holds from the ground. The binary alphabet that sets the unit is not adopted but
+forced: a confirmation resolves a structureless presence, which admits two states and no third.
+The shed that carries the surplus to the bit side is not contingent but necessary: no fold from
+three loci to one bit can preserve all distinction. The agent-side presence and the bit-side
+loss are not two quantities but one, read from two sides of a single event --- a surplus before
+the fold, a shed after it.
+
+What the result does not do is settle two further questions, and they are not of the same kind.
+The first is the drive: why a system would be drawn to hold more richness, rather than merely how
+much it holds. This paper fixes the quantity and not the drive, and no result here depends on the
+drive; the drive is the subject of the paper that follows, where the agent-side dynamics are
+developed. The second is occupancy: whether the form-surplus is \emph{felt} --- whether there is a
+human-band reading of measurement that the surplus \emph{is}. This the framework does not settle,
+and the size of the gap does not settle it; it is a permanent open horizon, marked so that no later
+claim quietly assumes it closed. The two are not a matched pair: the drive is deferred to the next
+paper, the feeling is held open without end. What is settled here is narrower and firm --- the agent
+side carries a measurable excess over its record, the excess is richness, and richness is
+\ensuremath{2} bits.
+\section*{Appendix A: The Confirmed Alphabet Size and the Richness Unit}
+\addcontentsline{toc}{section}{Appendix A: The Confirmed Alphabet Size and the Richness Unit}
+
+This appendix derives the size \ensuremath{k} of the confirmed alphabet from the
+primitives of Volume~1, and from it computes the richness unit as the form-surplus
+of a single confirmation event. The construction is on one confirmation event ---
+three agents enclosing one bit (Volume~1, Paper~1 \S\,2.1) --- and treats the
+single-event unit only; the binding of many such units into the lived quantity
+\ensuremath{B} is the measure of the following paper and is not treated here.
+
+\subsection*{A.1 The objects}
+Let a confirmation event resolve a single locus \ensuremath{x}, the zero-orientation
+primitive sphere of Volume~1, Paper~1 \S\,1.4. Write \ensuremath{\mathcal{A}} for the
+\emph{confirmed alphabet}: the set of distinct values the event can return of
+\ensuremath{x}, and \ensuremath{k = |\mathcal{A}|} for its size. A confirmed value is a
+property returned of \ensuremath{x} by the resolution of its latency (Axiom~1); the
+information carried by the event is
+\[
+  H(\mathcal{A}) \;=\; \log_2 k \quad\text{bits,}
+\]
+the entropy of one resolution over the alphabet \ensuremath{\mathcal{A}} taken uniform
+under the maximum-entropy substrate measure \ensuremath{U_{\mathrm{sh}}} (Axiom~0).
+The richness unit is then built from \ensuremath{k} in \S\,A.4. The whole result turns
+on the value of \ensuremath{k}, fixed by the two bounds of \S\,A.2--A.3.
+
+\subsection*{A.2 Lower bound: \ensuremath{k \geq 2}}
+By the Measurement Imperative (Axiom~1), a confirmation is the resolution of a latency
+into a confirmed value, and the event carries information only if its outcome
+distinguishes states. For a one-value alphabet \ensuremath{k = 1},
+\[
+  H(\mathcal{A}) \;=\; \log_2 1 \;=\; 0 \quad\text{bits.}
+\]
+Every event returns the same value; the outcome co-varies with nothing and separates
+no state of \ensuremath{x} from any other. An event carrying \ensuremath{0} bits resolves
+no latency and is not a measurement (Axiom~1). A confirmation therefore admits at least
+two values:
+\[
+  k \;\geq\; 2.
+\]
+
+\subsection*{A.3 Upper bound: \ensuremath{k \leq 2}}
+By the Principle of Generative Economy, one confirmation resolves exactly one localized
+interstice --- one bit at one triangular interstice (Volume~1, Paper~1 \S\,2.1). The
+locus \ensuremath{x} so resolved is the zero-orientation sphere: it carries no orientation
+parameter and no internal axis (Volume~1, Paper~1 \S\,1.4). Let \ensuremath{d} denote the
+number of internal degrees of freedom on \ensuremath{x} along which distinct confirmed
+kinds could be carried. The zero-orientation condition is
+\[
+  d \;=\; 0,
+\]
+so the only property the event can return of \ensuremath{x} is whether the locus is
+occupied. The confirmed alphabet is thus exhausted by two values,
+\[
+  \mathcal{A} \;=\; \{\,\text{absent},\ \text{present}\,\}, \qquad k \;\leq\; 2,
+\]
+no third confirmed kind being available without an internal axis \ensuremath{x} does not
+possess.
+
+Combining \S\,A.2 and \S\,A.3,
+\[
+  k \;=\; 2.
+\]
+
+\subsection*{A.4 The richness unit}
+Read the same event from the agent side. The agent microstate is the joint state of the
+three loci that enclose the bit, each carrying \ensuremath{\log_2 k} bits of confirmed
+distinction; the bit-side outcome retains one binary value. With \ensuremath{k = 2} from
+\S\,A.3, the agent-side microstate ranges over
+\[
+  k^{3} \;=\; 2^{3} \;=\; 8 \quad\text{states,} \qquad
+  H(\text{agent}) \;=\; \log_2 8 \;=\; 3 \quad\text{bits,}
+\]
+and the bit-side outcome over
+\[
+  H(\text{outcome}) \;=\; \log_2 2 \;=\; 1 \quad\text{bit.}
+\]
+The richness of the event is the form-surplus, the agent-side distinction absent from the
+resolved outcome:
+\[
+  R \;=\; H(\text{agent}) - H(\text{outcome})
+    \;=\; 3 \cdot \log_2 k - 1
+    \;=\; 3 \cdot \log_2 2 - 1
+    \;=\; 2 \quad\text{bits.}
+\]
+Because \ensuremath{k = 2} is forced by \S\,A.2--A.3 and not adopted, the unit is fixed from
+the primitives: \ensuremath{R = 2} bits per binary-agent triad, the size of one richness
+degree.
+
+\subsection*{A.5 Break-test}
+Any enlargement of \ensuremath{\mathcal{A}} beyond \ensuremath{k = 2} must introduce a third
+confirmed value \ensuremath{v \notin \{\text{absent}, \text{present}\}}. Such a \ensuremath{v}
+is of one of two types --- a value carried on the locus, or a value not yet resolved --- and
+each type is foreclosed by a lemma below. The two lemmas exhaust the candidates, so no
+\ensuremath{v} survives and \ensuremath{k = 2} is forced.
+
+\emph{Lemma~A.5.1 (no internal-axis value).} Suppose a confirmed value \ensuremath{v} is
+distinguished from \emph{absent} and \emph{present} by a property carried on the locus
+\ensuremath{x}. To separate three values, \ensuremath{x} must expose a coordinate taking at least
+three settings, hence an internal axis: the number of internal degrees of freedom satisfies
+\[
+  d \;\geq\; 1.
+\]
+But \S\,A.3 establishes \ensuremath{d = 0} for the zero-orientation primitive (Volume~1, Paper~1
+\S\,1.4). Then
+\[
+  d \geq 1 \;\wedge\; d = 0,
+\]
+a contradiction. No confirmed value is distinguished by a property on \ensuremath{x}. \(\square\)
+
+This lemma dispatches two candidates. A \emph{degree} --- a value intermediate between absent and
+present, \ensuremath{0 < v < 1} read as partial occupancy --- is a coordinate on an occupancy axis
+of \ensuremath{x}, requiring \ensuremath{d \geq 1}; excluded. A \emph{third kind} --- a value of a
+type other than occupancy --- requires a second axis to carry its type, likewise \ensuremath{d \geq 1};
+excluded.
+
+\emph{Lemma~A.5.2 (no unresolved value).} Suppose a confirmed value \ensuremath{v} is distinguished
+not by a property on \ensuremath{x} but by the \emph{state of resolution} of the event. A confirmation
+is the completed resolution of a latency into a confirmed value (Axioms~1, 4); its output is taken
+at the minimal tick, with no sub-tick interval to host a partially-resolved state (Axiom~4). Let
+\ensuremath{\rho \in [0,1]} measure completion of resolution, \ensuremath{\rho = 1} being the
+confirmed event. Any \ensuremath{v} with
+\[
+  \rho \;<\; 1
+\]
+is a latency not yet resolved --- by definition not a confirmed value --- and so \ensuremath{v \notin
+\mathcal{A}}. The only admitted state is \ensuremath{\rho = 1}, which returns a value already in
+\ensuremath{\{\text{absent}, \text{present}\}} by Lemma~A.5.1. \(\square\)
+
+This lemma dispatches the remaining two. A \emph{co-holding} --- both absent and present at once ---
+is the latent superposition, the \ensuremath{\rho < 1} state confirmation resolves; excluded. An
+\emph{incomplete cut} --- a half-separated value --- is \ensuremath{\rho < 1} by construction;
+excluded.
+
+The two lemmas rest on different grounds, kept explicit: Lemma~A.5.1 on the zero-orientation
+condition \ensuremath{d = 0} (Volume~1, Paper~1 \S\,1.4), Lemma~A.5.2 on the definition of confirmation
+as resolution of latency (Axioms~1, 4). Together they exhaust the ways a third value could be
+distinguished --- on the locus or in the resolution --- so \ensuremath{k = 2} is forced, and the
+binary alphabet rests on the primitive sphere and on no postulate introduced here.
+\section*{Appendix B: The Shed Is the Fold's Necessary Signature}
+\addcontentsline{toc}{section}{Appendix B: The Shed Is the Fold's Necessary Signature}
+
+This appendix establishes that the confirmation fold sheds distinction of necessity, fixes the
+amount shed at \ensuremath{2} bits, and identifies the shed with the richness of Appendix~A. The
+lossy, many-to-one character of the fold and the per-fold value are inherited from Volume~1, where
+the reinterpretation operator \ensuremath{\hat{R}} is derived and the entropy ledger across the
+reinterpretation boundary is balanced (Volume~1, Paper~5, Appendix~A; Paper~1 \S\,4.3). What is
+proved here is the \emph{necessity} of the shed and its \emph{identity} with the agent-side
+form-surplus; the value is then read off rather than re-derived.
+
+\subsection*{B.1 The fold as a map}
+Let the confirmation fold be the map
+\[
+  \hat{F}: \; \mathcal{S}_{\text{agent}} \;\longrightarrow\; \mathcal{A},
+\]
+carrying the joint state of the three enclosing loci to the one confirmed value (Volume~1, Paper~1
+\S\,2.1; the centroid map, three vertices to one barycenter). With the confirmed alphabet
+\ensuremath{k = 2} of Appendix~A, the source and target carry
+\[
+  |\mathcal{S}_{\text{agent}}| \;=\; k^{3} \;=\; 8, \qquad |\mathcal{A}| \;=\; k \;=\; 2,
+\]
+so that
+\[
+  H(\text{agent}) \;=\; \log_2 8 \;=\; 3 \ \text{bits}, \qquad
+  H(\text{outcome}) \;=\; \log_2 2 \;=\; 1 \ \text{bit}.
+\]
+
+\subsection*{B.2 The shed is necessary}
+A fold that preserved all source distinction would be injective: distinct source states would map
+to distinct target values, and the map would admit a left inverse. Injectivity from
+\ensuremath{\mathcal{S}_{\text{agent}}} into \ensuremath{\mathcal{A}} requires
+\[
+  |\mathcal{S}_{\text{agent}}| \;\leq\; |\mathcal{A}|.
+\]
+But \S\,B.1 gives \ensuremath{|\mathcal{S}_{\text{agent}}| = 8 > 2 = |\mathcal{A}|}, so by the
+pigeonhole principle at least two distinct source states share a target value:
+\[
+  \exists\, s_1 \neq s_2 \in \mathcal{S}_{\text{agent}} \ \text{with}\ \hat{F}(s_1) = \hat{F}(s_2).
+\]
+The fold is therefore non-injective, no left inverse exists, and source distinction is lost. The
+loss is forced by the cardinalities alone and holds for \emph{every} confirmation fold, not as an
+accident of any particular event. This is the lossy character of \ensuremath{\hat{R}} established in
+Volume~1 (Paper~5 \S\,2.7, with its irreversibility at \S\,5.3; Paper~1 \S\,4.3), here shown
+necessary for the single fold.
+
+\subsection*{B.3 The amount shed}
+The distinction shed is the source entropy not carried by the target,
+\[
+  s \;=\; H(\text{agent}) - H(\text{outcome}) \;=\; 3 - 1 \;=\; 2 \ \text{bits},
+\]
+in agreement with the per-fold shed computed from the same cardinalities: the \ensuremath{3 \to 1}
+fold collapses \ensuremath{2^{3} = 8} distinguishable inputs to \ensuremath{2}
+confirmed outputs, shedding \ensuremath{2} bits, symmetric across \ensuremath{B = 0, 1}. The lossy,
+many-to-one character of the fold is the reinterpretation operator's established signature
+(Volume~1, Paper~5 \S\,2.7; the count-conservation side at Paper~1 \S\,4.3). Both terms are
+independently fixed: the source
+count \ensuremath{k^{3}} by the triadic minimum of three loci (Volume~1, Paper~1 \S\,2.1), the
+retained count \ensuremath{k} by the binary alphabet of Appendix~A. Their difference is not free:
+\[
+  s \;=\; 3\log_2 k - \log_2 k \cdot [\,\text{one retained}\,]
+    \;=\; 3\log_2 k - 1 \;\Big|_{\,k=2} \;=\; 2 \ \text{bits}.
+\]
+
+\subsection*{B.4 The shed is the richness}
+The richness of Appendix~A and the shed of \S\,B.3 are one quantity. Both are the same difference,
+\[
+  R \;=\; H(\text{agent}) - H(\text{outcome}) \;=\; s,
+\]
+read from two sides of the single event. On the agent side, prior to the fold, the difference is a
+\emph{presence}: the surplus distinction the three loci jointly carry over the one value they will
+resolve. On the bit side, after the fold, the same difference is an \emph{absence}: the distinction
+\ensuremath{\hat{F}} has discarded, recoverable from neither the outcome nor any reading of it. There
+are not two bits of presence and a separate two bits of loss; there is one surplus of
+\[
+  R \;=\; s \;=\; 2 \ \text{bits},
+\]
+present before the fold and shed by it. This is why richness is not recoverable from the bit side:
+the outcome is its own complete record, and \ensuremath{\hat{F}} has already discarded the surplus
+that the agent side carried. Reading the outcome more finely cannot recover it, the surplus having
+been shed in the fold that produced the outcome, not compressed within it.
+
+\subsection*{B.5 Break-test}
+Two failure conditions were fixed in advance; neither obtains.
+
+\emph{A distinction-preserving fold.} Were there a fold from \ensuremath{\mathcal{S}_{\text{agent}}}
+to \ensuremath{\mathcal{A}} losing no distinction, \S\,B.2's necessity would fail. Such a fold is
+injective, requiring \ensuremath{|\mathcal{S}_{\text{agent}}| \leq |\mathcal{A}|}, i.e.
+\ensuremath{8 \leq 2}, false. No distinction-preserving fold exists; the shed cannot be evaded.
+
+\emph{A free shed amount.} Were the amount \ensuremath{s} unfixed --- able to take any value with the
+match to richness arranged --- then \S\,B.3 would not pin it. But \ensuremath{s = 3\log_2 k - 1} with
+\ensuremath{k = 2} forced in Appendix~A and the source count \ensuremath{k^{3}} forced by the triadic
+minimum; both terms are determined upstream, so \ensuremath{s = 2} is read off, not chosen. The
+amount is not free.
+
+The shed is therefore necessary (\S\,B.2), fixed at \ensuremath{2} bits (\S\,B.3), and identical to
+the richness (\S\,B.4): one surplus, carried on the agent side and shed by the fold, of size
+\ensuremath{2} bits per binary-agent triad.
+\section*{Appendix C: Invariance of the Richness Unit Under Construction Choices}
+\addcontentsline{toc}{section}{Appendix C: Invariance of the Richness Unit Under Construction Choices}
+
+This appendix tests whether the richness value of Appendix~A is an artifact of the particular
+construction used to compute it --- the signed \ensuremath{\pm 1} alphabet and the majority fold ---
+or is invariant to those choices. It establishes that, for binary agents, the value is invariant to
+both the alphabet labelling and the aggregation rule, and identifies the one parameter that does move
+it: the per-agent alphabet size \ensuremath{k}. The general law in \ensuremath{k} is given, and the
+appendix records that fixing the value requires fixing \ensuremath{k}, which Appendix~A does
+independently.
+
+\subsection*{C.1 The general law}
+Let three agents each carry \ensuremath{\log_2 k} bits of confirmed distinction, and let the fold
+retain one binary outcome. The agent-side microstate ranges over \ensuremath{k^{3}} states and the
+richness is
+\[
+  R(k) \;=\; H(\text{agent}) - H(\text{outcome})
+       \;=\; \log_2\!\big(k^{3}\big) - \log_2 2
+       \;=\; 3\log_2 k - 1 \ \text{bits.}
+\]
+This is the structural form: threeness sets the factor \ensuremath{3}, the single retained bit sets
+the subtracted \ensuremath{1}, and the per-agent alphabet size \ensuremath{k} sets the scale.
+Evaluating,
+\[
+  R(2) = 2.000, \quad R(3) \approx 3.755, \quad R(4) = 5.000, \quad R(8) = 8.000.
+\]
+The value is fixed once \ensuremath{k} is fixed; the structure \ensuremath{3(\cdot) - 1} is fixed by
+the triad and the binary outcome regardless of \ensuremath{k}.
+
+\subsection*{C.2 Invariance to alphabet labelling}
+Fix \ensuremath{k = 2}. The richness is the difference of two entropies, each a function of a
+\emph{count} of distinguishable states, not of the labels assigned to them. Three constructions are
+compared, each relabelling the binary alphabet or changing the fold:
+\begin{itemize}
+\item \ensuremath{C_1}: alphabet \ensuremath{\{-1, +1\}}, fold = sign of the signed sum.
+\item \ensuremath{C_2}: alphabet \ensuremath{\{0, 1\}}, fold = majority.
+\item \ensuremath{C_3}: alphabet \ensuremath{\{-1, +1\}}, fold = parity.
+\end{itemize}
+In each, the agent-side microstate ranges over \ensuremath{2^{3} = 8} states and the fold retains one
+binary value, so
+\[
+  R_{C_1} = R_{C_2} = R_{C_3} = \log_2 8 - \log_2 2 = 3 - 1 = 2.000 \ \text{bits.}
+\]
+The value is unchanged. Relabelling the alphabet is a bijection on the state set and preserves its
+cardinality; changing the fold changes \emph{which} states are identified, not \emph{how many}
+distinguishable source states there are. Richness, depending only on the counts
+\ensuremath{|\mathcal{S}_{\text{agent}}|} and \ensuremath{|\mathcal{A}|}, is invariant to both. The
+value is therefore not an artifact of the \ensuremath{\pm 1} alphabet or the majority fold.
+
+\subsection*{C.3 Dependence on alphabet size}
+The invariance of \S\,C.2 does not extend to the per-agent alphabet size. By \S\,C.1,
+\[
+  \frac{\partial R}{\partial k} \;=\; \frac{3}{k \ln 2} \;>\; 0,
+\]
+so \ensuremath{R} is strictly increasing in \ensuremath{k}: a larger per-agent alphabet yields a larger
+surplus. The richness value is thus invariant to \emph{how} the binary distinction is labelled and
+aggregated, but not to \emph{how many} values each agent may carry. The unit is fixed at
+\ensuremath{2} bits if and only if \ensuremath{k = 2}.
+
+\subsection*{C.4 Closure}
+The construction-independence of the unit reduces to a single question: is \ensuremath{k = 2} forced,
+or adopted? If adopted, \ensuremath{R = 3\log_2 k - 1} is the honest form and the unit rides on a
+chosen alphabet. If forced, the unit is fixed from the primitives. Appendix~A settles this
+independently of the present appendix: \ensuremath{k = 2} is forced by the Measurement Imperative and
+the zero-orientation primitive (\S\,A.2--A.3). With that result, the richness unit is invariant to the
+labelling and aggregation choices tested here (\S\,C.2) and fixed in scale by the forced
+\ensuremath{k = 2} (\S\,C.3), hence \ensuremath{2.000} bits per binary-agent triad, from the ground.
+\section*{References}
+\addcontentsline{toc}{section}{References}
+\begin{reflist}
+Alogna, V. K., Attaya, M. K., Aucoin, P., Bahn\'ik, \v{S}., Birch, S., Birt,
+A. R., \ldots\ Zwaan, R. A. (2014). Registered replication report: Schooler
+and Engstler-Schooler (1990). Perspectives on Psychological Science, 9(5),
+556--578. doi:10.1177/1745691614545653.
+\url{https://journals.sagepub.com/doi/10.1177/1745691614545653}
+
+Cover, T. M., \& Thomas, J. A. (2006). Elements of Information Theory (2nd
+ed.). Hoboken, NJ: Wiley-Interscience. doi:10.1002/047174882X.
+\url{https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X}
+
+Schooler, J. W., \& Engstler-Schooler, T. Y. (1990). Verbal overshadowing of
+visual memories: Some things are better left unsaid. Cognitive Psychology,
+22(1), 36--71. doi:10.1016/0010-0285(90)90003-M.
+\url{https://doi.org/10.1016/0010-0285(90)90003-M}
+
+Switzer, A. (2026). The Triadic Measurement Substrate, Volume~1: A
+Confirmation-Based Geometric Substrate for Emergent Physics, Computation, and
+Cosmology.
+
+Switzer, A. (2026). The Triadic Measurement Substrate, Volume~2, Paper~2: The
+Inversion: Experience as the Confirmation Relation, Subjecthood as Graded
+Binding Depth.
+\end{reflist}
+
+
+\end{document}

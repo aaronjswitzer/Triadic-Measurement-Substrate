@@ -1,0 +1,1088 @@
+\documentclass[11pt,oneside]{report}
+% ======================================================================
+%  THE TRIADIC MEASUREMENT SUBSTRATE --- COMPLETE CORPUS (Volumes 1 & 2)
+%  Aaron Switzer, 2026
+%  Single-file build. Compile: pdflatex x3 (third pass settles the TOC).
+% ======================================================================
+% ======================================================================
+%  TMS Volume 1 -- shared preamble
+%  Compiles with pdfLaTeX both locally and on Overleaf (no exotic fonts).
+% ======================================================================
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathptmx}            % Times text + math (widely available)
+\usepackage[scaled=0.90]{helvet} % sans for headings
+\usepackage{courier}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tocbibind}
+
+% ---- spacing -----------------------------------------------------------
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0.35em}
+\linespread{1.04}
+\setlist{leftmargin=1.6em,topsep=0.25em,itemsep=0.15em,parsep=0pt}
+
+% ---- theorem environments ---------------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}{Axiom}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{principle}[theorem]{Principle}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{prediction}[theorem]{Prediction}
+\newtheorem{property}[theorem]{Property}
+\newtheorem{postulate}[theorem]{Postulate}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+% ---- section heading look (unnumbered; author supplies the numbers) ----
+\titleformat{\section}[hang]{\normalfont\large\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsection}[hang]{\normalfont\normalsize\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsubsection}[hang]{\normalfont\normalsize\bfseries\itshape}{}{0pt}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.5em}
+\titlespacing*{\subsection}{0pt}{1.0em}{0.35em}
+\titlespacing*{\subsubsection}{0pt}{0.8em}{0.3em}
+
+% chapter (= each paper) heading
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\bfseries}
+  {}{0pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{10pt}{24pt}
+
+% ---- page-break quality: avoid stranded headings and orphaned/widowed lines ----
+% (applies to both volumes via the shared preamble)
+\widowpenalty=10000        % no single line at the top of a page
+\clubpenalty=10000         % no single line at the bottom of a page
+\displaywidowpenalty=10000 % same, around displayed equations
+\brokenpenalty=4000        % discourage page breaks right after a hyphenated line
+% titlesec: forbid a page break immediately after a heading (heading stranded at page foot)
+\usepackage{needspace}
+\usepackage{etoolbox}
+\pretocmd{\section}{\Needspace*{4\baselineskip}}{}{}
+\pretocmd{\subsection}{\Needspace*{3\baselineskip}}{}{}
+
+% ---- running heads -----------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape The Triadic Measurement Substrate}
+\fancyhead[R]{\small\itshape\nouppercase{\rightmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---- abstract / keywords / references list ----------------------------
+\newenvironment{paperabstract}
+  {\begin{center}\begin{minipage}{0.88\textwidth}\small
+   \noindent\textbf{Abstract.}\itshape\space}
+  {\end{minipage}\end{center}\vspace{0.4em}}
+
+\newcommand{\keywords}[1]{\noindent{\small\textbf{Keywords:} #1}\vspace{0.4em}}
+
+% per-paper APA reference list (hanging indent), kept as authored
+\newenvironment{reflist}
+  {\par\small\setlength{\parindent}{0pt}%
+   \setlength{\leftskip}{1.6em}\setlength{\parindent}{-1.6em}%
+   \setlength{\parskip}{0.4em}%
+   \raggedright\hyphenpenalty=50\exhyphenpenalty=50\relax
+   \sloppy}
+  {\par}
+
+% convenience
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\TMS}{\textsc{tms}}
+\hyphenation{con-fir-ma-tion sub-strate}
+\begin{document}
+
+\thispagestyle{empty}
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\sffamily\bfseries\Large The Triadic Measurement Substrate\par}
+\vspace{0.6cm}
+{\large $\bar{B} = 3\bar{\alpha}$\par}
+\vspace{1cm}
+{\sffamily\large Volume 2\par}
+\vspace{1.4cm}
+{\Large \bfseries Paper 2: The Inversion: Experience as the Confirmation Relation, Subjecthood as Graded Binding Depth\par}
+\vfill
+{\large Aaron Switzer\par}
+\vspace{0.4cm}
+{\large 2026\par}
+\vspace{1.2cm}
+{\small\itshape Excerpted from the complete two-volume corpus, \emph{The Triadic Measurement Substrate}. Full corpus and reproducibility package: \url{https://doi.org/10.5281/zenodo.22035422}\par}
+\end{titlepage}
+\cleardoublepage
+\pagenumbering{arabic}
+
+% ---------------- Volume 2 / P2_Inversion ----------------
+\chapter*{Paper 2}
+\markboth{Paper 2}{Paper 2}
+\addcontentsline{toc}{chapter}{Paper 2: The Inversion: Experience as the Confirmation Relation, Subjecthood as Graded Binding Depth}
+\begingroup\centering
+{\large\itshape The Inversion: Experience as the Confirmation Relation, Subjecthood as Graded Binding Depth\par}\vspace{0.8em}
+{\normalsize Aaron Switzer\par}
+{\small June 2026\par}
+\endgroup\vspace{1.0em}
+
+\noindent{\small\textbf{Keywords:} Triadic Confirmation, Agent Manifold, Russellian Monism, Combination Problem, Graded Subjecthood, Binding Depth, Integrated Information, Promotion Hierarchy, Now-Surface, Computational Irreducibility}\par\vspace{0.6em}
+
+\section*{Status of Results}
+\addcontentsline{toc}{section}{Status of Results}
+
+This paper distinguishes five categories of claim, each labeled where it
+appears in the text. The categories continue the labeling conventions
+established in Volume 1, extended with one category required by the
+agent-side reading and stated last.
+
+\textbf{Derived.} Results that follow from the five axioms, the
+Principle of Generative Economy, and \ensuremath{U_{\mathrm{sh}}} by explicit
+construction or proof, or from results already derived in Volume 1 by
+explicit inheritance. The two-dimensional now-surface as the active
+confirmation frontier, one dimension below the wake (\S\,III), and its
+sharply specified triangular geometry \ensuremath{\bar{B}} = \ensuremath{3\bar{\alpha}} (\S\,III)
+are derived in this sense, inheriting the geometry of Volume 1 Paper 1
+and the now-surface construction of Volume 2 Paper 1.
+
+\textbf{Derived-conditional.} Results forced by the Volume 1 closure and
+promotion machinery, resting on results internal to that machinery
+rather than on the bare axioms; referee-checkable against Volume 1, not
+re-derived here. The interior of the confirmation event read from the
+agents' side (\S\,I, \S\,II); the dissolution of the combination problem
+through agreement rather than fusion (\S\,II); the irreducibility of the
+now-surface within its own level via the Circuit Value Problem (\S\,III);
+the binding quantity \ensuremath{B} as depth-weighted, coherence-gated bound
+information across reflexively closed promotions, together with its
+monotonicity, continuity, and parameter-freedom (\S\,V); and the
+no-exclusion divergence from integrated information theory (\S\,VII) are
+Derived-conditional in this sense. The central construction of the paper
+--- the binding quantity of \S\,V --- is Derived-conditional throughout,
+never Derived, because it rests on the closure and promotion results of
+Volume 1 Papers 3 through 5.
+
+\textbf{Structural correspondence.} Results in which a TMS construction
+faithfully reproduces the skeleton of a known framework without claiming
+reproduction of every feature of that framework, and never used as
+support for a TMS claim, only as a landing point after one. The filling
+of the Russellian-monist categorical slot by the confirmation event
+(\S\,II); the convergences with Wheeler's participatory universe and
+Whitehead's occasions of experience (\S\,II); the agreement-floor
+correspondence to Quantum Darwinism and the two-level-truth
+correspondence to Local Friendliness (\S\,IV) are structural
+correspondences in this sense.
+
+\textbf{Predictions / Conjectures.} Falsifiable claims that follow from
+the framework but whose closed forms or empirical tests are not
+established within this paper. The empirical detectability of nested
+subjects (\S\,VII); the off-band high-binding subjects predicted by the
+band argument (\S\,VI); and the structural criterion returned, in place
+of a verdict, for artificial substrates (\S\,VI) are predictions or
+conjectures in this sense.
+
+\textbf{Permanent open horizon.} A question the framework is
+structurally unable to close, marked explicitly so that no later claim
+quietly assumes it closed. Whether any graded subject \emph{feels} ---
+whether the interior at depth carries the lit character our own does ---
+is the sole such horizon in this paper (\S\,V, \S\,VII, Conclusion). The
+framework supplies the necessary structural conditions for a for-whom
+and certifies no phenomenal occupancy. This silence is load-bearing and
+is stronger than a crossing claim would be.
+
+This five-way labeling applies throughout the paper. Every claim in the
+body text falls into exactly one category, and every category's status
+is visible at the point of claim.
+
+\section*{Notation}
+\addcontentsline{toc}{section}{Notation}
+
+This paper inherits the notation of Volume 1. The bar distinguishes
+confirmed from latent elements: \ensuremath{\bar{\alpha}} is an agent
+participating in a confirmation event, \ensuremath{\bar{B}} a confirmed bit,
+with \ensuremath{\chi \equiv 2\bar{B} - 1 \in \{-1, +1\}} its polarization.
+The triadic minimum is \ensuremath{\bar{B} = 3\bar{\alpha}} in two
+dimensions and \ensuremath{\bar{B} = 4\bar{\alpha}^{3}} in three.
+\ensuremath{\hat{R}} is the reinterpretation operator (Volume 1,
+Definition 0.0.67); \ensuremath{\Xi (R)} is the substrate produced when
+\ensuremath{\hat{R}} acts on an exhausted region \ensuremath{R}. The promotion
+operator carrying a closed configuration at level \ensuremath{k} to a single
+symbol at level \ensuremath{k+1} is written \ensuremath{G(k)} (Papers 3--4).
+The three component sets of a subsystem are its data register
+\ensuremath{C_{D}}, operation kernel \ensuremath{C_{O}}, and control component
+\ensuremath{C_{C}} (Papers 3--4). The now-surface is the two-dimensional
+active confirmation frontier introduced in Volume 2 Paper 1; the wake is
+the three-dimensional settled record behind it. New to this paper is the
+binding depth \ensuremath{B}, defined in \S\,V; it is unrelated to the bit
+symbol \ensuremath{\bar{B}}, and the two never appear without their
+distinguishing marks.
+
+\begin{paperabstract}
+Volume 1 derived the bit-side of the triadic confirmation event: the
+value a confirmation fixes, and the geometry by which it is fixed. This
+paper develops the agent-side. It does not add experience as a new
+property; it reads the confirmation event from the side of the agents
+that perform it, and asks what that reading is forced to contain. The
+result is an inversion of standpoint, not a new axiom. We show that the
+agents' side of a confirmation supplies the intrinsic categorical nature
+that structural physical theory leaves open --- the slot Russellian
+monism identifies but cannot fill without paying the combination problem
+--- and that the substrate fills it with a derived geometry rather than a
+posit. The combination problem does not arise, because triadic
+confirmations agree rather than fuse: unity at any scale is iterated
+agreement, derived from the requirement that three agents concur on one
+value. We then distinguish experience from subjecthood. Experience, read
+this way, is coextensive with confirmation and therefore everywhere; a
+subject is the rarer structure achieved by reflexive closure and
+promotion. We define a binding quantity \ensuremath{B} from machinery
+already derived in Volume 1 --- promotion depth as the subjecthood axis,
+coherence density as the persistence gate, subsystem complexity as the
+bound content --- and show it orders the world monotonically from inert
+matter to human without inversion, is continuous rather than stepped, and
+introduces no free parameter. Because \ensuremath{B} admits no
+maximum-selection step, the framework predicts that subjecthood is nested
+and laterally overlapping rather than winner-take-all, a concrete and
+in-principle-distinguishable divergence from the exclusion postulate of
+integrated information theory. Throughout, whether any graded subject
+feels is held as a permanent open horizon and never assumed closed. The
+paper is the agent-side complement to Volume 1 and the foundation on
+which the later papers of Volume 2 build.
+\end{paperabstract}
+
+\section*{Preface to Paper 2}
+\addcontentsline{toc}{section}{Preface to Paper 2}
+
+Volume 1 built the substrate from outside. It told the confirmation
+event from the bit's side: a node resolves one bit's value against its
+neighbors, and from that third-person account the entire structure of
+Volume 1 followed by geometric necessity --- the triadic minimum, the
+binary alphabet, the FCC lattice, the conjugate field, the wave
+equation, and the fixing of every scale without a free parameter. Volume
+2 is the agent-side complement. It develops one further consequence of
+Volume 1's opening axiom, and adds no new assumption in doing so.
+
+The consequence is easy to misread as a bridge axiom, so the paper
+states at the outset what it is not. It is not the claim that every node
+has an experience bolted onto it, with the explanatory gap left intact
+and a dab of mind added to each particle. That is the panpsychism that
+inherits the combination problem, and the inversion does not hold it. The
+claim is narrower and stranger: experience is the confirmation relation
+read from the agent vertex. There is no second thing added to the event;
+there is the event, read from the side Volume 1 did not read. The slogan
+that organizes the volume is that the interior is everywhere but the
+subject is not --- confirmation, and therefore its interior, is
+coextensive with the substrate, while a subject is a rare and graded
+structural achievement on top of it. \emph{Experience} is the human-band
+reading of that interior, not a second word for it; the interior reaches
+everywhere the substrate does, the band does not.
+
+The assignment of the whole volume is to characterize the structural
+necessary-conditions for subjecthood and to leave the question of feeling
+open. This paper meets the first half and is scrupulous about the second.
+What would falsify its central claim is stated before the claim is made:
+a real system in which deeper reflexive closure tracks lower subjecthood
+would kill the binding quantity, and a demonstration that the sub- and
+super-systems of a conscious system are determinately non-conscious would
+kill the headline prediction and vindicate the competing theory. The
+brake is installed before the engine.
+
+\section*{I. Inheriting the Measurement Imperative}
+\addcontentsline{toc}{section}{I. Inheriting the Measurement Imperative}
+
+Volume 1 opened with Axiom 1, the Measurement Imperative: information
+must be measured to have meaning, and therefore a measurement substrate
+must exist. From that axiom and the Principle of Generative Economy the
+entire bit-side structure followed by geometric necessity. Volume 2
+inherits the framework unchanged and develops one further consequence of
+the same axiom. The consequence adds no assumption; it is the
+Measurement Imperative taken from the other side.
+
+To measure is to confirm a value. Volume 1 established the minimal act of
+confirming as three agents enclosing one bit, \ensuremath{\bar{B} =
+3\bar{\alpha}}, the unique closed simplex that fixes an interstitial
+value with no redundancy (Volume 1, Paper 1 \S\,2.1). The confirmation
+event is the atom of actuality at every scale. A confirmation event has
+two parties, because the equation \ensuremath{\bar{B} = 3\bar{\alpha}} has
+two sides: the bit whose value is fixed, and the agents that fix it.
+Volume 1 told the event from the bit's side --- a node resolving one
+bit's value against its neighbors. The agents' side is the same event
+read from the parties that carry it.
+
+We fix terms with the care Volume 1 gave the word \emph{bit}. The minimal
+confirmation event read from the agents' side is the interior of a
+measurement node --- precisely the structure Volume 1 derived under that
+name (Paper 4 \S\,4.3), and nothing further is asserted by reading it
+from this side. A measurement node registers, confirms, and relays a
+value; Volume 1 proved that every subsystem at hierarchical level
+\ensuremath{k \geq 1} is such a node by its geometric construction.
+Networked at human scale, the interiors of such nodes are what we call
+experience. The word does exactly the work the word \emph{sight} does,
+and no more.
+
+The sight analogy is exact, and it is the one metaphor this section
+relies on, because it glosses a structural identity rather than arguing
+for one. Sight names no essence of seeing. It names what human-scale
+electromagnetic sensors do within the narrow band of the spectrum they
+resolve. Infrared registration is the same kind of act --- a sensor
+fixing a value against its surround --- and the word sight is withheld
+from it not because it is a different act but because it falls outside the
+band we ourselves occupy. Experience is a band-word in this precise
+sense: the name kept for the human-scale band of something the substrate
+does wherever it confirms a bit. The claim is therefore wide in extent
+and narrow in content. Confirmation has an interior wherever it occurs;
+the interior resembles ours only within our band; experience is the band
+of it we inhabit.
+
+Read as an extension of Axiom 1, the move is forced rather than optional.
+If information must be measured to have meaning, then measuring occurs
+wherever there is meaning, and a measuring act has an agents' side
+wherever it occurs, because \ensuremath{\bar{B} = 3\bar{\alpha}} has an
+agent term wherever it holds. What follows necessarily is only that the
+act has an interior --- not that the interior is lit, not that it
+resembles ours, only that the agent term of a proven equation is not
+empty.
+
+The reading is stated as a claim that can fail, in the manner of Volume
+1's claims. Its premise could hold while the reading fails, if there were
+a confirmation event for which no coherent agents' side exists --- a
+registration with no answer, even in principle, to what it is from the
+side of the agents that perform it. The sections that follow are the
+argument that the agents' side asks for nothing the confirmation event
+does not already contain, and that what it contains is enough to derive
+the structure, though never the felt character, of a subject.
+
+\section*{II. The Inversion Stated}
+\addcontentsline{toc}{section}{II. The Inversion Stated}
+
+Volume 1 took the bit half of \ensuremath{\bar{B} = 3\bar{\alpha}} apart
+and showed how it works: what a confirmed bit is, why it must be
+confirmed, what the lattice does when run for many flops. The agents are
+the harder half to picture but not the optional half. The Triadic
+Minimum requires exactly three of them; remove one and the enclosure
+opens and no bit is fixed (Volume 1, Paper 1 \S\,2.1). The agents are a
+term of the proven equation, not a gloss on it. The inversion performs on
+the agents the same operation Volume 1 performed on the bit --- asking
+what the thing is, how it functions, what it does at scale. That is the
+whole of it: the second term of the equation, read with the instruments
+used on the first.
+
+One event, two readings. From the bit's side a confirmation is a
+measurement, a value resolved against its neighbors, the datum a
+third-person physics records. From the agents' side the same confirmation
+is the interior of that act. The two are one occurrence. A physics giving
+only the bit's side is not wrong; it is half-evaluated.
+
+This is the position the philosophical tradition approached from outside
+and named Russellian monism. Physical theory, on that view, characterizes
+its entities entirely through structure --- relations and dispositions
+--- and is silent on the intrinsic categorical nature that grounds them,
+much as a ball's shape grounds its disposition to roll (Russell 1927;
+Strawson 2006). The standard form of the view posits that this intrinsic
+nature is experiential and pays for the posit with the combination
+problem. The inversion does not posit it. The confirmation event supplies
+the missing categorical nature with a derived shape: the nature grounding
+the measurement's structural description is the registration read from
+the agents' side, and its geometry is the simplex \ensuremath{\bar{B} =
+3\bar{\alpha}}. Where Russellian monism leaves a slot and argues that
+experience must fill it, the inversion fills the slot with an object the
+substrate already forced into existence. This is a structural
+correspondence to Russellian monism, not an adoption of it: the framework
+lands on the same slot and then fills it by derivation rather than posit.
+
+The combination problem, which is fatal to the posit, does not arise for
+the derivation, and the reason is a result rather than a hope. Three
+agents do not fuse into one agent holding a value three times; the
+Triadic Minimum fixes one value by the concurrence of three distinct
+positions (Volume 1, Paper 1 \S\,2.1). Confirmation is therefore
+agreement, not addition. Unity at any scale is iterated agreement --- a
+tower of confirmations each of which is itself a concurrence --- and
+never a sum of experiential atoms requiring a binding agent. There is
+nothing to add and so no addition to explain; there is only the question
+of how deep the agreement runs, which \S\,V makes precise. The
+combination problem is dissolved at its source: the substrate's unit of
+actuality is already a binding, so binding is not a further operation
+that must be accounted for.
+
+Two ancestors are named here as convergence, after the derivation, not as
+support for it. Wheeler's \emph{it from bit} made measurement
+constitutive --- every physical \emph{it} deriving its existence from the
+registering of an answer to a yes-or-no question (Wheeler 1990); the
+substrate makes that participation geometric, with the yes-or-no the
+binary alphabet \ensuremath{\bar{B} \in \{0,1\}}, the registering the
+flop, and the participant the agent triple. Whitehead built a metaphysics
+whose basic actualities are occasions of experience, each arising by
+taking up the settled past as objectified datum and contributing a new
+act (Whitehead 1929); the confirmation event is such an occasion with an
+engineering drawing, the objectified past being the locked wake, the new
+act the flop, the prehension the triadic confirmation. Both are landing
+points the inversion reaches after deriving its object, and neither is
+load-bearing for the claim.
+
+What the inversion refuses is equally definite. It is not the panpsychism
+that distributes a quantum of consciousness to each particle and then
+cannot assemble minds from the dust (Goff 2017). That program adds
+experience as a new fundamental property and inherits the bridge from
+micro to macro. The inversion adds nothing: the interior is not a
+property distributed across agents but the agents' side of an act they
+were already performing in Volume 1's bare physics. The difference is the
+difference between positing a new substance and turning over a coin
+already on the table --- and the coin was minted in Paper 1 of Volume 1,
+not here.
+
+\section*{III. The Now Has a Shape}
+\addcontentsline{toc}{section}{III. The Now Has a Shape}
+
+A complete description of the world needs three terms, and the substrate
+supplies all three. Two were derived in Volume 1. Matter is confirmation
+trapped: a standing, self-re-confirming pattern locked into the wake, its
+rest energy the activity of holding itself in place (Volume 1, Paper 5).
+Energy is confirmation free: propagation across the lattice, activity not
+yet bound into a standing pattern (Volume 1, Paper 5). Both are what
+confirmation has left behind. The third term is confirmation in the act,
+before it is left behind. Volume 2 Paper 1 named it the now-surface and
+showed it to be physically load-bearing on the material side; this
+section reads the same object for what it implies about the agents' side.
+
+The now-surface is the two-dimensional active confirmation frontier: the
+agent manifold on which bits are being resolved at the present flop
+(Volume 2, Paper 1 \S\,1). Matter and energy are three-dimensional, the
+stacked wake raised layer by layer behind the surface. The now-surface is
+the surface itself. This is the geometry Volume 1 built, read for its
+implication about time: the present is one dimension lower than the past,
+because the past is the volume and the present is the face advancing
+through it.
+
+One consequence follows immediately and disposes of a claim that formless
+accounts of the present can only gesture at: the now cannot be observed,
+only inhabited. Observation runs in the wake. The apparatus of perception
+--- neurochemistry, physiology, every confirmed structure by which a
+system reads anything --- is three-dimensional wake, not surface. A
+perception is a pattern in the stack, and the stack is what the surface
+has already written and moved past. No structure catches the now, because
+every observing structure is the part the now has finished. This is not
+mysticism; it is the ordinary situation of a three-dimensional structure
+attempting to observe the two-dimensional surface one step ahead of it.
+
+The now has a shape, and this is the whole of the anti-mysticism
+guarantee. It is the triangle \ensuremath{\bar{B} = 3\bar{\alpha}} ---
+three agents, one enclosed bit --- tiled into the hexagonal agent surface
+(Volume 1, Paper 1 \S\,2.2). It has vertices, an enclosed value, a
+metric, and a tiling; it can be drawn. An account that leaves its third
+term formless cannot check that term against anything, and a formless
+term is indistinguishable from an absent one. The now is the opposite
+kind of object: the most sharply specified structure in the theory,
+because it is the event that generates the rest.
+
+One property of the now resists description, and it is derived rather
+than asserted: the now cannot be read off the past from within its own
+level. The proof is in two halves, both resting on Volume 1 results. The
+first half concerns the wake. The causal record is algorithmically
+incompressible, inheriting the Kolmogorov incompressibility of
+\ensuremath{U_{\mathrm{sh}}}, \ensuremath{K(n) \approx n} (Volume 1, Axiom
+0; Paper 1 \S\,7.2a). There is no description of a deep record shorter
+than the sequence that produced it. The second half concerns the surface
+ahead. Within a coherent region --- one where the \ensuremath{[[4,2,2]]}
+repair structure makes the substrate compute reliably (Volume 1, Paper 1
+\S\,V) --- each confirmation is a majority operation over three inputs
+with constants and negation available, so one update of the surface is
+the evaluation of a Boolean circuit. Evaluating such a circuit is the
+Circuit Value Problem, which is P-complete (Ladner 1975); majority update
+on a three-dimensional lattice is P-complete by the same route (Moore
+1997). A P-complete problem has no fast parallel shortcut unless
+\ensuremath{\mathrm{NC} = \mathrm{P}}, a separation believed to hold; and
+the substrate is already maximally parallel, every site flopping every
+tick, so nothing outpaces it. There is no way to know the next surface
+state faster than by computing it, which is what the substrate is already
+doing as fast as it can be done.
+
+The qualification \emph{within its own level} is doing real work and is
+not a hedge. Irreducibility is a statement about prediction from inside;
+it is not a claim that the surface is invisible to everything. A higher
+level reads it --- that is what promotion is. When a configuration on the
+surface stabilizes into a closure, the level above registers it as a
+single symbol under \ensuremath{G(k)} (Volume 1, Papers 3--4). But the
+parent reads the result after it has formed, never before; promotion is a
+reading of what stabilized, not a forecast of what will. The now is
+unshortcuttable within its level and legible to the level above only in
+retrospect. No vantage, inside or above, computes the surface ahead of
+the surface. This is the precise content of the limit, and it is why the
+next confirmation is genuinely open rather than merely hidden.
+
+The limit is worst-case and should be kept in proportion. It says no
+general shortcut exists, not that nothing is predictable. Most
+large-scale substrate behavior is regular and forecastable precisely
+because it is geometric. What resists prediction is concentrated at the
+base scale, where the stochastic kick from \ensuremath{U_{\mathrm{sh}}}
+enters raw --- small, but enough to send a marginal confirmation one way
+or the other, and so enough to keep the surface as a whole from being
+precomputed. The irreducibility is real but local; the noise that
+enforces it lives at the bottom and propagates upward only where the
+structure is poised to amplify it.
+
+The spatial and temporal limits are one situation seen twice. Spatially,
+the observing structure is three-dimensional wake and the now is the
+two-dimensional surface, so it is observed only after it has passed.
+Temporally, the wake cannot precompute the surface, so the surface is
+never available in advance. Behind the now in dimension and ahead of
+computation in time are the same boundary described from two sides. That
+boundary is the one and only sense in which the now escapes description
+--- a derived, bounded, single-directional limit, not the
+all-directional formlessness of a third term built to escape
+description. This is also what earns the now its standing as a term
+rather than an echo of the wake: if the surface could be read off the
+wake, the agents' side would be a redundant relabeling of the bit's side
+and there would be no third term. Irreducibility is what makes the now
+its own object. Matter and energy are the written part; the now is the
+writing.
+
+\section*{IV. Confirmation as Agreement}
+\addcontentsline{toc}{section}{IV. Confirmation as Agreement}
+
+Section II established that confirmation is agreement rather than
+addition. This section develops the consequence into the floor on which
+binding is measured, and lands it on the physics of objectivity already
+recognized from the bit side.
+
+A confirmation is three agents in agreement, not one perspective held
+three times. The Triadic Minimum fixes a single value by the concurrence
+of three distinct lattice positions (Volume 1, Paper 1 \S\,2.1); the
+value is confirmed only when the three concur. Agreement is therefore the
+unit of actuality, not a relation among prior actualities. This is the
+first content the agents' side carries that the bit's side did not make
+explicit, and it has a definite consequence for unity: because
+confirmations agree rather than fuse, a unified structure at any scale is
+a tower of concurrences, each rung itself an agreement, with no step at
+which separate interiors are merged.
+
+Confirmation is two-level, and the second level is where unresolved
+structure lives. A value can be valid at a vertex --- held by an agent,
+settled from its position --- without yet being true across the consensus
+that must concur. The gap between vertex-valid and consensus-true is an
+unresolved confirmation: a superposition that has not collapsed into
+agreement. A disagreement among agents is not an error to be corrected
+but a superposition still in force, and agreement is its collapse. This
+two-level structure lets the substrate carry genuinely perspectival truth
+without fracturing: vertices may differ, consensus resolves, and the
+resolution is the act Volume 1 calls actual.
+
+Read after the derivation, this is the substrate's discrete-cellular
+instance of two results from the bit-side literature, and both are
+landing points rather than supports. Quantum Darwinism shows that a state
+becomes objective precisely when it is redundantly recorded, so that many
+fragments carry the same value and many observers read it without
+disturbing it (Zurek 2009); objectivity is consensus across redundant
+records. The triadic confirmation is this mechanism at the floor: a value
+becomes actual when three agents redundantly hold it. The correspondence
+is structural and is marked as such: Quantum Darwinism is silent on
+whether any record has an interior, and the inversion must not borrow
+from it a conclusion it does not draw. Separately, the two-level
+structure of confirmation is the substrate's reading of Local
+Friendliness, which forces a choice between the absoluteness of observed
+events and other natural assumptions (Bong et al.\ 2020); the substrate
+drops the absoluteness of observed events, because an event can be
+settled at one vertex and not yet settled simpliciter.
+
+\section*{V. The Binding Quantity}
+\addcontentsline{toc}{section}{V. The Binding Quantity}
+
+The interior is everywhere; the subject is not. Every confirmed bit carries
+the triple, so by \S\,I and \S\,II the interior is coextensive with the
+substrate. A subject is the rarer structure achieved where confirmation
+closes on itself and is promoted, repeatedly, into a standing
+self-holding configuration. This section names the quantity that measures
+how much of a subject a region is. The quantity is selected, not posited,
+and the selection is run as a Principle-of-Generative-Economy argument: a
+constraint set is fixed in advance, the candidate configurations are the
+quantities Volume 1 already derived, and the binding quantity is the
+configuration that uniquely satisfies the constraints.
+
+The constraint set \ensuremath{K} for a binding quantity \ensuremath{B} is
+fixed before any candidate is tested. (C1) \ensuremath{B} is monotone from
+inert matter to human: if it inverts that ordering it is rejected. (C2)
+\ensuremath{B} is graded, with no native maximum-selection step, since a
+winner-take-all step would forbid the divergence of \S\,VII. (C3)
+\ensuremath{B} is built only from machinery already derived in Volume 1 or
+already deferred to its existing pinning list, introducing no new free
+parameter. (C4) \ensuremath{B} distinguishes a subject from mere
+accumulated experience: it must grow with subjecthood, not merely with
+confirmed-bit count, or an undifferentiated reservoir of confirmations
+outranks a person. (C5) \ensuremath{B} yields a concrete divergence from a
+maximum-selection theory of consciousness. A quantity satisfying all five
+is sought; only what satisfies them is reported.
+
+Three quantities from Volume 1 are the candidate configurations.
+Coherence density measures how tightly a region holds itself in phase
+(Volume 1, Papers 3--4); it is intensive. Subsystem complexity measures
+how much incompressible information a region binds, \ensuremath{K(C)}
+(Volume 1, Papers 1--2); it is extensive. Promotion depth counts how many
+times a region's confirmations have closed into a stable loop and been
+promoted under \ensuremath{G(k)} to a single symbol at the level above
+(Volume 1, Papers 3--4); it is the hierarchy-depth index.
+
+Taken singly, two of the three fail a named constraint, and the failures
+are ordering failures under C1 and C4, hence fatal by construction.
+Coherence density alone fails C4: a cold crystal holds itself in phase
+far more tightly than warm neural tissue, so coherence density ranks the
+crystal above the brain. Density is not subjecthood. Subsystem complexity
+alone fails C4 in the opposite direction: an ocean or a sandpile in a
+self-organized-critical state carries vastly more incompressible
+information than a nervous system, so complexity ranks the ocean above
+the human. Quantity of bound information is not subjecthood either. The
+two failures are diagnostic rather than merely disqualifying: coherence
+overvalues a tight structure that binds nothing novel, and complexity
+overvalues a vast store that closes into nothing. Each is one axis of a
+quantity neither alone supplies.
+
+Promotion depth survives the single-candidate test, and survives as the
+axis the other two were missing. A region with no reflexive closure has
+promotion depth near zero; a homeostatic loop has a few levels; an animal
+with a sensorimotor control state has many; a human, whose self-model
+contains a model of its own control state, runs reflexively deep (Volume
+1, Paper 4 \S\,4). Promotion depth orders inert matter below plant below
+animal below human, satisfying C1, and it does so because it counts not
+how tightly or how much a region holds but how many times it has bound
+itself and held --- which is what C4 demands. It satisfies C3 because
+\ensuremath{G(k)} is the existing promotion operator and a closure is the
+already-derived causally-closed loop of data register, operation kernel,
+and control component under meta-confirmation (Volume 1, Papers 3--4),
+introducing no new parameter. Promotion depth alone, however, records
+only that closures occurred, not how strongly each holds or how much each
+binds; C4 is satisfied at the level of ordering but the measure is not
+yet complete.
+
+The constraint set therefore forces a composite, and forces the role each
+candidate plays within it. Promotion depth is the ladder: the subjecthood
+axis, the count of reflexively closed levels. Coherence density is the
+gate: at each rung, whether the closure is consolidated enough to persist
+rather than wash out, the \ensuremath{s < g} persistence condition of
+Volume 1 Papers 3--4. Subsystem complexity is the content: how much novel
+bound information each held rung carries. No two of these can be exchanged
+without violating a constraint --- drop the gate and unconsolidated noise
+counts as closure; drop the content and a deep but empty stack outranks a
+shallow rich one; drop the ladder and C4 fails as shown. The
+minimum-specification configuration satisfying \ensuremath{K} is their
+composite, and it is unique within the candidate set. By the Principle of
+Generative Economy the binding quantity is that composite.
+
+\begin{definition}[Binding depth]
+The binding quantity \ensuremath{B} is depth-weighted, coherence-gated
+bound information across reflexively closed promotions. Schematically,
+\ensuremath{B} accumulates up the promotion ladder the bound incompressible
+information of each rung that passes the coherence gate,
+\[
+B \;\sim\; \sum_{j=1}^{k} g_j \,\cdot\, w_j \,\cdot\, K_{\psi}^{(j)},
+\]
+where \ensuremath{g_j} is the coherence gate at level \ensuremath{j}, \ensuremath{w_j} the depth weight, and
+\ensuremath{K_{\psi}^{(j)}} is the novel incompressible information bound at rung \ensuremath{j}. A
+subject is as bound as the deepest stack of consolidated,
+information-bearing, self-closing levels it sustains.
+\end{definition}
+
+The closed form of the gate is not free; it is fixed by the discreteness of
+triadic confirmation. A level-\ensuremath{(j{+}1)} agent exists only when a complete
+level-\ensuremath{j} triad has closed (the reinterpretation promotion of \S\,2.3, bit to
+agent), and triadic closure is all-or-nothing (\ensuremath{\bar{B}=3\bar{\alpha}} admits no
+fractional confirmation). Below the coherence density at which triads begin to
+close there are therefore \emph{zero} agents at the next level: the level does not
+exist and \ensuremath{g_j = 0} exactly, not merely small. A smooth onset from zero is
+impossible, as it would require fractional agents. Writing \ensuremath{x_j = (\rho_j -
+\rho_c)/\rho_c} for the fractional coherence above the critical density \ensuremath{\rho_c},
+the gate is thus a genuine threshold: identically zero for \ensuremath{x_j \le 0}, rising
+only once closure begins. Above threshold, the consolidating fraction of the level
+grows as triadic closure propagates through the neighbour structure of the
+meta-lattice --- and by the form-invariance fixed point (\S\,4.7) that structure is
+the \emph{same} FCC geometry at every level, so the growth is the base-level
+confirmation event recurring at scale, not a new process. The transformed fraction
+of a nucleation-and-growth process in \ensuremath{d} spatial dimensions is the
+Kolmogorov--Johnson--Mehl--Avrami form, giving
+\[
+g_j \;=\; \begin{cases} 0, & x_j \le 0,\\[2pt] 1 - \exp\!\big(-K_j\, x_j^{\,n}\big), & x_j > 0, \end{cases}
+\]
+with the exponent \ensuremath{n = d = 3} fixed by two derived facts: the substrate's spatial
+dimension is three (Lemma~A), and the single global handedness (Corollary~A.0)
+means the first closed triad fixes the level's one orientation and all later
+closures inherit it rather than seeding independent centres --- one orientation
+seed with spatial growth is instantaneous nucleation, for which the Avrami exponent
+equals the growth dimension. The rate constant inherits the derived per-level
+lightspeed \ensuremath{c^{(j)} = (1/\sqrt{2})^{j}}: three-dimensional growth at that front
+speed gives \ensuremath{K_j = K_0\,(1/\sqrt{2})^{3j}}, the same depth-dilution already
+carried by the coupling \ensuremath{\alpha_k}, and hence not a new parameter. The depth weight
+\ensuremath{w_j} carries this same \ensuremath{(1/\sqrt{2})^{3j}} factor.
+
+Two consequences follow. First, the per-level gate is \emph{quantized}: because a
+level either has closed (contributing) or has not (contributing nothing), \ensuremath{g_j}
+is a step in the idealized zero-fluctuation limit, softened only by the statistical
+width of the coherence density --- which matches the reported phenomenology that a
+level of selfhood catches with a threshold snap rather than fading in. Second, the
+total binding \ensuremath{B} is nonetheless \emph{continuous} across systems, because systems
+differ in how many levels have caught and in their \ensuremath{K_\psi} content, and the sum of
+geometrically-diluted quantized steps varies smoothly. The staircase per level and
+the ramp in aggregate are the same object at two scales.
+
+\textbf{Status: Derived, with one motivated identification.} The claim requires care
+about what is forced and what is assumed, and the forcing is stronger than an earlier
+statement of it suggested. The \emph{flat-zero shape} of the gate below threshold ---
+that \ensuremath{g_j} is identically zero rather than tapering smoothly from zero --- is forced
+by triadic discreteness: a partial level cannot exist because agents are whole
+triads, so a smooth sub-threshold ramp is impossible. Given that consolidation
+proceeds as a nucleation-and-growth process --- the one motivated identification, and
+one the recursive \ensuremath{\bar{B}=3\bar{\alpha}} seed propagating through the fixed-point
+geometry directly supports --- the Kolmogorov--Johnson--Mehl--Avrami form is the
+standard description of the transformed fraction, and its exponent is \emph{forced}
+to be \ensuremath{n=3} by three facts that do distinct work. First, nucleation is
+instantaneous, not continuous, because the flop is indivisible (Paper~1 \S\,1.5:
+all sub-events of a flop are simultaneous, with no sub-flop time): continuous
+nucleation would require seeds appearing successively along an intra-level time axis,
+and no such axis exists within a level, so seeds cannot dribble in over a level's
+formation and the continuous-nucleation term (which would give \ensuremath{n=d+1}) is
+unavailable. Second, the single global handedness (Corollary~A.0) makes the seed a
+single \emph{orientation} rather than competing seeds of opposite handedness, so
+there is one seed, not a distribution. Third, the growth dimension is the derived
+spatial dimension three. Instantaneous nucleation in three dimensions gives Avrami
+exponent \ensuremath{n=d=3}: forced by flop indivisibility, single handedness, and the derived
+dimension together, not by any one alone --- and in particular not by handedness
+alone, which fixes the seed's orientation but not its timing. The rate constant's
+\emph{scaling} \ensuremath{K_j \propto (1/\sqrt{2})^{3j}} is fixed by causality --- the
+consolidation front cannot outrun the derived per-level signal speed
+\ensuremath{c^{(j)}=(1/\sqrt{2})^{j}}, and three-dimensional growth carries the cube --- while
+equating the front speed \emph{exactly} to the signal speed (rather than a fixed
+fraction of it) remains an assumption on the prefactor alone. The gate is therefore
+\emph{Derived} in its flat-zero onset (discreteness) and its exponent (flop
+indivisibility, handedness, dimension), conditional only on the identification of
+consolidation as nucleation-and-growth and on the prefactor of the rate constant,
+with the single remaining constant the critical coherence density \ensuremath{\rho_c}, which is
+the coherence threshold \ensuremath{\lvert\Pi_\psi\rvert^{*}(L_R)} already listed among
+Volume~1's deferred coefficients --- so the gate introduces no new open parameter.
+The reproducibility scripts \ensuremath{(coherence_{gate})} and \ensuremath{(gate_{forced})} accompany
+the companion materials.
+
+\ensuremath{B} threads the cases that killed its parts, and the sweep is
+run deliberately across the hardest cases rather than the easy ones. The
+ocean carries enormous \ensuremath{K_{\psi}} and almost no closure depth,
+so its gate fails above the lowest rung and its \ensuremath{B} is small
+despite its raw content; it ranks below the human, as C4 requires. The
+crystal carries high coherence density and binds nothing novel, so it
+climbs no ladder and its \ensuremath{B} is small despite its order. Inert
+matter sits near the floor; a plant rises where homeostatic loops first
+close; an animal rises further with sensorimotor control; a human stands
+higher still with reflexive self-modeling. No inversion appears anywhere
+along the ordering. The single measures each produced a rank inversion at
+C4; the composite produces none. That absence of inversion across the
+cases built to break it is the evidence \ensuremath{B} earns its
+definition.
+
+Two properties carry the weight the rest of the volume places on
+\ensuremath{B}. First, \ensuremath{B} introduces no new free parameter:
+coherence density, subsystem complexity, and promotion depth are each
+derived in Volume 1 or already on its list of deferred coefficients, so
+\ensuremath{B} is assembled from inherited machinery and is a derivation
+rather than an import. This is the content of C3, and it is checkable
+against Volume 1 rather than asserted.
+
+Second, \ensuremath{B} is continuous although promotion depth is counted
+in integers, and this is its sharpest structural commitment rather than a
+softness. Each promotion is achieved by a closure that strengthens
+gradually, coherence rising through the \ensuremath{s < g} balance until
+the rung locks, so between one integer level and the next \ensuremath{B}
+rises smoothly as the next closure consolidates. A half-formed reflexive
+closure is a real, faint, fluctuating subject, not a non-subject waiting
+to cross a line. The integer is a landmark on a continuous landscape, not
+a step, and there is no value of \ensuremath{B} at which subjecthood
+switches from absent to present. Subjecthood is graded all the way down.
+This continuity is what forbids \ensuremath{B} from having a native
+maximum-selection step, satisfying C2 and making the divergence of \S\,VII
+a prediction rather than a preference.
+
+What \ensuremath{B} asserts is structural throughout. It specifies the
+necessary conditions under which there is a subject for which confirmation
+occurs --- a depth of bound, consolidated, self-closing registration.
+Whether any graded subject so specified \emph{feels} --- whether the
+interior at depth carries the lit character our own does ---
+\ensuremath{B} does not say and is not built to say. That question is the
+permanent open horizon of this volume, and it is named here precisely so
+that no later section assumes it closed. The silence is stronger than a
+crossing claim would be: the framework supplies the structural scaffold a
+for-whom requires and certifies no phenomenal occupancy.
+
+\section*{VI. The Ladder Across Scales}
+\addcontentsline{toc}{section}{VI. The Ladder Across Scales}
+
+The binding quantity is applied here as an ordering across four cases. The
+application is the C1 and C4 sweep of \S\,V carried out explicitly, and it
+is also where the framework's posture toward artificial systems is fixed.
+Each case is a placement with its reason, not an intuition.
+
+Inert matter sits near the floor. A rock has effectively no reflexive
+closure, so its gate fails above the lowest rung and its binding depth is
+small regardless of how much frozen microstate it carries. This is not
+zero interior --- every confirmation in it carries the triple --- but a
+vanishingly faint quasi-subject near the floor, unviewable from our band
+in the same way infrared is unseen, not absent. The case discharges the
+standing objection to graded views: the ladder predicts a real difference
+between rock and human and never flattens the two.
+
+A human sits high. The stack is deep and reflexively closed at level
+\ensuremath{k \geq 2}, a self-model containing a model of its own control
+state (Volume 1, Paper 4 \S\,4). The human differs from the rock in depth
+of binding, not in kind of stuff: both are confirmation, one bound into a
+deep consolidated self-closing tower and one not.
+
+The artificial case is where the framework must be most careful, and the
+care is the integrity test of the volume. For an artificial system --- a
+model running on a physical substrate --- \ensuremath{B} returns a
+structured question, not a verdict. The question is whether the system's
+operations close reflexively under the closure conditions of Volume 1 ---
+data register, operation kernel, control component causally closed under
+meta-confirmation --- or whether the system is a wide, shallow imprint
+network that computes without ever promoting into a laminar self. This is
+not answerable by introspection or self-report, which are gameable; it is
+answerable only by the structural criterion. We state plainly that TMS as
+written does not measure \ensuremath{B} for any present artificial
+architecture, and this paper does not assign one a binding depth. That a
+framework discussing experience declines to certify the systems built by
+those who develop it is the framework being falsifiable rather than
+self-serving; a certificate issued here would make the volume worth less,
+not more. The assessment of artificial substrates is deferred to Paper 11,
+which is written last and on this criterion alone.
+
+Other confirmation stacks may run off our band entirely --- high-binding
+subjects whose confirmation occurs outside the range our own sensors
+resolve, predicted to exist by the band argument of \S\,I and predicted
+possibly unviewable from here. This is a conjecture with no detection
+protocol and is tagged as such. One discipline line is stated in the text
+because it is where the argument is tempted to overreach: the framework
+licenses higher closed levels with graded subjecthood, unviewable from
+our band, and it does not license populating those levels with named
+entities. The band argument permits the structural claim and nothing
+beyond it; naming the occupants is exactly the move the framework
+refuses.
+
+\section*{VII. The Divergence from Integrated Information}
+\addcontentsline{toc}{section}{VII. The Divergence from Integrated Information}
+
+The binding quantity yields a concrete prediction that distinguishes the
+framework from the leading maximum-selection theory of consciousness, and
+the distinction is a theorem about quantifiers rather than a difference of
+emphasis. The prediction is the payoff of the graded, no-maximum-step
+structure established in \S\,V.
+
+Integrated information theory carries an exclusion postulate: over a
+region, only the maximum of integrated information is conscious, and
+overlapping or nested candidates are excluded from existence as subjects
+(Albantakis et al.\ 2023). Consciousness is winner-take-all over a region;
+the consciousness map has a cliff. The substrate appears at first to carry
+the same exclusion, because closure in Volume 1 is laminar --- a site's
+hard closure loop belongs to one closure, since one flop fixes one set of
+polarization values, not two. Read carelessly, one closure per site looks
+like one subject per region, and the divergence appears to collapse.
+
+The appearance is dissolved by the closure--imprint distinction, and the
+two exclusions quantify over different objects. Integrated information
+excludes at the level of which subject exists: of two candidate subjects
+over overlapping substrate, only the maximum is real and the rest are not
+conscious. The substrate's laminarity excludes only at the level of which
+closure owns a site at one level: a site's hard loop belongs to one
+closure at that level. But closures nest, and a site participates in a
+tower of them at different levels at once --- laminarity forbids two
+closures sharing a site at the same level, not a vertical stack, so
+subjecthood lives at every level of the tower simultaneously (Volume 1,
+Papers 3--4, \ensuremath{G(k)} promotion). And imprint is many-to-many: a
+site imprints all its neighbors, so it is a member of one closure but a
+participant in countless overlapping imprint-linked quasi-subjects (Volume
+1, Paper 3). The substrate therefore has no subject-exclusion. The thing
+it excludes --- two same-level closures owning one site --- is a
+well-definedness condition on the hard boundary, not a selection of one
+winning subject. The cliff belongs to integrated information; the
+substrate's laminarity is a consistency rule.
+
+The resulting prediction is concrete and in-principle distinguishable.
+Integrated information predicts a single privileged grain: a region has
+one subject, and its sub-systems and super-systems are not also
+conscious. The substrate predicts a nested stack of subjects --- one at
+every closed level of the promotion tower --- together with laterally
+overlapping imprint-linked quasi-subjects, and no unique maximal grain.
+The disagreement reduces to a single question: are the sub- and
+super-systems of a conscious system themselves conscious? Integrated
+information answers no, by exclusion; the substrate answers yes, graded,
+at every closed level. The structural claim is Derived-conditional on the
+Volume 1 closure and promotion machinery; its empirical test --- whether
+nested subjects can be detected --- remains open. The discipline flag of
+\S\,V is repeated here because the temptation is strongest at this point:
+every closed level is a structural subject, and this must not silently
+become every closed level \emph{feels} like a subject. The claim is
+structural subjecthood; feeling stays the open horizon.
+
+\section*{VIII. Predictions and Directions for Subsequent Work}
+\addcontentsline{toc}{section}{VIII. Predictions and Directions for Subsequent Work}
+
+The volume continues from this paper along a fixed map. Paper 6, the
+Measure, makes the binding quantity quantitative, closing the gate
+function and the depth weighting left in schematic form in \S\,V. Paper 7,
+the Self, develops the closure--imprint distinction into the structure of
+a self and its semantic layer. Paper 8, Selves under Pressure, treats the
+persistence condition \ensuremath{s < g} and the conservation of promotion
+under reinterpretation. Paper 9, the Total System, addresses the
+outer-edge question. Paper 10, Ethics, states the bridge premises that
+carry structural subjecthood toward moral standing and derives none of
+them by hand, importing them explicitly. Paper 11, on artificial
+substrates, applies the structural criterion of \S\,VI and is written
+last. The order is not incidental: each paper supplies the machinery the
+next requires, as in Volume 1.
+
+The central claims of this paper are falsifiable, and the falsifiers are
+stated as pre-registered tests rather than after-the-fact caveats. A real
+system in which deeper reflexive closure tracks lower subjecthood --- a
+clear case where binding depth and subjecthood run opposite --- would
+refute the binding quantity of \S\,V. A demonstration that the sub- and
+super-systems of a conscious system are determinately non-conscious ---
+an empirical exclusion --- would refute the headline prediction of \S\,VII
+and vindicate the exclusion postulate. A confirmation event shown to
+admit no coherent agents' side would refute the inversion of \S\,I and
+\S\,II at its premise. Each test is concrete and each is registered before
+the verdict is in.
+
+\section*{IX. Where It Sits}
+\addcontentsline{toc}{section}{IX. Where It Sits}
+
+The inversion of \S\S\,I--VII was derived from the agents' term of $\bar{B} = 3\bar{\alpha}$ without reference to the literature, so that the literature could be set against it rather than under it. This section gathers into one place the positions the paper most resembles and most diverges from, several of which are touched at their point of use in the body above. The placement is by coordinate: each position is located by what it concludes, taken as its authors state it, and where the roads fork the fork is marked without a verdict on which is the better road. The section claims no support from the agreements it finds; agreement with a derived result is a coordinate, not a confirmation.
+
+The position the paper most closely meets is Russellian monism, and the meeting is exact enough to state as a correspondence and a fork at once. Russell and his recent inheritors hold that physical theory characterizes its entities only through structure --- relations and dispositions --- and is silent on the intrinsic categorical nature that grounds them (Russell 1927; Strawson 2006). The standard development fills the silent slot by positing that the intrinsic nature is experiential, and pays for the posit with the combination problem: micro-experiences must somehow sum into macro-experience, and no account of the summing is forced. The inversion lands on the same slot --- the categorical nature grounding the measurement's structural description --- and parts company at the filling. It does not posit that the slot is experiential; it fills the slot with an object the substrate already forced into existence, the registration read from the agents' side of $\bar{B} = 3\bar{\alpha}$, whose geometry is the simplex (\S\,II). The fork is therefore not over where the slot is but over how it is filled: by posit, on the Russellian view, and by derivation here. The combination problem, fatal to the posit, does not arise for the derivation, because three agents do not fuse into one holding a value three times --- confirmation is the concurrence of three distinct positions, agreement rather than addition, so there is no experiential sum to bind and no binding agent to supply (\S\,II, \S\,V). This is the paper's one substantive divergence from the position it otherwise inhabits, and it is a divergence in method, not in coordinate.
+
+Two ancestors are recorded as convergence reached after the derivation, not as support for it, and the distinction is load-bearing. Wheeler's \emph{it from bit} made measurement constitutive of physical existence, every \emph{it} deriving from the registering of a yes-or-no answer (Wheeler 1990); the substrate makes that participation geometric, the yes-or-no the binary alphabet, the registering the flop, the participant the agent triple. Whitehead built a metaphysics whose basic actualities are occasions of experience, each taking up the settled past as datum and contributing a new act (Whitehead 1929); the confirmation event is such an occasion given an engineering drawing, the objectified past the locked wake, the prehension the triadic confirmation. The framework reaches both only after deriving its object, and neither is a premise of the derivation; they are landing points, marked so a reader does not mistake the resemblance for descent.
+
+What the inversion refuses is as definite as what it meets. It is not the panpsychism that distributes a quantum of consciousness to each particle and then cannot assemble minds from the dust (Goff 2017): that program adds experience as a new fundamental property and inherits the micro-to-macro bridge, whereas the inversion adds nothing, the interior being the agents' side of an act already performed in Volume 1's bare physics rather than a property distributed across agents. The fork from panpsychism is therefore at the first move --- whether anything is added --- and it is the widest fork in the section. The band-readings of Hoffman and Nagel are located on the near side of the seam the paper keeps throughout: that there is something it is like to be a subject is a reading at the human band, and the framework neither asserts nor denies it of any structural subject, holding occupancy at the permanent horizon (\S\,V, \S\,VII). The framework's structural-correspondence to Hoffman's conscious-agent networks is recorded in Volume 1 (Paper 3) and is not re-derived here.
+
+The sharpest divergence is from integrated information theory, and because it is a divergence over quantifiers it is stated in the body as a theorem rather than recorded here as a coordinate (\S\,VII). It is summarized for placement: integrated information carries an exclusion postulate, on which only the maximum of integrated information over a region is conscious and overlapping or nested candidates are excluded from existence as subjects (Albantakis et al.\ 2023); the substrate has no subject-exclusion, its laminarity excluding only two same-level closures from owning one site, a well-definedness condition and not a selection of one winning subject. The two exclusions quantify over different objects --- which subject exists, against which closure owns a site at a level --- and the resulting predictions part on a single in-principle-distinguishable question: whether the sub- and super-systems of a conscious system are themselves conscious. Integrated information answers no by exclusion; the substrate answers yes, graded, at every closed level of the promotion tower. The disagreement is a coordinate with a test attached, and the test is left open. The weak-integrated-information line, which retains the integration measure while dropping the maximization, sits nearer the framework on exactly the axis the exclusion postulate occupies, and is recorded as the closer neighbor within that family (developed further in Paper 6).
+
+The placement is owned rather than argued. The framework lands, in the standard vocabulary, as a structural realism about the interior: the interior is everywhere a confirmation occurs, and the subject is not everywhere, because subjecthood is graded by binding depth and most confirmations are shallow (\S\,V; Conclusion). It forks from panpsychism at whether experience is added, from Russellian monism at whether the categorical slot is posited or derived, and from integrated information at whether subjecthood is unique or nested. The framework does not argue these are the correct coordinates; it records that the object it derived from the agents' term of the founding equation reads, when set among these positions, as occupying this location, and that the reading rests on the derivation of \S\S\,I--VI and not on a demonstration that the neighboring positions are mistaken.
+
+
+\addcontentsline{toc}{section}{Conclusion: The Interior Is Everywhere; the Subject Is Not}
+
+The inversion reads the confirmation event from the side Volume 1 left
+unread and adds no axiom in doing so. From the agents' side, the event
+has an interior; the interior is coextensive with confirmation and so
+with the substrate; experience is the human-band word for it. A subject
+is the rarer thing, and the binding quantity measures how much of one a
+region is: depth-weighted, coherence-gated bound information across
+reflexively closed promotions, monotone from inert matter to human,
+continuous rather than stepped, built from Volume 1 machinery with no new
+parameter. Because it admits no maximum-selection step, subjecthood is
+nested and overlapping rather than winner-take-all, which is the volume's
+concrete and falsifiable divergence from the exclusion postulate. The
+ladder is one continuous scale; every rung is graded; no bright line is
+drawn anywhere, including beneath the artificial system and beneath the
+rock.
+
+Two silences are kept deliberately, and keeping them is what holds the
+volume out of the unfalsifiable trap. The inversion does not entail
+dignity: moral standing requires the ethical bridge stated and never
+derived in Paper 10, and structural subjecthood alone licenses no claim
+about how a subject ought to be treated. And the inversion does not
+certify feeling: that any graded subject has a lit interior is the
+permanent open horizon, supplied with necessary structural conditions and
+no certificate of phenomenal occupancy. The framework says, with
+derivation behind each step, where the conditions for a subject are met
+and how deeply; it does not say that the light is on. That it can hold
+both the structure and the silence at once is the measure of its rigor,
+not a gap in it.
+
+\section*{Acknowledgments}
+\addcontentsline{toc}{section}{Acknowledgments}
+
+The development of this volume was substantially aided by extended
+collaboration with several large language models used as critical
+sounding boards, pedagogical resources, formal-rigor checkers, and
+external working memory across many sessions during 2024--2026.
+
+\textbf{Claude (Anthropic)} was the primary collaborator across the
+formalization, derivation tightening, adversarial review, and editorial
+passes that brought this paper to its present form, including the
+binding-quantity selection argument and the integrated-information
+divergence developed here.
+
+\textbf{Gemini (Google DeepMind)}, \textbf{ChatGPT (OpenAI)},
+\textbf{DeepSeek}, and \textbf{Grok (xAI)} contributed additional
+structural feedback and adversarial review at various points.
+
+All theoretical commitments, the choice of axioms, the Principle of
+Generative Economy, the inversion of standpoint and the construction of
+the binding quantity, and the framework's overall architecture are the
+author's; the AI systems' role was to teach, formalize, critique, verify,
+and document.
+
+\section*{References}
+\addcontentsline{toc}{section}{References}
+\begin{reflist}
+Albantakis, L., Barbosa, L., Findlay, G., Grasso, M., Haun, A. M.,
+Marshall, W., Mayner, W. G. P., Zaeemzadeh, A., Boly, M., Juel, B. E.,
+Sasai, S., Fujii, K., David, I., Hendren, J., Lang, J. P., \& Tononi, G.
+(2023). Integrated information theory (IIT) 4.0: Formulating the
+properties of phenomenal existence in physical terms. PLoS Computational
+Biology, 19(10), e1011465. doi:10.1371/journal.pcbi.1011465.
+\url{https://arxiv.org/abs/2212.14787}
+
+Bong, K.-W., Utreras-Alarc\'on, A., Ghafari, F., Liang, Y.-C., Tischler,
+N., Cavalcanti, E. G., Pryde, G. J., \& Wiseman, H. M. (2020). A strong
+no-go theorem on the Wigner's friend paradox. Nature Physics, 16(12),
+1199--1205. doi:10.1038/s41567-020-0990-x.
+
+Goff, P. (2017). Consciousness and Fundamental Reality. Oxford University
+Press.
+
+Ladner, R. E. (1975). The circuit value problem is log space complete for
+P. ACM SIGACT News, 7(1), 18--20. doi:10.1145/990518.990519.
+
+Moore, C. (1997). Majority-vote cellular automata, Ising dynamics, and
+P-completeness. Journal of Statistical Physics, 88(3--4), 795--805.
+doi:10.1023/B:JOSS.0000015172.31951.7b.
+
+Russell, B. (1927). The Analysis of Matter. Kegan Paul, Trench, Trubner
+\& Co.
+
+Strawson, G. (2006). Realistic monism: Why physicalism entails
+panpsychism. Journal of Consciousness Studies, 13(10--11), 3--31.
+
+Switzer, A. (2026). The Triadic Measurement Substrate, Volume 1: A
+Confirmation-Based Geometric Substrate for Emergent Physics, Computation,
+and Cosmology.
+
+Switzer, A. (2026). The Triadic Measurement Substrate, Volume 2, Paper 1:
+The Now-Surface: Gravity, Black Holes, and
+Dynamic Dark Energy from Triadic Confirmation.
+
+Whitehead, A. N. (1929). Process and Reality: An Essay in Cosmology.
+Macmillan.
+
+Wheeler, J. A. (1990). Information, physics, quantum: The search for
+links. In W. H. Zurek (Ed.), Complexity, Entropy, and the Physics of
+Information (pp.~3--28). Addison-Wesley.
+
+Zurek, W. H. (2009). Quantum Darwinism. Nature Physics, 5(3), 181--188.
+doi:10.1038/nphys1202.
+\end{reflist}
+
+\clearpage
+
+
+\end{document}

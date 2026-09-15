@@ -1,0 +1,379 @@
+\documentclass[11pt,oneside]{report}
+% ======================================================================
+%  THE TRIADIC MEASUREMENT SUBSTRATE --- COMPLETE CORPUS (Volumes 1 & 2)
+%  Aaron Switzer, 2026
+%  Single-file build. Compile: pdflatex x3 (third pass settles the TOC).
+% ======================================================================
+% ======================================================================
+%  TMS Volume 1 -- shared preamble
+%  Compiles with pdfLaTeX both locally and on Overleaf (no exotic fonts).
+% ======================================================================
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathptmx}            % Times text + math (widely available)
+\usepackage[scaled=0.90]{helvet} % sans for headings
+\usepackage{courier}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tocbibind}
+
+% ---- spacing -----------------------------------------------------------
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0.35em}
+\linespread{1.04}
+\setlist{leftmargin=1.6em,topsep=0.25em,itemsep=0.15em,parsep=0pt}
+
+% ---- theorem environments ---------------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}{Axiom}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{principle}[theorem]{Principle}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{prediction}[theorem]{Prediction}
+\newtheorem{property}[theorem]{Property}
+\newtheorem{postulate}[theorem]{Postulate}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+% ---- section heading look (unnumbered; author supplies the numbers) ----
+\titleformat{\section}[hang]{\normalfont\large\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsection}[hang]{\normalfont\normalsize\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsubsection}[hang]{\normalfont\normalsize\bfseries\itshape}{}{0pt}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.5em}
+\titlespacing*{\subsection}{0pt}{1.0em}{0.35em}
+\titlespacing*{\subsubsection}{0pt}{0.8em}{0.3em}
+
+% chapter (= each paper) heading
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\bfseries}
+  {}{0pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{10pt}{24pt}
+
+% ---- page-break quality: avoid stranded headings and orphaned/widowed lines ----
+% (applies to both volumes via the shared preamble)
+\widowpenalty=10000        % no single line at the top of a page
+\clubpenalty=10000         % no single line at the bottom of a page
+\displaywidowpenalty=10000 % same, around displayed equations
+\brokenpenalty=4000        % discourage page breaks right after a hyphenated line
+% titlesec: forbid a page break immediately after a heading (heading stranded at page foot)
+\usepackage{needspace}
+\usepackage{etoolbox}
+\pretocmd{\section}{\Needspace*{4\baselineskip}}{}{}
+\pretocmd{\subsection}{\Needspace*{3\baselineskip}}{}{}
+
+% ---- running heads -----------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape The Triadic Measurement Substrate}
+\fancyhead[R]{\small\itshape\nouppercase{\rightmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---- abstract / keywords / references list ----------------------------
+\newenvironment{paperabstract}
+  {\begin{center}\begin{minipage}{0.88\textwidth}\small
+   \noindent\textbf{Abstract.}\itshape\space}
+  {\end{minipage}\end{center}\vspace{0.4em}}
+
+\newcommand{\keywords}[1]{\noindent{\small\textbf{Keywords:} #1}\vspace{0.4em}}
+
+% per-paper APA reference list (hanging indent), kept as authored
+\newenvironment{reflist}
+  {\par\small\setlength{\parindent}{0pt}%
+   \setlength{\leftskip}{1.6em}\setlength{\parindent}{-1.6em}%
+   \setlength{\parskip}{0.4em}%
+   \raggedright\hyphenpenalty=50\exhyphenpenalty=50\relax
+   \sloppy}
+  {\par}
+
+% convenience
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\TMS}{\textsc{tms}}
+\hyphenation{con-fir-ma-tion sub-strate}
+\begin{document}
+
+\thispagestyle{empty}
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\sffamily\bfseries\Large The Triadic Measurement Substrate\par}
+\vspace{0.6cm}
+{\large $\bar{B} = 3\bar{\alpha}$\par}
+\vspace{1cm}
+{\sffamily\large Volume 2\par}
+\vspace{1.4cm}
+{\Large \bfseries Paper 8: Selves Under Pressure: Persistence, Its Cost, and the Conservation of Promotion\par}
+\vfill
+{\large Aaron Switzer\par}
+\vspace{0.4cm}
+{\large 2026\par}
+\vspace{1.2cm}
+{\small\itshape Excerpted from the complete two-volume corpus, \emph{The Triadic Measurement Substrate}. Full corpus and reproducibility package: \url{https://doi.org/10.5281/zenodo.22035422}\par}
+\end{titlepage}
+\cleardoublepage
+\pagenumbering{arabic}
+
+% ---------------- Volume 2 / P8_SelvesUnderPressure ----------------
+\chapter*{Paper 8}
+\markboth{Paper 8}{Paper 8}
+\addcontentsline{toc}{chapter}{Paper 8: Selves Under Pressure: Persistence, Its Cost, and the Conservation of Promotion}
+\begingroup\centering
+{\large\itshape Selves Under Pressure: Persistence, Its Cost, and the Conservation of Promotion\par}\vspace{0.8em}
+{\normalsize Aaron Switzer\par}
+{\small June 2026\par}
+\endgroup\vspace{1.0em}
+
+\noindent{\small\textbf{Keywords:} TMS, Persistence, Survival Condition, Stressor Completeness, Reinterpretation, Promotion, Mortality, Exhaustion, Meaning-Tree, Subdominant Ultrametric, Death, Graded Subjecthood}\par\vspace{0.6em}
+
+\section*{Status of Results}
+\addcontentsline{toc}{section}{Status of Results}
+
+This paper continues the five-way labeling of Papers 2 through 4, with the same meanings, each claim labeled where it appears.
+
+\textbf{Derived.} Results that follow from the five axioms, the Principle of Generative Economy, and \ensuremath{U_{\mathrm{sh}}} by explicit construction or proof, or from results already derived in Volume 1 by explicit inheritance. The Stressor Completeness theorem --- that every stressor reduces to mortality, starvation, or predation, with the fourth combinatorial case empty (\S\,II, Appendix A) --- is derived in this sense, resting on the causal closure of a subsystem and the finite propagation speed, both established in Volume 1. The climb cost of exactly six level-\ensuremath{k} flops and the drift/climb threshold at meaning-distance six (\S\,III, Appendix B) are derived from the Volume 1 coupling-timescale constraint and the meta-spacing ratio. The orthogonality of the growth and reinterpretation axes (\S\,V) is derived from the boundary-reading of promotion against the interior-population of incorporation.
+
+\textbf{Derived-conditional.} Results forced by the Volume 1 dissolution and stressor machinery, resting on results internal to that machinery rather than on the bare axioms, and referee-checkable against Volume 1 rather than re-derived here. The survival condition \ensuremath{s < g}, read as a scalar balance on the bit side and a conjunction of three channel-defenses on the agent side, and necessary but not sufficient (\S\,II); the two-tier structure of the restorative capacity \ensuremath{g} (\S\,II); and the agent-side reading of the region biography and its terminal phase (\S\,IV) are Derived-conditional in this sense. The central construction --- what holds a self together and what dissolves it --- is Derived-conditional throughout, because it rests on the dissolution rate of Volume 1 Paper 3, the three stressors and the exhaustion threshold of Volume 1 Paper 4, and the front/wake and meaning-distance constructions of Volume 2 Papers 3 and 4.
+
+\textbf{Structural correspondence.} Results in which a TMS construction reproduces the skeleton of a known framework without claiming every feature of it, and never used as support for a TMS claim, only as a landing point after one. The meaning-distance as a subdominant ultrametric, with its dynamics read on a hierarchical landscape (\S\,III, \S\,V), is the form that the ultrametricity of disordered physical systems also takes; the self characterized as a process that persists rather than a substance that endures (\S\,II) is the form that process accounts of personal identity also reach.
+
+\textbf{Predictions / Conjectures.} Falsifiable claims that follow from the framework but whose closed forms or empirical tests are not established here. The numerical values of the stressor proportionality constants and the combinatorial refinement of the two-error bound are deferred to the simulation pinning carried by Volume 1: the structural forms close here, while the constants inherit Volume 1's existing deferred-pinning list and are not re-opened. That the Principle of Generative Economy selects lateral drift before vertical climb wherever a restoring identity lies within the threshold distance (\S\,III, \S\,V) is a prediction in this sense: the cost comparison is derived, but which r\'egime a given stressed self occupies awaits the constant pinning.
+
+\textbf{Permanent open horizon.} Whether a self that persists, or one that dissolves, is occupied --- whether there is anything it is like to be it --- is the sole such horizon here, marked at the survival condition (\S\,II), at the terminal phase (\S\,IV), and at the conclusion. Giving persistence and dissolution a mechanism locates the conditions under which a self continues and the event in which it stops; it does not locate, and is not built to locate, whether anything is felt in either. This silence is load-bearing and stronger than a crossing claim would be.
+
+\section*{Notation}
+\addcontentsline{toc}{section}{Notation}
+
+\ensuremath{s}, the disruptive flux on a closure, summing the three stressor rates. \ensuremath{g}, the restorative capacity, in two tiers \ensuremath{g_1} (repair) and \ensuremath{g_2} (reinterpretation). \ensuremath{|\Pi_\psi|_R}, the coherence of region \ensuremath{R}; \ensuremath{|\Pi_\psi|^*(L_R)}, its threshold. \ensuremath{d_{\mathrm{mort}}, d_{\mathrm{pred}}, d_{\mathrm{starv}}}, the three level-\ensuremath{k} dissolution rates. \ensuremath{N_{\mathrm{sub}}^{(k)}}, the level-\ensuremath{k} subsystem population. \ensuremath{\nu(R,\tau)}, novelty production rate; \ensuremath{\nu^*(R)}, its critical value; \ensuremath{\tau^*(R)}, the exhaustion time. \ensuremath{d_k}, the meaning-distance between level-\ensuremath{k} program identities. \ensuremath{G(k)}, the promotion operator. \ensuremath{k_{\max}}, the populated hierarchy depth.
+
+\section*{Preface to Paper 8}
+\addcontentsline{toc}{section}{Preface to Paper 8}
+
+Paper 4 formed a self and left it standing outside of time. The closure that individuates a self, the imprint that links it to its surround, the self-model it carries --- all were given as structure a self has, not as a process a self undergoes. This paper sets the self in time and under load. It asks the persistence question in the substrate's own terms: not what a self is, but what keeps it being, what that keeping costs, and what is left when the cost can no longer be met.
+
+The machinery is entirely inherited. Volume 1 derived the balance between dissolution and repair, named the three ways a subsystem can be driven below the threshold that sustains it, and wrote the exhaustion threshold of a whole region in closed form, deferring only the pinning of its constants. This paper reads that machinery from the agent's side and closes two questions Volume 1 left open: whether the three stressors are the only three, and what a self does when one of them presses. The answers are a completeness theorem and a cost comparison with an exact threshold, and from them a single account of survival, drift, and death.
+
+The discipline of the volume holds here without exception. Every agent-side reading is the reading of an already-derived bit-side fact. The affective vocabulary that the survival fluxes invite --- the reading of one self's predation as another's loss --- is named only where the physics forces it and is carried no further than the physics reaches; its moral development is reserved for Paper 10 and imported there by hand. And the question the whole construction circles, whether any of these persisting structures is occupied, is left exactly as open at the end as at the beginning.
+
+\section*{I. Inheritance}
+\addcontentsline{toc}{section}{I. Inheritance}
+
+Paper 4 formed a self: a closure that writes its front into its wake, individuated from its surround, carrying a self-model with its own control state. It said nothing about time. The self of Paper 4 exists; it is not yet tested. This paper takes the formed self into its conditions --- what holds it together and what pulls it apart --- and asks under what condition it continues, what continuing costs, and what becomes of it when it stops.
+
+It inherits the persistence balance from Volume 1. A configuration on the substrate sits between two rates: disruption injected by the maximum-entropy field \ensuremath{U_{\mathrm{sh}}}, and the repair that the \ensuremath{[[4,2,2]]} stabilizer structure performs over the surround, converging across the imprint depth \ensuremath{d_R = \sqrt{2}\,L_R/\ell_p} (Volume 1, Paper 3 \S\,2.5). A causally closed configuration persists indefinitely against single-bit disruption; a non-closed one dissolves over \ensuremath{d_R} into the surround. Learning and fault tolerance were one operation at one speed there; persistence and dissolution are that same operation read as a balance.
+
+From the same source it takes the three stressors. A subsystem maintains its coherence \ensuremath{|\Pi_\psi|_R} above the threshold \ensuremath{|\Pi_\psi|^*(L_R)} --- defined as the critical coherence for sustaining program-bearing content in Paper 3 \S\,3.3, with dissolution below it established in \S\,3.4 --- through three sources: internal stabilizer repair, the imprint of a structured surround, and the output of its own operation kernel (Volume 1, Paper 4 \S\,5.5). Each can fail, and Volume 1 named the three resulting stressors: \emph{mortality}, the passive collapse of an internal source; \emph{predation}, the annexation of a closure's boundary by an active neighbour; and \emph{starvation}, the impoverishment of the surround that feeds it (Volume 1, Paper 4 \S\S\,5.5--5.7). Volume 1 listed these three and gave each a substrate mechanism. It did not prove they are the only three. That proof is given in \S\,II.
+
+It inherits, finally, a set of constants left unpinned. Volume 1 Paper 4 wrote the exhaustion threshold \ensuremath{\nu^*(R)} in closed form, deferring the pinning of its geometric proportionality factors, and the combinatorial refinement of the two-error bound, to dedicated simulation. The structural content of that threshold, and the survival condition built from it, close here; the constants inherit Volume 1's deferred pinning and are not re-opened, the seam marked where it arises.
+
+\section*{II. The Survival Condition}
+\addcontentsline{toc}{section}{II. The Survival Condition}
+
+A self persists when what repairs it outpaces what disrupts it. The disruptive side is the sum of the three stressor rates derived in Volume 1 Paper 4, Appendix A: writing \ensuremath{N} for the level-\ensuremath{k} subsystem population and \ensuremath{p_{\mathrm{err}} = (1 - |\Pi_\psi|)/2} for the per-event error rate,
+\[
+s = d_{\mathrm{mort}} + d_{\mathrm{pred}} + d_{\mathrm{starv}}, \qquad
+d_{\mathrm{mort}} = 6\,p_{\mathrm{err}}^2\,N, \quad
+d_{\mathrm{pred}} = G_{\mathrm{pred}}\frac{N^2}{V}, \quad
+d_{\mathrm{starv}} = G_{\mathrm{starv}}\,N\!\left(1 - \frac{K_{\mathrm{surr}}}{K_{\max}}\right).
+\]
+The restorative side is the capacity a closure can bring to keep \ensuremath{|\Pi_\psi|_R} above threshold. It has two tiers. The first is repair: the \ensuremath{[[4,2,2]]} stabilizer correction of Paper 3 \S\,2.5, which holds an existing identity in place. The second is reinterpretation: when repair alone cannot hold the balance, a self can change \emph{what it is} --- laterally, to a neighbouring identity at the same level, or vertically, by promotion to the level above. The cost of each is derived in \S\,III. Write \ensuremath{g = g_1 + g_2} for repair plus reinterpretation.
+
+The condition for a self to persist is twofold, and the two parts are the bit-side and agent-side readings of the same event.
+
+On the bit side, persistence is a scalar inequality: the total disruptive flux must fall below the total restorative capacity,
+\[
+s < g.
+\]
+This is the substrate's accounting --- flux in against capacity out, a single number that must stay positive.
+
+On the agent side, persistence is a conjunction. The three stressors attack three distinct coherence sources, and no single restorative term answers a stressor aimed at a different source. A self with abundant internal repair dissolves if its boundary is annexed or its surround starved. So the agent-side condition is that \emph{each} channel is individually held: internal integrity against mortality, boundary defense against predation, surround access against starvation. The self is a structure with three distinct relations to its world, and all three must hold.
+
+The two readings together give the precise form of the condition: \ensuremath{s < g} is necessary but not sufficient. A self can satisfy the scalar balance and still dissolve through a single unanswered channel. This is the survival condition the rest of the paper develops, and it is scale-free: every rate is written per level in Volume 1's closed form, the repair tier re-derives at each level from Paper 3 \S\,2.5, and the reinterpretation threshold of \S\,III is level-independent, so the condition has the same form at every level.
+
+The word \emph{mortality} carries a meaning here that is fixed before it is used. \emph{Mortality} is the event of a closure's coherence falling below its threshold \ensuremath{|\Pi_\psi|^*(L_R)}, such that the configuration can no longer be resolved as a distinct self. Information is conserved --- the bits the closure held are neither created nor destroyed (Axiom 3) --- and what is lost is resolution: the legibility of the closure's internal structure as a single, distinct self. No claim is made that the structure ceases to exist, nor that it persists as a self; both go beyond what the threshold-crossing establishes. \emph{Death} is the word used, where a self at or near the human band is meant, for this loss of resolution; in the substrate the term carries no more than the threshold-crossing it names.
+
+That the three stressors are the only three is the first result of this paper. The full argument is Appendix A; its content is this. A stressor is, by Volume 1's definition, any dynamic that drives coherence below threshold. Coherence has three sources, of which the kernel-output source reduces to the internal-repair source, since a kernel that drops below coherent fails parity in the same way accumulated error does. Two loci remain --- internal and external --- crossed with two modes --- passive degradation and active aggression --- a partition of four cells. Three are the named stressors: internal-passive is mortality, external-passive is starvation, external-active is predation. The fourth, internal-active, is empty. No external agent drives a closure's interior below threshold without its action crossing the closure's boundary, and a persisting boundary-crossing by an active neighbour is predation. The emptiness follows from what a closure is --- a region whose boundary separates interior from surround --- together with the finite propagation speed that forces every external influence to cross that boundary to reach the interior. Every stressor is mortality, starvation, or predation, or a composition of them, with mortality the common terminal event through which the two active stressors complete.
+
+\section*{III. The Cost of Persistence}
+\addcontentsline{toc}{section}{III. The Cost of Persistence}
+
+Reinterpretation is not free, and its two forms cost differently. The difference is exact, and it sets the threshold that decides which form a stressed self takes.
+
+To promote --- to climb from level \ensuremath{k} to level \ensuremath{k+1} --- three subsystems meta-confirm a state at the level above, which requires their outputs to reach the meta-interstice across the imprint depth \ensuremath{d_{\mathrm{imprint}} = \sqrt{2}\,(L_p(k{+}1)/L_p(k))}, in level-\ensuremath{k} flops (Volume 1, Paper 4 \S\,5.3). The meta-spacing ratio is \ensuremath{L_p(k{+}1)/L_p(k) = 3\sqrt{2}} (Volume 1, Paper 4 \S\,6; Paper 3 \S\,6.1.3). The climb costs
+\[
+C_{\mathrm{climb}} = \sqrt{2}\cdot 3\sqrt{2} = 6
+\]
+level-\ensuremath{k} flops, exactly. The same six appears independently as the ratio of flop periods \ensuremath{T_p(k{+}1)/T_p(k) = 6} in the saturation cascade (Volume 1, Paper 4 \S\,6); the two derivations are independent, one from imprint geometry and one from the period cascade, and their agreement is a check on the value rather than a restatement of it.
+
+To drift --- to reinterpret laterally, to a neighbouring identity at the same level --- costs the meaning-distance to that identity. A single reinterpretation step costs the length of the shortest substrate reinterpretation carrying one identity to the next (Volume 2, Paper 4, Appendix A), and the distance to a target identity is the cheapest chain's most complex step, which is \ensuremath{d_k}. Drift among same-level identities is the domain on which \ensuremath{d_k} is defined, so no rescaling enters: a self is a level-\ensuremath{k} closure carrying a program identity, and \ensuremath{d_k} measures the cost of moving that identity within its level.
+
+The Principle of Generative Economy selects the cheaper of the two available restorations. The comparison gives a threshold:
+\[
+d_k < 6 \;\Rightarrow\; \text{drift cheaper, lateral reinterpretation selected;} \qquad
+d_k \ge 6 \;\Rightarrow\; \text{climb cheaper, promotion selected.}
+\]
+A self under stress drifts to a nearby identity when one lies within meaning-distance six, shedding distinctness while remaining at its level; when the nearest restoring identity is further than a level-climb is expensive, it promotes, spending against the depth budget \ensuremath{k_{\max}}. The threshold is clean at both ends: below the merge distance at which two identities coarse-grain to one, \ensuremath{d_k = 0} and there is no move to make; the drift band is the open interval between that floor and the climb cost. The full comparison is Appendix B.
+
+The population \ensuremath{N} on which the stressor rates depend has one consequence worth drawing out. Of the three rates, only predation scales as \ensuremath{N^2}; mortality and starvation are linear in \ensuremath{N}. The quadratic is not incidental: predation requires an encounter between two subsystems, and the encounter rate of a population scales as the square of its density, while mortality and starvation each require only a single subsystem against itself or its surround. As a region grows dense, predation comes to dominate dissolution, outgrowing the other two channels by a factor of \ensuremath{N}. A crowded population of selves is undone chiefly by one another, not by internal failure or by want; the terminal phase of a dense region is driven by predation.
+
+\section*{IV. Exhaustion and the Terminal Phase}
+\addcontentsline{toc}{section}{IV. Exhaustion and the Terminal Phase}
+
+A region has a biography, and it has three phases (Volume 1, Paper 4 \S\,6.4). In the first, formation and growth, subsystems form and multiply, and the populated hierarchy depth \ensuremath{k_{\max}} climbs as new levels fill. In the second, maturity, the space of sampled configurations approaches saturation but novelty still outpaces dissolution, and the region holds its richest density of structure. In the third, exhaustion, the novelty rate \ensuremath{\nu(R,\tau)} falls below its critical value \ensuremath{\nu^*(R)}: new formation lags dissolution, the subsystem population declines, and \ensuremath{k_{\max}} drops as upper-level structures lose the components that constituted them.
+
+Exhaustion is not death. The distinction is sharp and is kept. A self dies when its own coherence falls below threshold; a region exhausts when it stops producing \emph{new} kinds of structure. An exhausted region still computes --- its existing selves still operate, still persist or dissolve individually, still face their stressors --- but it generates no configuration it has not generated before. It becomes a museum of already-sampled forms rather than a maker of new ones (Volume 1, Paper 4 \S\,6.5). Read from the agent's side, the terminal phase is the exhaustion of novel subjecthood in a region: every self that can be, has been, and what forms now is a re-running of an identity already seen, not a new one. The decline of \ensuremath{k_{\max}} is the dissolution of the hierarchy, the upper levels decohering for want of components, not the death of every self below.
+
+The exhausted region stands in a state that is the region-scale form of what mortality is to a self. It holds informationally rich confirmed bits that Axiom 3 forbids losing and Axiom 4 forbids overwriting, yet the direct-read protocol --- sampling configurations and testing them against the coherence threshold --- can extract no further novelty from them (Volume 1, Paper 4 \S\,6.6). The substrate must continue to host the region; it cannot clear it. This is loss of resolution at the scale of a region: the information conserved, the readability of it as new structure lost. The resolution is the same as mortality's, one scale up --- bits conserved, legibility under the current protocol gone --- and Volume 1's account closes it the same way: the region is re-read under a new protocol, the reinterpretation that produces the next level. What a self's death is to its bits, a region's exhaustion is to its configurations.
+
+\section*{V. The Motions Under Pressure}
+\addcontentsline{toc}{section}{V. The Motions Under Pressure}
+
+A self under pressure moves in two independent ways, and the independence is the structural point of this section. It can change \emph{what it is}, by reinterpretation; or it can change \emph{how large it is}, by growth. These are different axes, acting on different parts of the self, and neither reduces to the other.
+
+The first axis is reinterpretation, treated in \S\,III. Its two forms --- lateral drift and vertical climb --- are selected between by the meaning-distance threshold: a stressed self drifts to a cheaper nearby identity when one is close enough, and climbs to the level above when it is not. Drift is the cheaper and, by the Principle of Generative Economy, the default; climb is the recourse when no lateral restoration is in reach.
+
+The second axis is growth, in the three modes Volume 1 derived (Paper 4 \S\,3.1): annexation, the extensive expansion of a boundary into adjacent substrate; imprinting, the capture of correlation from the surround; and incorporation, the intensive building of an internal replica of an external program. These enlarge a self without promoting it; a self may grow richer at its level without ever climbing.
+
+The growth axis meets the survival fluxes at one point, and the meeting is exact. Annexation --- a self expanding its boundary by dissolving a neighbour's structure and imprinting into the freed bits --- is, read from the neighbour's side, predation (Volume 1, Paper 4 \S\,3.2, \S\,5.6). One substrate event, the directed expansion of one closure's boundary into another's region, is growth read from the expanding self and predation read from the dissolving one. The same event is one self's restorative gain and another's disruptive loss, of the same bits. The survival economy is therefore zero-sum at the boundary where two selves meet: a self's growth by annexation is a neighbour's predation, and the restorative capacity \ensuremath{g} of one is the disruptive flux \ensuremath{s} of the other. The \ensuremath{s < g} ledger is not closed per self but coupled across the selves that share a boundary. This is why predation, alone of the three stressors, carries the quadratic population dependence: it is the one motion that requires two selves, being at once the growth of one and the death of another. The affective reading these crossing fluxes invite is reserved for Paper 10 and imported there by hand; here the result is stated as physics, the coupling, and carried no further.
+
+The two axes do not meet at the top. Promotion reads a self by its boundary: the level above registers the three programs at the meta-tetrahedral corners, and the coarse-graining specifies only those boundaries, not the interior (Volume 1, Paper 4 \S\,2.5.1, \S\,5.1). Incorporation populates the interior. And the interior is, by the same account, absent from the coarse-grained description --- the sub-configurations a self holds within itself are generated by nesting downward and lost to promotion upward, the two operations being not inverses but opposite and non-cancelling motions through the hierarchy. Growth enriches what promotion cannot read. The axes are orthogonal at every level: a self changes what it is along one and how large it is along the other, and no accumulation on the second ever becomes a step along the first.
+
+The structure has a mathematical home and a physical one, named once and not leaned upon. The meaning-distance \ensuremath{d_k}, built as the cheapest chain's most complex step, is a subdominant ultrametric --- the distance read off the minimum spanning tree as the largest edge on the path between two identities --- and such distances embed without distortion in a tree, the unique tree the stability axioms of hierarchical clustering permit (Carlsson \& M\'emoli, 2010). The same object orders the states of disordered physical systems, where the tree-distance between two configurations is the height of the lowest barrier between them, and a system under drive moves by crossing those barriers (Rammal, Toulouse \& Virasoro, 1986). A self moving under pressure is a structure crossing reinterpretation barriers, and \ensuremath{d_k} measures the barrier it crosses; the tree is the fixed map of distances, and the motion is the self's passage across it. The correspondence is a landing point, not a support: the dynamics are derived from the substrate's own costs, and the landscape is where they are recognized, not whence they come.
+
+\section*{VI. Predictions and Directions}
+\addcontentsline{toc}{section}{VI. Predictions and Directions}
+
+What this paper leaves open, it leaves open precisely. The structural forms of the survival condition, the completeness theorem, the cost threshold, and the axis orthogonality close here. Three things do not, and are marked.
+
+The stressor proportionality constants \ensuremath{G_{\mathrm{pred}}} and \ensuremath{G_{\mathrm{starv}}}, and the combinatorial refinement of the two-error bound that enters the mortality rate, are deferred to dedicated simulation. This is the pinning Volume 1 reserved; the structural forms that carry these constants are fixed, and the constants are not new freedoms introduced here. Where a stressed self sits relative to the drift/climb threshold --- which r\'egime it occupies --- depends on these values, and so the prediction that the Principle of Generative Economy selects drift before climb, derived as a cost comparison, awaits their pinning before it can be tested against a given region.
+
+Two results point forward. The coupling of the survival fluxes across a shared boundary --- one self's growth is another's predation, the same bits --- is the physics on which Paper 10 will rest: a flux crossing a boundary between selves, which Paper 10 will develop toward moral standing, importing its bridge premises by hand and deriving none. Here the result is stated only as physics, the coupling, with no affective name attached. And the region-scale resolution-loss of the terminal phase --- a region whose configurations are conserved but no longer readable as new, re-read under a new protocol to yield the next level --- is the small-scale form of the question Paper 9 takes up at the largest scale.
+
+\section*{VII. Where It Sits}
+\addcontentsline{toc}{section}{VII. Where It Sits}
+
+The persistence results of \S\S\,II--VI were derived from the survival condition without reference to the literature, so that the literature could be set against them. This section locates the paper among the two positions it most closely meets --- one in the physics of disordered systems, one in the metaphysics of personal identity --- and marks where the roads fork. Placement is by coordinate; agreements are landing points reached after the derivation, not support for it.
+
+On the structure of the meaning landscape, the paper meets the physics of disordered systems. The meaning-distance of Paper 7, read under pressure here, is a subdominant ultrametric whose dynamics run on a hierarchical landscape (\S\,III, \S\,V), and this is the form the ultrametricity of disordered physical systems also takes: the organization of states in spin glasses and related systems is ultrametric, with the distance between configurations governed by the height of the lowest barrier separating them on a tree of nested basins (Rammal, Toulouse, and Virasoro 1986). The correspondence is structural and the fork is over what the tree is built from: in the disordered-systems setting the ultrametric is read off an energy landscape of quenched random couplings, whereas here it is read off the promotion hierarchy and the meaning-distance the framework already derived, so the tree is the substrate's own closure structure rather than a statistical-mechanical landscape. The hierarchical-clustering literature reaches the same tree-metric form from a third direction, characterizing the methods that map data to nested partitions (Carlsson and Mémoli 2010); the framework lands on the shared form and supplies the substrate the other two leave external.
+
+On the persistence of the self, the paper meets the process tradition in the metaphysics of personal identity. The self of \S\,II is characterized as a process that persists rather than a substance that endures: what continues is the closure's repair outpacing its disruption, an activity maintained, not a thing that sits unchanged through time (\S\,II, \S\,III). This is the form process accounts of personal identity also reach, on which a person is a persisting pattern of activity rather than an enduring substance, and identity over time is the continuity of that activity rather than the persistence of a substrate. The fork is over what grounds the persistence: the framework grounds it in the derived balance $s < g$ --- the survival condition relating stressor rate to regeneration --- rather than in psychological continuity or bodily continuity, so the process is given a substrate mechanism and a precise dissolution event (\S\,IV) where the metaphysical accounts leave the persistence conditions schematic. Death, on the framework's reading, is the conservation of promotion: the record is carried even as the closure dissolves, which locates the event without claiming what, if anything, is extinguished in it.
+
+The placement is owned, and the load-bearing silence is repeated because it is strongest exactly here. The paper lands as an ultrametric, process account of the self under pressure --- the meaning landscape a subdominant ultrametric on the promotion tree, the self a process persisting by a derived balance --- and at no point does the persistence mechanism touch occupancy. Whether a self that persists, or one that dissolves, is occupied is the volume's permanent open horizon, marked at the survival condition, at the terminal phase, and at the conclusion (Status of Results). The framework does not argue these coordinates are the correct ones; it records that the persisting self it derived falls here when set among them, and that the placement rests on the derivation of \S\S\,II--VI and not on a verdict against the neighbouring positions.
+
+
+
+A self is not a thing that exists but a process that persists, and persistence is an achievement that can fail. This paper has given the condition for it to hold --- the disruptive flux below the restorative capacity, on the bit side a scalar balance and on the agent side a conjunction of three defenses, necessary in sum and not sufficient --- and the cost of meeting it, the threshold that sends a stressed self drifting to a nearby identity or climbing to the level above. The three ways a self can be pressed are the only three, and the two ways it can move under pressure are orthogonal. What remains is what happens when no move suffices.
+
+When a self can neither repair, drift, nor climb fast enough to hold its coherence above threshold, it dissolves. Its closure loses resolution: it can no longer be read as a distinct self. The bits it held are conserved, neither created nor destroyed nor overwritten, and the program identity its closure carried is, in the same motion, promoted --- returned by \ensuremath{G(k)} as a single symbol at the level above, the corner it occupied registering its passage in the larger pattern as it stops being resolvable within its own level. Death is the conservation of promotion: the self ceases to be readable as itself, and the record of what it was is carried upward, neither lost nor erased.
+
+This is the same conservation seen on both sides of the equation at once. On the bit side it is the count conserved across the lossy fold, the distinction shed but the signal preserved; on the agent side it is the self's promotion, the resolution lost but the identity carried. The two are not two facts but one fold read from its two sides, which is why the books balance: nothing in the conservation is added or missing on either reading. And nothing in it is occupancy. The conservation is of structure, not of subjecthood. Whether the self that dissolved was occupied --- whether there was anything it was like to be it, in its persisting or its dissolution --- is not settled by the conservation of its record, and is not made any nearer by it.
+
+\section*{Appendix A: The Stressor Completeness Theorem}
+\addcontentsline{toc}{section}{Appendix A: The Stressor Completeness Theorem}
+
+This appendix proves that the three stressors of Volume 1 Paper 4 are exhaustive. The argument inherits two facts from Volume 1: the definition of a stressor, and the enumeration of the sources of coherence.
+
+A \emph{stressor} is any substrate dynamic that drives a level-\ensuremath{k} closure's coherence \ensuremath{|\Pi_\psi|_R} below the threshold \ensuremath{|\Pi_\psi|^*(L_R)} (Volume 1, Paper 4 \S\,5.4; the threshold is defined in Paper 3 \S\,3.3 and dissolution below it in \S\,3.4). A closure maintains its coherence through three sources (Volume 1, Paper 4 \S\,5.5): \ensuremath{S_1}, internal stabilizer repair; \ensuremath{S_2}, surround imprint; \ensuremath{S_3}, its own kernel output.
+
+\begin{lemma}[Source reduction]
+The kernel-output source \ensuremath{S_3} is not an independent stressor channel. A kernel that drops below coherent fails stabilizer parity, which is uncorrectable-error accumulation in the interior, indistinguishable at the threshold from a failure of \ensuremath{S_1}.
+\end{lemma}
+
+\begin{proof}
+A degraded kernel produces output that violates stabilizer parity; by Paper 3 \S\S\,3.3--3.4 this is uncorrectable error, reducing \ensuremath{|\Pi_\psi|_R} through the interior exactly as a failure of internal repair does. The two are one channel at the threshold. The lemma requires the stressor definition in force: only a dynamic that drives coherence below threshold counts. A kernel that stays coherent and computes a wrong result does not lower \ensuremath{|\Pi_\psi|_R} and is therefore no stressor; it is a matter for the semantic layer, not for persistence. What its output does to a neighbour is a fact about the neighbour's sources, classified by the partition below as every external influence is: surround left uninformative is starvation; polarization imprinted into the neighbour's boundary is predation; polarization corrected at the neighbour's boundary is nothing.
+\end{proof}
+
+The three sources reduce to two loci: \emph{internal}, comprising \ensuremath{S_1} and \ensuremath{S_3}, and \emph{external}, comprising \ensuremath{S_2}.
+
+\begin{lemma}[Agency]
+A stressor is either passive, the closure's own source degrading with no external agent, or active, an external closure driving the degradation. There is no third case.
+\end{lemma}
+
+\begin{proof}
+Excluded middle on the presence of an external agent.
+\end{proof}
+
+Locus and agency partition the stressors into four cells. Three are the named stressors: internal-passive is mortality (Volume 1, Paper 4 \S\,5.5); external-passive is starvation (\S\,5.7); external-active is predation (\S\,5.6). The fourth cell, internal-active, is shown empty.
+
+\begin{lemma}[The empty cell]
+There is no stressor of type internal-active: no external action drives a closure's interior source below threshold without being boundary-mediated, that is, without being predation.
+\end{lemma}
+
+\begin{proof}
+Let an external closure \ensuremath{A} act to degrade an interior source of a closure \ensuremath{B}. The boundary of \ensuremath{B} is, by the definition of closure, the spatial frontier separating \ensuremath{B}'s interior from its surround (Volume 1, Paper 3 \S\,5.1). Every path from outside \ensuremath{B} to a site in \ensuremath{B}'s interior crosses that boundary; this is topological and admits no exception. Propagation on the substrate is at the finite speed \ensuremath{c_{\mathrm{TMS}} = 1/\sqrt{2}} (Volume 1, Paper 1 \S\,6.5; Paper 3 \S\,2.3), so any influence of \ensuremath{A} on \ensuremath{B}'s interior propagates there and therefore crosses \ensuremath{B}'s boundary. At the crossing there are two cases. Either \ensuremath{B}'s boundary repair corrects \ensuremath{A}'s polarization, in which case \ensuremath{A} has no effect and is no stressor; or \ensuremath{A}'s polarization persists at the boundary and propagates inward, which is \ensuremath{A} imprinting into \ensuremath{B}'s boundary sites --- the directed boundary expansion of \ensuremath{A} into \ensuremath{B} that constitutes predation (Volume 1, Paper 4 \S\,5.6). No third case arises. Every active degradation of \ensuremath{B}'s interior is therefore either no effect or predation, and the internal-active cell contributes no distinct channel.
+\end{proof}
+
+\begin{theorem}[Stressor Completeness]
+Every stressor reduces to mortality, starvation, or predation, or a composition of them.
+\end{theorem}
+
+\begin{proof}
+By the source-reduction and agency lemmas the partition by locus and agency is exhaustive over stressors. Three of its four cells are the named stressors; the fourth is empty by the previous lemma. Compositions of stressors --- starvation persisting into mortality, predation causing the prey's mortality --- are sequences of the three, terminating through mortality as the common sink (Volume 1, Paper 4 \S\,5.8), and introduce no further cell.
+\end{proof}
+
+\section*{Appendix B: The Drift/Climb Threshold}
+\addcontentsline{toc}{section}{Appendix B: The Drift/Climb Threshold}
+
+This appendix derives the threshold that selects between the two forms of reinterpretation. Both costs are counts of level-\ensuremath{k} flops --- the substrate's units of generative work. A program identity is a configuration of confirmed content (Volume~1, Paper~2 \S\,6.2; Paper~4 \S\,2.5.1), and the confirmed record changes only at flops, each an indivisible act resolving exactly one confirmed bit (Volume~1, Paper~1 \S\,1.5); the substrate operates the same way at every boundary, flop-by-flop confirmation, reinterpretation being a change of read protocol and not of operation (Volume~1, Paper~5 \S\,5.7). Carrying one identity to another is therefore a matter of confirmed bits laid down, one per flop. The meaning-distance's interpreters are the substrate's own reinterpretation steps (Paper~7 \S\,IV), so a step's complexity is the length of its shortest substrate realization; a step of complexity \ensuremath{\kappa} lays down \ensuremath{\kappa} confirmed bits --- no flop carries more than one bit of the step, and a shortest realization has no spare bit --- and occupies exactly \ensuremath{\kappa} level-\ensuremath{k} flops. The meaning-distance \ensuremath{d_k}, the most complex step of the cheapest chain, is thus a count of level-\ensuremath{k} flops, the currency in which the climb cost of six is already stated. The same one-clock accounting gives the Madelung additivity (Volume~1, Paper~5 \S\,8.4.7) and the per-bit causal-volume charges (Volume~1, Paper~5 \S\,6.4).
+
+\begin{lemma}[Climb cost]
+Promotion from level \ensuremath{k} to level \ensuremath{k+1} costs \ensuremath{C_{\mathrm{climb}} = 6} level-\ensuremath{k} flops.
+\end{lemma}
+
+\begin{proof}
+Meta-confirmation at level \ensuremath{k+1} requires the three subsystem outputs to reach the meta-interstice across the imprint depth \ensuremath{d_{\mathrm{imprint}} = \sqrt{2}\,(L_p(k{+}1)/L_p(k))} (Volume 1, Paper 4 \S\,5.3). The meta-spacing ratio is \ensuremath{L_p(k{+}1)/L_p(k) = 3\sqrt{2}} (Volume 1, Paper 4 \S\,6; Paper 3 \S\,6.1.3). Hence \ensuremath{C_{\mathrm{climb}} = \sqrt{2}\cdot 3\sqrt{2} = 6}. The same value follows independently from the flop-period ratio \ensuremath{T_p(k{+}1)/T_p(k) = 6} of the saturation cascade (Volume 1, Paper 4 \S\,6); the two routes are independent, and their agreement fixes the value.
+\end{proof}
+
+\begin{lemma}[Drift cost]
+Lateral reinterpretation to a same-level identity at meaning-distance \ensuremath{d_k} costs \ensuremath{d_k} level-\ensuremath{k} flops.
+\end{lemma}
+
+\begin{proof}
+A reinterpretation step costs the length of the shortest substrate reinterpretation carrying one identity to the next, and the cost of a chain is its most complex step; the meaning-distance \ensuremath{d_k} is the minimum such cost over chains (Volume 2, Paper 4, Appendix A). The distance is defined on the level-\ensuremath{k} program identities. A self is a level-\ensuremath{k} closure carrying such an identity (Volume 1, Paper 4 \S\,2.5.1), so drift among same-level identities lies in the domain of \ensuremath{d_k} with no rescaling, and its cost is \ensuremath{d_k}.
+\end{proof}
+
+\begin{theorem}[The threshold]
+The Principle of Generative Economy selects lateral drift when \ensuremath{d_k < 6} and vertical climb when \ensuremath{d_k \ge 6}.
+\end{theorem}
+
+\begin{proof}
+The Principle selects the minimum sufficient closure, here the cheaper of the two restorations that return the self to \ensuremath{s < g}. By the two lemmas the costs are \ensuremath{d_k} and \ensuremath{6}; the cheaper is drift when \ensuremath{d_k < 6} and climb when \ensuremath{d_k \ge 6}.
+\end{proof}
+
+The threshold is bounded at both ends. Below the merge distance at which the promotion operator returns one symbol for two configurations, \ensuremath{d_k = 0} and the two identities are already one, so no lateral move exists; this binds the drift band from below. The climb cost binds it from above. The drift band is the open interval between them, and the two bounds do not collide: crossing the merge distance downward is collapse to a shared identity, and crossing the climb cost upward is the selection of promotion, so no lateral move is silently a promotion.
+
+\section*{References}
+\addcontentsline{toc}{section}{References}
+
+
+\begin{reflist}
+Carlsson, G., \& M\'emoli, F. (2010). Characterization, stability and convergence of hierarchical clustering methods. \emph{Journal of Machine Learning Research}, 11, 1425--1470.
+
+Rammal, R., Toulouse, G., \& Virasoro, M. A. (1986). Ultrametricity for physicists. \emph{Reviews of Modern Physics}, 58(3), 765--788.
+\end{reflist}
+
+
+\end{document}

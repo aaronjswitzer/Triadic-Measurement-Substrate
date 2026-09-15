@@ -1,0 +1,1903 @@
+\documentclass[11pt,oneside]{report}
+% ======================================================================
+%  THE TRIADIC MEASUREMENT SUBSTRATE --- COMPLETE CORPUS (Volumes 1 & 2)
+%  Aaron Switzer, 2026
+%  Single-file build. Compile: pdflatex x3 (third pass settles the TOC).
+% ======================================================================
+% ======================================================================
+%  TMS Volume 1 -- shared preamble
+%  Compiles with pdfLaTeX both locally and on Overleaf (no exotic fonts).
+% ======================================================================
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathptmx}            % Times text + math (widely available)
+\usepackage[scaled=0.90]{helvet} % sans for headings
+\usepackage{courier}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tocbibind}
+
+% ---- spacing -----------------------------------------------------------
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0.35em}
+\linespread{1.04}
+\setlist{leftmargin=1.6em,topsep=0.25em,itemsep=0.15em,parsep=0pt}
+
+% ---- theorem environments ---------------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}{Axiom}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{principle}[theorem]{Principle}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{prediction}[theorem]{Prediction}
+\newtheorem{property}[theorem]{Property}
+\newtheorem{postulate}[theorem]{Postulate}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+% ---- section heading look (unnumbered; author supplies the numbers) ----
+\titleformat{\section}[hang]{\normalfont\large\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsection}[hang]{\normalfont\normalsize\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsubsection}[hang]{\normalfont\normalsize\bfseries\itshape}{}{0pt}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.5em}
+\titlespacing*{\subsection}{0pt}{1.0em}{0.35em}
+\titlespacing*{\subsubsection}{0pt}{0.8em}{0.3em}
+
+% chapter (= each paper) heading
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\bfseries}
+  {}{0pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{10pt}{24pt}
+
+% ---- page-break quality: avoid stranded headings and orphaned/widowed lines ----
+% (applies to both volumes via the shared preamble)
+\widowpenalty=10000        % no single line at the top of a page
+\clubpenalty=10000         % no single line at the bottom of a page
+\displaywidowpenalty=10000 % same, around displayed equations
+\brokenpenalty=4000        % discourage page breaks right after a hyphenated line
+% titlesec: forbid a page break immediately after a heading (heading stranded at page foot)
+\usepackage{needspace}
+\usepackage{etoolbox}
+\pretocmd{\section}{\Needspace*{4\baselineskip}}{}{}
+\pretocmd{\subsection}{\Needspace*{3\baselineskip}}{}{}
+
+% ---- running heads -----------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape The Triadic Measurement Substrate}
+\fancyhead[R]{\small\itshape\nouppercase{\rightmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---- abstract / keywords / references list ----------------------------
+\newenvironment{paperabstract}
+  {\begin{center}\begin{minipage}{0.88\textwidth}\small
+   \noindent\textbf{Abstract.}\itshape\space}
+  {\end{minipage}\end{center}\vspace{0.4em}}
+
+\newcommand{\keywords}[1]{\noindent{\small\textbf{Keywords:} #1}\vspace{0.4em}}
+
+% per-paper APA reference list (hanging indent), kept as authored
+\newenvironment{reflist}
+  {\par\small\setlength{\parindent}{0pt}%
+   \setlength{\leftskip}{1.6em}\setlength{\parindent}{-1.6em}%
+   \setlength{\parskip}{0.4em}%
+   \raggedright\hyphenpenalty=50\exhyphenpenalty=50\relax
+   \sloppy}
+  {\par}
+
+% convenience
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\TMS}{\textsc{tms}}
+\hyphenation{con-fir-ma-tion sub-strate}
+\begin{document}
+
+\thispagestyle{empty}
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\sffamily\bfseries\Large The Triadic Measurement Substrate\par}
+\vspace{0.6cm}
+{\large $\bar{B} = 3\bar{\alpha}$\par}
+\vspace{1cm}
+{\sffamily\large Volume 1\par}
+\vspace{1.4cm}
+{\Large \bfseries Paper 3: Computation Emerges: Surround-Driven Repair, Coherence Bistability, and the First Subsystem\par}
+\vfill
+{\large Aaron Switzer\par}
+\vspace{0.4cm}
+{\large 2026\par}
+\vspace{1.2cm}
+{\small\itshape Excerpted from the complete two-volume corpus, \emph{The Triadic Measurement Substrate}. Full corpus and reproducibility package: \url{https://doi.org/10.5281/zenodo.22035422}\par}
+\end{titlepage}
+\cleardoublepage
+\pagenumbering{arabic}
+
+% ---------------- Volume 1 / paper3 ----------------
+\chapter*{Paper 3}
+\markboth{Paper 3}{Paper 3}
+\addcontentsline{toc}{chapter}{Paper 3: Computation Emerges: Surround-Driven Repair, Coherence Bistability, and the First Subsystem}
+\begingroup\centering
+{\large\itshape Computation Emerges: Surround-Driven Repair, Coherence Bistability, and the First Subsystem\par}\vspace{0.8em}
+{\normalsize Aaron Switzer\par}
+{\small May 2026\par}
+\endgroup\vspace{1.0em}
+
+\noindent{\small\textbf{Keywords:} TMS, Stabilizer Repair, Hebbian Learning, Coherence Bistability, Coarse-Graining, Subsystems, Universal Computation, Computational Hierarchy}\par\vspace{0.6em}
+
+\section*{Status of Results}
+\addcontentsline{toc}{section}{Status of Results}
+
+This paper distinguishes four categories of claim, each labeled where it
+appears in the text.
+
+\textbf{Derived.} Results that follow from the five axioms, the
+Principle of Generative Economy, and the structures established in
+Papers 1 and 2 by explicit construction or proof. Surround-driven repair
+as a direct consequence of FCC boundary geometry, requiring no extension
+of the [[4,2,2]] repair operator (\S\,2.2); the Imprinting Theorem
+stating that a region of diameter \ensuremath{L_{R}} converges to the unique
+stabilizer-satisfying continuation of its retarded surround history over
+imprint depth \ensuremath{d_{R}} = \ensuremath{\sqrt{2}} \ensuremath{\cdot} \ensuremath{L_{R}/\ell_{p}} flops (\S\,2.3); Hebbian co-firing as a
+corollary of the imprint mechanism under structured boundary conditions
+(\S\,2.4); the dissolution rate of non-T-closed configurations and the
+effective error-rate decay \ensuremath{(1/3)^{d}} (\S\,2.5, closing the Paper 2
+deferrals); the recursive applicability of the axioms at the
+coarse-grained scale \ensuremath{L_{p},} producing the meta-level triadic rule,
+meta-level FCC structure, and meta-level [[4,2,2]] stabilizer
+dynamics by the same arguments applied at the same axiomatic content
+(\S\,IV); the \ensuremath{(C_{D},} \ensuremath{C_{O},} \ensuremath{C_{C})} trichotomy as the unique minimum
+sufficient decomposition of any non-trivial information-transforming
+configuration (\S\,5.2); the minimum subsystem extent \ensuremath{L_{\mathrm{sub}}} = \ensuremath{3L_{p}} + \ensuremath{\delta}
+(\S\,5.3); the existence of a minimum computing subsystem by explicit
+construction (\S\,5.4); and the information-generation rate differential of
+one novel P-state per meta-flop per minimum subsystem (\S\,5.5) are derived
+in this sense.
+
+\textbf{Structural correspondence.} The coherence bistability threshold
+\textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{*(L_{R})} = 1 \ensuremath{-} \ensuremath{2\sqrt{c_{\mathrm{TMS}}/(6}} \ensuremath{L_{R}))} of \S\,3.3 is a
+derivation of the scaling form, not of the exact coefficient. The
+functional dependence \ensuremath{p_{\mathrm{error}}} \ensuremath{\propto} \ensuremath{1/\sqrt{L_{R}}} is forced by balancing per-flop
+noise injection against per-flop imprinting capacity under FCC
+connectivity. The numerical coefficients depend on combinatorial factors
+(notably the C(4,2) = 6 upper bound on per-tetrahedral-unit two-error
+configurations) and geometric proportionality factors on the imprinting
+side, which are stated as worst-case bounds and reserved for refinement
+in Paper 5's simulation work. The threshold's qualitative behavior ---
+strictly between 0 and 1, monotonic in \ensuremath{L_{R},} producing a bistable phase
+structure --- is forced by the derivation. Its quantitative pinning is
+not.
+
+\textbf{Predictions / Conjectures.} Falsifiable claims that follow from
+the framework but whose closed forms are not derived within this paper.
+The hierarchical lightspeed formula \ensuremath{c^{(k)}} (\S\,6.1) gives the structural
+form, with the \ensuremath{L_{p}(k)/L_{p}(k-1)} and \ensuremath{T_{p}(k)/T_{p}(k-1)} ratios identified
+as combinatorial quantities requiring enumeration of
+stabilizer-satisfying T-closed configurations at each level. The refined
+\ensuremath{\beta} = f(d, \ensuremath{K_{\psi,\mathrm{local}},} \ensuremath{K_{\psi,\mathrm{surround}},} \ensuremath{K_{\psi,\mathrm{subsystem}})} prediction (\S\,6.2)
+specifies the functional dependences; f's explicit form is deferred. The
+spatial-distribution prediction for computational activity in old
+substrate regions (\S\,6.3) is a structural claim whose empirical bridge
+requires the simulation work of Paper 5. The structural parallel to
+self-organized criticality flagged in \S\,3.5 is a positioning claim;
+specific statistical predictions (power-law cascade-collapse statistics,
+scale-free correlation lengths, 1/f signatures in novel-configuration
+emergence rates) are conjectures pending Paper 5's simulation work.
+
+\textbf{Deferred derivations carried into Papers 4 and 5.} The minimum
+program extent \ensuremath{L_{p},} characterized in \S\,4.1 as approximately 4--8 lattice
+spacings, is left as a placeholder pending combinatorial enumeration of
+stabilizer-satisfying T-closed configurations at substrate level. The
+exact integer value, and the corresponding \ensuremath{L_{p}^{(k)}} at higher
+hierarchical levels, are reserved for Paper 5. The closed form of f and
+the explicit numerical \ensuremath{c^{(k)}} sequence inherit this deferral. The
+macroscopic consequences of subsystem dynamics --- hierarchies,
+multi-subsystem dynamics, novelty exhaustion, the dispersion structure
+of \ensuremath{c^{(k)}} --- are carried into Paper 4. The cross-level relativistic
+phenomena flagged in \S\,6.1 are carried into Paper 4 \S\,8.2 and resolved
+structurally in Paper 5.
+
+This four-way labeling applies throughout the paper. Every claim in the
+body text falls into exactly one category.
+
+\section*{Preface to Paper 3}
+\addcontentsline{toc}{section}{Preface to Paper 3}
+
+This paper is the third installment in Volume 1 of the Triadic
+Measurement Substrate program. Volume 1, Paper 1 established the
+geometric and ontological architecture of the substrate --- the agent
+manifold \ensuremath{M\alpha ,} triadic confirmation, FCC necessity, the [[4,2,2]]
+structural correspondence, and the wave dynamics of the confirmation and
+polarization fields. Volume 1, Paper 2 developed the substrate's
+computational dynamics --- the polarization-biased resolution of
+synthetic bits, the Born-rule structural correspondence, the 3-input
+majority gate, and the formal definition of programs as configurations
+causally closed under the flop operator T with K(C) \textless{}
+\textbar C\textbar. Paper 3 takes both as given and develops the next
+move: how computation emerges from informational substrate, how learning
+is forced by the geometry rather than added to it, and how the first
+subsystem --- the smallest configuration that transforms patterns rather
+than merely persisting them --- is generated by the substrate dynamics
+without external design.
+
+As in Papers 1 and 2, no new axioms are introduced. No new free
+parameters are introduced. The Principle of Generative Economy continues
+to govern every selection. Paper 3 additionally closes several formal
+debts deferred from Paper 2 --- the dissolution rate of non-T-closed
+configurations, the effective error-rate decay with coherence depth, and
+the existence and form of the coherence bistability threshold --- by
+derivations that follow from the same geometric primitives that produced
+wave dynamics and biased measurement.
+
+\begin{paperabstract}
+Building on the binary alphabet \ensuremath{\bar{B}} \ensuremath{\in} \{0, 1\}, the polarization field \ensuremath{\psi ,}
+and the program formalism established in Paper 2, we develop the
+computational dynamics of the TMS substrate at and above the program
+scale. Five principal results are derived. First, the [[4,2,2]]
+stabilizer repair operator of Paper 1, when applied at boundary sites of
+any finite region R, automatically incorporates the polarization
+landscape of R's surround into the repair bias --- by the FCC geometry
+of parent-child connectivity alone, with no new mechanism introduced.
+This produces the Imprinting Theorem: over the imprint depth \ensuremath{d_{R}} = \ensuremath{\sqrt{2}} \ensuremath{\cdot}
+\ensuremath{L_{R}/\ell_{p}} flops, R's polarization landscape converges to the unique
+stabilizer-satisfying continuation of the retarded surround history.
+Hebbian co-firing follows as a corollary. Second, the dissolution rate
+of non-T-closed configurations and the effective error-rate decay with
+coherence depth --- both deferred from Paper 2 --- are derived from the
+same iteration as \ensuremath{O(L/\ell_{p})} flops and \ensuremath{(1/3)^{d}} respectively. Third, the
+per-event error probability is shown to be a function of local
+polarization coherence, and balancing per-flop noise injection
+(combinatorially set by [[4,2,2]] error statistics) against
+per-flop imprinting capacity (geometrically set by FCC connectivity)
+yields a closed-form coherence bistability threshold
+\textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{*(L_{R})} separating regions that sustain
+program-bearing algorithmic content from regions that decay toward
+noise. Fourth, the substrate's axioms are scale-independent: applied at
+the coarse-grained scale \ensuremath{L_{p}} of minimum stabilizer-satisfying T-closed
+configurations, they produce the same triadic rule, the same FCC
+geometry, and the same [[4,2,2]] stabilizer structure at the
+meta-level --- hierarchy by geometric necessity. Fifth, the minimum
+subsystem is derived as a composite of three programs (data, operation,
+control) at meta-tetrahedral extent \ensuremath{L_{\mathrm{sub}}} = 3 \ensuremath{L_{p}} + \ensuremath{\delta ,} with the
+trichotomy shown to be the unique minimum sufficient decomposition of
+any non-trivial information-transforming configuration. The substrate
+concentrates computation into bit-rich regions, generates subsystems
+wherever the local disruption rate favors information-generating
+configurations, and supports a recursive hierarchy with derived
+(generically distinct) lightspeeds at each level. No new free numerical
+parameters are introduced; every quantity follows from the axioms and
+the Principle of Generative Economy.
+\end{paperabstract}
+
+\section*{I. Inheritance from Papers 1 and 2}
+\addcontentsline{toc}{section}{I. Inheritance from Papers 1 and 2}
+
+\subsection*{1.1 Inherited Structure}
+
+Paper 3 takes the following structures from Papers 1 and 2 as given:
+
+\begin{itemize}
+\item
+  The agent manifold \ensuremath{M\alpha} with agent spacing \ensuremath{\ell_{0}} \ensuremath{\equiv} \ensuremath{\ell_{p},} and the FCC causal
+  stack with face-diagonal nearest-neighbor connectivity (Paper 1
+  \S\,2--\S\,3).
+\item
+  The triadic actualization rule \ensuremath{\bar{B}} = \ensuremath{3\bar{\alpha}_{2}} in 2D and \ensuremath{\bar{B}} = \ensuremath{4\bar{\alpha}_{3}} in 3D, with
+  the \ensuremath{1\to 4} multiplier and informational closure (Paper 1 \S\,2, \S\,4).
+\item
+  The binary alphabet \ensuremath{\bar{B}} \ensuremath{\in} \{0, 1\} with polarization \ensuremath{\chi} \ensuremath{\equiv} \ensuremath{2\bar{B}} \ensuremath{-} 1 \ensuremath{\in} \{\ensuremath{-1,}
+  +1\}, and polarization-carrying touch vector signals (Paper 1 \S\,1.3,
+  \S\,1.4).
+\item
+  The flop as the atomic unit of state change, with no sub-flop time
+  (Paper 1 \S\,1.5).
+\item
+  The wave equations for the confirmation density \ensuremath{\varphi} and the polarization
+  field \ensuremath{\psi} at \ensuremath{c_{\mathrm{TMS}}} = \ensuremath{1/\sqrt{2}} (Paper 1 \S\,6; Paper 2 \S\,2).
+\item
+  The [[4,2,2]] structural correspondence: logical qubit LQ1 =
+  bit value, LQ2 = causal-history inheritance, jointly protected by
+  stabilizers \ensuremath{S_{x}} and \ensuremath{S_{Z}} at distance 2 (Paper 1 \S\,5).
+\item
+  The polarization-biased resolution rule \ensuremath{P(\bar{B}} = 1 \textbar{} \ensuremath{\Pi_{\psi})} = (1
+  + \ensuremath{\Pi_{\psi})/2} and its structural correspondence to the Born rule (Paper 2
+  \S\,4).
+\item
+  The 3-input majority gate as the substrate's irreducible computational
+  primitive and the universality result \{MAJ, constant\} \ensuremath{\to} \{AND, OR,
+  NOT\} (Paper 2 \S\,5).
+\item
+  The flop operator T and the formal definition of a program: a
+  configuration C with \ensuremath{T^{n}[C]} = C and K(C) \textless{}
+  \textbar C\textbar{} (Paper 2 \S\,6.2).
+\item
+  \ensuremath{U_{\mathrm{sh}}} as the pervasive maximum-entropy flux present at every depth of
+  the causal stack, providing both the source of latent bits and the
+  stochastic disruption to confirmed states (Paper 1 \S\,1.1, \S\,6.3).
+\end{itemize}
+
+\subsection*{1.2 The Computational Questions Paper 3 Answers}
+
+Paper 2 established that the substrate computes --- the majority gate is
+the irreducible primitive, universality is forced by the gate set, and
+programs are configurations causally closed under T with K(C)
+\textless{} \textbar C\textbar. Paper 2 deferred three formal
+derivations to Paper 3: the dissolution rate of non-T-closed
+configurations, the effective error-rate decay with coherence depth, and
+the explicit conditions under which the substrate selects
+program-bearing configurations against \ensuremath{U_{\mathrm{sh}}} disruption. Paper 3 answers
+these and develops three further structural questions: how the substrate
+learns from its environment, how computational density concentrates into
+bit-rich regions, and how the first subsystem --- the smallest
+configuration that transforms patterns rather than merely persisting
+them --- emerges from the same geometric primitives without additional
+design.
+
+\section*{II. Learning as Imprinted Repair}
+\addcontentsline{toc}{section}{II. Learning as Imprinted Repair}
+
+\subsection*{2.1 The Surround}
+
+\begin{definition}[Surround]
+For a finite region R of the FCC lattice, the
+surround \ensuremath{S_{R}} is the set of lattice sites within nearest-neighbor
+touch-vector range of the boundary \ensuremath{\partial R} that lie outside R itself:
+\end{definition}
+
+\emph{\ensuremath{S_{R}} = \{y \ensuremath{\notin} R : \ensuremath{\exists} x \ensuremath{\in} \ensuremath{\partial R} with y \ensuremath{\in} neigh(x)\}}
+
+The polarization landscape on \ensuremath{S_{R}} is the time-dependent function
+\ensuremath{\psi_{S}(\tau )} = \{\ensuremath{\chi (y,} \ensuremath{\tau )} : y \ensuremath{\in} \ensuremath{S_{R}}\}. The touch vector network at \ensuremath{\partial R} carries
+signals from \ensuremath{S_{R}} into R at every flop. By the connectivity established
+in Paper 1 \S\,1.3, no other channel of informational communication between
+R and the rest of the lattice exists. The surround is the complete
+informational environment of R.
+
+\subsection*{2.2 Surround-Driven Repair}
+
+Paper 1 \S\,5.2 established that when \ensuremath{U_{\mathrm{sh}}} disrupts a confirmed bit in R,
+the synthetic bits produced at the next flop detect the stabilizer
+syndrome and repair the missing or anomalous confirmation by projecting
+toward the nearest stabilizer-satisfying state. Paper 2 \S\,5.2 treated
+``nearest'' as a local concept --- the nearest configuration consistent
+with R's own interior. That treatment was sufficient at the level of
+universality but incomplete at the level of repair geometry.
+
+\begin{proposition}[Surround Dependence of Repair]
+The stabilizer-repair
+projection at a boundary site x \ensuremath{\in} \ensuremath{\partial R} has a parent set that includes at
+least one agent in \ensuremath{S_{R}.} The polarization landscape on \ensuremath{S_{R}} therefore
+contributes to the bias of the repair, and the ``nearest
+stabilizer-satisfying configuration'' is determined jointly by the
+polarization landscapes on R and \ensuremath{S_{R}.}
+\end{proposition}
+
+\begin{proof}
+By Paper 1 \S\,4.2, a synthetic bit at position x has three parent
+agents in the prior layer, and its polarization is biased by the three
+incoming touch vector signals from those parents (Paper 2 \S\,3.2). For x \ensuremath{\in}
+\ensuremath{\partial R,} the FCC geometry forces at least one of x's parents to lie in \ensuremath{S_{R}}
+rather than in R --- this is the geometric definition of a boundary
+site. The polarization at that parent contributes to \ensuremath{\Pi_{\psi}(x)} by the same
+linear weighting that governs all parent-to-child polarization transfer.
+The repair projection at x is therefore biased by the polarization on
+\ensuremath{S_{R}} through this parent.
+
+\end{proof}
+
+\begin{corollary}[No New Mechanism]
+Surround-driven repair requires no
+extension of the repair operator beyond what Paper 1 \S\,5 already
+established. The same mechanism --- synthetic bits at the next flop
+carrying their parent polarizations into the resolution of a syndrome
+violation --- automatically includes surround contributions at boundary
+sites by FCC geometry alone. What Paper 2 treated as local was already
+non-local by construction.
+\end{corollary}
+
+This is the key recognition. The [[4,2,2]] repair is a
+projection operator whose bias is set by the full set of parent
+polarizations at the repair site. At interior sites of R, all parents
+lie in R and the repair is local. At boundary sites, parents lie in both
+R and \ensuremath{S_{R}} and the repair is surround-driven. The repair operator is the
+same; its locality is a property of the site, not of the mechanism.
+
+\subsection*{2.3 Imprinting Over the Retarded Surround History}
+
+The boundary sites of R communicate surround information into R's
+interior at each flop. Iterating the repair operator over successive
+flops propagates this information inward at the lattice propagation
+speed \ensuremath{c_{\mathrm{TMS}}} = \ensuremath{1/\sqrt{2}} (Paper 1 \S\,6.5). For a region of diameter \ensuremath{L_{R},}
+complete inward propagation requires \ensuremath{d_{R}} = \ensuremath{\sqrt{2}} \ensuremath{\cdot} \ensuremath{L_{R}/\ell_{p}} flops. We refer
+to \ensuremath{d_{R}} as the imprint depth of R.
+
+The polarization information arriving at any interior site of R at flop
+\ensuremath{\tau} is not the value of \ensuremath{\psi_{S}} at that moment, but the value of \ensuremath{\psi_{S}} at
+retarded time \ensuremath{\tau} \ensuremath{-} \ensuremath{d/c_{\mathrm{TMS}},} where d is the lattice distance from the
+relevant boundary point to the interior site. This is forced by signal
+conservation (Axiom 3) and the finite propagation speed established in
+Paper 1 --- it is not an assumption added here. The imprint at flop \ensuremath{\tau} is
+therefore a function of the retarded surround history over the window
+\ensuremath{[\tau} \ensuremath{-} \ensuremath{d_{R},} \ensuremath{\tau ].}
+
+\begin{definition}[Imprinted Configuration]
+The configuration of R after k \ensuremath{\geq}
+\ensuremath{d_{R}} flops of repair under the surround history \ensuremath{\psi_{S}(\tau '),} \ensuremath{\tau '} \ensuremath{\in} \ensuremath{[\tau} \ensuremath{-}
+\ensuremath{d_{R},} \ensuremath{\tau ],} is the imprinted configuration \ensuremath{\psi_{R}*(\psi_{S}}\textbar\ensuremath{[\tau} \ensuremath{-}
+\ensuremath{d_{R},} \ensuremath{\tau ])} --- the unique stabilizer-satisfying continuation of that
+retarded history into R.
+\end{definition}
+
+\begin{theorem}[Imprinting Theorem]
+The imprinted configuration
+\ensuremath{\psi_{R}*(\psi_{S}}\textbar\ensuremath{[\tau} \ensuremath{-} \ensuremath{d_{R},} \ensuremath{\tau ])} is the unique polarization
+landscape on R that minimizes the expected per-flop stabilizer syndrome
+rate consistent with the retarded surround history at the boundary.
+\end{theorem}
+
+Proof sketch. The stabilizer repair operator is a contraction on the
+space of polarization landscapes: configurations farther from stabilizer
+parity are projected closer to it at each flop. The fixed points of the
+repair operator are exactly the stabilizer-satisfying configurations.
+With the retarded boundary history fixed, the iterated repair operator
+converges to the stabilizer-satisfying configuration whose polarization
+landscape is consistent with the retarded surround history at the
+boundary and stabilizer-satisfying in the interior. This configuration
+is unique because the [[4,2,2]] parity conditions in a coherent
+region determine the polarization at each interior site given its
+retarded boundary values up to discrete flips, and the boundary values
+are fixed by the retarded \ensuremath{\psi_{S}.} \hfill\ensuremath{\square}
+
+The configuration of R after k \ensuremath{\geq} \ensuremath{d_{R}} flops is therefore not a function
+of R's initial state but a function of the surround's history. R's
+polarization landscape encodes the surround's history at the boundary,
+automatically averaged across propagation delays. When \ensuremath{\psi_{S}} varies
+slowly compared to \ensuremath{d_{R},} R tracks \ensuremath{\psi_{S}} closely. When \ensuremath{\psi_{S}} varies
+rapidly, R averages over the variation. No regime selector is needed ---
+the retarded average is what the geometry produces. This encoding is
+what learning is.
+
+\subsection*{2.4 The Hebbian Corollary}
+
+Hebbian co-firing --- the principle that simultaneous activity in
+connected units strengthens their effective bond (Hebb, 1949) --- is the
+canonical mechanism by which environmental correlations are encoded in a
+neural substrate. It is typically presented as a phenomenological rule
+for synaptic plasticity. Recent work in statistical mechanics has
+derived Hebbian learning from a maximum-entropy variational principle
+(Albanese et al., 2024), establishing it as a theorem about how networks
+extract correlations under entropy extremization. In the TMS, Hebbian
+co-firing emerges as a different and complementary theorem --- about how
+the geometric stabilizer-repair operator behaves under structured
+boundary conditions. Both derivations target the same phenomenon; the
+convergence of independent first-principles derivations strengthens the
+result.
+
+\begin{corollary}[Hebbian Co-Firing]
+Let \ensuremath{s_{i},} \ensuremath{s_{j}} \ensuremath{\in} \ensuremath{S_{R}} be two surround
+sites and let r \ensuremath{\in} R be an interior site causally downstream from both.
+Define the surround correlation over k flops:
+\end{corollary}
+
+\emph{\ensuremath{C{ij}(k)} = (1/k) \ensuremath{\Sigma {\tau =1}^{k}} \ensuremath{\chi (s_{i},} \ensuremath{\tau )} \ensuremath{\cdot} \ensuremath{\chi (s_{j},} \ensuremath{\tau )}}
+
+and the bond strength between \ensuremath{(s_{i},} \ensuremath{s_{j})} and r:
+
+\emph{\ensuremath{W{ij,r}(k)} = (1/k) \ensuremath{\Sigma {\tau =1}^{k}} \ensuremath{\chi (r,} \ensuremath{\tau )} \ensuremath{\cdot} \ensuremath{(\chi (s_{i},} \ensuremath{\tau )} +
+\ensuremath{\chi (s_{j},} \ensuremath{\tau ))/2}}
+
+Then \ensuremath{W{ij,r}(k)} is monotonically increasing in
+\textbar \ensuremath{C{ij}(k)}\textbar{} for k \ensuremath{\geq} \ensuremath{d_{R}.}
+
+\begin{proof}
+By Paper 2 \S\,3.2, the polarization at r is determined by its
+parents via the linear bias rule. The parents of r at flop \ensuremath{\tau} have causal
+histories tracing back to \ensuremath{S_{R}} at flop \ensuremath{\tau} \ensuremath{-} d, where d is the causal
+depth from \ensuremath{S_{R}} to r. When \ensuremath{s_{i}} and \ensuremath{s_{j}} co-fire positively (both +1 or
+both \ensuremath{-1),} the polarization signals propagating from them through the
+lattice reinforce each other at every intermediate layer; their joint
+contribution to \ensuremath{\Pi_{\psi}} at r's parents is amplified relative to the case of
+uncorrelated firing. When they anti-fire, their contributions partially
+cancel. The bond strength \ensuremath{W{ij,r}(k)} uses the linear average
+\ensuremath{(\chi (s_{i})} + \ensuremath{\chi (s_{j}))/2} --- the same linear weighting that the substrate
+uses at every parent-to-child transfer --- and is therefore the natural
+measure consistent with the substrate's own dynamics, with no additional
+non-linear operation introduced. Iterated over k flops with k \ensuremath{\geq} \ensuremath{d_{R},}
+the time-averaged bias at r tracks the time-integrated correlation
+\ensuremath{C{ij}(k).} The stabilizer repair operator, by \S\,2.2, projects r toward
+configurations consistent with this bias. The bond strength
+\ensuremath{W{ij,r}(k)} therefore increases monotonically with
+\textbar \ensuremath{C{ij}(k)}\textbar.
+
+\end{proof}
+
+\begin{remark}
+The Hebbian rule in standard neural network theory is a designed
+update --- a learning rule chosen to produce desired representational
+properties. In the TMS, the Hebbian rule is a theorem about how the
+geometric repair operator behaves under structured boundary conditions.
+The substrate learns not because it has been equipped with a learning
+mechanism, but because the repair mechanism it was already equipped with
+for fault tolerance has surround-imprinting as its non-local extension.
+Learning and fault tolerance are the same geometric process applied at
+different spatial scales.
+\end{remark}
+
+\subsection*{2.5 The Convergence Rate and the Dissolution Rate}
+
+The imprinting process converges over the imprint depth \ensuremath{d_{R}} = \ensuremath{\sqrt{2}} \ensuremath{\cdot}
+\ensuremath{L_{R}/\ell_{p}} flops. This is the same timescale that governs the dissolution
+of non-closed configurations promised at Paper 2 \S\,6.3. We derive both
+here from the same argument.
+
+\begin{theorem}[Dissolution and Convergence]
+Let C be a configuration on R of
+spatial extent \ensuremath{L_{R}.}
+\end{theorem}
+
+\begin{itemize}
+\item
+  If C satisfies stabilizer parity and is causally closed under T (C is
+  a program in the sense of Paper 2 \S\,6.2), then C persists indefinitely
+  against single-bit disruptions from \ensuremath{U_{\mathrm{sh}}.}
+\item
+  If C satisfies stabilizer parity but is not causally closed under T,
+  then C dissolves into the imprinted configuration
+  \ensuremath{\psi_{R}*(\psi_{S}}\textbar\ensuremath{[\tau} \ensuremath{-} \ensuremath{d_{R},} \ensuremath{\tau ])} over the imprint depth \ensuremath{d_{R}} = \ensuremath{\sqrt{2}}
+  \ensuremath{\cdot} \ensuremath{L_{R}/\ell_{p}} flops.
+\item
+  If C does not satisfy stabilizer parity, then C is repaired toward the
+  nearest parity-satisfying configuration within a single flop, then
+  evolves according to (i) or (ii).
+\end{itemize}
+
+Proof sketch. Case (i) is Paper 1 \S\,5.3. Case (iii) is Paper 1 \S\,5.2. For
+case (ii), C is a fixed point of the repair operator at flop \ensuremath{\tau} but not
+of the flop operator T. The next-flop state T[C] differs from C; the
+difference propagates outward at \ensuremath{c_{\mathrm{TMS}}} from the sites of disagreement.
+Over k flops, the cumulative drift is O(k \ensuremath{\cdot} \ensuremath{c_{\mathrm{TMS}}} \ensuremath{\cdot} \ensuremath{\ell_{p}).} When this drift
+exceeds \ensuremath{L_{R},} the configuration has been entirely replaced by whatever
+the retarded surround history supplies. That threshold is reached at k =
+\ensuremath{L_{R}/(c_{\mathrm{TMS}}} \ensuremath{\cdot} \ensuremath{\ell_{p})} = \ensuremath{\sqrt{2}} \ensuremath{\cdot} \ensuremath{L_{R}/\ell_{p}.} The resulting configuration is
+\ensuremath{\psi_{R}*(\psi_{S}}\textbar\ensuremath{[\tau} \ensuremath{-} \ensuremath{d_{R},} \ensuremath{\tau ]).} \hfill\ensuremath{\square}
+
+\begin{corollary}[Effective Error-Rate Decay]
+In a coherent region where \ensuremath{\psi_{S}}
+is structured and stationary over \ensuremath{d_{R}} flops, the probability that a
+single-bit error survives stabilizer repair over d successive flops is
+bounded above by:
+\end{corollary}
+
+\begin{equation*}
+P_{\mathrm{error}}(d) \leq (1/3)^{d}
+\end{equation*}
+
+with the bound becoming tight when the coherence region is large
+compared to the error correlation length (one lattice spacing). For
+smaller coherence regions, repair rounds at successive layers operate on
+overlapping tetrahedral units and the bound is loose but still upper.
+
+\begin{proof}
+The per-event error probability in the intermediate
+\textbar \ensuremath{\Pi_{\psi}}\textbar{} = 1/3 case is 1/3 (Paper 2 \S\,5.1). Repair rounds
+at successive layers are independent in the limit of large coherence
+regions because the repair at layer \ensuremath{\tau} + 1 operates on synthetic bits
+whose parents differ from those at layer \ensuremath{\tau .} The probability of d
+independent uncorrected errors is the d-th power of the per-event
+probability.
+
+\end{proof}
+
+These results settle both formal debts carried forward from Paper 2. The
+dissolution rate and the error-decay rate are not independent results
+--- they are two readings of the same geometric process. Configurations
+dissolve into surround-imprinted forms over \ensuremath{O(L/\ell_{p})} flops; single-bit
+errors are corrected at the same rate. Learning and fault tolerance are
+the same operation at the same speed.
+
+\section*{III. Coherence Phases and the Concentration of Computational Density}
+\addcontentsline{toc}{section}{III. Coherence Phases and the Concentration of Computational Density}
+
+\subsection*{3.1 Bit-Richness as Polarization Structure}
+
+Throughout this paper we use the term bit-rich to refer specifically to
+regions whose polarization landscape sustains programs in the sense of
+Paper 2 \S\,6.2 --- configurations causally closed under T with K(C)
+\textless{} \textbar C\textbar. Bit-richness is a property of the
+polarization landscape across confirmed sites, not of the confirmation
+density \ensuremath{\varphi .} A region with \ensuremath{\varphi} near 1 but uniform polarization carries no
+programs; a region with moderate \ensuremath{\varphi} but coherent polarization landscape
+may carry many. Confirmation density and polarization structure are
+independent axes (Paper 2 \S\,2.4), and bit-richness lives on the second.
+
+The three-state distinction established in Paper 1 \S\,1.4 --- latent (in
+\ensuremath{U_{\mathrm{sh}},} undecided), confirmed-zero \ensuremath{(\bar{B}} = 0), and confirmed-one \ensuremath{(\bar{B}} = 1) ---
+is the substrate's irreducible computational state space. \ensuremath{\varphi} measures
+confirmed-vs-latent (either value of \ensuremath{\bar{B}} counts toward \ensuremath{\varphi ).} Polarization
+structure measures the pattern of 0s and 1s among already-locked bits.
+``Bit-rich'' as used in this paper refers exclusively to the second.
+
+The local algorithmic content of a region is bounded above by its
+confirmation density:
+
+\begin{equation*}
+K_{\psi}(R) \leq N_{R} \cdot \text{log} 2 = \varphi_{R} \cdot V_{R} \cdot \text{log} 2
+\end{equation*}
+
+This counting bound holds for any configuration. Hosting programs of
+substantial algorithmic content requires both confirmed substrate (high
+\ensuremath{\varphi )} and structured polarization landscape across that substrate. Programs
+sit strictly between the two extremes of trivially uniform polarization
+\ensuremath{(K_{\psi}} \ensuremath{\approx} log \ensuremath{V_{R})} and algorithmically incompressible polarization at the
+local \ensuremath{U_{\mathrm{sh}}} rate \ensuremath{(K_{\psi}} \ensuremath{\approx} \textbar C\textbar{} \ensuremath{\cdot} log 2).
+
+\subsection*{3.2 The Per-Event Error Rate as a Function of Coherence}
+
+The per-event error rate introduced in Paper 2 \S\,5.1 is not a fixed
+constant. It is a function of the local polarization amplitude. From the
+resolution probability \ensuremath{P(\bar{B}} = 1 \textbar{} \ensuremath{\Pi_{\psi})} = (1 + \ensuremath{\Pi_{\psi})/2,} the
+probability that a confirmation resolves contrary to the dominant
+polarization of its parents is:
+
+\emph{\ensuremath{p_{\mathrm{error}}(\Pi_{\psi})} = (1 \ensuremath{-} \textbar \ensuremath{\Pi_{\psi}}\textbar)/2}
+
+For \textbar \ensuremath{\Pi_{\psi}}\textbar{} = 1 (fully aligned parents), \ensuremath{p_{\mathrm{error}}} = 0.
+For \textbar \ensuremath{\Pi_{\psi}}\textbar{} = 0 (maximally disagreed parents), \ensuremath{p_{\mathrm{error}}}
+= 1/2. For \textbar \ensuremath{\Pi_{\psi}}\textbar{} = 1/3 (two-vs-one parents), \ensuremath{p_{\mathrm{error}}}
+= 1/3, recovering the value used in Paper 2 \S\,5.1.
+
+The error rate is therefore set by local polarization coherence --- the
+degree to which parent polarizations at each confirmation event agree.
+Coherent regions have low \ensuremath{p_{\mathrm{error}};} incoherent regions have high
+\ensuremath{p_{\mathrm{error}}.} There is no separately specified disruption mechanism. What
+Paper 1 \S\,6.3 referred to as \ensuremath{``U_{\mathrm{sh}}} regulation'' is precisely the residual
+stochasticity in the polarization-biased resolution, and its local
+magnitude is governed by the polarization landscape itself.
+
+A region's per-flop accumulation of incompressible noise scales as \ensuremath{N_{R}}
+\ensuremath{\cdot} \ensuremath{p_{\mathrm{error}}(\langle}\textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{\rangle )} --- the count of confirmed sites
+times the local error probability. When \ensuremath{p_{\mathrm{error}}} is small, the noise
+injection is small relative to the [[4,2,2]] repair capacity,
+and the algorithmic structure of \ensuremath{\psi} is preserved. When \ensuremath{p_{\mathrm{error}}} is large,
+noise injection exceeds repair capacity, and structured polarization
+patterns decay toward incompressibility.
+
+\subsection*{3.3 The Critical Coherence Threshold}
+
+\begin{theorem}[Coherence Bistability, Scaling Form]
+A region R sustains
+program-bearing algorithmic content in its polarization landscape if and
+only if its local coherence \textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{_{R}} exceeds a critical
+threshold \textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{*(L_{R})} whose scaling with the region's
+characteristic length is
+\end{theorem}
+
+\emph{\textbar \ensuremath{\Pi_{\psi}}\textbar{}}\ensuremath{(L_{R})} \ensuremath{\sim} 1 \ensuremath{-} 2 \ensuremath{\sqrt{c}} \ensuremath{\cdot} \ensuremath{\alpha_{\mathrm{geom}}} / \ensuremath{(\beta_{\mathrm{comb}}} \ensuremath{\cdot}
+\ensuremath{L_{R}))*}
+
+where \ensuremath{\beta_{\mathrm{comb}}} captures per-tetrahedral-unit error combinatorics
+(worst-case upper bound \ensuremath{\beta_{\mathrm{comb}}} = C(4,2) = 6) and \ensuremath{\alpha_{\mathrm{geom}}} captures
+imprinting-side geometric proportionality (worst-case lower bound
+\ensuremath{\alpha_{\mathrm{geom}}} = 1). In these worst-case bounds the threshold takes the closed
+form
+
+\emph{\textbar \ensuremath{\Pi_{\psi}}\textbar{}}\ensuremath{(L_{R})} = 1 \ensuremath{-} 2 \ensuremath{\sqrt{c_{\mathrm{TMS}}}} / (6 \ensuremath{L_{R}))*}
+
+which is strictly between 0 and 1 for all \ensuremath{L_{R}} \ensuremath{\geq} \ensuremath{4\ell_{p}/(6} \ensuremath{c_{\mathrm{TMS}}).}
+
+\begin{proof}
+Each tetrahedral confirmation unit contains 4 agents, and the
+[[4,2,2]] code has distance 2: single-agent errors per unit are
+correctable, two-or-more-agent errors per unit are not. With per-event
+error probability \ensuremath{p_{\mathrm{error}}} = (1 \ensuremath{-} \textbar \ensuremath{\Pi_{\psi}}\textbar)/2, the per-unit
+uncorrectable error probability is approximately \ensuremath{P_{\mathrm{unc}}} \ensuremath{\approx} 6 \ensuremath{p^{2}_{\mathrm{error}}}
+for moderate \ensuremath{p_{\mathrm{error}},} with the factor 6 = C(4,2) counting the ways two
+errors can occur among four agents in a tetrahedral unit. Each
+uncorrectable error injects incompressibility into \ensuremath{\psi} at that site at a
+rate that scales as \ensuremath{V_{R}} \ensuremath{\cdot} \ensuremath{P_{\mathrm{unc}}} per flop, where \ensuremath{V_{R}} is the region's
+volume in lattice units.
+
+The imprinting mechanism (\S\,II) counteracts this loss. The retarded
+surround history is communicated into R through its boundary at rate
+\ensuremath{A_{R}} \ensuremath{\cdot} \ensuremath{c_{\mathrm{TMS}},} where \ensuremath{A_{R}} is the boundary area in lattice units. The
+stabilizer-satisfying continuation of the retarded surround reduces
+local entropy at a rate proportional to this flow.
+
+Balancing per-flop noise injection against per-flop imprinting gain
+yields the self-consistent equation:
+
+\begin{equation*}
+6 p^{2}_{\mathrm{error}} \cdot V_{R} = A_{R} \cdot c_{\mathrm{TMS}}
+\end{equation*}
+
+For a region of characteristic length \ensuremath{L_{R},} \ensuremath{A_{R}/V_{R}} \textasciitilde{}
+\ensuremath{1/L_{R},} giving \ensuremath{p^{2}_{\mathrm{error}}} = \ensuremath{c_{\mathrm{TMS}}/(6} \ensuremath{L_{R}),} and therefore:
+
+\begin{equation*}
+p_{\mathrm{error}},\text{crit} = \sqrt{c_{\mathrm{TMS}} / (6 L_{R})}
+\end{equation*}
+
+Translating back to the coherence: \textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{*(L_{R})} = 1 \ensuremath{-} 2
+\ensuremath{p_{\mathrm{error}},\text{crit}} = 1 \ensuremath{-} 2 \ensuremath{\sqrt{c_{\mathrm{TMS}}/(6}} \ensuremath{L_{R})).} The threshold is strictly
+between 0 and 1 for all finite \ensuremath{L_{R}} because \ensuremath{c_{\mathrm{TMS}}/(6} \ensuremath{L_{R})} is positive
+and bounded above by 1/4 in the regime of interest \ensuremath{L_{R}} \ensuremath{\geq} \ensuremath{4\ell_{p}/(6} \ensuremath{c_{\mathrm{TMS}}).}
+Small regions have proportionally more surround influence and lower
+thresholds; large regions have less and higher thresholds.
+
+\end{proof}
+
+The threshold is geometric: it follows from the [[4,2,2]] code
+distance, the polarization-biased resolution rule, and the FCC
+connectivity structure. The functional dependence on \ensuremath{L_{R}} is forced by
+the derivation; the numerical coefficients inside the square root are
+stated as worst-case bounds.
+
+\begin{remark}[Status of the Threshold]
+The derivation above forces
+the scaling form \ensuremath{p_{\mathrm{error}}} \ensuremath{\propto} \ensuremath{1/\sqrt{L_{R}}} by balancing per-flop noise
+injection (scaling as \ensuremath{p^{2}_{\mathrm{error}}} \ensuremath{\cdot} \ensuremath{V_{R})} against per-flop imprinting gain
+(scaling as \ensuremath{A_{R}} \ensuremath{\cdot} c), under FCC connectivity and [[4,2,2]] code
+distance 2. The functional dependence on \ensuremath{L_{R}} is therefore derived. The
+numerical coefficients inside the square root are not --- they depend on
+combinatorial and geometric factors stated here as worst-case bounds.
+The factor \ensuremath{\beta_{\mathrm{comb}}} = 6 is the C(4,2) count of two-error configurations
+in a tetrahedral unit; the true effective value is generically lower
+under correlated error statistics. The factor \ensuremath{\alpha_{\mathrm{geom}}} = 1 absorbs the
+imprinting-side geometry; the true effective value depends on the
+precise boundary topology of R and may carry a multiplicative correction
+of order unity. Both refinements are reserved for Paper 5's simulation
+work.
+\end{remark}
+
+The structural content of the theorem --- that a critical threshold
+exists, that it scales as 1 \ensuremath{-} \ensuremath{2\sqrt{\cdot /L_{R}},} that it is strictly between 0
+and 1, that small regions face higher thresholds than large ones, that
+the threshold separates a bistable phase structure --- is forced by the
+derivation. The exact numerical pinning of the threshold for a given
+\ensuremath{L_{R}} is not. Section 3.4's self-reinforcement result and \S\,3.5's
+continuous-sampling framing depend on the structural content; they do
+not depend on the precise coefficient values.
+
+\subsection*{3.4 Self-Reinforcement of Coherent Regions}
+
+\begin{theorem}[Self-Reinforcement of Coherent Regions]
+Let R be a region with
+local coherence \textbar \ensuremath{\Pi_{\psi}}\textbar{}\emph{R \textbf{\textgreater{}}
+\textbar \ensuremath{\Pi_{\psi}}\textbar{}\textbf{\ensuremath{(L_{R})} and let \ensuremath{S_{R}} be its surround. Over
+k \ensuremath{\geq} \ensuremath{d_{R}} flops, the imprinting mechanism of \S\,II drives R toward the
+configuration \ensuremath{\psi_{R}}}\ensuremath{(\psi_{S}}\textbar\ensuremath{[\tau} \ensuremath{-} \ensuremath{d_{R},} \ensuremath{\tau ])} that minimizes the
+per-flop syndrome rate. The resulting configuration has coherence
+\textbar \ensuremath{\Pi_{\psi}}\textbar{}}\{R*\} \ensuremath{\geq} \textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{_{R}.} Coherent
+regions become more coherent; incoherent regions remain incoherent and
+dissolve toward noise.
+\end{theorem}
+
+\begin{proof}
+By the Imprinting Theorem (\S\,2.3), R relaxes toward the
+stabilizer-satisfying continuation of the retarded surround history.
+Stabilizer-satisfying configurations have by definition the lowest
+possible local syndrome rate. By \S\,3.2, low syndrome rate corresponds to
+high local coherence \textbar \ensuremath{\Pi_{\psi}}\textbar. The imprinted configuration
+is therefore at least as coherent as R's initial state, and strictly
+more coherent unless R was already at a fixed point of imprinting under
+its current surround. A region above the threshold therefore becomes
+more coherent over flop time and remains above the threshold; a region
+below the threshold cannot stabilize, as its low coherence produces an
+uncorrected error rate exceeding the imprinting capacity, and its
+program content decays toward \ensuremath{U_{\mathrm{sh}}-\text{like}} noise. The two phases are
+dynamically separated.
+
+\end{proof}
+
+The TMS does not produce a uniform sea of computation. It produces sharp
+regions of coherent, program-bearing structure separated by incoherent
+intervening medium. The boundaries between these phases are themselves
+geometric features of the substrate, governed by the propagation of
+polarization waves across the critical-coherence interface.
+
+\subsection*{3.5 The Substrate as Continuous Sampler}
+
+Sections 3.3 and 3.4 together establish a strong claim about the
+substrate's long-time behavior. \ensuremath{U_{\mathrm{sh}}} is the pervasive maximum-entropy
+flux present at every depth of the causal stack (Paper 1 \S\,1.1, \S\,6.3). By
+Axiom 0, \ensuremath{U_{\mathrm{sh}}} is algorithmically incompressible, with no preferred
+direction, scale, or target. The substrate is therefore continuously
+sampling all possible polarization configurations --- every possible
+pattern is being attempted, everywhere, all the time. The dynamics
+select among these attempts.
+
+Configurations above the coherence threshold self-reinforce by the
+imprinting plus bistability mechanisms of \S\,3.3 and \S\,3.4. Configurations
+below the threshold decay back into \ensuremath{U_{\mathrm{sh}}-\text{like}} noise. The substrate does
+not produce coherent regions through any special generative mechanism;
+it retains them while letting everything else dissolve. The selection is
+the mechanism. \ensuremath{U_{\mathrm{sh}}} is the source.
+
+This framing is consistent with the pervasive flux character of \ensuremath{U_{\mathrm{sh}}}
+established in Paper 1: \ensuremath{U_{\mathrm{sh}}} is not only at the leading edge of the
+cascade but at every depth, which is why the [[4,2,2]] repair
+must fire continuously to preserve already-confirmed bits against
+ambient disruption. Coherent regions form wherever the substrate's own
+dynamics produce a configuration that the substrate's own repair
+operator can sustain.
+
+Computation and confirmation are not two separate processes. They are
+the same process under structured polarization conditions. Bit-rich
+regions are exactly the regions where confirmation can be sustained
+against \ensuremath{U_{\mathrm{sh}}} --- coherent parents reliably bias their children's
+resolution, keeping \ensuremath{p_{\mathrm{error}}} low, keeping uncorrectable errors below the
+imprinting rate, keeping the region intact. Bit-poor regions cannot
+sustain confirmation indefinitely; their high \ensuremath{p_{\mathrm{error}}} means the
+resolution does not lock reliably, and the region returns to \ensuremath{U_{\mathrm{sh}}.} The
+substrate computes by confirming, and confirms by computing. Anywhere it
+is not computing, it is not confirming; anywhere it is not confirming,
+it does not exist as substrate.
+
+\begin{remark}[Structural Parallel to Self-Organized Criticality]
+The
+dynamics described in \S\,3.3--\S\,3.5 --- a structurally supercritical
+amplification mechanism (the \ensuremath{1\to 4} cascade) balanced against a
+structurally subcritical disruption mechanism \ensuremath{(U_{\mathrm{sh}}} flux at every depth),
+with the observable substrate sitting on the dynamic-stability boundary
+between them --- rhymes with the architecture of self-organized
+criticality (Bak, Tang, \& Wiesenfeld, 1987; Jensen, 1998). SOC
+describes systems that naturally settle at the boundary between
+supercritical and subcritical regimes without external tuning, producing
+characteristic statistical signatures (power-law event distributions,
+scale-free correlation lengths, 1/f noise) as the empirical fingerprint
+of the critical state.
+\end{remark}
+
+The TMS substrate exhibits the structural preconditions for SOC
+behavior: the cascade dynamics are geometrically forced to amplify, the
+\ensuremath{U_{\mathrm{sh}}} disruption is geometrically forced to oppose, and the
+[[4,2,2]] repair operator provides the local relaxation
+mechanism. The coherence bistability of \S\,3.3 is the substrate's
+expression of the critical state --- regions above
+\textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{*(L_{R})} sustain structure, regions below dissolve,
+and the boundary between them is where the cascade and disruption
+balance dynamically. The continuous-sampling mechanism of \S\,3.5 is the
+SOC drive: \ensuremath{U_{\mathrm{sh}}} continuously injects new configurations across the
+substrate; the geometric selection retains those above threshold and
+dissolves the rest.
+
+One structural disanalogy is worth noting. Classical SOC depends on a
+temporal-scale separation between slow drive (e.g., sand grains added
+slowly to the Bak-Tang-Wiesenfeld pile) and fast relaxation (avalanches
+discharging accumulated stress quickly). TMS has continuous drive and
+continuous relaxation operating at the same atomic scale (every flop,
+every site). Whether this places TMS in the classical SOC universality
+class or in a non-classical SOC variant --- and whether an emergent
+slow/fast separation arises at the level of bit-rich regions versus
+their boundaries --- is an open question whose resolution depends on the
+cascade-collapse statistics derived in Paper 5's simulation work.
+
+The structural parallel is flagged here as a research direction.
+Specific predictions --- power-law statistics for cascade collapse
+events, scale-free correlation lengths in bit-rich region geometry, 1/f
+signatures in novel-configuration emergence rates --- are testable in
+principle and will be developed alongside the combinatorial enumeration
+of stabilizer-satisfying T-closed configurations in Paper 5.
+
+\section*{IV. Coarse-Graining and the Second-Order Alphabet}
+\addcontentsline{toc}{section}{IV. Coarse-Graining and the Second-Order Alphabet}
+
+\subsection*{4.1 The Minimum Program Scale}
+
+By \S\,3.3, regions sustaining program-bearing polarization landscapes have
+a coherence threshold \textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{*(L_{R})} that depends on
+region size. The relation derived above places a lower bound on the
+spatial extent of any region capable of hosting a program against \ensuremath{U_{\mathrm{sh}}}
+disruption: as \ensuremath{L_{R}} decreases, the required coherence increases, until
+the threshold approaches 1 and no configuration short of perfect
+alignment can sustain itself. The minimum program extent \ensuremath{L_{p}} is the
+smallest \ensuremath{L_{R}} for which a non-trivial T-closed configuration of
+compressibility K(C) \textless{} \textbar C\textbar{} can stably exist.
+
+Derivation of \ensuremath{L_{p}.~A} non-trivial program requires at least one boundary
+between polarization domains --- a configuration with K(C)
+\textgreater{} log \ensuremath{V_{R}} must contain at least one non-uniformity. The
+[[4,2,2]] repair sustains each domain only if its thickness is
+large enough that boundary errors do not propagate inward faster than
+they can be corrected. The minimum thickness is set by the FCC
+nearest-neighbor distance (one lattice spacing) plus the propagation
+distance during one error-correction cycle (one further lattice spacing
+along a face diagonal). The minimum non-trivial program therefore has at
+least one domain boundary plus two stabilizing layers on each side,
+giving a minimum spatial extent of approximately 4 to 8 lattice spacings
+depending on geometry.
+
+\begin{equation*}
+L_{p} \approx (4--8) \ell_{p}
+\end{equation*}
+
+The exact integer value of \ensuremath{L_{p}} for a given configuration shape is
+determined by closed-form enumeration of stabilizer-satisfying T-closed
+configurations under the [[4,2,2]] code in the FCC lattice --- a
+combinatorial calculation tractable in principle and most efficiently
+approached through simulation alongside the program zoo enumeration
+deferred to Paper 5. The structural fact required here is that \ensuremath{L_{p}} is
+finite and strictly greater than \ensuremath{\ell_{p}:} a single confirmed bit cannot be a
+program because K(C) \ensuremath{\approx} \textbar C\textbar{} for any single-bit
+configuration; the minimum non-trivial program is several lattice
+spacings.
+
+\ensuremath{L_{p}} plays the same role at the meta-level that \ensuremath{\ell_{p}} plays at the
+substrate level. It is the minimum resolvable length of the
+coarse-grained system. Below \ensuremath{L_{p},} programs do not exist; the substrate
+is structureless at that scale by the same architectural necessity that
+makes the substrate structureless below \ensuremath{\ell_{p}.}
+
+\subsection*{4.2 The Coarse-Graining Operator G}
+
+\begin{definition}[Coarse-Graining Operator]
+Let R be a spatial region of the
+FCC lattice with diameter \ensuremath{L_{R}} \ensuremath{\geq} \ensuremath{L_{p},} and let \ensuremath{[\tau_{0},} \ensuremath{\tau_{0}} + n] be a
+time window covering one period of a candidate program. The
+coarse-graining operator G maps the polarization landscape \ensuremath{\psi} on R \ensuremath{\times}
+\ensuremath{[\tau_{0},} \ensuremath{\tau_{0}} + n] to a single meta-level state \ensuremath{\bar{P}_{p}} \ensuremath{\in} \{0, 1\} indexed by
+program identity p:
+\end{definition}
+
+*G : \ensuremath{\psi (R} \ensuremath{\times} \ensuremath{[\tau_{0},} \ensuremath{\tau_{0}} + n]) \ensuremath{\mapsto} \ensuremath{\bar{P}_{p}(X,} T)*
+
+where X is the meta-spatial center of R (the centroid of R's spatial
+support) and T is the meta-time index counting completed periods.
+
+G evaluates to \ensuremath{\bar{P}_{p}} = 1 if \ensuremath{\psi} on R \ensuremath{\times} \ensuremath{[\tau_{0},} \ensuremath{\tau_{0}} + n] satisfies
+\ensuremath{T^{n}[C]} = C for the program of identity p (causal closure under T)
+AND \textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{_{R}} \ensuremath{\geq} \textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{*(L_{R})} (above the
+coherence threshold). G evaluates to \ensuremath{\bar{P}_{p}} = 0 if either condition fails.
+
+\ensuremath{\bar{P}_{p}} = 1 indicates that program p is locked in region R at meta-time T.
+\ensuremath{\bar{P}_{p}} = 0 indicates that program p is absent. This is the meta-level
+analog of \ensuremath{\bar{B}} \ensuremath{\in} \{0, 1\}, with \ensuremath{\chi_{p}} \ensuremath{\equiv} \ensuremath{2\bar{P}_{p}} \ensuremath{-} 1 \ensuremath{\in} \{\ensuremath{-1,} +1\} the
+meta-level polarization.
+
+\begin{remark}
+G is not a new mechanism. It is a measurement operation defined
+on substrate-level data --- checking whether the configuration on a
+region satisfies the program closure condition. The dynamics of the
+substrate are unchanged. What G does is identify which regions are
+running which programs at each meta-time, without altering the
+substrate-level evolution.
+\end{remark}
+
+\begin{remark}[Lorentz preservation under G]
+The effective continuum dynamics
+induced by G on the meta-lattice preserve Lorentz symmetry at leading
+order, with residual scaling set by cubic-invariant suppression on the
+FCC point group \ensuremath{O_{h}} (Paper 5 \S\,4.1 Lemma B). G itself is a
+classification operator on substrate-level data; the Lorentz property is
+a consequence of how the FCC geometry survives coarse-graining, not a
+property added to G.
+\end{remark}
+
+\subsection*{4.3 Programs as Meta-Level Primitives}
+
+\begin{proposition}
+A program of meta-spatial extent \ensuremath{L_{p}} is the unique minimum
+sufficient primitive at the meta-level under Axiom 2 and the Principle
+of Generative Economy.
+\end{proposition}
+
+\begin{proof}
+Axiom 2 selected the sphere as the unique substrate-level
+primitive because it is the only isotropic geometric primitive requiring
+zero orientation parameters. At the meta-level, a program is identified
+by its identity p and its location X. Its internal polarization
+structure is hidden by G (the operator returns only \ensuremath{\bar{P}_{p},} not the
+underlying \ensuremath{\psi ).} At the meta-level, therefore, programs are characterized
+by location and identity alone --- no orientation parameter is exposed
+to the meta-level dynamics. They are isotropic at the meta-level by
+construction.
+
+A program also has finite spatial extent \ensuremath{L_{p}} with a definable boundary
+(the surface across which its polarization landscape meets the
+surround's). By Generative Economy applied to this finite-extent
+isotropic primitive, the minimum-perimeter boundary is the sphere of
+diameter \ensuremath{L_{p}.~\text{Programs}} are therefore spheres at the meta-level --- not
+by additional postulate, but as the unique structure forced by the same
+axioms that produced the substrate-level sphere primitive.
+
+\end{proof}
+
+This is the geometric form of the recursive applicability of the axioms.
+The same primitive selection that gave the substrate its agents gives
+the meta-level its program-agents. No new axiom is introduced.
+
+\subsection*{4.4 The Triadic Minimum at the Meta-Level}
+
+\begin{theorem}[Meta-Level Triadic Minimum]
+Three programs constitute the
+necessary and sufficient minimum for P-state actualization in the
+meta-manifold of programs.
+\end{theorem}
+
+\begin{proof}
+The argument of Paper 1 \S\,2.1 applies unchanged at the meta-level.
+Meta-level confirmation requires a closed simplicial cover of the
+meta-manifold --- every meta-interstice fully bounded with complete
+angular closure. The case analysis is identical: two programs define a
+meta-1-simplex with open boundary; four programs achieve closure
+non-minimally; three programs achieve closure with no redundancy. By
+Generative Economy at the meta-level, three is uniquely selected.
+
+\end{proof}
+
+\ensuremath{*\bar{P}_{p}} = 3 \ensuremath{\bar{\alpha}_{p},_{2}} (2D meta-level)*
+
+The meta-manifold of programs is hexagonally close-packed by the same
+Thue-Fejes Tóth argument applied at the meta-scale. The meta-lattice
+spacing is \ensuremath{L_{p}.}
+
+Remark on Environment-Creation. When three programs jointly confirm a
+P-state, the meta-interstice they enclose is a bounded region of
+substrate available to host further configurations. The three programs
+do not merely confirm an abstract meta-bit --- they create an
+environment. The meta-interstice has definable boundaries (the three
+programs' polarization boundaries), an interior (the substrate region
+between them), and a finite extent (the meta-tetrahedral coupling
+region). Every confirmation event at every level creates an environment,
+viewed from one level up. The substrate confirms bits and creates
+bit-interstice environments; the meta-level confirms programs and
+creates program-interstice environments. Each level is the environment
+for the level below it. This is the structural form of the recursion
+that produces hierarchy.
+
+\subsection*{4.5 Meta-Level FCC Necessity and Sublattice Bifurcation}
+
+\begin{theorem}[Meta-Level FCC]
+The meta-manifold of programs
+has FCC structure with meta-lattice spacing \ensuremath{L_{p}.}
+\end{theorem}
+
+\emph{Proof sketch.} Meta-confirmed P-states cannot be overwritten ---
+they are records of programs that completed their period in the
+substrate's causal stack, and that causal record is itself protected by
+substrate-level Axiom 4. Meta-Axiom 4 follows from substrate-Axiom 4
+under G. The argument of Paper 1 \S\,2.3 then applies: lateral expansion in
+a hexagonally-packed meta-layer is impossible (no unoccupied
+meta-interstice); oblique meta-displacement introduces a free
+orientation parameter; orthogonal meta-displacement is forced by
+program-on-program contact geometry. The argument of Paper 1 \S\,2.4 then
+forces ABCABC over ABABAB by Definition (Causal Position) at the
+meta-level: two meta-layers with identical meta-touch-vector
+connectivity would produce a meta-causal loop, violating meta-Axiom 4.
+
+The 2D-to-3D promotion does not need to be repeated at the meta-level.
+Programs already exist in 3D substrate space, and their meta-spatial
+coordinates are inherited from their substrate-level positions. The
+meta-FCC structure is direct: meta-lattice nodes are program centers,
+meta-lattice connectivity is set by which programs share polarization
+boundaries at the substrate level. \hfill\ensuremath{\square}
+
+The meta-level inherits FCC structure with the same face-diagonal
+connectivity that governs the substrate level. By the propagation-speed
+argument of Paper 1 \S\,6.5, applied to whatever meta-level field
+propagates on the meta-lattice, the meta-propagation speed in
+meta-lattice spacings per meta-flop is \ensuremath{c_{\mathrm{TMS}}^{(\text{meta})}} = \ensuremath{1/\sqrt{2}} ---
+identical in lattice-relative form, scaled by \ensuremath{L_{p}/\ell_{p}} and \ensuremath{t_{p}/T_{p}} in
+absolute units (see \S\,6.1).
+
+\textbf{The meta-level sublattice bifurcation.} The meta-FCC structure
+derived above is not the complete meta-level geometry. By the recursive
+scale-invariance established in \S\,4.7 (no new mechanism) and verified
+empirically in Paper 5 Appendix E (Stages 5 and 6), the meta-lattice
+positions further split into two interpenetrating FCC sublattices A and
+B by the sum-mod-4 invariant in the recursive integer-coordinate frame
+(storage convention with \ensuremath{\times 2} scaling per level). The two sublattices are
+each independently FCC at nearest-neighbor distance \ensuremath{2\sqrt{2}} in level-local
+units, related by spatial inversion through the (1,1,1)-offset (the
+level-(k+1) centroid positions).
+
+The [[4,2,2]] stabilizer dynamics of \S\,4.6 apply per-sublattice
+independently: A-tetrahedra evaluate their stabilizer parity within
+sublattice A; B-tetrahedra do the same within sublattice B; the joint
+readout at the shared centroid is the actualization site of the
+level-(k+1) confirmed bit. The full bifurcated structure that results
+--- two FCC sublattices coexisting at every meta-level --- is the
+complete geometry of the meta-substrate, with the substrate-level FCC of
+Paper 1 \S\,II being the level-0 case.
+
+Paper 5 \S\,6.1 develops the geometric consequences of this bifurcation in
+full, including the rigorous derivation of \ensuremath{L^{p(1)}} = \ensuremath{3\sqrt{2}} \ensuremath{\ell_{p}} as the
+spatial extent of the minimum level-1 program configuration (the
+inversion-partner stella-octangula tile plus boundary). The empirical
+verification of the bifurcation through \ensuremath{L_{\mathrm{box}}} = 12 is documented in
+Paper 5 Appendix E.
+
+\subsection*{4.6 Meta-Level [[4,2,2]] Structural Correspondence}
+
+\begin{theorem}[Meta-Level Stabilizer Correspondence]
+The meta-tetrahedral
+confirmation unit of four programs at the corners of an FCC
+meta-tetrahedron supports a [[4,2,2]] stabilizer structure
+encoding two logical meta-qubits: the value of the confirmed P-state and
+the inheritance of that P-state through the meta-causal stack.
+\end{theorem}
+
+\begin{proof}
+The argument of Paper 1 \S\,5 applies unchanged at the meta-level
+with the substitutions: 4 physical qubits \ensuremath{\to} 4 programs at the
+meta-tetrahedral corners; logical qubit 1 \ensuremath{\to} the value of the confirmed
+P-state \ensuremath{\bar{P}_{p}} \ensuremath{\in} \{0, 1\}; logical qubit 2 \ensuremath{\to} the inheritance of that
+P-state through prior meta-layers. The two stabilizer generators
+\ensuremath{S_{X}^{(\text{meta})}} and \ensuremath{S_{Z}^{(\text{meta})}} detect bit-flip-type and phase-type
+disruptions to individual programs in the meta-tetrahedral unit. The
+code distance is 2: any single-program disruption is detectable, and the
+meta-level synthetic P-states produced at the next meta-flop repair the
+syndrome within a single meta-flop.
+
+\end{proof}
+
+The substrate's fault tolerance against \ensuremath{U_{\mathrm{sh}}} disruption is inherited at
+the meta-level as fault tolerance against single-program disruption. A
+program that dissolves into noise from substrate-level \ensuremath{U_{\mathrm{sh}}} corresponds
+to a single-program disruption in the meta-tetrahedral unit; the
+surrounding three programs detect the syndrome and repair the P-state by
+reconfirming the program at the next meta-flop.
+
+\textbf{Independent dynamics per sublattice.} Under the sublattice
+bifurcation of \S\,4.5, the [[4,2,2]] meta-stabilizer code runs
+independently on each of the two meta-FCC sublattices: A-tetrahedra at
+level k evaluate their stabilizer parity among A-sublattice neighbors;
+B-tetrahedra at level k do the same within sublattice B; the level-(k+1)
+confirmation event at the shared centroid reads jointly from both A-tet
+and B-tet parents at level k. The cross-level coupling between A and B
+stabilizer evaluations at a shared centroid is the structural source of
+the non-Abelian commutator structure developed in Paper 5 \S\,8.2.
+
+\subsection*{4.7 No New Mechanism: Triadic Structure Is a Fixed Point of
+Coarse-Graining}
+
+The meta-level structure introduced in this section is not a separately
+postulated layer, and its recurrence is not merely asserted from the
+scale-freeness of the axioms --- it is a fixed point of the coarse-graining map,
+established by direct construction. The program-locking regions of extent
+\ensuremath{L_{p} = 3\sqrt{2}\,\ell_{p}} have centroids on the level-1 sublattice (all-odd
+coordinates with coordinate-sum \ensuremath{\equiv 1 \bmod 4}; Appendix E, Stage 5), and this
+meta-lattice is itself a genuine FCC lattice: interior coordination number 12,
+nearest-neighbor squared distance 8. Through each interior meta-site pass exactly
+24 meta-triangles and 8 meta-tetrahedra --- identical to the base-level counts ---
+so the two-dimensional minimum enclosure recurs and the minimal meta-confirmation
+has exactly three meta-agents. The meta-alphabet \ensuremath{\chi_{p} = 2\bar{P} - 1 \in \{-1,+1\}}
+is binary exactly as the base alphabet is, so with a three-agent enclosure the
+meta-resolution \ensuremath{\Pi = (\chi_{p_1}+\chi_{p_2}+\chi_{p_3})/3},
+\ensuremath{P(+) = (1+\Pi)/2} is the base rule with the meta-alphabet substituted. The
+structure is a fixed point, not an approximation: computed at levels 0 through 3,
+the invariants are identical at every level --- coordination 12, 24 triangles, 8
+tetrahedra --- with the nearest-neighbor squared distance scaling as 2, 8, 32, 128
+(the storage-convention factor of four per level). The meta-level triadic rule,
+the meta-level FCC geometry, the meta-level [[4,2,2]] stabilizer dynamics, and the
+meta-level polarization-biased resolution therefore recur \emph{exactly} under the
+coarse-graining operator G, by the same arguments applied to the structurally
+identical meta-alphabet.
+
+\begin{theorem}[Triadic Structure Is a Fixed Point of Coarse-Graining]
+The map that sends a triadic FCC substrate to its program-level coarse-graining
+under G returns a triadic FCC substrate: the coordination number (12), the
+minimum-enclosure count (three, giving \ensuremath{\bar{B} = 3\bar{\alpha}}), the triangle and
+tetrahedron counts (24 and 8), and the binary polarization-biased resolution rule
+are all preserved, at every level. The triadic confirmation structure is thus a
+fixed point of coarse-graining rather than a scale-dependent or approximate
+feature.
+\end{theorem}
+
+This is the meaning of hierarchy by geometric necessity. The substrate
+computes at scale \ensuremath{\ell_{p}} with binary alphabet \ensuremath{\bar{B}} \ensuremath{\in} \{0, 1\}. Wherever a
+region of the substrate satisfies the program conditions of Paper 2
+\S\,6.2, that region becomes a meta-level primitive operating at scale \ensuremath{L_{p}}
+with binary alphabet \ensuremath{\bar{P}} \ensuremath{\in} \{0, 1\}. The meta-level computes by exactly
+the same rules --- because the rules are forced by axioms that do not
+refer to scale, and because, as the fixed-point theorem now establishes, the
+structure those rules act on is identical at every level. The Principle of
+Generative Economy applied at scale \ensuremath{\ell_{p}}
+produces the substrate; applied at scale \ensuremath{L_{p},} it produces the
+meta-substrate; applied at any higher scale forced by recursive
+coarse-graining, it produces further meta-substrates without limit.
+Paper 3 stops the recursion at the first meta-level; the geometric
+structure for arbitrary recursion depth is established here, with
+macroscopic consequences developed in Paper 4.
+
+This recursive scale-invariance is structurally distinct from the
+coarse-graining procedures of integrated information theory (Albantakis
+et al., 2023), which select a \ensuremath{\text{maximal}-\Phi} substrate of consciousness by
+optimizing intrinsic information across candidate substrate grains.
+IIT's coarse-graining is over causal mechanisms; TMS's coarse-graining
+is over polarization landscapes (programs as meta-primitives). The TMS
+recursion does not require an optimization step at each level because
+the same axioms apply automatically at the new scale once \ensuremath{L_{p}} is
+identified.
+
+\section*{V. The First Subsystem}
+\addcontentsline{toc}{section}{V. The First Subsystem}
+
+\subsection*{5.1 From Programs to Subsystems}
+
+Section IV established that programs become meta-level primitives under
+the coarse-graining operator G, and that the same axioms produce the
+same triadic and FCC structure at the meta-scale. A program in isolation
+is a stable pattern --- a fixed point of the flop operator T satisfying
+stabilizer parity. A program in isolation does not operate on anything;
+it persists.
+
+A subsystem is the next structural object. We define it precisely.
+
+\begin{definition}[Subsystem]
+A subsystem is a composite configuration \ensuremath{C_{\mathrm{sub}}}
+on the substrate consisting of three program components in coupled
+operation:
+\end{definition}
+
+\begin{itemize}
+\item
+  A data register \ensuremath{C_{D}:} a program whose polarization landscape persists
+  across some number of meta-flops as a stable pattern that is read but
+  not modified by \ensuremath{C_{\mathrm{sub}}'s} other components during that interval.
+\item
+  An operation kernel \ensuremath{C_{O}:} a program whose flop dynamics, when
+  conjoined with \ensuremath{C_{D},} produce a derived polarization pattern \ensuremath{C_{R}}
+  distinct from both \ensuremath{C_{D}} and \ensuremath{C_{O}.}
+\item
+  A control component \ensuremath{C_{C}:} a meta-level program that selects which
+  operation kernel (from a population of available kernels) is conjoined
+  with \ensuremath{C_{D}} at each meta-flop.
+\end{itemize}
+
+The composite \ensuremath{C_{\mathrm{sub}}} = \ensuremath{(C_{D},} \ensuremath{C_{O},} \ensuremath{C_{C})} is a subsystem when all three
+components are themselves programs in the sense of Paper 2 \S\,6.2 and
+their joint configuration is causally closed at the meta-level under
+\ensuremath{T^{(\text{meta})}.}
+
+A program is a stable pattern. A subsystem is a stable pattern that
+transforms other patterns. That distinction is what separates
+persistence from computation.
+
+\subsection*{5.2 The Necessity of the Trichotomy}
+
+\begin{theorem}[Subsystem Minimum]
+Any configuration on the substrate that
+produces a derived polarization pattern from an input polarization
+pattern, under a selectable rule, requires the three components \ensuremath{(C_{D},}
+\ensuremath{C_{O},} \ensuremath{C_{C})} and no fewer.
+\end{theorem}
+
+\begin{proof}
+A configuration that produces a derived pattern from an input
+must contain three logical roles: the input must be present somewhere as
+a polarization landscape (the data role); a transformation must be
+present that reads the input and writes the derived pattern (the
+operation role); and the choice of transformation must be encoded
+somewhere if the configuration is to support more than a single fixed
+transformation (the control role).
+
+The first role cannot be absent: a derived pattern requires source
+material. The second role cannot be absent: a transformation requires a
+transformer. The third role cannot be absent in any configuration
+supporting multiple operations: without a control component, only a
+single transformation is possible, and the configuration is a fixed
+program, not a subsystem.
+
+These three roles cannot be merged into a single program. If \ensuremath{C_{D}} and
+\ensuremath{C_{O}} are the same program, the substrate-level dynamics at the \ensuremath{(C_{D},}
+\ensuremath{C_{O})} interface --- which here would be internal to a single program
+rather than a boundary between two --- would require the same spatial
+region to simultaneously satisfy two distinct closure conditions:
+T-closure on the input pattern (preserving \ensuremath{C_{D}} across the period) and
+the operation-kernel dynamics that produce a derived output pattern.
+Each flop at a confirmed site produces one set of polarization values,
+not two. The substrate cannot host both roles at the same positions
+without violating one of the closure conditions. Note that this is not a
+destructive-read problem in the conventional sense --- Axiom 4 (causal
+anchoring) preserves \ensuremath{C_{D}'s} bits across all flops. The constraint is
+spatial-functional: distinct computational roles require distinct
+spatial supports at the substrate level, because the substrate-level
+dynamics produce a single confirmation value per site per flop. If \ensuremath{C_{O}}
+and \ensuremath{C_{C}} are the same program, then the operation kernel cannot be
+switched, reducing the subsystem to a single transformation case. If
+\ensuremath{C_{D}} and \ensuremath{C_{C}} are the same program, then the data register encodes its
+own transformation rule, which forces \ensuremath{C_{D}} to satisfy two distinct
+closure conditions simultaneously --- generically impossible without
+specific constraints that would themselves require additional structure.
+
+Three components are therefore necessary. They are also sufficient: any
+computation expressible as ``read input, apply selected transformation,
+write output'' can be supported by a \ensuremath{(C_{D},} \ensuremath{C_{O},} \ensuremath{C_{C})} triple, by the
+universality result of Paper 2 \S\,5.3.
+
+\end{proof}
+
+\begin{remark}
+The trichotomy is structurally the same as the von Neumann
+architecture (memory, processor, control). What is novel here is not the
+trichotomy itself but its derivation: the three components are not
+design choices but the unique minimum sufficient decomposition of any
+non-trivial information-transforming configuration. The substrate does
+not arrive at this architecture by engineering. It arrives at it because
+the geometry permits no fewer.
+\end{remark}
+
+\subsection*{5.3 The Minimum Subsystem Size}
+
+The spatial extent of the smallest subsystem is the sum of the minimum
+extents of its three components, plus the connectivity required for
+coupling. Each component is itself a program with minimum spatial extent
+\ensuremath{L_{p}} (\S\,4.1). The coupling requires that the three components share
+polarization boundaries --- they must be meta-spatially adjacent in the
+meta-FCC sense established in \S\,4.5.
+
+\begin{theorem}[Minimum Subsystem Extent]
+The minimum subsystem extent is:
+\end{theorem}
+
+\begin{equation*}
+L_{\mathrm{sub}} = 3 L_{p} + \delta
+\end{equation*}
+
+where \ensuremath{\delta} is the meta-tetrahedral coupling overhead: the additional region
+required for the three components' polarization landscapes to interact
+at their shared boundaries with stabilizer-satisfying parity. \ensuremath{\delta} is
+bounded by 2 \ensuremath{\ell_{p}} from the FCC neighbor distance and is small relative to
+3 \ensuremath{L_{p}} for non-trivial programs.
+
+\begin{proof}
+By \S\,4.4, three programs constitute the minimum triadic
+confirmation at the meta-level, and they meet at a common
+meta-interstice. The composite extent is the sum of the three program
+extents plus the meta-interstice scale. The three program extents
+contribute 3 \ensuremath{L_{p};} the actual coupling region is the substrate-level
+zone where the three programs' polarization boundaries overlap --- a
+region of substrate-level scale, not meta-level scale. This zone has
+thickness on the order of the FCC nearest-neighbor distance \ensuremath{\ell_{p}.} The
+composite \ensuremath{\delta} is bounded by 2 \ensuremath{\ell_{p},} summing over the small region where
+pairs of programs meet at their substrate-level boundaries.
+
+\end{proof}
+
+A subsystem is therefore approximately three times the size of its
+constituent programs, plus a small substrate-scale coupling overhead.
+This is the smallest configuration that the substrate can support which
+transforms patterns rather than merely persisting.
+
+\subsection*{5.4 A Worked Example: The First Computing Subsystem}
+
+To establish that subsystems are not merely defined but actually
+realized by the substrate dynamics, we exhibit the smallest non-trivial
+computing subsystem.
+
+Consider the substrate at some meta-time T, with a region \ensuremath{R_{\mathrm{sub}}} of
+meta-extent \ensuremath{L_{\mathrm{sub}}} satisfying the coherence threshold of \S\,3.3. Within
+\ensuremath{R_{\mathrm{sub}},} suppose three programs have established themselves through the
+continuous-sampling and self-reinforcement mechanism of \S\,3.5:
+
+\begin{itemize}
+\item
+  \ensuremath{C_{D}} occupies one meta-tetrahedral corner with a polarization
+  landscape encoding a 3-bit pattern \ensuremath{(\chi_{a},} \ensuremath{\chi_{b},} \ensuremath{\chi_{c}).} The pattern is
+  stable across the meta-flop window: \ensuremath{T^{(\text{meta})}[C_{D}]} = \ensuremath{C_{D}} with
+  the polarization values preserved.
+\item
+  \ensuremath{C_{O}} occupies a second meta-tetrahedral corner with a polarization
+  landscape encoding the majority gate primitive of Paper 2 \S\,5.1. When
+  \ensuremath{C_{O}'s} boundary touches \ensuremath{C_{D}'s} boundary, the substrate-level dynamics
+  at the interface implement the majority gate computation on the \ensuremath{(\chi_{a},}
+  \ensuremath{\chi_{b},} \ensuremath{\chi_{c})} pattern.
+\item
+  \ensuremath{C_{C}} occupies the third meta-tetrahedral corner with a polarization
+  landscape encoding a switch between two operation kernels: the
+  majority gate and its negation (the minority gate, equivalent under
+  NOT to MAJ by Paper 2 \S\,5.3).
+\end{itemize}
+
+The substrate-level dynamics at the interfaces between \ensuremath{(C_{D},} \ensuremath{C_{O}),}
+\ensuremath{(C_{D},} \ensuremath{C_{C}),} and \ensuremath{(C_{O},} \ensuremath{C_{C})} implement the following composite
+operation: at each meta-flop, \ensuremath{C_{C}} selects which operation kernel is
+active; \ensuremath{C_{D}} presents its 3-bit pattern; \ensuremath{C_{O}} applies the selected
+kernel to \ensuremath{C_{D}'s} pattern; the result is the polarization at the fourth
+meta-tetrahedral corner --- the meta-interstice --- which constitutes
+the output P-state of the subsystem at this meta-flop.
+
+This is a complete computing subsystem. It reads input, applies a
+selected operation, and produces output. It is the substrate equivalent
+of a programmable single-bit logic gate, and it is the smallest
+configuration that supports this operation.
+
+\begin{remark}
+This worked example is not the only minimum subsystem ---
+variations differ in which Boolean operations \ensuremath{C_{O}} and \ensuremath{C_{C}} encode ---
+but all minimum subsystems share the \ensuremath{(C_{D},} \ensuremath{C_{O},} \ensuremath{C_{C})} trichotomy at
+meta-tetrahedral extent. The existence of one such configuration is
+sufficient to establish that the substrate dynamics support computing
+subsystems at the derived minimum scale. The population of distinct
+minimum subsystems is the substrate's first program zoo at the subsystem
+level.
+\end{remark}
+
+\subsection*{5.5 The Information-Generation Rate Differential}
+
+\begin{theorem}[Subsystem Information Generation Rate]
+A region of the
+substrate hosting a minimum computing subsystem produces one novel
+P-state per meta-flop. The same region hosting only static (period-1)
+programs produces zero novel P-states per meta-flop. The
+information-generation rate differential between subsystem-hosting and
+static-program-hosting regions of equal extent is therefore exactly one
+novel P-state per meta-flop per subsystem hosted, in the limit of
+non-trivial operation kernels.
+\end{theorem}
+
+\begin{proof}
+A static program region produces no derived patterns by
+definition --- its polarization landscape repeats with period n under
+\ensuremath{T^{n},} so the output at each meta-flop is identical to the output at
+the previous meta-flop after n have elapsed; this is repetition, not
+generation. The information output of a static program region per
+meta-flop is exactly its self-reproduction, with zero novel content.
+
+A minimum subsystem region produces, at each meta-flop, the polarization
+landscape of its output: a derived pattern that is a function of \ensuremath{(C_{D},}
+\ensuremath{C_{O},} \ensuremath{C_{C})} but is not equal to any of them individually. The output is
+determined by \ensuremath{C_{C}'s} current selection and \ensuremath{C_{D}'s} current data, both of
+which can vary across meta-flops. In the worked example of \S\,5.4, each
+meta-flop produces exactly one new P-state at the meta-interstice ---
+the result of applying the selected operation kernel to the current
+data. The novel content per meta-flop is therefore exactly one P-state
+for the minimum subsystem; for a region hosting N subsystems, exactly N
+P-states per meta-flop.
+
+This rate is exact for the minimum case and provides a strict lower
+bound for more complex subsystems with multi-bit data registers or
+multi-state control components.
+
+\end{proof}
+
+\begin{corollary}[Selection for Subsystems]
+The substrate selects for
+subsystems over static programs in any region where \ensuremath{U_{\mathrm{sh}}} disruption rate
+exceeds the static-program persistence rate but does not exceed the
+subsystem persistence rate.
+\end{corollary}
+
+\begin{proof}
+By \S\,3.3 and \S\,3.4, the substrate retains configurations that
+survive against \ensuremath{U_{\mathrm{sh}}} disruption. A static program persists only through
+its self-reproduction under T. A computing subsystem persists through
+self-reproduction and contributes additional polarization content per
+meta-flop, raising the local coherence above what static programs alone
+can sustain. In regions where \ensuremath{U_{\mathrm{sh}}} disruption rate is high enough to
+dissolve static programs but low enough to permit subsystems, only
+subsystems survive. The substrate thus generates progressively more
+computing subsystems wherever the dynamics permit.
+
+\end{proof}
+
+This is the substrate's first selective pressure beyond simple program
+persistence. Wherever \ensuremath{U_{\mathrm{sh}}} is intense enough to threaten static programs
+but not so intense as to overwhelm imprinting, the substrate produces
+subsystems --- not by design, but because subsystems are the only
+configurations whose information-generation rate keeps pace with the
+local disruption rate. The informally framed claim that the substrate
+``maximizes information output'' acquires here a derived form: at
+sufficient disruption rates, information-generating configurations are
+the only persisting ones.
+
+\subsection*{5.6 Subsystems and Their Environments}
+
+The recursive structure established in \S\,IV admits a sharper reading in
+light of \S\,V. When three programs jointly confirm a P-state at the
+meta-level (\S\,4.4), the meta-interstice they enclose is a bounded region
+of substrate available to host further configurations. That bounded
+region is an environment --- a substrate sub-region with definable
+boundaries, internal dynamics, and access to its surround through the
+polarization channels of its enclosing programs.
+
+When subsystems form in such meta-interstices, the enclosing programs
+constitute the subsystem's external environment. The subsystem's
+interior dynamics are partially shielded from the broader substrate by
+its enclosure, and its boundary conditions are set by the polarizations
+of the enclosing programs. This is the substrate-level mechanism by
+which subsystems acquire individuality: they are not merely composite
+programs but composite programs operating within an environment that was
+itself created by other programs.
+
+This is the entry point to Paper 4. The relationship between subsystems
+and their environments, the question of when a subsystem becomes a self
+with internal models of its surround, and the dynamics of multiple
+subsystems sharing an environment are all consequences of the geometric
+structure established here. Paper 3 establishes that the first subsystem
+exists, is minimum-sized, has the \ensuremath{(C_{D},} \ensuremath{C_{O},} \ensuremath{C_{C})} trichotomy, and
+generates information faster than static programs. Paper 4 establishes
+the hierarchies and self-modeling conditions that follow.
+
+\section*{VI. Predictions and Directions for Subsequent Work}
+\addcontentsline{toc}{section}{VI. Predictions and Directions for Subsequent Work}
+
+\subsection*{6.1 Hierarchical Lightspeeds}
+
+Section IV established that the meta-level inherits FCC structure with
+face-diagonal connectivity, and that the propagation-speed argument of
+Paper 1 \S\,6.5 applies unchanged at the meta-level, giving \ensuremath{c_{\mathrm{TMS}}^{(\text{meta})}}
+= \ensuremath{1/\sqrt{2}} meta-lattice-spacings per meta-flop. Translated to
+substrate-level absolute units, the meta-propagation speed is:
+
+\begin{equation*}
+c^{(\text{meta})} = (L_{p} / \ell_{p}) \cdot (t_{p} / T_{p}) \cdot c
+\end{equation*}
+
+where \ensuremath{L_{p}} is the meta-lattice spacing (the minimum program extent of
+\S\,4.1), \ensuremath{T_{p}} is the meta-flop duration (the minimum program period), and
+c is the substrate-level lightspeed established in Paper 1 \S\,6.7.
+
+The ratio \ensuremath{L_{p}/\ell_{p}} and the ratio \ensuremath{T_{p}/t_{p}} are independent geometric
+quantities. \ensuremath{L_{p}} is set by the minimum spatial extent of a
+stabilizer-satisfying T-closed configuration with K(C) \textless{}
+\textbar C\textbar. \ensuremath{T_{p}} is set by the minimum temporal period of the
+same configuration. These quantities depend on different aspects of the
+FCC dynamics and are not constrained to scale together. In general:
+
+\emph{\ensuremath{c^{(\text{meta})}} \ensuremath{\neq} c}
+
+This is a derived prediction, not an imported relation. Each level of
+the recursive hierarchy established in \S\,IV has its own derived
+propagation speed, generically distinct from the substrate-level c.~At
+hierarchical level k, the propagation speed in substrate-absolute units
+is the product of successive scaling ratios:
+
+\ensuremath{*c^{(k)}} = \ensuremath{\prod _{j=1}^{k}} \ensuremath{(L_{p}^{(j)}} / \ensuremath{L_{p}^{(j-1)})} \ensuremath{\cdot}
+\ensuremath{(T_{p}^{(j-1)}} / \ensuremath{T_{p}^{(j)})} \ensuremath{\cdot} c*
+
+with \ensuremath{L_{p}^{(0)}} \ensuremath{\equiv} \ensuremath{\ell_{p}} and \ensuremath{T_{p}^{(0)}} \ensuremath{\equiv} \ensuremath{t_{p}.~\text{Each}} ratio in the product
+is set by the minimum program structure at its level. The full hierarchy
+produces a discrete spectrum of lightspeeds, each geometrically forced.
+
+This prediction is in principle testable. If subsystems at hierarchical
+levels k \ensuremath{\geq} 1 host their own observers --- a question reserved for Paper
+4 and Volume 2 --- those observers would measure the lightspeed at their
+level, not the substrate's c.~Apparent variations in the physical
+lightspeed across regions of the universe with different hierarchical
+depths would be a signature of this structure.
+
+This result complements the Lorentz-covariance derivation in the Wolfram
+model (Gorard, 2020), which derives Lorentz invariance from causal-graph
+isomorphism under different updating orders, but where the absolute
+propagation speed is not derived. TMS derives both the existence of a
+Lorentz-invariant propagation speed (from FCC connectivity) and its
+absolute value relative to the substrate scale (from face-diagonal
+geometry), and now extends the derivation to hierarchical levels.
+
+\subsection*{6.2 The \ensuremath{\beta} = f(d, \ensuremath{K_{\psi})} Prediction Refined}
+
+Paper 1 \S\,7.2 introduced the prediction that the GUP deformation
+parameter \ensuremath{\beta} scales with causal depth d and polarization complexity \ensuremath{K_{\psi}.}
+Paper 2 \S\,6.4 identified \ensuremath{K_{\psi}} as the Kolmogorov complexity of the program
+running through the bit's causal history. Paper 3 refines both terms
+further.
+
+By \S\,II, every region's polarization landscape is the imprint of its
+retarded surround history. A bit's \ensuremath{K_{\psi}} therefore measures the
+algorithmic complexity not only of its own program but of the surround
+history that imprinted it. By \S\,IV, when the bit is embedded within a
+subsystem, its \ensuremath{K_{\psi}} additionally incorporates the algorithmic structure
+of the subsystem's internal operations --- the data being processed, the
+operations being applied, the control sequence selecting them.
+
+The refined prediction:
+
+\begin{equation*}
+\beta = f(d, K_{\psi,\mathrm{local}}, K_{\psi,\mathrm{surround}}, K_{\psi,\mathrm{subsystem}})
+\end{equation*}
+
+with the three \ensuremath{K_{\psi}} contributions being the polarization complexity of
+the bit's immediate region, of the imprinting surround history, and of
+the encompassing subsystem (if one is present). f is monotonically
+increasing in all four arguments.
+
+The physical interpretation: a bit embedded in a deep, complex,
+surround-imprinted subsystem has a substrate footprint reflecting the
+full computational history of the configuration it participates in. Its
+position uncertainty floor is correspondingly larger than for an
+isolated bit at comparable energy. The closed-form derivation of f is
+reserved for the simulation work of subsequent papers, but its
+functional dependences are now fully specified.
+
+\subsection*{6.3 Subsystem Density and Phase Geometry}
+
+By \S\,3.4 and \S\,5.5, subsystems concentrate computational activity into
+coherent regions and outcompete static programs wherever \ensuremath{U_{\mathrm{sh}}} disruption
+rates favor information-generating configurations. The substrate's
+long-time behavior is therefore expected to be inhomogeneous: regions of
+dense subsystem activity separated by regions of relatively quiescent
+program-only substrate, with the boundaries between them governed by the
+coherence threshold of \S\,3.3.
+
+A specific prediction: the spatial distribution of computational
+activity in any sufficiently old region of the substrate follows the
+same statistics as the boundary geometry of coherent regions. The
+boundaries are themselves geometric features --- surfaces across which
+the coherence threshold is crossed --- and their statistics are
+computable from FCC lattice dynamics. This prediction is testable in
+simulation and is the empirical bridge to the simulation work of Paper
+5.
+
+\subsection*{6.4 Deferred Derivations Closed by Paper 3}
+
+Paper 3 has paid back the following derivations deferred from earlier
+papers:
+
+\begin{itemize}
+\item
+  The dissolution rate of non-T-closed configurations, deferred at Paper
+  2 \S\,6.3, derived in \S\,2.5 as \ensuremath{\sqrt{2}} \ensuremath{\cdot} \ensuremath{L_{R}/\ell_{p}} flops.
+\item
+  The effective error-rate decay with coherence depth, deferred at Paper
+  2 \S\,5.2, derived in \S\,2.5 as \ensuremath{(1/3)^{d}} in the limit of large coherence
+  regions.
+\item
+  The existence and closed form of the coherence bistability threshold,
+  identified in \S\,3.3 as \textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{*(L_{R})} = 1 \ensuremath{-} \ensuremath{2\sqrt{c_{\mathrm{TMS}}/(6}}
+  \ensuremath{L_{R})).}
+\item
+  The functional dependences of the GUP parameter f, specified in \S\,6.2.
+\item
+  The minimum program extent \ensuremath{L_{p},} characterized in \S\,4.1 as
+  approximately 4--8 lattice spacings, with exact value determined by
+  combinatorial enumeration of stabilizer-satisfying T-closed
+  configurations.
+\item
+  The minimum subsystem extent \ensuremath{L_{\mathrm{sub}}} = 3 \ensuremath{L_{p}} + \ensuremath{\delta ,} derived in \S\,5.3.
+\item
+  The information-generation rate differential between subsystem-hosting
+  and static-program regions, derived in \S\,5.5.
+\end{itemize}
+
+The remaining deferrals --- the exact integer value of \ensuremath{L_{p},} the
+explicit closed form of f, the spectrum of program periods \ensuremath{T_{p}^{(k)}}
+at successive hierarchical levels --- depend on closed-form enumeration
+of stabilizer-satisfying T-closed configurations, a combinatorial task
+most efficiently approached through simulation. These are reserved for
+the simulation work of Paper 5 alongside the field-reinterpretation
+derivation.
+
+\subsection*{6.5 Forward References}
+
+Paper 4 will address the macroscopic consequences of the subsystem
+dynamics established here: hierarchies of subsystems, the conditions
+under which a subsystem develops an internal model of its environment,
+the dynamics of multiple subsystems sharing a meta-interstice
+environment, and the eventual exhaustion of novelty as a substrate
+region completes its accessible configuration space. The hierarchical
+lightspeed prediction of \S\,6.1 will be developed in detail at that point.
+
+Paper 5 will address the reinterpretation of substrate-level binary
+information as field configurations on a bounded space --- the geometric
+mechanism by which the substrate's digital content becomes the wave
+dynamics, initial conditions, and field structure of a simulated
+universe. The connection between subsystem hierarchies and simulated
+physical law is the central object of that work.
+
+Volume 2 will address the agent-side complement: the relationship
+between substrate-level subsystem computation and the structure of
+observer experience. The information-generation differential established
+in \S\,5.5 --- that subsystems generate more polarization content per unit
+substrate than static programs --- will reappear as the substrate-level
+correlate of richness of experience in the agent-side framework. The
+relationship to Hoffman's conscious agents (Hoffman, Prakash, Prentner,
+2023) and to integrated information theory (Albantakis et al., 2023)
+will be developed there in full, building on the structural
+correspondences sketched in Papers 1 and 3.
+
+\section*{Conclusion: Computation Emerges}
+\addcontentsline{toc}{section}{Conclusion: Computation Emerges}
+
+Paper 1 established how structure emerges from maximum-entropy substrate
+by triadic confirmation. Paper 2 established how information emerges
+from confirmed structure by polarization-biased resolution. Paper 3 has
+established how computation emerges from informational substrate by
+surround-driven repair, polarization-coherence bistability, and the
+recursive applicability of the substrate's own axioms at the
+coarse-grained scale.
+
+The results of Paper 3 follow from the axioms of Paper 1 and the
+dynamics of Paper 2 without additional postulate. Surround-driven repair
+is not a separate mechanism: it is the [[4,2,2]] stabilizer
+projection of Paper 1 \S\,5 applied to boundary sites, where the geometry
+of the FCC lattice automatically includes surround agents in the parent
+set. The Imprinting Theorem of \S\,2.3 follows by iteration. Hebbian
+co-firing follows as a corollary, complementing the independent
+maximum-entropy derivation of the same phenomenon (Albanese et al.,
+2024). The dissolution and error-decay rates follow from the same
+iteration applied to different conserved quantities. The coherence
+bistability threshold of \S\,3.3 follows from balancing the per-flop noise
+injection --- combinatorially determined by [[4,2,2]] error
+statistics --- against the per-flop imprinting capacity ---
+geometrically determined by FCC connectivity. Coherent regions form by
+self-reinforcement against an ambient \ensuremath{U_{\mathrm{sh}}} flux that is present at every
+depth of the causal stack, not added at any moment.
+
+The coarse-graining operator G of \S\,4.2 is not a new mechanism but a
+measurement on substrate-level data. The meta-level structure that
+follows under G --- the meta-level triadic rule, the meta-level FCC
+geometry, the meta-level [[4,2,2]] stabilizer dynamics --- is
+the same axiomatic content applied at scale \ensuremath{L_{p}.~\text{The}} recursion is not
+constructed; it is the geometric form of the axioms' scale-independence.
+
+The subsystem of \S\,V is the substrate's first computing object --- the
+smallest configuration that transforms patterns rather than merely
+persisting them. Its three components (data, operation, control) are not
+designed but forced: the unique minimum sufficient decomposition of any
+configuration that reads input, applies a selected transformation, and
+produces output. The substrate generates subsystems wherever the local
+disruption rate favors information-generating configurations over static
+programs.
+
+Every quantity introduced in Paper 3 has been derived from the axioms
+and the Principle of Generative Economy, or from the structures
+established in Papers 1 and 2 under the same principle. The minimum
+program scale \ensuremath{L_{p},} the minimum subsystem scale \ensuremath{L_{\mathrm{sub}},} the coherence
+threshold \textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{*(L_{R}),} the dissolution rate, the
+error-decay rate, the information-generation rate differential, and the
+hierarchical lightspeed \ensuremath{c^{(\text{meta})}} are all geometrically forced. The
+model continues to contain no free \emph{dimensionless} numerical parameters.
+
+The arc from Paper 1 to Paper 3 is a single unbroken chain. \ensuremath{U_{\mathrm{sh}}} provides
+the maximum-entropy substrate. Triadic confirmation pulls binary
+outcomes from it. The FCC lattice carries those outcomes forward as wave
+dynamics. The polarization field encodes their computational content.
+The Born-rule structural correspondence governs per-event resolution.
+The majority gate is the irreducible computational primitive. The
+stabilizer dynamics select programs from noise. Surround-driven repair
+imprints environmental structure onto local configurations. Coherence
+bistability concentrates computation into coherent regions.
+Coarse-graining produces meta-level primitives obeying the same axioms.
+The first subsystem emerges as the unique minimum sufficient
+configuration that transforms patterns. No new axioms. No new
+parameters. No new mechanisms.
+
+Paper 4 takes the subsystem as given and develops its hierarchies,
+environments, and self-modeling conditions. Paper 5 reinterprets the
+substrate's digital content as field configurations on a bounded space,
+producing the geometric mechanism of simulation. The arc through Volume
+1 is the derivation, from five axioms and one principle, of a substrate
+capable of generating universes inside itself.
+
+\section*{Acknowledgments}
+\addcontentsline{toc}{section}{Acknowledgments}
+
+The development of this volume was substantially aided by extended
+collaboration with several large language models used as critical
+sounding boards, pedagogical resources, formal-rigor checkers, and
+external working memory across many sessions during 2024--2026.
+
+\textbf{Gemini (Google DeepMind)} was the long-running primary
+collaborator across the framework's conceptual development, providing
+physics pedagogy, structural critique, and ongoing review of the ideas
+that became Volume 1. The author's path into the technical literature,
+and the working-out of the framework's core conceptual moves over a long
+period preceding formalization, were carried by extended dialogue with
+Gemini.
+
+\textbf{Claude (Anthropic)} was the primary collaborator across the
+formalization, derivation tightening, simulation work, citation
+auditing, and editorial passes that brought the volume to its present
+form, including the sublattice bifurcation analysis empirically verified
+in Paper 5 Appendix E.
+
+\textbf{ChatGPT (OpenAI)}, \textbf{DeepSeek}, \textbf{Grok (xAI)}, and
+\textbf{Granite (IBM)} contributed additional structural feedback and
+review at various points.
+
+All theoretical commitments, the choice of axioms, the Principle of
+Generative Economy, the sublattice bifurcation insight, and the
+framework's overall architecture are the author's; the AI systems' role
+was to teach, formalize, critique, verify, and document.
+
+\section*{References}
+\addcontentsline{toc}{section}{References}
+\begin{reflist}
+Albanese, L., Barra, A., Bianco, P., Durante, F., \& Pallara, D. (2024).
+Hebbian Learning from First Principles. Journal of Mathematical Physics,
+65, 113302. doi:10.1063/5.0197652.
+\url{https://arxiv.org/abs/2401.07110}
+
+Albantakis, L., Barbosa, L. S., Findlay, G., Grasso, M., Haun, A. M.,
+Marshall, W., Mayner, W. G. P., Zaeemzadeh, A., Boly, M., Juel, B. E.,
+Sasai, S., Fujii, K., David, I., Hendren, J., Lang, J. P., \& Tononi, G.
+(2023). Integrated information theory (IIT) 4.0: Formulating the
+properties of phenomenal existence in physical terms. PLoS Computational
+Biology, 19(10), e1011465. doi:10.1371/journal.pcbi.1011465.
+\url{https://arxiv.org/abs/2212.14787}
+
+Bak, P., Tang, C., \& Wiesenfeld, K. (1987). Self-organized criticality:
+An explanation of the 1/f noise. Physical Review Letters, 59(4),
+381--384. doi:10.1103/PhysRevLett.59.381.
+
+Bombelli, L., Lee, J., Meyer, D., \& Sorkin, R. D. (1987). Space-time as
+a causal set. Physical Review Letters, 59(5), 521--524.
+doi:10.1103/PhysRevLett.59.521.
+
+Gorard, J. (2020). Some Relativistic and Gravitational Properties of the
+Wolfram Model. Complex Systems, 29(2), 599--654.
+doi:10.25088/ComplexSystems.29.2.599.
+
+Gottesman, D. (1997). Stabilizer Codes and Quantum Error Correction.
+Ph.D.~Thesis, California Institute of Technology.
+\url{https://arxiv.org/abs/quant-ph/9705052}
+
+Hebb, D. O. (1949). The Organization of Behavior: A Neuropsychological
+Theory. Wiley.
+
+Hoffman, D. D., Prakash, C., \& Prentner, R. (2023). Fusions of
+Consciousness. Entropy, 25(1), 129. doi:10.3390/e25010129.
+
+Hossenfelder, S. (2013). Minimal Length Scale Scenarios for Quantum
+Gravity. Living Reviews in Relativity, 16(1), 2.
+doi:10.12942/lrr-2013-2.
+
+Jensen, H. J. (1998). Self-Organized Criticality: Emergent Complex
+Behavior in Physical and Biological Systems. Cambridge University Press.
+
+Kolmogorov, A. N. (1965). Three approaches to the quantitative
+definition of information. Problems of Information Transmission, 1(1),
+1--7.
+
+Pastawski, F., Yoshida, B., Harlow, D., \& Preskill, J. (2015).
+Holographic quantum error-correcting codes: toy models for the
+bulk/boundary correspondence. Journal of High Energy Physics, 2015(6),
+149. doi:10.1007/JHEP06(2015)149. \url{https://arxiv.org/abs/1503.06237}
+
+Shannon, C. E. (1948). A mathematical theory of communication. Bell
+System Technical Journal, 27(3), 379--423.
+doi:10.1002/j.1538-7305.1948.tb01338.x.
+
+Surya, S. (2019). The causal set approach to quantum gravity. Living
+Reviews in Relativity, 22(1), 5. doi:10.1007/s41114-019-0023-1.
+
+Switzer, A. (2026a). The Triadic Measurement Substrate (TMS), Volume 1,
+Paper 1: Emergent 3D Information Topology and the Binary Alphabet via
+[[4,2,2]] Quantum Error Detection Structural Correspondence.
+
+Switzer, A. (2026b). The Triadic Measurement Substrate (TMS), Volume 1,
+Paper 2: Computational Dynamics of the Binary Alphabet: The Polarization
+Field, the Born-Rule Structural Correspondence, and the Emergence of
+Universal Computation.
+
+'t Hooft, G. (2016). The Cellular Automaton Interpretation of Quantum
+Mechanics. Fundamental Theories of Physics 185. Springer.
+doi:10.1007/978-3-319-41285-6.
+
+Wolfram, S. (2002). A New Kind of Science. Wolfram Media.
+
+Wolfram, S. (2020). A Class of Models with the Potential to Represent
+Fundamental Physics. Complex Systems, 29(2), 107--536.
+doi:10.25088/ComplexSystems.29.2.107.
+\end{reflist}
+
+\clearpage
+
+
+\end{document}

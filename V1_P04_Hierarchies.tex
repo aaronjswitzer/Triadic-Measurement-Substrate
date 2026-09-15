@@ -1,0 +1,2095 @@
+\documentclass[11pt,oneside]{report}
+% ======================================================================
+%  THE TRIADIC MEASUREMENT SUBSTRATE --- COMPLETE CORPUS (Volumes 1 & 2)
+%  Aaron Switzer, 2026
+%  Single-file build. Compile: pdflatex x3 (third pass settles the TOC).
+% ======================================================================
+% ======================================================================
+%  TMS Volume 1 -- shared preamble
+%  Compiles with pdfLaTeX both locally and on Overleaf (no exotic fonts).
+% ======================================================================
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathptmx}            % Times text + math (widely available)
+\usepackage[scaled=0.90]{helvet} % sans for headings
+\usepackage{courier}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tocbibind}
+
+% ---- spacing -----------------------------------------------------------
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0.35em}
+\linespread{1.04}
+\setlist{leftmargin=1.6em,topsep=0.25em,itemsep=0.15em,parsep=0pt}
+
+% ---- theorem environments ---------------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}{Axiom}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{principle}[theorem]{Principle}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{prediction}[theorem]{Prediction}
+\newtheorem{property}[theorem]{Property}
+\newtheorem{postulate}[theorem]{Postulate}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+% ---- section heading look (unnumbered; author supplies the numbers) ----
+\titleformat{\section}[hang]{\normalfont\large\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsection}[hang]{\normalfont\normalsize\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsubsection}[hang]{\normalfont\normalsize\bfseries\itshape}{}{0pt}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.5em}
+\titlespacing*{\subsection}{0pt}{1.0em}{0.35em}
+\titlespacing*{\subsubsection}{0pt}{0.8em}{0.3em}
+
+% chapter (= each paper) heading
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\bfseries}
+  {}{0pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{10pt}{24pt}
+
+% ---- page-break quality: avoid stranded headings and orphaned/widowed lines ----
+% (applies to both volumes via the shared preamble)
+\widowpenalty=10000        % no single line at the top of a page
+\clubpenalty=10000         % no single line at the bottom of a page
+\displaywidowpenalty=10000 % same, around displayed equations
+\brokenpenalty=4000        % discourage page breaks right after a hyphenated line
+% titlesec: forbid a page break immediately after a heading (heading stranded at page foot)
+\usepackage{needspace}
+\usepackage{etoolbox}
+\pretocmd{\section}{\Needspace*{4\baselineskip}}{}{}
+\pretocmd{\subsection}{\Needspace*{3\baselineskip}}{}{}
+
+% ---- running heads -----------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape The Triadic Measurement Substrate}
+\fancyhead[R]{\small\itshape\nouppercase{\rightmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---- abstract / keywords / references list ----------------------------
+\newenvironment{paperabstract}
+  {\begin{center}\begin{minipage}{0.88\textwidth}\small
+   \noindent\textbf{Abstract.}\itshape\space}
+  {\end{minipage}\end{center}\vspace{0.4em}}
+
+\newcommand{\keywords}[1]{\noindent{\small\textbf{Keywords:} #1}\vspace{0.4em}}
+
+% per-paper APA reference list (hanging indent), kept as authored
+\newenvironment{reflist}
+  {\par\small\setlength{\parindent}{0pt}%
+   \setlength{\leftskip}{1.6em}\setlength{\parindent}{-1.6em}%
+   \setlength{\parskip}{0.4em}%
+   \raggedright\hyphenpenalty=50\exhyphenpenalty=50\relax
+   \sloppy}
+  {\par}
+
+% convenience
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\TMS}{\textsc{tms}}
+\hyphenation{con-fir-ma-tion sub-strate}
+\begin{document}
+
+\thispagestyle{empty}
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\sffamily\bfseries\Large The Triadic Measurement Substrate\par}
+\vspace{0.6cm}
+{\large $\bar{B} = 3\bar{\alpha}$\par}
+\vspace{1cm}
+{\sffamily\large Volume 1\par}
+\vspace{1.4cm}
+{\Large \bfseries Paper 4: Hierarchies, Self-Modeling Measurement Nodes, Multi-Subsystem Dynamics, and Novelty Exhaustion\par}
+\vfill
+{\large Aaron Switzer\par}
+\vspace{0.4cm}
+{\large 2026\par}
+\vspace{1.2cm}
+{\small\itshape Excerpted from the complete two-volume corpus, \emph{The Triadic Measurement Substrate}. Full corpus and reproducibility package: \url{https://doi.org/10.5281/zenodo.22035422}\par}
+\end{titlepage}
+\cleardoublepage
+\pagenumbering{arabic}
+
+% ---------------- Volume 1 / paper4 ----------------
+\chapter*{Paper 4}
+\markboth{Paper 4}{Paper 4}
+\addcontentsline{toc}{chapter}{Paper 4: Hierarchies, Self-Modeling Measurement Nodes, Multi-Subsystem Dynamics, and Novelty Exhaustion}
+\begingroup\centering
+{\large\itshape Hierarchies, Self-Modeling Measurement Nodes, Multi-Subsystem Dynamics, and Novelty Exhaustion\par}\vspace{0.8em}
+{\normalsize Aaron Switzer\par}
+{\small May 2026\par}
+\endgroup\vspace{1.0em}
+
+\noindent{\small\textbf{Keywords:} TMS, Subsystem Hierarchy, Recursive Coarse-Graining, Self-Modeling, Measurement Node, Stressor Dynamics, Region Biography, Novelty Exhaustion, Hierarchical Lightspeeds}\par\vspace{0.6em}
+
+\section*{Status of Results}
+\addcontentsline{toc}{section}{Status of Results}
+
+This paper distinguishes four categories of claim, each labeled where it
+appears in the text.
+
+\textbf{Derived.} Results that follow from the five axioms, the
+Principle of Generative Economy, and the structures established in
+Papers 1 through 3 by explicit construction or proof. The recursive
+coarse-graining operator \ensuremath{G^{(k)}} at arbitrary hierarchical depth as the
+recursive application of Paper 3's G under axiom scale-independence
+(\S\,2.1); the scale-separation requirement \ensuremath{L_{p}^{(k)}} \ensuremath{\gg} \ensuremath{L_{p}^{(k-1)}} and
+\ensuremath{T_{p}^{(k)}} \ensuremath{\gg} \ensuremath{T_{p}^{(k-1)}} as forced by the meta-level coherence
+threshold (\S\,2.2); the existence and finiteness of the hierarchy ceiling
+\ensuremath{k_{\mathrm{max}}} for any bounded region (\S\,2.3); the Russian-doll floor at \ensuremath{L_{p}} for
+downward nesting (\S\,2.4); the structural asymmetry between lossy
+coarse-graining and generative downward nesting, establishing per-level
+independence of configuration spaces (\S\,2.5.1); the three growth modes
+(annexation, imprinting, incorporation) with their respective geometric,
+informational, and structural ceilings (\S\,III); self-modeling as a
+structural property of every subsystem at k \ensuremath{\geq} 1, with the three
+conditions of self-modeling jointly satisfied by the \ensuremath{(C_{D},} \ensuremath{C_{O},} \ensuremath{C_{C})}
+trichotomy plus the Imprinting Theorem (\S\,4.2); the identification of
+every subsystem at k \ensuremath{\geq} 1 as a measurement node at its level (\S\,4.3);
+higher-order self-modeling at k \ensuremath{\geq} 2 including self-modeling-of-self as a
+derived consequence of the recursion (\S\,4.6); meta-meta-confirmation as
+the same triadic structure applied at the next level, with the
+polarization-biased resolution rule inherited unchanged (\S\,5.2); the
+coupling-timescale constraint \ensuremath{T_{p}^{(k+1)}} \ensuremath{\geq} \ensuremath{\sqrt{2}} \ensuremath{\cdot} \ensuremath{(L_{p}(k+1)/L_{p}(k))} \ensuremath{\cdot}
+\ensuremath{T_{p}^{(k)}} from the requirement of coherent meta-meta-confirmation
+(\S\,5.3); three substrate-level stressors (mortality, predation,
+starvation) with substrate mechanisms and level-(k+1) signatures
+(\S\,5.5--\S\,5.7); the overdetermination of subsystem formation by
+Borel-Cantelli inevitability, PGE preference, and flux-balance forcing
+(\S\,5.1); inter-region and intra-region diversity as derived consequences
+of substrate-level dynamics (\S\,5.9); the finiteness of accessible
+configuration space \ensuremath{\Sigma (R)} for any bounded region (\S\,6.1); monotonic decay
+of the novelty production rate \ensuremath{\nu (R,} \ensuremath{\tau )} as \ensuremath{\Sigma_{\mathrm{sampled}}} approaches \ensuremath{\Sigma (R)}
+(\S\,6.2); the structural exhaustion problem at \ensuremath{\tau} \textgreater{} \ensuremath{\tau *(R),}
+with Axioms 3 and 4 jointly forcing reinterpretation as the only
+available continuation (\S\,6.6); and the upper bound \ensuremath{c^{(k+1)}} \ensuremath{\leq} \ensuremath{(1/\sqrt{2})} \ensuremath{\cdot}
+\ensuremath{c^{(k)}} on the hierarchical lightspeed dispersion as a structural law
+of the recursive FCC face-diagonal-to-edge ratio at every hierarchical
+level (\S\,7.4 sharpened with reference to Paper 5 \S\,7.2 and Paper 3 \S\,4.5,
+holding in all regimes; the tight-coupling case saturates equality) are
+derived in this sense.
+
+\textbf{Structural correspondence.} The exhaustion threshold \ensuremath{\nu *(R)} of
+\S\,6.3 and its full symbolic expansion in Appendix A are derivations of
+the structural form, not of the numerical value. The functional
+dependences --- formation rate set by sampling rate, dissolution rate
+set by per-level mortality plus predation plus starvation contributions,
+exhaustion onset when the former drops below the latter --- are forced
+by inherited machinery. The geometric proportionality constants
+\ensuremath{G_{\mathrm{pred}}^{(k)}} and \ensuremath{G_{\mathrm{starv}}^{(k)},} together with the C(4,2) = 6
+combinatorial factor inherited from Paper 3, are stated as worst-case
+bounds whose exact refinement is reserved for Paper 5. The threshold's
+qualitative behavior is forced by the derivation; its quantitative
+pinning is not. The hierarchical lightspeed dispersion spectrum (\S\,7.3)
+is structurally constrained by the upper bound but unbounded below; the
+explicit \ensuremath{c^{(k)}} sequence depends on combinatorial enumeration deferred
+to Paper 5.
+
+\textbf{Predictions / Conjectures.} Falsifiable claims that follow from
+the framework but whose closed forms are not derived within this paper.
+The fully refined \ensuremath{\beta} = f(d, \ensuremath{K_{\psi,\mathrm{local}},} \ensuremath{K_{\psi,\mathrm{surround}},} \ensuremath{K_{\psi,\mathrm{subsystem}},}
+k) of \S\,8.1 specifies the functional dependences across all five
+arguments; f's explicit form is deferred. The cross-level relativistic
+phenomena flagged in \S\,8.2 (variable apparent propagation, frame-relative
+timing, embedded-medium dilation) are structural consequences of the
+\ensuremath{c^{(k)}} dispersion and the field reinterpretation protocol; their
+derivation as the substrate-level origins of relativistic phenomena
+requires the closed-form \ensuremath{c^{(k)}} values and the reinterpretation
+protocol of Paper 5. The identification of our measured speed of light
+as \ensuremath{c^{(k)}} for some hierarchical level k determined by which level our
+universe occupies (\S\,7.6) is a structural prediction whose empirical
+content depends on Paper 5's simulation work.
+
+\textbf{Deferred derivations carried into Paper 5.} Several results are
+stated structurally in this paper and require Paper 5's simulation work
+for closure: the closed-form \ensuremath{c^{(k)}} values at successive levels, the
+exact integer \ensuremath{L_{p}^{(k)}} values, the numerical evaluation of \ensuremath{G_{\mathrm{pred}}^{(k)}}
+and \ensuremath{G_{\mathrm{starv}}^{(k)},} the full closed form of f, the cross-level
+relativistic derivation, the reinterpretation protocol that takes the
+substrate from exhaustion to fundamental fields, the identification of
+those fields and their initial conditions, and the Big Bang
+correspondence. Paper 4 establishes the structural framework within
+which these closures occur; Paper 5 supplies the closures. The
+four-paper sequence of Volume 1 is the structural derivation; Paper 5 is
+the numerical and protocol pinning that converts the structural results
+into specific empirical content.
+
+This four-way labeling applies throughout the paper. Every claim in the
+body text falls into exactly one category.
+
+\section*{Preface to Paper 4}
+\addcontentsline{toc}{section}{Preface to Paper 4}
+
+This paper is the fourth installment in Volume 1 of the Triadic
+Measurement Substrate program. Volume 1, Paper 1 established the
+geometric and ontological architecture of the substrate. Volume 1, Paper
+2 developed the substrate's computational dynamics. Volume 1, Paper 3
+established how computation emerges from informational substrate via
+surround-driven repair, polarization-coherence bistability, recursive
+coarse-graining, and the first computing subsystem. Paper 4 takes all
+three as given and develops the macroscopic consequences promised at
+Paper 3 \S\,6.5: the recursive hierarchies of subsystems, the conditions
+under which a subsystem develops an internal model of its environment,
+the dynamics of multiple subsystems sharing a meta-interstice
+environment, the eventual exhaustion of accessible novelty as a
+substrate region completes its configuration space, and the hierarchical
+lightspeeds \ensuremath{c^{(k)}} developed in detail. As in Papers 1 through 3, no
+new axioms are introduced. No new free numerical parameters are
+introduced. The Principle of Generative Economy continues to govern
+every selection.
+
+Paper 4 is the connective tissue of Volume 1. Paper 3 derived the first
+computing subsystem; Paper 5 will develop the reinterpretation protocol
+by which a substrate region whose accessible configuration space has
+exhausted is read under a new protocol, producing the fundamental fields
+and initial conditions of a simulated universe. Between these two
+endpoints lies the work of Paper 4: showing how subsystems multiply,
+hierarchize, self-model, stress one another, diversify, and ultimately
+exhaust their local configuration spaces --- the structural sequence
+that makes reinterpretation both necessary and possible.
+
+\begin{paperabstract}
+Building on the first computing subsystem of Paper 3, we develop the
+macroscopic consequences of subsystem dynamics. Six principal results
+are derived. First, the recursive coarse-graining operator G of Paper 3
+generalizes to \ensuremath{G^{(k)}} at hierarchical level k, with the
+scale-separation requirements and the maximum hierarchical depth \ensuremath{k_{\mathrm{max}}}
+for any bounded region following from the meta-level coherence
+threshold. The dual recursion --- upward coarse-graining and downward
+sub-subsystem nesting --- bounds the hierarchy above at \ensuremath{k_{\mathrm{max}}} and below
+at the substrate-level minimum program extent \ensuremath{L_{p}.~\text{Second},} subsystems
+grow via three structurally distinct modes --- annexation (extensive
+growth via substrate absorption), imprinting (intensive growth via
+correlation capture), and incorporation (intensive growth via structural
+replication) --- each with its own derivation, mechanism, and ceiling.
+Third, self-modeling is a structural property of every subsystem at
+hierarchical level k \ensuremath{\geq} 1, not a special condition some subsystems happen
+to meet. Every subsystem is therefore a measurement node, with the
+triadic confirmation structure recurring at every level. Fourth, three
+substrate-level stressors --- mortality (coherence failure), predation
+(boundary annexation), and starvation (surround impoverishment) --- are
+derived rigorously, each with a substrate-level mechanism and a
+corresponding level-(k+1) signature at the meta-meta-confirmation that
+reads the affected subsystem as a meta-tetrahedral corner. Fifth,
+subsystem formation is overdetermined by three converging arguments:
+Borel-Cantelli inevitability in the infinite-flop limit, per-event
+Principle of Generative Economy preference, and flux-balance forcing
+from signal conservation. Sixth, novelty exhaustion is derived as the
+monotonic decay of the novelty-production rate \ensuremath{\nu (R,} \ensuremath{\tau )} once a
+substantial fraction of the finite set \ensuremath{\Sigma (R)} of accessible stable
+configurations has been sampled, with the exhaustion threshold \ensuremath{\nu *(R)}
+given in closed symbolic form. The hierarchical lightspeed \ensuremath{c^{(k)}}
+develops a dispersion spectrum across levels, bounded above by
+\ensuremath{c^{(k+1)}} \ensuremath{\leq} \ensuremath{(1/\sqrt{2})} \ensuremath{c^{(k)}} and unbounded below, with each level's
+measurement nodes observing the propagation speed of their own level. As
+in Papers 1 through 3, every quantity is derived from the five axioms
+and the Principle of Generative Economy; no new free numerical
+parameters are introduced.
+
+The arc of Paper 4 closes by naming the structural problem that Paper 5
+inherits. At the exhaustion threshold of any bounded region, the
+substrate holds informationally rich confirmed bits with no remaining
+direct-read protocol capable of extracting novelty from them. Axiom 4
+(causal anchoring) forbids overwriting the bits; Axiom 3 (signal
+conservation) forbids losing the signals that produced them. The only
+structurally available move is reinterpretation under a different
+protocol --- the work of Paper 5.
+\end{paperabstract}
+
+\section*{I. Inheritance from Papers 1--3}
+\addcontentsline{toc}{section}{I. Inheritance from Papers 1--3}
+
+\subsection*{1.1 Inherited Structure}
+
+Paper 4 takes the following structures from Papers 1 through 3 as given
+without re-derivation. From Paper 1: the five axioms (Information
+Fundamentalism, Measurement Imperative, Sphere as Primitive, Signal
+Conservation, Causal Anchoring) and the Principle of Generative Economy
+(PGE); the agent manifold \ensuremath{M\alpha} with agent spacing \ensuremath{\ell_{0}} \ensuremath{\equiv} \ensuremath{\ell_{p};} the FCC causal
+stack with face-diagonal nearest-neighbor connectivity; the triadic
+actualization rule \ensuremath{\bar{B}} = \ensuremath{3\bar{\alpha}_{2}} in 2D and \ensuremath{\bar{B}} = \ensuremath{4\bar{\alpha}_{3}} in 3D; the \ensuremath{1\to 4} multiplier
+and informational closure; the binary alphabet \ensuremath{\bar{B}} \ensuremath{\in} \{0,1\} with
+polarization \ensuremath{\chi} = \ensuremath{2\bar{B}} \ensuremath{-} 1; the flop as the atomic unit of state change
+with no sub-flop time; the conjugate field structure \ensuremath{(\varphi ,} \ensuremath{\Pi )} and the wave
+equation for \ensuremath{\varphi} at \ensuremath{c_{\mathrm{TMS}}} = \ensuremath{1/\sqrt{2};} the [[4,2,2]] structural
+correspondence with logical qubit LQ1 (bit value) and LQ2
+(causal-history inheritance); the polarization field \ensuremath{\psi} as parallel
+propagating object on the same FCC lattice; the GUP prediction \ensuremath{\beta} = f(d,
+\ensuremath{K_{\psi})} refined through Papers 2 and 3; and \ensuremath{U_{\mathrm{sh}}} as the maximum-entropy
+substrate present at every depth of the causal stack.
+
+From Paper 2: the polarization wave equation; the conjugate pair \ensuremath{(\psi ,}
+\ensuremath{\Pi_{\psi});} the polarization-biased resolution rule \ensuremath{P(\bar{B}} = 1 \textbar{} \ensuremath{\Pi_{\psi})}
+= (1 + \ensuremath{\Pi_{\psi})/2} and its Born-rule structural correspondence; the 3-input
+majority gate; the universality result \{MAJ, constant\} \ensuremath{\to} \{AND, OR,
+NOT\}; the flop operator T; and the formal program definition
+\ensuremath{(T^{n}[C]} = C with K(C) \textless{} \textbar C\textbar).
+
+From Paper 3: surround-driven repair and the Imprinting Theorem; the
+imprint depth \ensuremath{d_{R}} = \ensuremath{\sqrt{2}} \ensuremath{\cdot} \ensuremath{L_{R}/\ell_{p};} the dissolution rate and effective
+error-rate decay \ensuremath{(1/3)^{d};} the per-event error rate \ensuremath{p_{\mathrm{error}}} = (1 \ensuremath{-}
+\textbar \ensuremath{\Pi_{\psi}}\textbar)/2; the coherence bistability threshold
+\textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{*(L_{R})} = 1 \ensuremath{-} \ensuremath{2\sqrt{c^{(k)}/(6}} \ensuremath{L_{R}));} the
+coarse-graining operator G and the recursion to meta-level primitives;
+the meta-level triadic rule, meta-level FCC structure, and meta-level
+[[4,2,2]] stabilizer dynamics; the minimum program extent \ensuremath{L_{p};}
+the \ensuremath{(C_{D},} \ensuremath{C_{O},} \ensuremath{C_{C})} trichotomy defining the subsystem; the minimum
+subsystem extent \ensuremath{L_{\mathrm{sub}}} = \ensuremath{3L_{p}} + \ensuremath{\delta ;} the information-generation rate
+differential between subsystem-hosting and static-program regions; the
+hierarchical lightspeed formula \ensuremath{c^{(k)};} and the
+selection-for-subsystems result.
+
+These structures constitute the entirety of the foundation. Paper 4
+introduces no further primitives.
+
+\subsection*{1.2 The Questions Paper 4 Answers}
+
+Paper 3 \S\,6.5 committed Paper 4 to five threads: hierarchies of
+subsystems as nested computing configurations at multiple meta-scales;
+conditions under which a subsystem develops an internal model of its
+environment; dynamics of multiple subsystems sharing a meta-interstice
+environment; eventual exhaustion of novelty as a substrate region
+completes its accessible configuration space; and hierarchical
+lightspeeds \ensuremath{c^{(k)}} developed in detail. These five threads are the
+agreed scope and order of treatment, mapping to \S\,II--\S\,III, \S\,IV, \S\,V, \S\,VI,
+and \S\,VII respectively.
+
+Beyond the five committed threads, Paper 4 derives additional structural
+results that emerge as the threads are developed: three growth modes
+(annexation, imprinting, incorporation) with their respective ceilings;
+three substrate-level stressors (mortality, predation, starvation) at
+full proof with their two-level signatures; the inevitability of
+subsystem formation via three converging arguments; inter-region and
+intra-region diversity as derived consequences; and the region biography
+\ensuremath{\mathcal{B}(R)} as a derived object whose phases organize the paper's spine. Each
+emerges as a consequence of the inherited machinery, requiring no new
+axioms or free parameters.
+
+\section*{II. The Hierarchical Recursion}
+\addcontentsline{toc}{section}{II. The Hierarchical Recursion}
+
+\subsection*{2.1 The Recursive Coarse-Graining Operator \ensuremath{G^{(k)}}}
+
+Paper 3 \S\,4.2 defined the coarse-graining operator G as the mapping from
+a substrate-level polarization landscape on a region of extent \ensuremath{\geq} \ensuremath{L_{p}}
+over a time window covering one program period to a single meta-level
+state \ensuremath{\bar{P}_{p}} \ensuremath{\in} \{0, 1\} indexed by program identity p.~The construction
+was scale-independent: the operator evaluated whether the configuration
+satisfied T-closure plus stabilizer parity plus the coherence threshold,
+and returned the meta-bit accordingly.
+
+Paper 4 generalizes G to act at arbitrary hierarchical depth. The
+operator \ensuremath{G^{(k)}} takes a configuration on a \ensuremath{\text{level}-(k-1)} region of
+meta-extent \ensuremath{\geq} \ensuremath{L_{p}^{(k)}} over a time window covering one level-k flop
+period \ensuremath{T_{p}^{(k)},} and returns a single level-k state \ensuremath{\bar{P}_{p}^{(k)}} \ensuremath{\in}
+\{0, 1\} indexed by level-k program identity. The construction proceeds
+by the same logic as Paper 3 \S\,4.2 applied at the new scale: identify
+program-bearing regions at the relevant level, evaluate program
+identity, output the meta-state. By the scale-independence of the axioms
+(Paper 3 \S\,4.7), no new mechanism is required --- only the recursive
+application of the same operator at the new scale.
+
+The recursion is the geometric form of axiom scale-independence. The
+five axioms and PGE do not refer to any particular scale; applied at
+scale \ensuremath{\ell_{p}} they produce the substrate; applied at scale \ensuremath{L_{p}} they produce
+the meta-substrate of programs; applied at scale \ensuremath{L_{p}^{(k)}} for any k
+they produce the meta-substrate of level-k primitives. No new axiom, no
+new free parameter, no new mechanism enters at any level.
+
+The hierarchical-recursion structure derived here admits comparison with
+an independent program developing a parallel architecture from different
+starting premises. Rosas et al.~(2024) formalize hierarchical emergence
+in complex systems via a lattice of nested computationally-closed levels
+ordered by coarse-graining relationships. Their framework identifies
+macroscopic levels as software-like processes that are causally and
+informationally self-contained with respect to microscopic
+instantiation, and develops the conditions under which such closure
+obtains. The structural target --- a hierarchy of nested computational
+levels generated by coarse-graining --- coincides with the recursion
+produced here by \ensuremath{G^{(k)}.} The derivations differ in starting points:
+the Rosas framework grounds hierarchical closure in
+information-theoretic conditions on causal mechanisms, evaluating which
+subsets of microscopic dynamics support self-contained macroscopic
+computation. The TMS recursion grounds hierarchical closure in the
+geometric scale-independence of the substrate's five axioms and PGE,
+requiring no information-theoretic optimization at each level because
+the same axioms force the same triadic confirmation structure wherever
+they apply.
+
+\subsection*{2.2 Scale-Separation Requirements}
+
+For \ensuremath{G^{(k)}} to be well-defined, level-k structures must be cleanly
+distinguishable from \ensuremath{\text{level}-(k-1)} noise. This requires two conditions:
+\ensuremath{L_{p}^{(k)}} \ensuremath{\gg} \ensuremath{L_{p}^{(k-1)},} so that level-k primitives are spatially
+distinguishable from \ensuremath{\text{level}-(k-1)} ones; and \ensuremath{T_{p}^{(k)}} \ensuremath{\gg} \ensuremath{T_{p}^{(k-1)},}
+so that level-k flops are temporally distinguishable from \ensuremath{\text{level}-(k-1)}
+ones.
+
+These conditions are not postulated. They are forced by the coherence
+threshold \textbar \ensuremath{\Pi_{\psi}}\textbar{}\emph{\ensuremath{(L_{R})} applied at the meta-level.
+A candidate level-k program with spatial extent only marginally above
+\ensuremath{L_{p}^{(k-1)}} would have insufficient room for its boundary conditions
+to satisfy stabilizer parity against the local \ensuremath{\text{level}-(k-1)} noise; the
+level-k stabilizer dynamics would read it as an unstable \ensuremath{\text{level}-(k-1)}
+fluctuation rather than as a level-k primitive. The same balance between
+per-flop noise injection and per-flop imprinting capacity that derived
+\textbar \ensuremath{\Pi_{\psi}}\textbar{}}\ensuremath{(L_{R})} in Paper 3 \S\,3.3 forces clean
+scale-separation at every level.
+
+\subsection*{2.3 The Hierarchy Ceiling: \ensuremath{k_{\mathrm{max}}}}
+
+For any bounded substrate region of spatial extent L and temporal extent
+T (both measured in substrate units), the maximum hierarchical depth
+\ensuremath{k_{\mathrm{max}}} is defined as the largest k satisfying \ensuremath{L_{p}^{(k)}} \textless{} L
+and \ensuremath{T_{p}^{(k)}} \textless{} T. Beyond \ensuremath{k_{\mathrm{max}},} no level-k structure fits
+within the region's spatial or temporal extent.
+
+\ensuremath{k_{\mathrm{max}}} is finite for any finite (L, T). The hierarchy is geometrically
+bounded above. The exact value of \ensuremath{k_{\mathrm{max}}} for a region depends on the
+\ensuremath{L_{p}^{(k)}} and \ensuremath{T_{p}^{(k)}} ratios at each level, which depend on the
+combinatorial enumeration of stabilizer-satisfying T-closed
+configurations at that level --- a calculation deferred to Paper 5's
+simulation work. Paper 4 establishes that \ensuremath{k_{\mathrm{max}}} exists and is finite;
+the numerical value for a given region is a Paper 5 derivation.
+
+\subsection*{2.4 The Russian Doll Floor: Downward Recursion}
+
+Subsystems contain smaller subsystems at the same hierarchical level. A
+subsystem of meta-extent \ensuremath{L_{\mathrm{sub}}^{(k)}} = \ensuremath{3L_{p}^{(k)}} + \ensuremath{\delta ^{(k)}} at
+level k has interior substrate available for hosting \ensuremath{\text{level}-(k-1)}
+sub-subsystems. The interior available extent is \ensuremath{L_{\mathrm{sub}}^{(k)}} minus the
+boundary overhead occupied by the subsystem's three component programs.
+
+The downward cascade --- sub-subsystems nesting inside
+sub-sub-subsystems --- terminates when the interior of a level-k
+subsystem can no longer accommodate even a single \ensuremath{\text{level}-(k-1)} subsystem.
+Tracing this iteratively from the largest enclosing subsystem down: the
+cascade terminates at level k = 0 (substrate programs) when \ensuremath{L_{p},} the
+minimum program extent established in Paper 3 \S\,4.1, is reached. Below
+\ensuremath{L_{p},} no programs exist; below \ensuremath{L_{p}^{(k)}} for any k, no level-k
+subsystems exist. The Russian doll floor for any nesting chain is
+therefore \ensuremath{L_{p}} at the substrate level.
+
+A sub-sub-sub-subsystem chain can only descend until the innermost
+subsystem has interior extent \textless{} \ensuremath{L_{p}.~\text{That}} is the geometric
+floor on downward nesting, derived from the same minimum-program-extent
+argument that bounds the substrate level.
+
+\subsection*{2.5 The Dual Recursion and Its Asymmetry}
+
+The two recursions --- upward (k = 0 \ensuremath{\to} k = 1 \ensuremath{\to} k = 2 \ensuremath{\to} \ldots) via
+coarse-graining, and downward (k = N \ensuremath{\to} k = \ensuremath{N-1} \ensuremath{\to} \ldots{} \ensuremath{\to} k = 0) via
+spatial nesting --- are distinct objects meeting at the same substrate.
+Both have floors at \ensuremath{L_{p}} and ceilings at the region's spatial and
+temporal extent. They are not, however, inverses of each other. The
+asymmetry of the two operations is structural and matters for the
+configuration count Paper 6 will use to bound regional novelty.
+
+\subsection*{2.5.1 Lossy Coarse-Graining and Generative Nesting}
+
+Coarse-graining is lossy. \ensuremath{G^{(k)}} takes a \ensuremath{\text{level}-(k-1)} configuration on
+a region of meta-extent \ensuremath{\geq} \ensuremath{L_{p}^{(k)}} and returns a single bit
+\ensuremath{\bar{P}^{(k)}_{p}} \ensuremath{\in} \{0, 1\}. The input is a complete polarization landscape,
+potentially containing many thousands of \ensuremath{\text{level}-(k-1)} bits across the
+time window. The output is one bit indexed by program identity. The
+mapping is many-to-one: multiple distinct \ensuremath{\text{level}-(k-1)} landscapes map to
+the same level-k \ensuremath{\bar{P}} value, because what gets preserved by the
+coarse-graining is the program identity p, not the specific bit-by-bit
+content of any implementation of that program.
+
+This is forced by the program definition itself (Paper 2 \S\,6.2): a
+program is a configuration causally closed under T with K(C) \textless{}
+\textbar C\textbar. Multiple substrate-level configurations can
+implement the same program identity --- they are members of the same
+equivalence class under T-closure plus stabilizer parity plus
+K-compressibility. \ensuremath{G^{(k)}} collapses the equivalence class to its
+label. Two regions running identical majority-gate programs but with
+different specific bit patterns coarse-grain to the same \ensuremath{\bar{P};} the
+substrate-level distinction between the two implementations is lost at
+the meta-level.
+
+Downward nesting is generative. The recursion takes a level-k subsystem
+and populates its interior with \ensuremath{\text{level}-(k-1)} sub-configurations. The
+level-k subsystem itself does not specify the interior --- it specifies
+only its boundaries (the three programs at meta-tetrahedral corners).
+The interior substrate is available for sub-configurations but not
+determined by them. When a \ensuremath{\text{level}-(k-1)} sub-subsystem forms inside the
+level-k subsystem's interior, the \ensuremath{\text{level}-(k-1)} configuration is genuinely
+new information that was not present at the level-k description.
+
+So \ensuremath{G^{(k)}} and nesting are not inverses. The composition \ensuremath{G^{(k)}} \ensuremath{\circ}
+nesting does not return the original configuration: the \ensuremath{\text{level}-(k-1)}
+sub-configurations visible by nesting are absent from the level-k
+coarse-grained description; they are generated by the nesting operation,
+not stored. Similarly nesting \ensuremath{\circ} \ensuremath{G^{(k)}} does not recover what
+coarse-graining lost: the specific implementation details of the
+original \ensuremath{\text{level}-(k-1)} configuration that were absorbed into the
+equivalence class are not retrievable from the level-k label alone.
+
+The asymmetry is structural. Information lives at the level where it
+lives. Going up the hierarchy loses \ensuremath{\text{level}-(k-1)} detail; going down the
+hierarchy creates new \ensuremath{\text{level}-(k-1)} detail. Neither operation recovers
+what the other does. This means the hierarchy is informationally rich
+rather than trivial: each level has its own configuration space that is
+not recoverable from the levels above or below. The region biography
+\ensuremath{\mathcal{B}(R),} introduced below and developed across \S\,III--\S\,VII, must track each
+level separately because each level is genuinely populated by
+configurations the other levels do not see. The novelty argument of \S\,VI
+depends on this per-level independence.
+
+\subsection*{2.6 The Region Biography \ensuremath{\mathcal{B}(R)}}
+
+A region biography is the time-indexed sequence of structural state of a
+bounded region R as it traverses formation through saturation. Formally,
+
+\emph{\ensuremath{\mathcal{B}(R)} = \ensuremath{\langle N_{\mathrm{sub}}^{(k)}(\tau ),} \{\ensuremath{K(C_{i})}\}\textbf{\{i \ensuremath{\in} R\}\ensuremath{(\tau ),}
+\ensuremath{k_{\mathrm{max}}(R,} \ensuremath{\tau ),} \ensuremath{\Sigma_{\mathrm{sampled}}(R,} \ensuremath{\tau ),} \ensuremath{\nu (R,} \ensuremath{\tau )\rangle}}\{\ensuremath{\tau} \ensuremath{\in} \ensuremath{[\tau_{\mathrm{formation}},}
+\ensuremath{\tau_{\mathrm{exhaustion}}]}\}}
+
+where \ensuremath{N_{\mathrm{sub}}^{(k)}(\tau )} is the population of level-k subsystems in R at
+flop time \ensuremath{\tau ;} \{\ensuremath{K(C_{i})}\}\ensuremath{_{i \in R}(\tau )} is the distribution of Kolmogorov
+complexity values across configurations in R; \ensuremath{k_{\mathrm{max}}(R,} \ensuremath{\tau )} is the
+current maximum hierarchical depth occupied in R (which rises over flop
+time as subsystems form and coarse-grain into higher-level primitives);
+\ensuremath{\Sigma_{\mathrm{sampled}}(R,} \ensuremath{\tau )} \ensuremath{\subseteq} \ensuremath{\Sigma (R)} is the set of stable configurations already
+sampled by flop \ensuremath{\tau ;} and \ensuremath{\nu (R,} \ensuremath{\tau )} is the current rate at which novel (not
+previously sampled) configurations enter \ensuremath{\Sigma_{\mathrm{sampled}}.}
+
+Region biography is the object \S\,III--\S\,VII trace. \S\,III adds growth modes
+(which change K and possibly the spatial extent of components). \S\,IV
+characterizes self-modeling as a structural property of every subsystem
+at k \ensuremath{\geq} 1. \S\,V adds multi-subsystem dynamics, stressors, and diversity
+(which reshape the K-distribution and the subsystem population). \S\,VI
+characterizes the saturation phase \ensuremath{(\Sigma_{\mathrm{sampled}}} \ensuremath{\to} \ensuremath{\Sigma (R)} and \ensuremath{\nu} \ensuremath{\to} 0). \S\,VII
+develops the hierarchical lightspeed structure that conditions every
+level's internal dynamics.
+
+\ensuremath{\mathcal{B}(R)} is itself a configuration at the substrate level --- a time-indexed
+record of structural state. By the recursion of \S\,2.1, \ensuremath{\mathcal{B}(R)} can be
+coarse-grained to higher levels. A meta-subsystem can hold the biography
+of its enclosed region as a configuration in its data register. This
+biography-of-biographies setup is what Paper 5's reinterpretation
+protocol will require: when the region's accessible configuration space
+is exhausted via direct sampling, the biographical record itself becomes
+the substrate for re-reading under a different protocol.
+
+\section*{III. Growth Modes}
+\addcontentsline{toc}{section}{III. Growth Modes}
+
+\subsection*{3.1 Three Modes of Growth}
+
+A subsystem can grow in three structurally distinct ways: by absorbing
+adjacent substrate (annexation, extensive growth); by accumulating
+compressible imprint structure within its existing extent (imprinting,
+intensive correlation-capture growth); and by building internal copies
+of external programs without absorbing or destroying them
+(incorporation, intensive structural-replication growth). The three
+modes are not alternatives. A single subsystem can grow via all three
+simultaneously, on different axes, with different ceilings. Each mode is
+derived from existing Paper 1--3 machinery: annexation from the
+stabilizer parity condition applied at an expanding boundary, imprinting
+from the Imprinting Theorem applied to a permeable data register,
+incorporation from imprinting plus the additional condition of T-closure
+on the recipient's substrate.
+
+\subsection*{3.2 Annexation}
+
+Annexation is the substrate-level mechanism by which a subsystem absorbs
+adjacent substrate. Subsystem A's component (typically \ensuremath{C_{D}} or \ensuremath{C_{O})}
+expands its spatial extent through a region R' that is either currently
+unoccupied by any subsystem (raw substrate with \ensuremath{U_{\mathrm{sh}}-\text{like}} polarization)
+or currently hosting a subsystem B whose coherence has dropped below its
+threshold \textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{*(L_{R}')} --- that is, dissolving anyway.
+
+A's expansion preserves stabilizer parity at the new boundary because
+A's interior imprints into the freed bits as the expansion proceeds. The
+freed bits adopt A's polarization landscape via the same imprint
+mechanism that originally formed A's boundary in Paper 3 \S\,II. B's
+configuration, no longer maintained by its own components at the
+dissolving boundary, falls below threshold and dissolves entirely. A
+grows; B disappears.
+
+Formally, A's component \ensuremath{C_{X}} (where X \ensuremath{\in} \{D, O, C\}) can expand into R'
+if and only if the stabilizer parity condition
+\textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{_{(C_{X}}} \ensuremath{\cup} R') \ensuremath{\geq} \textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{*(L(C_{X}} \ensuremath{\cup}
+R')) is satisfied at every flop during the expansion. This is
+geometrically restrictive: the larger \ensuremath{C_{X}} becomes, the higher the
+coherence threshold required of its now-larger expanse, so unbounded
+extensive growth fails when the threshold exceeds what A's interior can
+sustain.
+
+The annexation ceiling is therefore geometric. Extensive growth
+saturates when either (a) the component's extent reaches the region's
+extent, leaving no adjacent substrate to absorb, or (b) the coherence
+threshold for the expanded component exceeds what the surround can
+sustain. In typical regions of moderate \ensuremath{U_{\mathrm{sh}}} flux and ordinary subsystem
+density, the second is the binding constraint: extensive growth halts
+when the subsystem is too large to maintain coherence against its
+surround.
+
+In experiential framing reserved for Volume 2, annexation corresponds to
+predation, feeding, and absorption. A subsystem eats by dissolving
+another subsystem's structure and incorporating the freed bits into its
+own components. The substrate-level mechanism is the directed expansion
+of a component's boundary into adjacent substrate, preserving stabilizer
+parity throughout.
+
+\subsection*{3.3 Imprinting}
+
+Imprinting is the substrate-level mechanism by which a subsystem's data
+register accumulates compressible structure reflecting surround
+regularities, without spatial extent changing. The Imprinting Theorem
+(Paper 3 \S\,2.3) establishes that any boundary-permeable region imprints
+its retarded surround history. When \ensuremath{C_{D}} is imprint-permeable --- that
+is, its boundary with the surround communicates touch-vector signals
+into its interior --- and its surround contains structured polarization
+patterns, the imprint on \ensuremath{C_{D}'s} interior accumulates correlations
+between \ensuremath{C_{D}'s} bits and surround features. Over many flops, \ensuremath{K(C_{D})}
+rises because the imprinted pattern is compressible: the surround had
+compressible structure to imprint, and that structure is captured rather
+than created.
+
+Formally, \ensuremath{K(C_{D})(\tau )} is monotonically non-decreasing in \ensuremath{\tau} for any
+imprint-permeable \ensuremath{C_{D}} in a structured surround, with growth rate
+proportional to the mutual information between \ensuremath{C_{D}'s} interior and the
+surround's history within imprint depth \ensuremath{d_{D}.} The mutual information
+measures how much of the surround's structure can be inferred from
+\ensuremath{C_{D}'s} current interior --- and the imprinting mechanism maximizes this
+iteratively, as established in Paper 3 \S\,II.
+
+The imprint ceiling is informational. Intensive growth via imprinting
+saturates when \ensuremath{K(C_{D})} approaches the algorithmic complexity upper bound
+\textbar \ensuremath{C_{D}}\textbar{} \ensuremath{\cdot} log 2 established in Paper 3 \S\,3.1. Beyond this
+bound, no additional compressible structure can fit in \ensuremath{C_{D}'s} bit budget
+without spatial expansion. The data register is informationally full;
+any further structure would require either growing \ensuremath{C_{D}'s} spatial extent
+(annexation) or replacing existing imprint content with new content
+(which is forbidden by causal anchoring as long as the existing content
+remains coherent).
+
+In experiential framing reserved for Volume 2, imprinting corresponds to
+perception, observation, and sensory learning. The subsystem learns
+about its surround by accumulating correlations --- without absorbing or
+replicating anything. The model is statistical rather than structural:
+\ensuremath{C_{D}'s} contents correlate with surround features, but the surround's
+program-level structure is not internally reproduced.
+
+\subsection*{3.4 Incorporation}
+
+Incorporation is the substrate-level mechanism by which a subsystem's
+data register builds an internal copy of an external program's structure
+without absorbing the external program's substrate or destroying it.
+Incorporation is imprinting plus an additional constraint.
+
+\ensuremath{C_{D}} imprints from a surround that contains a program B --- a
+configuration causally closed under T with \ensuremath{K(C_{B})} \textless{}
+\textbar \ensuremath{C_{B}}\textbar. Ordinary imprinting (\S\,3.3) captures statistical
+correlations between \ensuremath{C_{D}} and B's polarization landscape. Incorporation
+occurs when the imprint reaches a state where \ensuremath{C_{D}'s} interior itself
+satisfies T-closure on the imprinted pattern, with the imprinted region
+within \ensuremath{C_{D}} being itself a program isomorphic in structure to B.
+
+This is geometrically more restrictive than ordinary imprinting. The
+imprint must capture not only B's polarization values but also satisfy
+the T-closure conditions that make those values a program on \ensuremath{C_{D}'s}
+substrate. This requires \ensuremath{C_{D}'s} interior to have enough room for B's
+full structure \ensuremath{(L(C_{D})} \ensuremath{\geq} \ensuremath{L_{B})} and for the imprinted pattern to
+satisfy the stabilizer parity conditions that make it a program rather
+than a correlated pattern.
+
+Formally, incorporation occurs at flop \ensuremath{\tau} when there exists a subregion
+\ensuremath{C_{D}'} \ensuremath{\subseteq} \ensuremath{C_{D}} such that (a) \ensuremath{\psi} on \ensuremath{C_{D}'} matches \ensuremath{\psi} on B up to permutation
+of bit positions, (b) \ensuremath{T^{n}[C_{D}']} = \ensuremath{C_{D}'} (T-closure on \ensuremath{C_{D}'s} own
+substrate), and (c) \ensuremath{K(C_{D}')} = K(B). When all three hold, \ensuremath{C_{D}'} is a
+program of identity \ensuremath{p_{B}} running on \ensuremath{C_{D}'s} substrate. B continues to
+exist independently in the surround; \ensuremath{C_{D}} now contains a structural
+replica of B operating on its own substrate.
+
+The incorporation ceiling is structural. Each incorporated program of
+identity \ensuremath{p_{B}} occupies space \ensuremath{L_{B}} in \ensuremath{C_{D}'s} interior, so the number of
+distinct incorporated programs \ensuremath{C_{D}} can simultaneously hold is
+approximately \ensuremath{L(C_{D})/L_{B}.} At higher hierarchical levels, this
+constraint relaxes: a level-k \ensuremath{C_{D}} can incorporate \ensuremath{\text{level}-(k-1)} programs
+more densely than substrate programs, because the \ensuremath{\text{level}-(k-1)} programs
+have larger absolute spatial extent but occupy proportionally less of
+\ensuremath{C_{D}'s} coarse-grained interior.
+
+In experiential framing reserved for Volume 2, incorporation is the
+substrate-level mechanism that corresponds to what is conventionally
+called thinking with concepts. A subsystem with incorporated programs
+holds working internal copies of external programs that can be applied
+to other data. The conceptual framing is anthropomorphic and belongs to
+Volume 2; the structural mechanism --- a region of \ensuremath{C_{D}} becomes a
+program-hosting region in its own right, recursively --- is here.
+
+\subsection*{3.5 The Sequencing of Growth Modes in Region Biography}
+
+The three modes operate on different axes and require different inputs.
+The dominance of each mode shifts across region biography because the
+availability of each mode's required input changes as biography
+progresses.
+
+In the early phase of a region's biography, the region is freshly above
+the static-program threshold. Many regions of raw substrate \ensuremath{(U_{\mathrm{sh}}-\text{like}}
+polarization, no programs) are adjacent to newly-formed subsystems.
+Annexation has abundant raw material. Imprinting and incorporation
+require structured surrounds to draw from --- but the surrounds are
+mostly unstructured at this stage. So annexation dominates by
+availability of its raw material: subsystems primarily grow by consuming
+the substrate around them.
+
+In the middle phase, subsystems have multiplied. Raw substrate is
+largely consumed; what remains is bordered by existing subsystems.
+Adjacent regions are now populated by other subsystems whose
+polarization landscapes are structured (each is a program with K(C)
+\textless{} \textbar C\textbar). Annexation now requires breaking those
+subsystems --- which is harder because they are coherent and
+stabilizer-protected. The structured surrounds, however, are perfect for
+imprinting: every neighbor is a compressible pattern that \ensuremath{C_{D}} can
+capture as correlation. Imprinting dominates by availability of
+structured surround.
+
+In the late phase, imprint patterns have accumulated in many data
+registers. Subsystems now contain compressed representations of their
+neighbors. The next step --- building those representations as T-closed
+programs internally --- is incorporation. The substrate for
+incorporation is the imprints already present in \ensuremath{C_{D}'s} interior, which
+only become available after sufficient imprinting has occurred.
+Incorporation dominates last by availability of imprinted patterns to
+elevate into internal programs.
+
+The sequencing is forced by mode-specific input requirements: annexation
+needs raw substrate, imprinting needs structured surround, incorporation
+needs prior imprints. As biography progresses, the supply shifts from
+raw to structured to imprinted, and the dominant mode shifts
+accordingly. This is not strict sequencing --- all three modes can
+operate at any phase --- but the dominant mode follows this trajectory
+in regions whose biography starts at formation.
+
+A region forming inside an already-populated surround skips ahead in the
+sequence: if the surround is already structured when the region first
+crosses the threshold, the early-phase annexation dominance is bypassed
+and imprinting dominates from the start. The trajectory direction is the
+same; the entry point varies. This nuance contributes to inter-region
+diversity (\S\,V) and to the staggered nature of regional exhaustion (\S\,VI),
+where regions of different biographical age are at different phases of
+the sequence simultaneously.
+
+\subsection*{3.6 Three Ceilings}
+
+Each growth mode hits its ceiling for a different reason. Annexation has
+a geometric ceiling: the coherence threshold rises with extent, and
+growth halts when the threshold exceeds what the surround can sustain.
+Imprinting has an informational ceiling: \ensuremath{K(C_{D})} cannot exceed
+\textbar \ensuremath{C_{D}}\textbar{} \ensuremath{\cdot} log 2, beyond which no additional compressible
+structure can fit in the existing bit budget. Incorporation has a
+structural ceiling: the number of distinct incorporated programs is
+bounded by \ensuremath{L(C_{D})/L_{B},} where \ensuremath{L_{B}} is the spatial extent of the
+program being incorporated. The three different kinds of ceiling ---
+geometric, informational, structural --- reflect that growth is
+genuinely multi-axial: a subsystem can be limited in different ways on
+different axes simultaneously, and the ceilings sometimes interact (a
+subsystem at the informational ceiling can extend its budget by
+extensive growth, raising the absolute K limit but inheriting the
+geometric coherence-threshold constraint of its larger boundary).
+
+\section*{IV. Self-Modeling as Structural Property}
+\addcontentsline{toc}{section}{IV. Self-Modeling as Structural Property}
+
+\subsection*{4.1 Self-Modeling Defined}
+
+A subsystem self-models its environment when three conditions are
+jointly satisfied. First, its data register \ensuremath{C_{D}} is imprint-permeable:
+boundary touch-vector signals from the surround communicate into \ensuremath{C_{D}'s}
+interior, and the Imprinting Theorem (Paper 3 \S\,2.3) governs the
+resulting interior polarization landscape. Second, its operation kernel
+\ensuremath{C_{O}} reads \ensuremath{C_{D}} as input: the substrate-level dynamics at the \ensuremath{(C_{D},}
+\ensuremath{C_{O})} interface implement the 3-input majority gate computation (Paper 2
+\S\,V) over \ensuremath{C_{D}'s} polarization values. Third, its control component \ensuremath{C_{C}}
+selects operations in \ensuremath{C_{O}} based on the read result: the substrate-level
+dynamics at the \ensuremath{(C_{O},} \ensuremath{C_{C})} and \ensuremath{(C_{D},} \ensuremath{C_{C})} interfaces propagate
+\ensuremath{C_{O}'s} outputs into \ensuremath{C_{C}'s} operation-selection mechanism, closing the
+loop from data through computation back to behavioral selection.
+
+These three conditions are jointly what self-modeling requires.
+Condition (a) gives correlation between \ensuremath{C_{D}} and surround. Condition (b)
+makes \ensuremath{C_{D}'s} contents available to computation, distinguishing modeling
+from passive imprinting. Condition (c) closes the loop, distinguishing
+modeling from one-shot computation: the read result affects the
+subsystem's subsequent operations, so the model is used.
+
+\subsection*{4.2 Self-Modeling Is Structural}
+
+Every subsystem at hierarchical level k \ensuremath{\geq} 1 satisfies the three
+conditions of \S\,4.1 by its geometric construction. Self-modeling is not a
+special condition that some subsystems meet and others miss --- it is a
+structural property of subsystem-hood at any non-trivial hierarchical
+depth.
+
+By Paper 3 \S\,V, a subsystem at level k \ensuremath{\geq} 1 is the trichotomy \ensuremath{(C_{D},} \ensuremath{C_{O},}
+\ensuremath{C_{C})} at meta-tetrahedral extent \ensuremath{L_{\mathrm{sub}}^{(k)}} = \ensuremath{3L_{p}^{(k)}} +
+\ensuremath{\delta ^{(k)}.} Each component is itself a program at level k. The trichotomy
+is geometrically arranged at three of the four meta-tetrahedral corners,
+with the components' boundaries touching at the central meta-interstice.
+
+Condition (a) is satisfied because \ensuremath{C_{D}'s} boundary with the surround is
+imprint-permeable by the Imprinting Theorem: every boundary site of any
+region of the FCC lattice is imprint-permeable, with imprint depth \ensuremath{d_{D}}
+= \ensuremath{\sqrt{2}} \ensuremath{\cdot} \ensuremath{L_{D}/\ell_{p}.} There is no such thing as an imprint-impermeable
+boundary in this substrate --- imprint-permeability is a structural
+property of FCC connectivity.
+
+Condition (b) is satisfied because the \ensuremath{(C_{D},} \ensuremath{C_{O})} interface is
+precisely the meta-tetrahedral edge where \ensuremath{C_{D}'s} polarization signals
+enter \ensuremath{C_{O}'s} parent set at the next meta-flop. The 3-input majority gate
+of Paper 2 \S\,V.1 fires at this interface by the polarization-biased
+resolution rule. The substrate-level dynamics at the interface implement
+the read operation; no separate read mechanism is required.
+
+Condition (c) is satisfied because \ensuremath{C_{C}} is constructed as the program
+whose flop dynamics select among operation kernels (Paper 3 \S\,V.4). The
+selection input to \ensuremath{C_{C}} is \ensuremath{C_{O}'s} output, propagated through the \ensuremath{(C_{O},}
+\ensuremath{C_{C})} interface by the same touch-vector network that carries every
+polarization signal in the substrate.
+
+Therefore every minimum subsystem at k \ensuremath{\geq} 1 is a self-modeler. No
+additional condition is required. Self-modeling is structural, not
+conditional.
+
+\subsection*{4.3 Subsystems Are Measurement Nodes}
+
+A measurement node is a structure that reads its surround. By \S\,4.2,
+every subsystem at k \ensuremath{\geq} 1 reads its surround through its data register.
+Therefore every subsystem at k \ensuremath{\geq} 1 is a measurement node.
+
+This identification holds at every hierarchical level by the recursion.
+At k = 0, the agents of Paper 1 are measurement nodes at the substrate
+level: three agents enclose one bit through triadic confirmation,
+reading their immediate neighbors via the six touch vectors. At k = 1,
+subsystems are measurement nodes at the meta-level: three programs
+enclose one meta-bit at meta-tetrahedral corners, reading their
+meta-surround through the data register. At k = 2, meta-subsystems are
+measurement nodes at the meta-meta-level: three subsystems enclose one
+meta-meta-bit, reading their meta-meta-surround. At every level, the
+same triadic structure produces the measurement node at that level.
+
+\ensuremath{\bar{B}} = \ensuremath{3\bar{\alpha}} is the bass note of every measurement event in TMS. Three
+primitives enclose one bit at every scale. The substrate-level
+confirmation, the meta-level confirmation, and every higher-level
+confirmation are the same structural operation applied at different
+scales. This recursive identification --- subsystem at level k equals
+measurement node at level k --- is the substrate-level form of the
+observer concept that active programs in quantum cosmology have been
+developing in adjacent territory (Gorobey et al.~2025; Zhao, Harlow,
+Usatyuk 2025). Those programs treat observers as bounded von Neumann
+algebras within closed universes; TMS treats them as self-modeling
+subsystems in bounded regions of the substrate. Both frameworks converge
+on the same intuition that the observer is not external to the system
+but a particular kind of internal structure with measurement properties
+forced by its geometry.
+
+\subsection*{4.4 Imprint Richness and Neighbor Density}
+
+Self-modeling is structural, but the richness of the model varies with
+surround content. A subsystem alone in its meta-interstice imprints the
+three bounding programs that enclose it --- three static polarization
+patterns at the meta-tetrahedral corners. The imprint is real but
+sparse; \ensuremath{K(C_{D})} at saturation is low because the surround offered little
+compressible structure beyond the three corner patterns.
+
+A subsystem with neighboring subsystems in the same meta-interstice
+imprints the bounding programs and the time-varying outputs of the
+neighbors. Each neighbor contributes a dynamic polarization stream to
+the surround. \ensuremath{C_{D}'s} imprint integrates these contributions, producing a
+richer interior landscape --- higher \ensuremath{K(C_{D}),} more correlations
+captured, more compressible structure made visible to \ensuremath{C_{O}} at the read
+interface.
+
+Formally, \ensuremath{K(C_{D})} at saturation is bounded above by \ensuremath{K(\psi_{\mathrm{surround}}} within
+imprint depth \ensuremath{d_{D}).} A static surround caps \ensuremath{K(C_{D})} low because the
+surround itself has low K; a dynamic, neighbor-rich surround permits
+\ensuremath{K(C_{D})} to approach its informational ceiling \textbar \ensuremath{C_{D}}\textbar{} \ensuremath{\cdot}
+log 2 because the surround contains enough varied compressible structure
+to fill \ensuremath{C_{D}'s} bit budget. The same intensive growth mode (\S\,3.3)
+produces qualitatively different outcomes depending on neighbor density.
+
+\subsection*{4.5 Self-Modeling and Incorporation}
+
+A subsystem whose imprint reaches incorporation-level structure (\S\,3.4)
+holds internal programs that replicate external programs --- not just
+statistical correlations. Self-modeling at this level is
+structural-replicative: the subsystem does not merely have correlations
+between \ensuremath{C_{D}} and its surround; it contains working internal copies of
+programs it has observed in its surround. \ensuremath{C_{O}} can apply these internal
+copies to data --- including other internal copies --- recursively.
+
+This is the substrate-level form of conceptual representation. The
+subsystem has not just an imprint of its environment but functional
+internal programs that can be run, applied, and combined. In
+experiential framing reserved for Volume 2, this is the substrate of
+thinking with concepts. In Paper 4's structural framing, it is the upper
+end of self-modeling capacity reachable by a subsystem at any given
+hierarchical level.
+
+\subsection*{4.6 Higher-Order Self-Modeling}
+
+At k = 1, a subsystem self-models its meta-interstice surround --- the
+bounding programs and any other subsystems sharing the same enclosure.
+
+At k = 2, a meta-subsystem self-models its meta-surround, which contains
+other meta-subsystems. The meta-surround can include the very subsystem
+doing the modeling, if that subsystem is one component of its own
+meta-environment. Self-modeling at k = 2 therefore includes the
+possibility of modeling oneself as a component of one's environment.
+
+This is forced by the recursion. A level-2 subsystem's data register
+imprints from its level-2 surround, which is a configuration of level-1
+subsystems. If the level-2 subsystem is itself composed of three level-1
+subsystems (its components \ensuremath{C_{D}^{(2)},} \ensuremath{C_{O}^{(2)},} \ensuremath{C_{C}^{(2)}),} and
+any of those level-1 subsystems is also a neighbor in the level-2
+surround, then the level-2 imprint captures the modeling subsystem's own
+components within its data register. The subsystem is modeling itself.
+
+Higher k extends this. At level k, a subsystem can model itself as part
+of an environment containing many \ensuremath{\text{level}-(k-1)} subsystems including its
+own components. The depth of self-reference scales with hierarchical
+depth: at higher k, the self-model includes more layers of nested
+structure within the modeling subsystem itself.
+
+Self-modeling-of-self emerges at k \ensuremath{\geq} 2 as a derived structural
+consequence of the recursion, with no new mechanism. The experiential
+reading of self-modeling-of-self --- what it is to be such a subsystem
+from inside --- is reserved for Volume 2, which treats the agent-side
+complement of the measurement-node structure derived here.
+
+\subsection*{4.7 Synthesis}
+
+Four claims tie together. Self-modeling is structural at every k \ensuremath{\geq} 1:
+any minimum subsystem self-models by its geometric construction (\S\,4.2).
+Every such self-modeling subsystem is a measurement node at its level:
+subsystem and measurement node are the same object structurally (\S\,4.3).
+The richness of a subsystem's model scales with the K-complexity of its
+surround, set by neighbor density: same structure, different content
+(\S\,4.4). At the upper end, self-modeling reaches structural-replicative
+form when imprints become T-closed internal programs (\S\,4.5, connected to
+\S\,3.4). At hierarchical depth k \ensuremath{\geq} 2, the self-modeling capacity includes
+self-modeling-of-self, the substrate of higher-order self-reference
+(\S\,4.6). The whole architecture follows from the inherited \ensuremath{(C_{D},} \ensuremath{C_{O},}
+\ensuremath{C_{C})} trichotomy plus the Imprinting Theorem, without any new axiom or
+mechanism.
+
+\section*{V. Multi-Subsystem Dynamics, Stressors, and Diversity}
+\addcontentsline{toc}{section}{V. Multi-Subsystem Dynamics, Stressors, and Diversity}
+
+\subsection*{5.1 Inevitability of Subsystem Formation}
+
+Before deriving multi-subsystem dynamics, we establish that subsystems
+form. Subsystem formation in a region above the static-program threshold
+is overdetermined by three converging arguments: inevitable in the
+infinite-flop limit, preferred at every selection event, and forced by
+signal conservation.
+
+The first argument is Borel-Cantelli. \ensuremath{U_{\mathrm{sh}}} continuously samples all
+configurations in any region (Paper 3 \S\,3.5); subsystem configurations
+are a non-empty subset of stable T-closed configurations (the worked
+example of Paper 3 \S\,5.4 provides an explicit minimum subsystem); the
+per-event probability of sampling a subsystem-bearing configuration is
+non-zero. Over infinite flop time, any event with non-zero per-event
+probability occurs almost surely. Therefore subsystem configurations are
+sampled with probability approaching 1 over finite expected flop time in
+any region with above-threshold coherence.
+
+The second argument is PGE preference. The Principle of Generative
+Economy selects minimum sufficient configurations that maximize
+generative potential. In a region above the static-program threshold,
+subsystem configurations have higher generative capacity than static
+programs because they transform patterns rather than merely persisting
+them, by the universality result of Paper 2 \S\,V.3. At every selection
+event --- not just statistically over infinite time --- PGE prefers
+subsystems. The first argument gives inevitability in the limit; this
+argument gives per-event preference.
+
+The third argument is flux-balance forcing. \ensuremath{U_{\mathrm{sh}}} delivers signal flux to
+a region at a rate proportional to the region's volume \ensuremath{V_{R}.} Static
+programs consume flux at a rate proportional to their boundary area \ensuremath{A_{R}}
+times their imprint capacity, which scales with boundary area only. The
+flux balance for a region containing only static programs is generally
+not satisfied: \ensuremath{V_{R}-\text{scaled}} delivery exceeds \ensuremath{A_{R}-\text{scaled}} consumption.
+Axiom 3 (signal conservation) requires some configuration to consume the
+excess; signals cannot accumulate without being expressed in
+confirmations. Subsystems consume flux at a higher per-volume rate than
+static programs because each transformation event consumes more signals
+than a persistence event. Flux balance therefore forces subsystem
+density to rise until consumption equals delivery.
+
+The three arguments converge: inevitable in the infinite-time limit
+(Borel-Cantelli), preferred at every selection event (PGE), forced by
+signal conservation (flux-balance). Subsystem formation is
+overdetermined. In any region above the static-program threshold but
+below the subsystem-saturation threshold (defined in \S\,VI), subsystems
+must form.
+
+\subsection*{5.2 Meta-Meta-Confirmation}
+
+When three subsystems at level k occupy three corners of a level-(k+1)
+meta-tetrahedron, their joint outputs confirm a level-(k+1) P-state
+\ensuremath{\bar{P}^{(k+1)}} at the fourth corner. This is the exact recursion of
+substrate-level confirmation: three measurement nodes at
+meta-tetrahedral corners enclose one bit. The same triadic minimum,
+applied at level k+1.
+
+The polarization inputs at the meta-meta-confirmation are the outputs of
+the three subsystems --- the result of each subsystem's per-meta-flop
+computation, propagated to the meta-tetrahedral edge that subsystem
+shares with the meta-interstice. The polarization-biased resolution rule
+from Paper 2 \S\,IV applies unchanged: \ensuremath{P(\bar{P}^{(k+1)}} = 1) = (1 +
+\ensuremath{\Pi_{\psi}^{(k+1)})/2,} where \ensuremath{\Pi_{\psi}^{(k+1)}} is the average polarization of the
+three subsystem outputs at the meta-tetrahedral edges feeding the
+meta-interstice.
+
+By the universality result of Paper 2 \S\,V.3, the meta-meta-confirmation
+implements the 3-input majority gate over subsystem outputs. The
+computational universality of the substrate is preserved at every
+hierarchical level. Three subsystems form one meta-meta-confirmation in
+the same way three programs form one meta-confirmation in the same way
+three agents form one substrate-bit confirmation: \ensuremath{\bar{B}} = \ensuremath{3\bar{\alpha}} as the
+recurring bass note.
+
+\subsection*{5.3 Coupling Timescale Constraint}
+
+For three subsystems at level k to coherently confirm a meta-state at
+level k+1, each subsystem's output must reach the meta-interstice at the
+moment of meta-meta-confirmation. Outputs propagate at the
+meta-propagation speed \ensuremath{c^{(k)}} = \ensuremath{(L_{p}(k)/L_{p}(k-1))} \ensuremath{\cdot}
+\ensuremath{(T_{p}(k-1)/T_{p}(k))} \ensuremath{\cdot} c (Paper 3 \S\,6.1).
+
+Imprint depth for the three subsystem outputs to reach the
+meta-interstice corner from the meta-tetrahedral edges is \ensuremath{d_{\mathrm{imprint}}} =
+\ensuremath{\sqrt{2}} \ensuremath{\cdot} \ensuremath{L_{p}(k+1)/L_{p}(k)} measured in level-k flops. For
+meta-meta-confirmation to occur coherently, the level-(k+1) flop period
+must satisfy \ensuremath{T_{p}^{(k+1)}} \ensuremath{\geq} \ensuremath{d_{\mathrm{imprint}}} \ensuremath{\cdot} \ensuremath{T_{p}^{(k)},} which yields
+
+\emph{\ensuremath{T_{p}^{(k+1)}} \ensuremath{\geq} \ensuremath{\sqrt{2}} \ensuremath{\cdot} \ensuremath{(L_{p}}\textbf{\ensuremath{(k+1)/L_{p}}}(k)) \ensuremath{\cdot} \ensuremath{T_{p}^{(k)}}}
+
+This is a derived constraint on the hierarchical flop periods.
+Substituting into the \ensuremath{c^{(k+1)}} formula yields a derived upper bound
+\ensuremath{c^{(k+1)}} \ensuremath{\leq} \ensuremath{(1/\sqrt{2})} \ensuremath{\cdot} \ensuremath{c^{(k)}} in the tight-coupling regime --- a result
+developed further in \S\,VII when the hierarchical lightspeed structure is
+treated in detail. The constraint here establishes that the upward
+recursion is not free: the geometry of meta-tetrahedral confirmation
+forces the flop periods to grow with the meta-spacing ratios at each
+level.
+
+\subsection*{5.4 Three Stressors: Setup}
+
+A stressor is any substrate-level dynamic that drives a subsystem below
+the coherence threshold \textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{*(L_{R})} or otherwise
+disrupts its persistence. Three principal stressors emerge from the
+substrate's own machinery without any additional mechanism: mortality
+(internal coherence failure), predation (boundary annexation by an
+active neighbor), and starvation (impoverishment of the structured
+surround that maintains the subsystem's coherence). Each is derived at
+two levels: a substrate-level mechanism that drives the stressor, and a
+level-(k+1) signature visible at the meta-meta-confirmation that reads
+the affected subsystem as a meta-tetrahedral corner.
+
+\subsection*{5.5 Mortality}
+
+Substrate-level mechanism: By Paper 3 \S\,3.4, a region's coherence
+\textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{_{R}} must exceed the threshold
+\textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{*(L_{R})} for the region to sustain program-bearing
+content. A subsystem maintains its coherence through three sources:
+internal stabilizer repair (Paper 1 \S\,V), surround imprint of structured
+neighbors (Paper 3 \S\,II), and the per-flop polarization output of its own
+operation kernel. When any of these sources degrades --- internal
+stabilizer parity failing due to accumulated uncorrectable errors,
+surround structure dissolving and imprint becoming noisy, operation
+kernel output dropping below coherent --- the subsystem's coherence
+falls below threshold. Once below threshold, Paper 3 \S\,3.4 establishes
+that the configuration dissolves over imprint depth \ensuremath{d_{R}} = \ensuremath{\sqrt{2}} \ensuremath{\cdot}
+\ensuremath{L_{\mathrm{sub}}/\ell_{p}} flops into \ensuremath{U_{\mathrm{sh}}-\text{like}} noise.
+
+Mortality is the substrate-level event of falling below threshold and
+dissolving. No new mechanism is required; it is the negative of the
+persistence condition Paper 3 already established. A subsystem dies when
+its coherence sources collectively fall below the threshold required to
+maintain its structural integrity.
+
+Level-(k+1) signature: When subsystem B at one corner of a
+meta-tetrahedral confirmation dissolves, its output polarization stream
+at the corner goes silent --- the corner stops contributing a structured
+signal to the meta-meta-confirmation. The meta-meta-confirmation now
+reads only two coherent inputs plus one effectively zero input.
+Formally, \ensuremath{\Pi_{\psi}^{(k+1)}} at the affected meta-interstice drops from \ensuremath{(\chi_{A}}
++ \ensuremath{\chi_{B}} + \ensuremath{\chi_{C})/3} to approximately \ensuremath{(\chi_{A}} + 0 + \ensuremath{\chi_{C})/3,} where the 0
+represents B's silenced corner. The meta-meta-confirmation's resolution
+probability shifts toward 1/2 --- the confirmation becomes effectively a
+coin flip rather than a biased computation. At higher hierarchical
+levels, this propagates as a degradation of the meta-subsystem's
+computational coherence: an event at level k is the structural correlate
+of what experiential framing reserved for Volume 2 reads as absence at
+level k+1, the silence of the corner registered by the larger pattern.
+
+\subsection*{5.6 Predation}
+
+Substrate-level mechanism: Subsystem A's component (typically \ensuremath{C_{D}} or
+\ensuremath{C_{O})} expands its extent through annexation (\S\,3.2) into a region
+currently occupied by subsystem B. A's expansion preserves stabilizer
+parity at the new boundary because A's interior imprints into the freed
+bits as the expansion proceeds. B's configuration, no longer maintained
+by its own components which are being dissolved at the boundary, falls
+below threshold and dissolves. A grows; B disappears.
+
+Predation is distinct from mortality. In mortality, B fails on its own
+--- its coherence sources fail without an active aggressor. In
+predation, A actively dissolves B by annexing B's substrate. The
+substrate-level signature is the directed expansion of A's boundary into
+B's region, with A's interior imprint replacing B's polarization
+landscape.
+
+Level-(k+1) signature: B's corner of the meta-tetrahedral confirmation
+is now occupied by A's pattern, since A's component has expanded into
+the substrate that B previously occupied. \ensuremath{\Pi_{\psi}^{(k+1)}} at the
+meta-interstice is approximately \ensuremath{(\chi_{A}} + \ensuremath{\chi_{A}} + \ensuremath{\chi_{C})/3} = \ensuremath{(2\chi_{A}} +
+\ensuremath{\chi_{C})/3.} The signature is polarization homogenization: two corners carry
+the same pattern (A's), where they previously carried distinct patterns
+(A's and B's). The meta-meta-confirmation reads reduced diversity at
+this corner-set, and the information-carrying capacity of the
+meta-tetrahedral confirmation degrades --- three distinct inputs
+collapsed to two effectively-identical inputs plus one distinct one.
+
+\subsection*{5.7 Starvation}
+
+Substrate-level mechanism: A subsystem's coherence depends on imprint
+from a structured surround (\S\,4.4). When the surround becomes
+uninformative --- neighbors dissolve, or surrounding programs stabilize
+into low-K static patterns --- the subsystem's \ensuremath{C_{D}} imprints noise
+rather than structure. Formally, when \ensuremath{K(\psi_{\mathrm{surround}}} within imprint
+depth) approaches log(volume), the imprinted \ensuremath{C_{D}} has \ensuremath{K(C_{D})}
+approaching log(\textbar \ensuremath{C_{D}}\textbar), the trivial floor. \ensuremath{C_{D}'s}
+content becomes algorithmically uninteresting; \ensuremath{C_{O}'s} operations on a
+uniform \ensuremath{C_{D}} produce uniform outputs; the subsystem's operation kernel
+cannot perform non-trivial computation because there is no structured
+data to process. The subsystem persists structurally (its stabilizer
+parity may remain intact internally) but its computational function goes
+idle for lack of structured input.
+
+Starvation is distinct from mortality and predation. In mortality, B
+fails internally. In predation, A actively destroys B. In starvation, B
+persists structurally but stops computing because its environment no
+longer feeds it structured input. Predation requires predators with
+active annexation dynamics; mortality results from internal failure;
+starvation requires environmental impoverishment. The three stressors
+arise from genuinely different substrate-level dynamics.
+
+Over time, without dynamic output, the subsystem's contribution to
+neighboring imprints also falls to noise. This creates a positive
+feedback: starved subsystems contribute uninformative surrounds to their
+neighbors, who in turn starve. Starvation propagates through neighbor
+networks more slowly than predation but more cumulatively.
+
+Level-(k+1) signature: B's output at the meta-tetrahedral corner becomes
+constant or low-K. \ensuremath{\Pi_{\psi}^{(k+1)}} at the meta-interstice includes a
+corner contributing a frozen value rather than a dynamic stream. The
+meta-meta-confirmation continues, but its variability is reduced ---
+fewer distinct meta-meta-outcomes are reached because one input source
+is informationally stuck. The signature is output rigidification: a
+corner contributing a fixed or near-fixed value over many
+meta-meta-flops, where it previously contributed dynamic variation.
+
+\subsection*{5.8 Stressor Interactions and Selection}
+
+The three stressors interact. Mortality is a passive failure mode;
+predation is an active mechanism that can cause mortality in the prey;
+starvation is a slow degradation that can lead to mortality if it
+persists. Predation requires predators with active annexation dynamics.
+Starvation often results from a populated region exhausting its raw
+substrate, leaving only structured neighbors whose outputs may become
+rigidified at long times. Mortality is the terminal phase of either
+active stressor, as well as a possible terminal phase of subsystems that
+simply degrade from internal accumulated errors.
+
+Subsystems exposed to these stressors face a selection environment that
+is not externally imposed but generated by the substrate's own
+multi-subsystem dynamics. A subsystem persists by avoiding all three:
+maintaining internal coherence against mortality, maintaining defensive
+boundary configurations against predation, and maintaining access to
+structured surround against starvation. The configurations that persist
+are those whose internal structure and behavior happen to navigate all
+three simultaneously.
+
+\subsection*{5.9 Diversity: Two Mechanisms}
+
+Diversity of subsystem configurations across the substrate has two
+independent origins.
+
+Inter-region diversity: Different regions of the substrate have
+different local conditions. Different \ensuremath{U_{\mathrm{sh}}} disruption rates, different
+stressor profiles (some regions have abundant raw substrate and low
+predation pressure; others have dense subsystem populations and high
+predation pressure), different surround histories that imprint different
+patterns. The subsystems that survive in different regions are biased by
+different selection pressures. The population of surviving subsystems
+across the substrate is therefore diverse across regions --- different
+stressor profiles produce different surviving subsystem distributions.
+
+Intra-region diversity: Within a single region under a single stressor
+profile, the survival set \ensuremath{\Sigma_{\mathrm{survive}}(R,} S) --- the set of subsystem
+configurations that satisfy the survival conditions under stressor
+profile S --- is generically large. A single stressor (e.g., the need to
+obtain structured input under a partial starvation pressure) admits many
+distinct solutions: active acquisition of structured neighbors via
+boundary imprint exchange, passive imprint of stable bounding programs,
+internal generation of structure via incorporation of remembered
+patterns, restructuring the operation kernel to extract more from less.
+The continuous-sampling mechanism (Paper 3 \S\,3.5) populates \ensuremath{\Sigma_{\mathrm{survive}}(R,}
+S) with whatever configurations \ensuremath{U_{\mathrm{sh}}} instantiates that satisfy the
+survival conditions. Multiple distinct configurations coexist within the
+same survival set.
+
+Intra-region diversity is the formal answer to the question of why
+diverse creatures emerge in the same environment under the same
+stressors. The stressor underdetermines the solution; the substrate
+samples the underdetermined solution space; multiple solutions persist.
+This complements inter-region diversity: even before regions are
+compared, each region's internal subsystem population is itself diverse
+because the local stressor profile underdetermines the solutions to its
+own pressures.
+
+\section*{VI. Novelty Exhaustion}
+\addcontentsline{toc}{section}{VI. Novelty Exhaustion}
+
+\subsection*{6.1 Finiteness of Accessible Configuration Space}
+
+Let R be a bounded substrate region of spatial extent L and temporal
+extent T in substrate units. Let \ensuremath{\Sigma_{k}(R)} be the set of stable
+configurations at hierarchical level k that R can host ---
+configurations causally closed under \ensuremath{T^{(k)},} satisfying stabilizer
+parity at level k, with K(C) \textless{} \textbar C\textbar. Then
+\ensuremath{\Sigma_{k}(R)} is finite for every k \ensuremath{\leq} \ensuremath{k_{\mathrm{max}}(R),} and \ensuremath{\Sigma (R)} =
+\ensuremath{\bigcup _{k=0}^{k_{\mathrm{max}}}} \ensuremath{\Sigma_{k}(R)} is finite.
+
+\begin{proof}
+At level k, the number of bit positions in R is bounded by
+\textbar R\textbar\ensuremath{/L_{p}^{(k)3}.} The total number of binary
+configurations of those bits is bounded by
+2(\textbar R\textbar\ensuremath{/L_{p}(k)^{3}).} The stable subset \ensuremath{\Sigma_{k}(R)} is a strict
+subset of this total: most binary configurations do not satisfy
+\ensuremath{T^{(k)}-\text{closure}} plus stabilizer parity plus K \textless{}
+\textbar C\textbar. So \ensuremath{\Sigma_{k}(R)} is finite at every k. Summing over k from
+0 to \ensuremath{k_{\mathrm{max}}(R),} \ensuremath{\Sigma (R)} is finite as a finite sum of finite sets.
+
+The per-level structure matters. By \S\,2.5.1 (the asymmetry of
+coarse-graining and nesting), configurations at different levels are
+informationally independent: coarse-graining loses \ensuremath{\text{level}-(k-1)} detail,
+nesting generates new \ensuremath{\text{level}-(k-1)} detail. So \ensuremath{\Sigma_{k}(R)} at each level
+contributes independent novelty. \ensuremath{\Sigma (R)} is genuinely the sum, not a
+relabeling of a single level's contribution. A region with \ensuremath{k_{\mathrm{max}}} = 1
+has fewer accessible configurations than a region with \ensuremath{k_{\mathrm{max}}} = 5,
+because the latter has five independent configuration spaces to sample
+(substrate plus four higher levels) rather than one.
+
+The per-level independence delays exhaustion. The hierarchy is not just
+structural decoration on top of a single configuration count; it
+genuinely multiplies the accessible novelty available to the region over
+its biographical history.
+
+\end{proof}
+
+\subsection*{6.2 Novelty Production Rate}
+
+Define \ensuremath{\nu (R,} \ensuremath{\tau )} as the rate of new (not previously sampled) stable
+configurations entering \ensuremath{\Sigma_{\mathrm{sampled}}(R,} \ensuremath{\tau )} per unit substrate flop time at
+flop \ensuremath{\tau .} Three factors determine \ensuremath{\nu :} the size of \ensuremath{\Sigma (R),} the fraction of
+\ensuremath{\Sigma (R)} already sampled, and the instantaneous sampling rate set by \ensuremath{U_{\mathrm{sh}}}
+flux and the continuous-sampling mechanism of Paper 3 \S\,3.5.
+
+Formally, the expected \ensuremath{\nu (R,} \ensuremath{\tau )} at flop \ensuremath{\tau} is approximately
+
+\emph{\ensuremath{\nu (R,} \ensuremath{\tau )} \ensuremath{\approx} \ensuremath{\rho_{\mathrm{sample}}(R)} \ensuremath{\cdot} (\textbar \ensuremath{\Sigma (R)}\textbar{} \ensuremath{-}
+\textbar \ensuremath{\Sigma_{\mathrm{sampled}}(R,} \ensuremath{\tau )}\textbar) / \textbar \ensuremath{\Sigma (R)}\textbar{}}
+
+where \ensuremath{\rho_{\mathrm{sample}}(R)} is the substrate's instantaneous sampling rate in R,
+roughly constant for a given region under steady \ensuremath{U_{\mathrm{sh}}} flux.
+
+When \textbar \ensuremath{\Sigma_{\mathrm{sampled}}(R,} \ensuremath{\tau )}\textbar{} is small relative to
+\textbar \ensuremath{\Sigma (R)}\textbar, the second factor is near 1 and \ensuremath{\nu} is high. As
+\textbar \ensuremath{\Sigma_{\mathrm{sampled}}(R,} \ensuremath{\tau )}\textbar{} approaches \textbar \ensuremath{\Sigma (R)}\textbar,
+the second factor approaches 0 and \ensuremath{\nu} decays monotonically. This is not a
+postulate; it is a counting argument. Every novel configuration is
+sampled at most once before becoming non-novel. The pool of un-sampled
+configurations shrinks monotonically as biographical history
+accumulates, and the rate of novelty production decays with the pool.
+
+\subsection*{6.3 The Exhaustion Threshold}
+
+Define \ensuremath{\nu *(R)} as the critical novelty rate below which subsystem
+formation can no longer keep pace with stressor-driven dissolution in R.
+
+At \ensuremath{\nu} \textgreater{} \ensuremath{\nu}\emph{, new subsystems form (via inevitability,
+\S\,5.1) faster than existing subsystems dissolve (via stressors,
+\S\,5.4--\S\,5.7). Subsystem density rises or stabilizes. At \ensuremath{\nu}
+\textbf{\textless{}} \ensuremath{\nu}}, new subsystem formation slows because the
+sampling pool is depleted --- \ensuremath{U_{\mathrm{sh}}} keeps sampling, but most samples now
+hit configurations already in \ensuremath{\Sigma_{\mathrm{sampled}},} which provide no new
+structure. Meanwhile, stressors continue to dissolve existing subsystems
+at undiminished rates. Net subsystem density falls.
+
+\ensuremath{\nu *(R)} is set by the region's stressor profile. The closed-form symbolic
+expression follows from balancing formation rate against dissolution
+rate:
+
+\emph{\ensuremath{\nu}}(R) = \textbar \ensuremath{\Sigma (R)}\textbar{} \ensuremath{\cdot} \ensuremath{\Sigma_{k}} \ensuremath{[d_{\mathrm{mort}}^{(k)}} +
+\ensuremath{d_{\mathrm{pred}}^{(k)}} + \ensuremath{d_{\mathrm{starv}}^{(k)}]} / \ensuremath{(\rho_{\mathrm{sample}}(R)} \ensuremath{\cdot} \ensuremath{P_{\mathrm{coherent}})*}
+
+where \ensuremath{d_{\mathrm{mort}}^{(k)},} \ensuremath{d_{\mathrm{pred}}^{(k)},} \ensuremath{d_{\mathrm{starv}}^{(k)}} are the level-k
+dissolution rates derived in \S\,5.4--\S\,5.7, \ensuremath{\rho_{\mathrm{sample}}(R)} is the substrate
+sampling rate, and \ensuremath{P_{\mathrm{coherent}}} is the probability that a sampled
+configuration meets the coherence threshold
+\textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{*(L_{\mathrm{sub}}^{(k)}).} Each dissolution rate has a
+derived form (worked out in Appendix A) that depends on the per-event
+error rate \ensuremath{p_{\mathrm{error}}} = (1 \ensuremath{-} \textbar \ensuremath{\Pi_{\psi}}\textbar)/2, the
+[[4,2,2]] code distance, and the local subsystem density. The
+combinatorial factors in the dissolution-rate expressions (notably the
+C(4,2) = 6 upper bound on per-tetrahedral-unit two-error probability)
+are flagged as worst-case upper bounds whose exact numerical refinement
+is reserved for Paper 5's simulation work.
+
+The exhaustion threshold \ensuremath{\tau}\emph{(R) is the flop time at which \ensuremath{\nu (R,} \ensuremath{\tau )}
+first drops below \ensuremath{\nu}}(R). After \ensuremath{\tau}\emph{, the region cannot sustain its
+previous subsystem density. Subsystem populations decline; hierarchy
+depths collapse downward as upper levels lose component subsystems; the
+region's biography enters its terminal phase. Aggressive predation
+environments have high \ensuremath{\nu}} (subsystems are destroyed rapidly, requiring
+fast novelty influx); quiescent environments have low \ensuremath{\nu *.}
+
+\subsection*{6.4 Region Biography Fully Formalized}
+
+The region biography \ensuremath{\mathcal{B}(R)} introduced in \S\,2.6 is now fully specified by
+combining the structural development of \S\,III--\S\,V with the novelty
+dynamics of \S\,6.1--\S\,6.3. The biography traverses three phases.
+
+Phase I --- Formation and Growth \ensuremath{(\tau} \ensuremath{\in} \ensuremath{[\tau_{\mathrm{formation}},} \ensuremath{\tau_{\mathrm{mid}}]):}
+Subsystems form by the inevitability argument of \S\,5.1. They grow via the
+three modes of \S\,III, with annexation dominating early when raw substrate
+is abundant, transitioning to imprinting dominance as subsystems
+multiply and surrounds become structured. Sub-subsystems nest downward
+(\S\,2.4); coarse-grained meta-subsystems form upward (\S\,2.1). \ensuremath{N_{\mathrm{sub}}^{(k)}}
+rises at every level; the K-distribution shifts toward higher values as
+data registers accumulate compressible imprints; \ensuremath{k_{\mathrm{max}}(R,} \ensuremath{\tau )} climbs as
+more hierarchical levels are populated.
+
+Phase II --- Maturity \ensuremath{(\tau} \ensuremath{\in} \ensuremath{[\tau_{\mathrm{mid}},} \ensuremath{\tau *(R)]):} \ensuremath{\Sigma_{\mathrm{sampled}}} approaches
+saturation but \ensuremath{\nu (R,} \ensuremath{\tau )} \textgreater{} \ensuremath{\nu *(R),} so the region still
+produces novel configurations faster than stressors dissolve existing
+subsystems. Subsystem density is stable; hierarchy is at or near \ensuremath{k_{\mathrm{max}};}
+incorporation-mode growth dominates (\S\,3.5) as imprinted patterns are
+elevated into internal programs. Stressor dynamics generate intense
+diversity selection (\S\,5.8--\S\,5.9), producing both inter-region and
+intra-region diversity. This is the phase of richest configuration
+density per unit substrate.
+
+Phase III --- Exhaustion \ensuremath{(\tau} \textgreater{} \ensuremath{\tau}\emph{(R)): \ensuremath{\nu (R,} \ensuremath{\tau )}
+\textbf{\textless{}} \ensuremath{\nu}}(R). New formation lags dissolution.
+\ensuremath{N_{\mathrm{sub}}^{(k)}} declines; \ensuremath{k_{\mathrm{max}}} drops as upper-level meta-subsystems lose
+component subsystems and decoalesce; K-distribution drifts toward
+already-sampled patterns; the region is no longer producing
+computationally interesting novelty. Configurations that exist continue
+to operate, but no new compressible structure enters the region's
+biographical record.
+
+\ensuremath{\mathcal{B}(R)} is itself a configuration at the substrate level --- a time-indexed
+record of structural state. By the recursion of \S\,2.1, \ensuremath{\mathcal{B}(R)} can be
+coarse-grained to higher levels. A meta-subsystem can hold the biography
+of its enclosed region as a configuration in its data register. This
+biography-of-biographies setup is the substrate-level prerequisite for
+the work of Paper 5: when the region's accessible configuration space is
+exhausted via direct sampling, the biographical record itself becomes
+the substrate for re-reading under a different protocol. The substrate
+for reinterpretation is \ensuremath{\mathcal{B}(R).}
+
+\subsection*{6.5 Clarifications}
+
+Three clarifications about the exhaustion concept are important to state
+explicitly.
+
+Exhaustion is regional, not global. In an infinite substrate, novel
+configurations can always emerge in regions that have not yet exhausted.
+The substrate as a whole has no exhaustion threshold; only bounded
+regions do. The substrate continues producing novelty somewhere
+indefinitely.
+
+Exhaustion does not mean dissolution. A region in Phase III still hosts
+existing configurations, including persisting subsystems whose internal
+dynamics continue. What stops is the production of new compressible
+structure. The region becomes a museum of already-sampled configurations
+rather than a generator of new ones.
+
+Exhaustion does not mean stasis. Existing subsystems can still compute
+on their data; stressors continue to operate; some subsystems still
+persist while others dissolve. The region is dynamic. It is just no
+longer novel. Every state the region enters in Phase III is a state it
+has been in before.
+
+\subsection*{6.6 The Structural Problem}
+
+At \ensuremath{\tau} \textgreater{} \ensuremath{\tau}\emph{(R), the region holds confirmed bits with no
+remaining direct-read protocol that can extract novel information.
+\ensuremath{\Sigma_{\mathrm{sampled}}(R,} \ensuremath{\tau}}) \ensuremath{\approx} \ensuremath{\Sigma (R);} the configurations have all been sampled;
+further sampling produces only repetitions. The confirmed bits still
+exist, however. They satisfy Axiom 4 (causal anchoring) --- they are
+part of the causal record and cannot be overwritten. They satisfy Axiom
+3 (signal conservation) --- the signals that produced them have been
+consumed and locked into the confirmation record.
+
+The region is therefore in a structurally constrained state: it holds
+informationally rich confirmed bits, but the substrate's direct-read
+protocol (sampling new configurations, evaluating their stability
+against the coherence threshold) can extract no further novelty from
+them. Axiom 3 forbids losing these bits; the signals that produced them
+have been irrevocably consumed and the record stands. Axiom 4 forbids
+overwriting them. The substrate cannot eliminate the exhausted region;
+it must continue to host it. But direct sampling has nothing further to
+extract.
+
+The only structurally available move is to read the confirmed bits under
+a different protocol --- one that treats the confirmed bits not as
+configurations to evaluate for stability, but as something else. The
+biographical record \ensuremath{\mathcal{B}(R)} is available as the substrate for this
+reinterpretation. What that protocol is, and how the reinterpretation
+produces fundamental fields, initial conditions, and the wave dynamics
+of a simulated universe, is the central work of Paper 5.
+
+\section*{VII. Hierarchical Lightspeeds}
+\addcontentsline{toc}{section}{VII. Hierarchical Lightspeeds}
+
+\subsection*{7.1 The \ensuremath{c^{(k)}} Formula Restated}
+
+From Paper 3 \S\,6.1, the propagation speed at hierarchical level k in
+absolute substrate units is
+
+\ensuremath{*c^{(k)}} = \ensuremath{\prod _{j=1}^{k}} \ensuremath{(L_{p}^{(j)}} / \ensuremath{L_{p}^{(j-1)})} \ensuremath{\cdot}
+\ensuremath{(T_{p}^{(j-1)}} / \ensuremath{T_{p}^{(j)})} \ensuremath{\cdot} c*
+
+with \ensuremath{L_{p}^{(0)}} \ensuremath{\equiv} \ensuremath{\ell_{p}} and \ensuremath{T_{p}^{(0)}} \ensuremath{\equiv} \ensuremath{t_{p}.~\text{The}} propagation speed in
+level-k units (level-k spacings per level-k flop) is unchanged across
+levels: \ensuremath{1/\sqrt{2}.} Every level inherits the same FCC face-diagonal geometry
+that produced \ensuremath{c_{\mathrm{TMS}}} = \ensuremath{1/\sqrt{2}} at the substrate level (Paper 1 \S\,6.5). The
+propagation-speed argument depends only on the FCC connectivity, which
+is scale-invariant per Paper 3 \S\,4.5.
+
+What varies across levels is the absolute propagation speed expressed in
+substrate units. The variation comes from the ratios \ensuremath{L_{p}(j)/L_{p}(j-1)}
+and \ensuremath{T_{p}(j-1)/T_{p}(j)} at each level --- geometric quantities set by the
+minimum program extent and minimum program period at level j.
+
+\subsection*{7.2 Measurement Nodes at Level k Measure \ensuremath{c^{(k)}}}
+
+From \S\,IV.3, every subsystem at hierarchical level k \ensuremath{\geq} 1 is a measurement
+node. A measurement node at level k reads its surround through imprint,
+computes via its operation kernel, and produces output at the
+meta-tetrahedral confirmation. Its natural spatial unit is \ensuremath{L_{p}^{(k)};}
+its natural temporal unit is \ensuremath{T_{p}^{(k)}.}
+
+When a measurement node at level k measures the propagation speed of a
+wave crossing its meta-interstice, it counts how many \ensuremath{L_{p}^{(k)}}
+spacings the wave covers per \ensuremath{T_{p}^{(k)}} flops. By the lattice-relative
+invariance, this ratio is always \ensuremath{1/\sqrt{2}} in level-k units. Translated to
+substrate units, it equals \ensuremath{c^{(k)}.}
+
+Every measurement node at level k therefore measures the propagation
+speed of its level: \ensuremath{1/\sqrt{2}} in its own units, \ensuremath{c^{(k)}} in substrate units.
+The substrate c is the propagation speed at the agent level (k = 0),
+derived from the FCC face-diagonal geometry. Measurement nodes above
+level 0 measure in their own scaled units and observe \ensuremath{c^{(k)};} they can
+infer the substrate c by applying the \ensuremath{c^{(k)}} formula in reverse if the
+\ensuremath{L_{p}^{(j)}} and \ensuremath{T_{p}^{(j)}} ratios at intermediate levels are known. The
+substrate c is inferrable but not directly measurable by any measurement
+node above level 0.
+
+If our universe is itself a level-k structure, our measured speed of
+light is \ensuremath{c^{(k)}} at our level rather than the substrate c.~Which level
+we sit at, and what the substrate c is in our SI units, are questions
+Paper 5's simulation work pins.
+
+\subsection*{7.3 The \ensuremath{c^{(k)}} Sequence as Dispersion Spectrum}
+
+The ratios \ensuremath{L_{p}(k)/L_{p}(k-1)} and \ensuremath{T_{p}(k)/T_{p}(k-1)} at each level are
+independent geometric quantities. \ensuremath{L_{p}^{(k)}} is set by the minimum
+spatial extent of a stabilizer-satisfying T-closed configuration at
+level k; \ensuremath{T_{p}^{(k)}} is set by the minimum temporal period of such a
+configuration. These ratios depend on different aspects of the level-k
+combinatorics and are not constrained to scale together.
+
+Consequence: \ensuremath{c^{(k)}} does not follow a monotonic trend across levels.
+Level 1 might have \ensuremath{c^{(1)}} \textless{} c, if the spacing ratio rises
+faster than the period ratio falls. Level 2 might have \ensuremath{c^{(2)}}
+\textgreater{} \ensuremath{c^{(1)}} if the level-2 ratios produce a faster
+propagation. Level 3 might be smaller again. The hierarchical
+lightspeeds form a dispersion spectrum --- a sequence of distinct
+absolute speeds, each set by local combinatorial facts about programs at
+its level.
+
+There is no general inequality \ensuremath{c^{(k+1)}} \textgreater{} \ensuremath{c^{(k)}} or
+\ensuremath{c^{(k+1)}} \textless{} \ensuremath{c^{(k)}} without additional constraints. The sign
+of \ensuremath{(c^{(k+1)}} \ensuremath{-} \ensuremath{c^{(k)})} depends on whether \ensuremath{(L_{p}(k+1)/L_{p}(k))} \ensuremath{\cdot}
+\ensuremath{(T_{p}(k)/T_{p}(k+1))} is greater than or less than 1, which depends on the
+level-(k+1) combinatorics independently of level-k.
+
+\subsection*{7.4 Bounds on the Spectrum}
+
+The dispersion is bounded above. The coupling-timescale constraint from
+\S\,5.3 forces \ensuremath{T_{p}^{(k+1)}} \ensuremath{\geq} \ensuremath{\sqrt{2}} \ensuremath{\cdot} \ensuremath{(L_{p}(k+1)/L_{p}(k))} \ensuremath{\cdot} \ensuremath{T_{p}^{(k)}.}
+Substituting into the \ensuremath{c^{(k+1)}} formula:
+
+\emph{\ensuremath{c^{(k+1)}} \ensuremath{\leq} \ensuremath{(L_{p}}\textbf{\ensuremath{(k+1)/L_{p}}}(k)) \ensuremath{\cdot} \ensuremath{(T_{p}^{(k)}} / \ensuremath{[\sqrt{2}} \ensuremath{\cdot}
+\ensuremath{(L_{p}}\textbf{\ensuremath{(k+1)/L_{p}}}(k)) \ensuremath{\cdot} \ensuremath{T_{p}^{(k)}])} \ensuremath{\cdot} \ensuremath{c^{(k)}} = \ensuremath{(1/\sqrt{2})} \ensuremath{\cdot}
+\ensuremath{c^{(k)}}}
+
+So \ensuremath{c^{(k+1)}} \ensuremath{\leq} \ensuremath{(1/\sqrt{2})} \ensuremath{\cdot} \ensuremath{c^{(k)}} is a derived upper bound. The \ensuremath{1/\sqrt{2}}
+factor has a sharper geometric origin than the coupling-timescale
+derivation above suggests: it is the FCC face-diagonal-to-edge ratio of
+the cubic cell containing the lattice at every hierarchical level, made
+explicit in Paper 5 \S\,7.2. By recursive scale-invariance and the
+sublattice bifurcation of Paper 3 \S\,4.5, the same FCC
+face-diagonal-to-edge ratio reappears at every level k \ensuremath{\geq} 0. The
+\ensuremath{c^{(k+1)}} \ensuremath{\leq} \ensuremath{(1/\sqrt{2})} \ensuremath{c^{(k)}} bound is therefore not merely a constraint
+derived from the coupling-timescale argument: it is a \emph{structural
+law} of the recursive FCC geometry, with the coupling-timescale argument
+here providing the dynamical mechanism by which the geometric law is
+realized.
+
+Lightspeed cannot grow across the hierarchy beyond this geometric
+ceiling per level. There is no general lower bound --- \ensuremath{c^{(k+1)}} can be
+arbitrarily small relative to \ensuremath{c^{(k)}} if the level-(k+1) ratios produce
+a slow propagation. Lightspeeds can collapse downward through the
+hierarchy; they cannot grow upward beyond the \ensuremath{(1/\sqrt{2})} factor per level.
+
+The \ensuremath{c^{(k)}} sequence is therefore monotonically non-increasing in the
+tight-coupling limit (where the upper bound is saturated), and freely
+variable downward in looser coupling regimes. Higher hierarchical levels
+propagate at most slightly slower than lower levels in the tightest
+case, and potentially much slower in loose cases.
+
+\subsection*{7.5 Combinatorial Origin of \ensuremath{L_{p}^{(k)}} and \ensuremath{T_{p}^{(k)}}}
+
+The exact values of \ensuremath{L^{p(k)}} and \ensuremath{T^{p(k)}} are derived in Paper 5 \S\,6.1.3
+via the sublattice-bifurcation recursive structure, with the empirical
+verification of the bifurcation structure through Stages 5 and 6
+documented in Paper 5 Appendix E. The substrate-level values are \ensuremath{L^{p(1)}}
+= \ensuremath{3\sqrt{2}} \ensuremath{\ell_{p}} and \ensuremath{T^{p(1)}} = 6 \ensuremath{t_{p}} (Paper 5 \S\,6.1.3, \S\,6.2); higher-level
+values follow the recursive ratio \ensuremath{L^{p(k)}} = \ensuremath{(3\sqrt{2})_{k}} \ensuremath{\ell_{p}} and \ensuremath{T^{p(k)}} = \ensuremath{6_{k}}
+\ensuremath{t_{p}} in the saturation cascade. The combinatorial enumeration that
+supports these values is documented in Paper 5 \S\,VI and Appendix B.
+
+What Paper 4 establishes structurally: the ratios \ensuremath{L_{p}(k)/L_{p}(k-1)} and
+\ensuremath{T_{p}(k)/T_{p}(k-1)} are finite and positive at every level (no level has
+zero or infinite extent), they are independent of each other (set by
+different aspects of stabilizer-satisfying configurations), and they are
+bounded below by 1 + \ensuremath{\epsilon} for some \ensuremath{\epsilon} \textgreater{} 0 (the scale-separation
+requirement of \S\,2.2 forces them away from 1). These structural facts are
+sufficient to derive the dispersion-spectrum claim of \S\,7.3 and the
+upper-bound claim of \S\,7.4 without pinning numerical values.
+
+\subsection*{7.6 Empirical Consequences}
+
+If our universe is itself a level-k structure for some k \ensuremath{\geq} 1 (with k
+determined by Paper 5's simulation work), then our measured speed of
+light is \ensuremath{c^{(k)}} in substrate units. We have no direct access to the
+substrate c; our measurements are by construction in level-k units.
+Three structural consequences follow.
+
+Universal lightspeed within a level. All measurement nodes at our level
+measure the same \ensuremath{c^{(k)}.} Lorentz invariance at our level is preserved:
+the propagation-speed argument is scale-invariant per Paper 3 \S\,4.5, so
+the lattice-relative invariance that gives \ensuremath{c^{(k)}} the same value to
+all level-k measurement nodes is geometric and applies uniformly.
+
+Different lightspeeds at different levels. Measurement nodes at level k'
+\ensuremath{\neq} our k measure \ensuremath{c^{(k')},} which generically differs from our
+c.~Cross-level interactions could produce apparent variations in
+measured propagation speeds --- the substrate-level origins of
+relativistic phenomena, flagged for Paper 5 development in \S\,VIII forward
+references below.
+
+The substrate c is inferrable but not directly measurable by any
+measurement node above level 0. The substrate c is the propagation speed
+at the agent level, derived from the FCC face-diagonal geometry; level-k
+measurement nodes observe \ensuremath{c^{(k)}} and can compute the substrate c by
+inverting the \ensuremath{c^{(k)}} formula given the intermediate \ensuremath{L_{p}^{(j)}} and
+\ensuremath{T_{p}^{(j)}} ratios.
+
+The hierarchical structure that produces \ensuremath{c^{(k)}} also produces
+refinements to the GUP deformation parameter \ensuremath{\beta ,} developed in \S\,VIII.
+
+\subsection*{7.7 Summary}
+
+Hierarchical lightspeeds are not free parameters. Each \ensuremath{c^{(k)}} is
+forced by the level's \ensuremath{L_{p}^{(k)}} and \ensuremath{T_{p}^{(k)}} ratios, which are
+themselves forced by combinatorial enumeration of stabilizer-satisfying
+configurations at that level. The sequence forms a dispersion spectrum
+bounded above by \ensuremath{c^{(k+1)}} \ensuremath{\leq} \ensuremath{(1/\sqrt{2})} \ensuremath{\cdot} \ensuremath{c^{(k)}} and unbounded below.
+Measurement nodes at each level measure their level's \ensuremath{c^{(k)}.} Our
+measured c is \ensuremath{c^{(k)}} for some k determined by which hierarchical level
+our universe occupies --- a question reserved for Paper 5's simulation
+work.
+
+\section*{VIII. Predictions and Forward References}
+\addcontentsline{toc}{section}{VIII. Predictions and Forward References}
+
+\subsection*{8.1 Refined GUP Prediction}
+
+Paper 1 \S\,7.2 introduced \ensuremath{\beta} = f(d, \ensuremath{K_{\psi}):} the deformation parameter scales
+with causal depth and polarization complexity. Paper 2 \S\,6.4 identified
+\ensuremath{K_{\psi}} as the Kolmogorov complexity of the program running through the
+bit's causal history. Paper 3 \S\,6.2 refined further: \ensuremath{\beta} = f(d,
+\ensuremath{K_{\psi,\mathrm{local}},} \ensuremath{K_{\psi,\mathrm{surround}},} \ensuremath{K_{\psi,\mathrm{subsystem}}),} incorporating the
+imprinting surround history and the encompassing subsystem context.
+Paper 4 adds the final functional dependence:
+
+\begin{equation*}
+\beta = f(d, K_{\psi,\mathrm{local}}, K_{\psi,\mathrm{surround}}, K_{\psi,\mathrm{subsystem}}, k)
+\end{equation*}
+
+where k is the hierarchical level at which the bit's enclosing subsystem
+operates. The function f is monotonically increasing in all five
+arguments. A bit embedded in a level-k subsystem inherits the
+computational complexity not only of its local region, surround, and
+immediate subsystem, but also of the hierarchical depth at which that
+subsystem participates.
+
+The physical reading: deeper hierarchical embedding means more layers of
+computational structure between the bit and the substrate level. Each
+layer adds to the algorithmic complexity of the bit's causal record.
+Bits in subsystems at higher k have larger substrate footprints --- more
+lattice geometry and computational content is geometrically present in
+their confirmation records. The closed form of f is reserved for Paper
+5's simulation work, which can numerically probe the relationship
+between hierarchical depth and effective \ensuremath{\beta} across the range of (d, \ensuremath{K_{\psi})}
+values encountered in actual cascade instances. Paper 4 establishes the
+functional dependence; Paper 5 will pin the form.
+
+\subsection*{8.2 Cross-Level Propagation Effects}
+
+\S\,VII derived the \ensuremath{c^{(k)}} sequence as a dispersion spectrum. The
+structural and empirical consequences of \ensuremath{c^{(k)}} variation within a
+level were treated. The consequences of \ensuremath{c^{(k)}} variation across levels
+--- when subsystems at different hierarchical levels share substrate at
+their interfaces --- are flagged here as forward reference.
+
+When a \ensuremath{\text{level}-(k-1)} subsystem exists inside a level-k meta-subsystem
+(downward Russian doll nesting from \S\,2.4), the two subsystems share
+substrate at their interface. The \ensuremath{\text{level}-(k-1)} subsystem propagates
+information at \ensuremath{c^{(k-1)};} the level-k subsystem propagates at \ensuremath{c^{(k)}.}
+At the interface, two different propagation speeds meet on the same
+substrate.
+
+The substrate-level dynamics at this interface produce three structural
+effects. Variable apparent propagation: a signal originating in the
+\ensuremath{\text{level}-(k-1)} subsystem and observed at the level-k scale appears to
+propagate at a level-mixed effective speed, with the mixing depending on
+the boundary geometry and the relative \ensuremath{c^{(k)}} and \ensuremath{c^{(k-1)}}
+magnitudes. Frame-relative timing: events that are simultaneous in
+\ensuremath{\text{level}-(k-1)} units may not be simultaneous in level-k units, because the
+temporal scale \ensuremath{T_{p}^{(k)}} differs from \ensuremath{T_{p}^{(k-1)};} measurement nodes
+at different levels disagree about event ordering for events at
+level-mixed locations. Embedded-medium dilation: a \ensuremath{\text{level}-(k-1)} subsystem
+deeply embedded in a level-k meta-subsystem experiences propagation
+through the meta-subsystem's substrate at the effective \ensuremath{c^{(k)}} of the
+meta-subsystem's medium, producing an apparent slowing or speeding
+relative to the bare \ensuremath{c^{(k-1)}.}
+
+These three effects are the substrate-level origins of relativistic
+phenomena. Their derivation from the \ensuremath{c^{(k)}} spectrum and the
+cross-level interface dynamics requires the closed-form \ensuremath{c^{(k)}} values
+and the field reinterpretation protocol of Paper 5, and is addressed
+there. The QCA program (D'Ariano \& Perinotti 2014; Mlodinow \& Brun
+2025) is a parallel direction deriving relativistic dynamics from
+discrete substrates and provides useful comparison territory for that
+work.
+
+\subsection*{8.3 The Paper 5 Pivot}
+
+Paper 4 \S\,VI established that any bounded substrate region traverses a
+biography from formation through exhaustion. At \ensuremath{\tau} \textgreater{} \ensuremath{\tau *(R),}
+the region's accessible configuration space is saturated; the
+substrate's direct-read protocol can no longer extract novel
+information; further sampling produces only repetitions of
+already-sampled configurations.
+
+The confirmed bits in R still exist. By Axiom 4 (causal anchoring), they
+cannot be overwritten. By Axiom 3 (signal conservation), the signals
+that produced them cannot be lost. The region holds informationally rich
+confirmed bits with no remaining direct-read protocol that can extract
+novelty from them.
+
+The only structurally available move is to read the confirmed bits under
+a different protocol. The substrate must reinterpret what the confirmed
+bits represent --- treating them not as configurations to evaluate for
+stability, but as something else. The biographical record itself, \ensuremath{\mathcal{B}(R),}
+is available as the substrate for this reinterpretation.
+
+Paper 5 develops the reinterpretation protocol. The work involves
+identifying which protocols are structurally available given the axioms
+(signal conservation, causal anchoring, generative economy); deriving
+the specific reinterpretation that produces fundamental fields and
+initial conditions; showing how the confirmed binary content becomes
+wave configurations on those fields; deriving the spectrum of physical
+laws that follow; and addressing the cross-level relativistic phenomena
+flagged in \S\,8.2.
+
+The pivot point is named here: at \ensuremath{\tau} \textgreater{} \ensuremath{\tau *(R),} the
+substrate's read protocol transitions. What comes after the transition
+is the work of Paper 5.
+
+\subsection*{8.4 Other Forward References}
+
+To Paper 5: the closed-form \ensuremath{c^{(k)}} values; the exact integer
+\ensuremath{L_{p}^{(k)};} the C(4,2) = 6 combinatorial refinement; the full closed
+form of f(d, \ensuremath{K_{\psi,\mathrm{local}},} \ensuremath{K_{\psi,\mathrm{surround}},} \ensuremath{K_{\psi,\mathrm{subsystem}},} k); the
+cross-level relativistic derivation; the reinterpretation protocol; the
+fundamental field identification; the initial conditions; the Big Bang
+correspondence.
+
+To Paper 6 (if scope migrates): the full quadratic Born rule including
+complex amplitudes, phase, and interference; the
+\ensuremath{K_{\psi}-to-\text{metric}-\text{uncertainty}} theorem.
+
+To Volume 2: observer experience as the agent-side complement of
+measurement-node structure; the relationship between region biography
+\ensuremath{\mathcal{B}(R)} and subjective biography; the experiential reading of
+self-modeling-of-self at k \ensuremath{\geq} 2; contact with the conscious-agents
+framework of Hoffman, Prakash, Prentner (2023) and Integrated
+Information Theory 4.0 (Albantakis et al.~2023); the
+observer-in-cosmology program (Gorobey et al.~2025; Zhao, Harlow,
+Usatyuk 2025) and the von-Neumann-algebra approach to observers as
+bounded structures in closed universes.
+
+\subsection*{8.5 Summary}
+
+Paper 4 has established the macroscopic consequences of subsystem
+dynamics. The recursive coarse-graining operator \ensuremath{G^{(k)}} lifts the
+substrate's geometry to arbitrary hierarchical depth; the upward
+recursion is bounded above by region extent; the downward recursion is
+bounded below by \ensuremath{L_{p};} the two recursions are asymmetric, with each
+level genuinely contributing independent configuration space. Subsystems
+grow via annexation, imprinting, and incorporation, with three different
+kinds of ceiling. Self-modeling is a structural property of every
+subsystem at k \ensuremath{\geq} 1, and every such subsystem is a measurement node.
+Multi-subsystem dynamics produce three derivable stressors ---
+mortality, predation, starvation --- each with substrate-level mechanism
+and level-(k+1) signature. Diversity arises both inter-region (different
+stressor profiles) and intra-region (single stressor underdetermines its
+survival set). Subsystem formation is overdetermined by Borel-Cantelli,
+PGE preference, and flux-balance forcing. Region biography \ensuremath{\mathcal{B}(R)} traces a
+bounded region from formation through exhaustion in three phases.
+Novelty exhausts in finite flop time because \textbar \ensuremath{\Sigma (R)}\textbar{} is
+finite. The \ensuremath{c^{(k)}} spectrum forms a dispersion bounded above by \ensuremath{(1/\sqrt{2})}
+\ensuremath{\cdot} \ensuremath{c^{(k-1)}.} The GUP parameter \ensuremath{\beta} refines with hierarchical level.
+
+No new axioms. No new free numerical parameters. Every quantity derived
+from the five axioms and the Principle of Generative Economy as applied
+recursively across the hierarchy.
+
+The arc from Paper 1 through Paper 4 is the derivation, from five axioms
+and one principle, of a substrate that produces hierarchical structures
+of arbitrary depth, each populated by self-modeling measurement nodes
+that learn, grow, stress one another, diversify, and ultimately exhaust
+their local configuration spaces --- at which point the substrate
+confronts the structural problem that Paper 5 solves.
+
+\section*{Appendix A: Full Expansion of \ensuremath{\nu *(R)}}
+\addcontentsline{toc}{section}{Appendix A: Full Expansion of \ensuremath{\nu *(R)}}
+
+This appendix provides the full symbolic expansion of the exhaustion
+threshold \ensuremath{\nu *(R)} introduced in \S\,6.3, with each dissolution-rate term
+derived from the \S\,V stressor mechanisms.
+
+\subsection*{A.1 Mortality Rate}
+
+From \S\,5.5, mortality arises when a subsystem's coherence falls below its
+threshold \textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{*(L_{\mathrm{sub}}^{(k)})} due to accumulated
+uncorrectable errors. The per-event uncorrectable error probability in a
+tetrahedral confirmation unit at level k is approximately
+
+\emph{\ensuremath{P_{\mathrm{unc}}^{(k)}} \ensuremath{\approx} C(4,2) \ensuremath{\cdot} \ensuremath{(p_{\mathrm{error}}^{(k)})^{2}} = 6 \ensuremath{\cdot} ((1 \ensuremath{-}
+\textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{^{(k)})/2)^{2}}}
+
+where the factor C(4,2) = 6 is the worst-case upper bound on the number
+of two-error configurations in a tetrahedral unit (Paper 3 \S\,3.3); the
+exact refinement of this combinatorial factor is reserved for Paper 5.
+Per level-k flop, the mortality rate is
+
+\begin{equation*}
+d_{\mathrm{mort}}^{(k)} \approx P_{\mathrm{unc}}^{(k)} \cdot N_{\mathrm{sub}}^{(k)}
+\end{equation*}
+
+where \ensuremath{N_{\mathrm{sub}}^{(k)}} is the population of level-k subsystems in the
+region. Mortality scales linearly in subsystem count and quadratically
+in the per-event error probability.
+
+\subsection*{A.2 Predation Rate}
+
+From \S\,5.6, predation requires a predator-prey encounter --- a boundary
+interaction between an active subsystem and a vulnerable neighbor. The
+encounter rate scales as the square of subsystem density per unit
+volume:
+
+\begin{equation*}
+d_{\mathrm{pred}}^{(k)} \approx G_{\mathrm{pred}}^{(k)} \cdot (N_{\mathrm{sub}}^{(k)})^{2} / V_{R}^{(k)}
+\end{equation*}
+
+where \ensuremath{V_{R}^{(k)}} is the region's volume in level-k lattice units, and
+\ensuremath{G_{\mathrm{pred}}^{(k)}} is a geometric proportionality constant capturing the
+typical boundary-overlap geometry between adjacent level-k subsystems.
+\ensuremath{G_{\mathrm{pred}}^{(k)}} depends on \ensuremath{L_{p}^{(k)}} and the local subsystem packing
+density; its exact value at each hierarchical level is reserved for
+Paper 5's simulation work.
+
+\subsection*{A.3 Starvation Rate}
+
+From \S\,5.7, starvation arises when the surround becomes uninformative.
+Per level-k flop, the starvation rate is approximately
+
+\begin{equation*}
+d_{\mathrm{starv}}^{(k)} \approx G_{\mathrm{starv}}^{(k)} \cdot N_{\mathrm{sub}}^{(k)} \cdot (1 -
+K(\psi_{\mathrm{surround}})/K_{\mathrm{max}})
+\end{equation*}
+
+where \ensuremath{G_{\mathrm{starv}}^{(k)}} is the geometric proportionality constant
+capturing imprint geometry at level k (set by the imprint depth \ensuremath{d_{R}} and
+the boundary configuration), \ensuremath{K(\psi_{\mathrm{surround}})} is the algorithmic
+complexity of the surround within imprint depth, and \ensuremath{K_{\mathrm{max}}} =
+\textbar \ensuremath{C_{\mathrm{surround}}}\textbar{} \ensuremath{\cdot} log 2 is the maximum possible surround
+complexity. As surround complexity approaches \ensuremath{K_{\mathrm{max}},} starvation
+pressure approaches zero; as surround complexity falls toward
+log(volume), starvation pressure approaches \ensuremath{G_{\mathrm{starv}}^{(k)}} \ensuremath{\cdot}
+\ensuremath{N_{\mathrm{sub}}^{(k)}.}
+
+\subsection*{A.4 Formation Rate}
+
+From \S\,5.1, formation rate at novelty production rate \ensuremath{\nu} is
+
+\emph{\ensuremath{formation_{\mathrm{rate}}(R,} \ensuremath{\tau ,} \ensuremath{\nu )} \ensuremath{\approx} \ensuremath{\rho_{\mathrm{sample}}(R)} \ensuremath{\cdot} \ensuremath{(\nu} /
+\textbar \ensuremath{\Sigma (R)}\textbar) \ensuremath{\cdot} \ensuremath{P_{\mathrm{coherent}}}}
+
+where \ensuremath{\rho_{\mathrm{sample}}(R)} is the substrate sampling rate in R and \ensuremath{P_{\mathrm{coherent}}}
+is the probability that a sampled stable configuration meets the
+coherence threshold \textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{*(L_{\mathrm{sub}}^{(k)})} at its
+corresponding level.
+
+\subsection*{A.5 Exhaustion Threshold}
+
+Setting formation rate equal to total dissolution rate and solving for
+\ensuremath{\nu :}
+
+\emph{\ensuremath{\rho_{\mathrm{sample}}(R)} \ensuremath{\cdot} \ensuremath{(\nu}}(R) / \textbar \ensuremath{\Sigma (R)}\textbar) \ensuremath{\cdot} \ensuremath{P_{\mathrm{coherent}}} =
+\ensuremath{\Sigma_{k}} \ensuremath{[d_{\mathrm{mort}}^{(k)}} + \ensuremath{d_{\mathrm{pred}}^{(k)}} + \ensuremath{d_{\mathrm{starv}}^{(k)}]*}
+
+Therefore
+
+\emph{\ensuremath{\nu}}(R) = \textbar \ensuremath{\Sigma (R)}\textbar{} \ensuremath{\cdot} \ensuremath{\Sigma_{k}} \ensuremath{[d_{\mathrm{mort}}^{(k)}} +
+\ensuremath{d_{\mathrm{pred}}^{(k)}} + \ensuremath{d_{\mathrm{starv}}^{(k)}]} / \ensuremath{(\rho_{\mathrm{sample}}(R)} \ensuremath{\cdot} \ensuremath{P_{\mathrm{coherent}})*}
+
+Substituting the rate expressions from A.1--A.3:
+
+\emph{\ensuremath{\nu}}(R) = \textbar \ensuremath{\Sigma (R)}\textbar{} / \ensuremath{(\rho_{\mathrm{sample}}(R)} \ensuremath{\cdot} \ensuremath{P_{\mathrm{coherent}})} \ensuremath{\cdot}
+\ensuremath{\Sigma_{k}} [6 \ensuremath{\cdot} ((1 \ensuremath{-} \textbar \ensuremath{\Pi_{\psi}}\textbar\ensuremath{^{(k)})/2)^{2}} \ensuremath{\cdot} \ensuremath{N_{\mathrm{sub}}^{(k)}} +
+\ensuremath{G_{\mathrm{pred}}^{(k)}} \ensuremath{\cdot} \ensuremath{(N_{\mathrm{sub}}^{(k)})^{2}} / \ensuremath{V_{R}^{(k)}} + \ensuremath{G_{\mathrm{starv}}^{(k)}} \ensuremath{\cdot}
+\ensuremath{N_{\mathrm{sub}}^{(k)}} \ensuremath{\cdot} (1 \ensuremath{-} \ensuremath{K(\psi_{\mathrm{surround}}(k))/K_{\mathrm{max}}(k))]*}
+
+This is the full symbolic expression. Every term except the geometric
+proportionality constants \ensuremath{G_{\mathrm{pred}}^{(k)},} \ensuremath{G_{\mathrm{starv}}^{(k)},} and the
+C(4,2) = 6 upper bound is fully derived from inherited machinery. The
+numerical pinning of these structural constants is reserved for Paper
+5's simulation work, in keeping with the structural-vs-numerical
+division of labor across the volume.
+
+\section*{Acknowledgments}
+\addcontentsline{toc}{section}{Acknowledgments}
+
+The development of this volume was substantially aided by extended
+collaboration with several large language models used as critical
+sounding boards, pedagogical resources, formal-rigor checkers, and
+external working memory across many sessions during 2024--2026.
+
+\textbf{Gemini (Google DeepMind)} was the long-running primary
+collaborator across the framework's conceptual development, providing
+physics pedagogy, structural critique, and ongoing review of the ideas
+that became Volume 1. The author's path into the technical literature,
+and the working-out of the framework's core conceptual moves over a long
+period preceding formalization, were carried by extended dialogue with
+Gemini.
+
+\textbf{Claude (Anthropic)} was the primary collaborator across the
+formalization, derivation tightening, simulation work, citation
+auditing, and editorial passes that brought the volume to its present
+form, including the sublattice bifurcation analysis empirically verified
+in Paper 5 Appendix E.
+
+\textbf{ChatGPT (OpenAI)}, \textbf{DeepSeek}, \textbf{Grok (xAI)}, and
+\textbf{Granite (IBM)} contributed additional structural feedback and
+review at various points.
+
+All theoretical commitments, the choice of axioms, the Principle of
+Generative Economy, the sublattice bifurcation insight, and the
+framework's overall architecture are the author's; the AI systems' role
+was to teach, formalize, critique, verify, and document.
+
+\section*{References}
+\addcontentsline{toc}{section}{References}
+\begin{reflist}
+Albanese, L., Barra, A., Bianco, P., Durante, F., \& Pallara, D. (2024).
+Hebbian Learning from First Principles. Journal of Mathematical Physics,
+65, 113302. doi:10.1063/5.0197652.
+\url{https://arxiv.org/abs/2401.07110}
+
+Albantakis, L., Barbosa, L. S., Findlay, G., Grasso, M., Haun, A. M.,
+Marshall, W., Mayner, W. G. P., Zaeemzadeh, A., Boly, M., Juel, B. E.,
+Sasai, S., Fujii, K., David, I., Hendren, J., Lang, J. P., \& Tononi, G.
+(2023). Integrated information theory (IIT) 4.0: Formulating the
+properties of phenomenal existence in physical terms. PLoS Computational
+Biology, 19(10), e1011465. doi:10.1371/journal.pcbi.1011465.
+\url{https://arxiv.org/abs/2212.14787}
+
+Almheiri, A., Dong, X., \& Harlow, D. (2015). Bulk locality and quantum
+error correction in AdS/CFT. Journal of High Energy Physics, 2015(4),
+163. doi:10.1007/JHEP04(2015)163. \url{https://arxiv.org/abs/1411.7041}
+
+Bombelli, L., Lee, J., Meyer, D., \& Sorkin, R. D. (1987). Space-time as
+a causal set. Physical Review Letters, 59(5), 521--524.
+doi:10.1103/PhysRevLett.59.521.
+
+Born, M. (1926). Zur Quantenmechanik der Stoßvorgänge. Zeitschrift für
+Physik, 37(12), 863--867. doi:10.1007/BF01397477.
+
+D'Ariano, G. M., \& Perinotti, P. (2014). Derivation of the Dirac
+equation from principles of information processing. Physical Review A,
+90(6), 062106. doi:10.1103/PhysRevA.90.062106.
+\url{https://arxiv.org/abs/1306.1934}
+
+Goldstein, H., Poole, C., \& Safko, J. (2002). Classical Mechanics (3rd
+ed.). Addison-Wesley.
+
+Gorard, J. (2020). Some Quantum Mechanical Properties of the Wolfram
+Model. Complex Systems, 29(2), 537--598.
+doi:10.25088/ComplexSystems.29.2.537.
+
+Gorobey, N., Lukyanenko, A., \& Goltsev, A. V. (2025). Observer in
+Quantum Cosmology. arXiv preprint.
+\url{https://arxiv.org/abs/2506.06379}
+
+Gottesman, D. (1997). Stabilizer Codes and Quantum Error Correction.
+Ph.D.~Thesis, California Institute of Technology.
+\url{https://arxiv.org/abs/quant-ph/9705052}
+
+Hamilton, W. R. (1834). On a General Method in Dynamics. Philosophical
+Transactions of the Royal Society, 124, 247--308.
+
+Hebb, D. O. (1949). The Organization of Behavior: A Neuropsychological
+Theory. Wiley.
+
+Hoffman, D. D., Prakash, C., \& Prentner, R. (2023). Fusions of
+Consciousness. Entropy, 25(1), 129. doi:10.3390/e25010129.
+
+Hossenfelder, S. (2013). Minimal Length Scale Scenarios for Quantum
+Gravity. Living Reviews in Relativity, 16(1), 2.
+doi:10.12942/lrr-2013-2.
+
+Jaynes, E. T. (1957). Information Theory and Statistical Mechanics.
+Physical Review, 106(4), 620--630. doi:10.1103/PhysRev.106.620.
+
+Kauffman, S. (1993). The Origins of Order. Oxford University Press.
+
+Kolmogorov, A. N. (1965). Three approaches to the quantitative
+definition of information. Problems of Information Transmission, 1(1),
+1--7.
+
+Mlodinow, L., \& Brun, T. (2025). Quantum Electrodynamics from Quantum
+Cellular Automata, and the Tension Between Symmetry, Locality, and
+Positive Energy. Entropy, 27(5), 492. doi:10.3390/e27050492.
+\url{https://arxiv.org/abs/2503.05998}
+
+Pastawski, F., Yoshida, B., Harlow, D., \& Preskill, J. (2015).
+Holographic quantum error-correcting codes: toy models for the
+bulk/boundary correspondence. Journal of High Energy Physics, 2015(6),
+149. doi:10.1007/JHEP06(2015)149. \url{https://arxiv.org/abs/1503.06237}
+
+Rissanen, J. (1978). Modeling by shortest data description. Automatica,
+14(5), 465--471. doi:10.1016/0005-1098(78)90005-5.
+
+Rosas, F. E., Mediano, P. A. M., Luppi, A. I., Varley, T. F., Lizier, J.
+T., Stramaglia, S., Jensen, H. J., \& Marinazzo, D. (2024). Software in
+the natural world: A computational approach to hierarchical emergence.
+arXiv preprint. \url{https://arxiv.org/abs/2402.09090}
+
+Shannon, C. E. (1948). A mathematical theory of communication. Bell
+System Technical Journal, 27(3), 379--423.
+doi:10.1002/j.1538-7305.1948.tb01338.x.
+
+Surya, S. (2019). The causal set approach to quantum gravity. Living
+Reviews in Relativity, 22(1), 5. doi:10.1007/s41114-019-0023-1.
+
+Switzer, A. (2026a). The Triadic Measurement Substrate (TMS), Volume 1,
+Paper 1: Emergent 3D Information Topology and the Binary Alphabet via
+[[4,2,2]] Quantum Error Detection Structural Correspondence.
+
+Switzer, A. (2026b). The Triadic Measurement Substrate (TMS), Volume 1,
+Paper 2: Computational Dynamics of the Binary Alphabet.
+
+Switzer, A. (2026c). The Triadic Measurement Substrate (TMS), Volume 1,
+Paper 3: Computation Emerges.
+
+Takayanagi, T. (2025). Emergent Holographic Spacetime from Quantum
+Information. Physical Review Letters, 134, 240001.
+doi:10.1103/pg4r-fy8n.
+
+'t Hooft, G. (2016). The Cellular Automaton Interpretation of Quantum
+Mechanics. Fundamental Theories of Physics 185. Springer.
+doi:10.1007/978-3-319-41285-6.
+
+Wheeler, J. A. (1990). Information, physics, quantum: The search for
+links. In W. H. Zurek (Ed.), Complexity, Entropy and the Physics of
+Information (pp.~3--28). Addison-Wesley.
+
+Wolfram, S. (2002). A New Kind of Science. Wolfram Media.
+
+Wolfram, S. (2020). A Class of Models with the Potential to Represent
+Fundamental Physics. Complex Systems, 29(2), 107--536.
+doi:10.25088/ComplexSystems.29.2.107.
+
+Zhao, E. Y., Harlow, D., \& Usatyuk, M. (2025). Observers in a closed
+universe. arXiv preprint.
+\end{reflist}
+
+\clearpage
+
+
+\end{document}

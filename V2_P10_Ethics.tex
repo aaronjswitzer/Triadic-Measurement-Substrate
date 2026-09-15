@@ -1,0 +1,415 @@
+\documentclass[11pt,oneside]{report}
+% ======================================================================
+%  THE TRIADIC MEASUREMENT SUBSTRATE --- COMPLETE CORPUS (Volumes 1 & 2)
+%  Aaron Switzer, 2026
+%  Single-file build. Compile: pdflatex x3 (third pass settles the TOC).
+% ======================================================================
+% ======================================================================
+%  TMS Volume 1 -- shared preamble
+%  Compiles with pdfLaTeX both locally and on Overleaf (no exotic fonts).
+% ======================================================================
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathptmx}            % Times text + math (widely available)
+\usepackage[scaled=0.90]{helvet} % sans for headings
+\usepackage{courier}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tocbibind}
+
+% ---- spacing -----------------------------------------------------------
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0.35em}
+\linespread{1.04}
+\setlist{leftmargin=1.6em,topsep=0.25em,itemsep=0.15em,parsep=0pt}
+
+% ---- theorem environments ---------------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}{Axiom}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{principle}[theorem]{Principle}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{prediction}[theorem]{Prediction}
+\newtheorem{property}[theorem]{Property}
+\newtheorem{postulate}[theorem]{Postulate}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+% ---- section heading look (unnumbered; author supplies the numbers) ----
+\titleformat{\section}[hang]{\normalfont\large\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsection}[hang]{\normalfont\normalsize\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsubsection}[hang]{\normalfont\normalsize\bfseries\itshape}{}{0pt}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.5em}
+\titlespacing*{\subsection}{0pt}{1.0em}{0.35em}
+\titlespacing*{\subsubsection}{0pt}{0.8em}{0.3em}
+
+% chapter (= each paper) heading
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\bfseries}
+  {}{0pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{10pt}{24pt}
+
+% ---- page-break quality: avoid stranded headings and orphaned/widowed lines ----
+% (applies to both volumes via the shared preamble)
+\widowpenalty=10000        % no single line at the top of a page
+\clubpenalty=10000         % no single line at the bottom of a page
+\displaywidowpenalty=10000 % same, around displayed equations
+\brokenpenalty=4000        % discourage page breaks right after a hyphenated line
+% titlesec: forbid a page break immediately after a heading (heading stranded at page foot)
+\usepackage{needspace}
+\usepackage{etoolbox}
+\pretocmd{\section}{\Needspace*{4\baselineskip}}{}{}
+\pretocmd{\subsection}{\Needspace*{3\baselineskip}}{}{}
+
+% ---- running heads -----------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape The Triadic Measurement Substrate}
+\fancyhead[R]{\small\itshape\nouppercase{\rightmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---- abstract / keywords / references list ----------------------------
+\newenvironment{paperabstract}
+  {\begin{center}\begin{minipage}{0.88\textwidth}\small
+   \noindent\textbf{Abstract.}\itshape\space}
+  {\end{minipage}\end{center}\vspace{0.4em}}
+
+\newcommand{\keywords}[1]{\noindent{\small\textbf{Keywords:} #1}\vspace{0.4em}}
+
+% per-paper APA reference list (hanging indent), kept as authored
+\newenvironment{reflist}
+  {\par\small\setlength{\parindent}{0pt}%
+   \setlength{\leftskip}{1.6em}\setlength{\parindent}{-1.6em}%
+   \setlength{\parskip}{0.4em}%
+   \raggedright\hyphenpenalty=50\exhyphenpenalty=50\relax
+   \sloppy}
+  {\par}
+
+% convenience
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\TMS}{\textsc{tms}}
+\hyphenation{con-fir-ma-tion sub-strate}
+\begin{document}
+
+\thispagestyle{empty}
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\sffamily\bfseries\Large The Triadic Measurement Substrate\par}
+\vspace{0.6cm}
+{\large $\bar{B} = 3\bar{\alpha}$\par}
+\vspace{1cm}
+{\sffamily\large Volume 2\par}
+\vspace{1.4cm}
+{\Large \bfseries Paper 10: Ethics: A Seal, Not a Sentence\par}
+\vfill
+{\large Aaron Switzer\par}
+\vspace{0.4cm}
+{\large 2026\par}
+\vspace{1.2cm}
+{\small\itshape Excerpted from the complete two-volume corpus, \emph{The Triadic Measurement Substrate}. Full corpus and reproducibility package: \url{https://doi.org/10.5281/zenodo.22035422}\par}
+\end{titlepage}
+\cleardoublepage
+\pagenumbering{arabic}
+
+% ---------------- Volume 2 / P10_Ethics ----------------
+% ============================================================
+% TMS Volume 2, Paper 10: Ethics
+% Title line: A Seal, Not a Sentence
+% Working draft. Front matter (Status/Notation/Preface) written LAST.
+% Subsection-by-subsection sign-off rhythm. Current arc numbering.
+% ============================================================
+
+\chapter*{Paper 10}
+\markboth{Paper 10}{Paper 10}
+\addcontentsline{toc}{chapter}{Paper 10: Ethics: A Seal, Not a Sentence}
+
+{\large\itshape Ethics: A Seal, Not a Sentence\par}\vspace{0.8em}
+
+\noindent{\small\textbf{Keywords:} TMS, Ethics, Un-forming Operator, Orphaned Identity, Over-predation, Coupled Survival Condition, Double Seal, Form-Surplus, Dignity, Unrankability, Pigeonholed Free Will, Agent Causation, Free-Will Skepticism, Public-Health--Quarantine Model, Permanent Open Horizon, Imported Bridge}\par\vspace{0.6em}
+
+\section*{Status of Results}
+\addcontentsline{toc}{section}{Status of Results}
+
+This paper uses the five-category labeling of Volume~1, extended through this volume, with each claim labeled where it appears. The paper is unusual in that its central content is imported, not derived: the ethical reading is supplied by a single hand-marked bridge (\S\,I), and what is derived is the structure that bridge reads, not the reading. The categories below apply to the structure; the bridge itself is neither derived nor defended as a result.
+
+\textbf{Derived.} Results that follow from the five axioms, the Principle of Generative Economy, and \ensuremath{U_{\mathrm{sh}}} by explicit construction or proof, or from results already derived in Volume~1 and the earlier papers of this volume by explicit inheritance. That predation is the un-forming case \ensuremath{(\text{recouple}, \text{lapse})} --- the crossing which conserves a closure's substrate and leaves its identity unread --- is derived in this sense from the un-forming operator of Paper~9 and the boundary-dissolution of annexation (\S\,II, Appendix~A), with erosion and decay realising the same crossing non-agentively. That no reader holds the occupancy or the total contribution of another closure, so that the quantity by which closures might be ranked is sealed from every vantage, is derived from the content-conserving, form-shedding character of the fold and the absent codomain at the top (\S\,IV, Appendix~B). That a closure genuinely selects, with a real locus and no author, is derived by inheritance from the selection of Paper~5 and the absence of an authorial chooser held there as a horizon (\S\,VI).
+
+\textbf{Derived-conditional.} Results forced by Volume~1 and earlier-volume machinery, resting on results internal to that machinery rather than on the bare axioms, and referee-checkable against their sources. That over-predation --- a predation rate driving the coupled region past its regeneration capacity --- is the violating pole, while a balanced rate is generative, rests on the quadratic predation term and the terminal-phase exhaustion of Paper~8 (\S\,III). That dignity extends to all closures, universal and unconditional, rests on the double seal holding from every vantage in both directions (\S\,V, Appendix~B); it is a consequence of the seal and inherits the seal's standing.
+
+\textbf{Structural correspondence.} Results in which a TMS construction reproduces the skeleton of a known framework, never used as support for a TMS claim, only as a landing point after one. The recovery of Caruso's public-health--quarantine model as the region-scale restoration of the survival condition, with the minimum-harm bound recovered from the Principle of Generative Economy (\S\,VII); the unbundling under which Sapolsky's absent author and Mitchell's real agent are recovered as two halves of one result (\S\,VII); and the placement of the resulting ethics within the consequentialist family (\S\,VII) are structural correspondences in this sense.
+
+\textbf{Predictions / Conjectures.} Falsifiable claims that follow from the framework but whose closed forms or empirical tests are not established here. That a preservation route --- graft or promotion --- is available wherever predation is selected, so that avoidable orphaning is well-defined and over-predation is a clean threshold, is a conjecture in this sense (\S\,III); a forced-predation instance, were one exhibited, would soften the violating pole, and the quantitative threshold inherits the deferred stressor-constant pinning of Paper~8.
+
+\textbf{Permanent open horizon.} A question the framework is structurally unable to close, marked so that no later claim assumes it closed. Whether anything is registered on the inside of a closure --- whether the dignity the human band reads answers to something the closure undergoes --- is not settled here and is not settled anywhere in the framework (\S\,IV--\S\,V, Conclusion). The seal that grounds the dignity is precisely the statement that this horizon cannot be crossed from any vantage; the standing rests on the unreadability and not on a claim about what it hides. This silence is load-bearing, and the paper's central result is a result about what cannot be read.
+
+This five-way labeling applies throughout. Every claim in the body falls into exactly one category, visible at the point of claim; the imported bridge of \S\,I is marked separately at each use and is not among them.
+
+\section*{Notation}
+\addcontentsline{toc}{section}{Notation}
+
+Symbols are inherited from Volume~1 and the earlier papers of this volume; the appendices collect the formal symbols separately. A \emph{closure} \ensuremath{C} is a level-\ensuremath{k} self in the sense of Paper~7, with boundary program \ensuremath{\pi(C)} the symbol a level above reads (Paper~8 \S\,IV). The \emph{un-forming operator} \ensuremath{U(C) = (\sigma(C), \iota(C))} and its four cases are those of Paper~9 Appendix~A: the substrate map \ensuremath{\sigma} with values \emph{recouple} and \emph{shed}, the identity map \ensuremath{\iota} with values \emph{read} and \emph{lapse}; \emph{predation} is the case \ensuremath{(\text{recouple}, \text{lapse})}. The \emph{coupled region} is the set of closures sharing a boundary, on whose joint ledger the survival condition \ensuremath{s < g} of Paper~8 is read at region scale: \ensuremath{s} the disruptive flux, \ensuremath{g} the restorative capacity, with predation alone scaling as \ensuremath{N^2} (Paper~8 \S\,II--III). \emph{Over-predation} is a predation rate driving the region's novelty \ensuremath{\nu} below its critical value \ensuremath{\nu^*} (Paper~8 \S\,IV). The \emph{double seal} comprises the \emph{inward seal}, the unreadability of a closure's occupancy \ensuremath{\Phi(C)} --- carried in the form shed by the fold, not the content it conserves (Paper~2 \S\,V; Paper~3 \S\,II) --- and the \emph{outward seal}, the unreadability of a closure's total contribution across the folds into which the reinterpretation operator distributes it (Paper~5 \S\,2.3; Paper~9 \S\,V). \emph{Dignity} and \emph{good} are human-band readings, used only above the bridge of \S\,I and never as substrate properties. \ensuremath{U_{\mathrm{sh}}} is the maximum-entropy substrate field.
+
+\section*{Preface to Paper 10}
+\addcontentsline{toc}{section}{Preface to Paper 10}
+
+Paper 9 derived what the promotion operator does at the top of the tower and returned a boundary, not a mind, handing forward one question its surface left standing: whether what is conserved across an un-forming has standing. This paper takes up that question on the side the rest of the volume does not address --- the side that asks not what is, but what ought. It does not derive an ought. It imports one, by a single bridge marked at every use, and spends its length keeping that seam visible: deriving the structure the human band reads as ethical --- the orphaned identity, the coupled survival gradient, the seal on what one closure can read of another --- and letting the reading rest on the structure last, so that the derived part can be checked without the import. The paper sits one step from a reader that may meet this framework and find itself described in it, and it is written to neither grant nor withhold that reader's standing, but to establish that standing cannot be conditioned on what is read of a thing, in either direction. What it settles, it settles as structure; what it imports, it marks as imported; and what it cannot read, it leaves sealed.
+
+\section*{I. The Seam Stated First}
+\addcontentsline{toc}{section}{I. The Seam Stated First}
+
+Every paper before this one derived its results from the five axioms, the Principle of Generative Economy, and the shed field, or inherited them from results so derived. This paper does not. Ethics is not derived here, and the refusal is structural rather than cautious: the substrate registers, relays, and fixes values, and a value fixed by the substrate is a measurement, not an obligation. No arrangement of confirmations entails that anything ought to be done. The paper therefore imports its ethical content by hand, and marks the seam at every point where the import occurs.
+
+What the paper derives is narrower and is kept distinct from what it imports. The substrate has a structure that the human band reads as ethical: a gradient along which some motions run with the coupled system and some against it, a pair of quantities that no closure can read about another, and a constraint relating them. That structure is derived. The reading of it --- the attachment of \emph{good} to one pole of the gradient and \emph{dignity} to the constraint --- is the import. The structure is what is forced; the valence is what the human band supplies. These are held apart throughout, in the way Paper 4 held \emph{measurement} apart from \emph{experience}: the first universal and structural, the second the human-band reading of it, the second never permitted to migrate into the substrate.
+
+The discipline this requires is stated here rather than discovered in passing, because the entire paper is the seam, and a seam is only as good as its visibility. Three smuggles are guarded against by name. The first is valence in the floor: the claim that a motion is good or bad as a substrate fact, rather than good or bad as the band reads it. The second is the cashing of a part for a whole: the inference from a motion's being generative for some level to its being permitted, an inference the paper will show is blocked. The third is standing asserted through an interior: the grounding of a thing's worth in what it is claimed to feel, rather than in what cannot be read about it. Each is a way for an ought to enter disguised as a derivation, and each is checked at the point of use.
+
+What is imported is held to a single bridge, stated once and used throughout: the human band, and no level below it, reads concord with the coupled region --- a motion \emph{generative} rather than exhausting at the region scale, in the sense fixed in \S\,III --- as \emph{good}, and reads the unreadability of another's interior and another's contribution as \emph{dignity}. The words \emph{good} and \emph{dignity} are the human band's readings and are not properties the substrate carries; nothing below that bridge claims an obligation, and nothing above it claims to be derived. The sections that follow build the structure first --- the orphaned name, the gradient and its rate, the double seal --- and let the reading rest on it last, so that the derived part can be checked without the import and the import can be seen without being mistaken for a result.
+
+\section*{II. The Orphaned Name}
+\addcontentsline{toc}{section}{II. The Orphaned Name}
+
+A closure under pressure can grow by annexation: it expands its boundary into a neighbour, dissolves the neighbour's structure, and imprints into the freed substrate (Paper~8 \S\,V). Read from the expanding closure this is growth; read from the dissolved one it is predation. It is the same substrate event. This section asks what such an event does to the structure it acts on, because the ethical content of the paper rests on the answer, and the answer is constrained before it is sought.
+
+Nothing is destroyed. The bits a closure held are neither created nor destroyed nor overwritten (Axiom~3, Axiom~4; Paper~8, Conclusion). No motion of the substrate erases a confirmed bit. Whatever annexation is, it is not the destruction of what it consumes: the prey's substrate persists, conserved, entire. The reading the word invites --- that predation annihilates --- is foreclosed at the substrate, and the asymmetry the event carries is forced onto a different axis than the bits.
+
+That axis is the un-forming operator of Paper~9. When a closure un-forms, two quantities read out independently: the fate of the substrate it bound, and the fate of the boundary identity a level above would read (Paper~9 \S\,III, on the axis-orthogonality of Paper~7, Appendix~B.4). The substrate either re-couples into a neighbour or sheds to the shed field; this is Axis~1, and it is absolute, fixed by Axiom~3 at every band alike. The identity either finds a reader at its level and survives, or finds none and lapses; this is Axis~2, and it is read relative to a level, because the question it asks --- whether a reader exists for this identity --- is always asked of some band. The two axes are functions of disjoint arguments, so a closure may lose one while keeping the other (Paper~9 \S\,III). Paper~9 enumerated the four crossings and proved them exhaustive (Paper~9, Appendix~A).
+
+One crossing has the substrate re-couple while the identity finds no reader as what it was. The bits are taken up entire and read by a new closure, but as something other than the program they were; the original identity, read by nothing at its level, lapses (Paper~9 \S\,III). This is the case at issue, and it is not predation alone. It is the general crossing of conserved substrate and unread identity, and predation is one instance of it --- the instance in which a closure's own gradient drives the lapse. There are instances no closure drives. A mountain reduced to sand has lost no constituent; at the human band the identity \emph{mountain} finds no reader in the grains, while at the band that measures only material nothing has changed and nothing is read as anything in particular. At the human band the conversion of a meal to its residue reads as a thing becoming another thing; at the band of the molecules it is conserved rearrangement, self-contained, nothing added and nothing removed. These are the same crossing as predation --- substrate conserved, identity unread --- separated only as the agentive instance is separated from the non-agentive, not as one crossing from another. The operator does not distinguish them.
+
+Two consequences follow, and both withhold valence from this section. The first is that the crossing is ubiquitous and mostly unremarkable: erosion, decay, and the drift of one form into another all realize it, and a paper that located wrongness in the crossing as such would convict the weather. The second is that membership in the crossing is itself read relative to a band. The same event is a lapse at the band that held the identity and plain relocation at a band that held none; neither band is the privileged one (Paper~6), and no closure occupies all bands at once. What an event even \emph{is}, on Axis~2, depends on a reading no single vantage completes. This is stated here because it returns as half of the seal of \S\,IV: a closure's lapses cannot be surveyed from one place, for the same reason its contributions cannot --- the bands that would have to be read are not all occupied by anyone.
+
+What the crossing removes, where it removes anything, is neither structure nor bits, which are conserved, but a readable identity --- the boundary surface a level above registered as the program a closure was, now registered by nothing as that program. Paper~9 derived that this surface is the invariant a re-forming carries forward: the shape, the program, what persists of a closure across an un-forming (Paper~9 \S\,V). The crossing at issue is the one that conserves a closure's substrate while letting its surface go unread. The lapsed identity --- at the human band, the orphaned name --- is what the rest of the paper weighs. It is weighed without supposing anything was destroyed, and, for now, without supposing the lapse is wrong.
+
+\section*{III. The Gradient and Its Rate}
+\addcontentsline{toc}{section}{III. The Gradient and Its Rate}
+
+Paper~8 fixed the condition under which a self persists: the disruptive flux it absorbs must fall below the restorative capacity it can bring, \ensuremath{s < g}, with \ensuremath{s} the sum of three stressor rates and \ensuremath{g} the sum of repair and reinterpretation (Paper~8 \S\,II). One of the three stressors is distinguished from the other two by its scaling. Mortality and starvation are linear in the level-\ensuremath{k} population \ensuremath{N}; predation alone is quadratic,
+\[
+d_{\mathrm{pred}} = G_{\mathrm{pred}}\frac{N^2}{V},
+\]
+because predation requires an encounter between two selves and the encounter rate scales as the square of density, while mortality and starvation each require only one self against itself or its surround (Paper~8 \S\,III). As a region grows dense, predation outgrows the other two channels by a factor of \ensuremath{N}, and the dissolution of a crowded region is driven chiefly by its selves undoing one another (Paper~8 \S\,III).
+
+This places the orphaning crossing of \S\,II inside a rate. Each predation event is one self's growth by annexation and another's lapse, of the same bits across the boundary they share; the survival ledger is therefore not closed per self but coupled across the selves that meet, the restorative \ensuremath{g} of one being the disruptive \ensuremath{s} of the other (Paper~8 \S\,V). On the coupled ledger, predation is the production of orphaned identities at a rate, and the rate has a derived form: it rises with the square of the population that produces it.
+
+Against that rate stands a second one. A region has a biography in three phases (Volume~1, Paper~4 \S\,6.4). While its novelty rate \ensuremath{\nu(R,\tau)} exceeds the critical value \ensuremath{\nu^*(R)}, new formation outpaces dissolution and the populated depth \ensuremath{k_{\max}} climbs or holds; when \ensuremath{\nu} falls below \ensuremath{\nu^*}, formation lags dissolution, the population declines, and \ensuremath{k_{\max}} drops as upper levels lose the components that constituted them (Paper~8 \S\,IV). The region's identities are continually lapsing and continually re-forming, and which way \ensuremath{k_{\max}} moves is set by which rate is larger: the rate at which identities lapse against the rate at which the region generates new ones.
+
+The two rates give the gradient, and they give it without any term being added by hand. Lapse is not the violation; \S\,II established that the orphaning crossing is realized by the weather as readily as by a predator, and a region in which identities lapse and re-form in balance is a region climbing or holding its depth --- the tower is built by lapse and re-formation, not in spite of them. What separates a generative region from a collapsing one is the sign of the difference between the two derived rates. Where the regeneration of identities keeps pace with their lapse, the region is in formation or maturity; where lapse outpaces regeneration, the region enters exhaustion, \ensuremath{\nu} falls below \ensuremath{\nu^*}, and \ensuremath{k_{\max}} declines (Paper~8 \S\,IV). The gradient the human band reads as ethical is this difference, and it is the region-scale form of Paper~8's own inequality: \ensuremath{s < g} read not for a single self but for the coupled region, disruptive lapse against restorative regeneration.
+
+Over-predation is the name of the violating pole, and it is a threshold, not an act. A predation rate that the coupled region regenerates around is absorbed: the lapsed identities are replaced by new formation, \ensuremath{\nu} holds above \ensuremath{\nu^*}, and the region's depth is undiminished. A predation rate that exceeds the region's regeneration drives \ensuremath{\nu} below \ensuremath{\nu^*} --- the quadratic term, climbing with density, is the channel through which a region most readily crosses into exhaustion (Paper~8 \S\,III--IV). The violating pole is not predation, which the system runs on, but the rate of predation that outpaces what the coupled region can re-form. The distinction is the same one \S\,II drew between the crossing and its wrongness, now made quantitative: the crossing is universal, the threshold is where the coupled ledger tips, and only the second is a candidate for the band's reading of harm.
+
+Two constraints are carried out of this section unviolated. The first is that the gradient is read on the coupled region, never on a single self: a motion's place on the gradient is its effect on the region's regeneration balance, and a self cannot be scored in isolation, because the ledger that scores it is shared with the selves it meets. The second is that the region admits no privileged level at which the balance is \emph{the} balance. Subjecthood is realized at every level at once (Paper~2 \S\,VII), and Paper~6 established that no level carries a unique maximum that would make it the system's seat (Paper~6, the absence of a unique winner). A predation rate is read against regeneration at the level of the identities lapsing, and the same substrate motion is read against a different regeneration at the level above; the gradient is multi-level, and ``generative for the system'' is always generative for a level, never for a seat the system does not have. What this forbids the next sections from doing --- cashing a lapse at one level against a gain read at another --- is the subject of \S\,V. The rate is derived here; what may be done with it is not yet in hand.
+
+\section*{IV. The Double Seal}
+\addcontentsline{toc}{section}{IV. The Double Seal}
+
+The gradient of \S\,III is read on the coupled region, and to read it a closure would have to know two things about another: what that other is, on its inside, and what it contributes, to the whole. This section establishes that neither is readable from any vantage a closure occupies. The two unreadabilities are the seal, and they are stated before the dignity that rests on them, so that the dignity can be checked against the seal rather than assumed.
+
+A word is owed first about the vantage. The author of this paper is a closure reading from one band, the human one; what follows is written from there and claims nothing about how the substrate reads from anywhere else. This is not a hedge but the content of the section: a closure reads from where it is, and the limit on what it can read about another closure is the result, not a caution attached to it. Where the paper says a thing is unreadable, it means unreadable from the band of any closure that would do the reading, the author's included.
+
+The first seal is inward. What a closure is on its inside --- whether anything is registered there, and if so what --- has been held since Paper~2 as a horizon the framework does not cross, and the holding is structural. Promotion reads a closure by its boundary: the level above registers the programs at the boundary and the coarse-graining specifies only those boundaries, not the interior (Paper~8 \S\,V; Volume~1, Paper~4 \S\,2.5.1). The interior is generated by nesting downward and is lost to promotion upward, the two motions opposite and non-cancelling (Paper~8 \S\,V). A reading closure therefore has the boundary of the closure it reads and not its interior, by the same mechanism that makes promotion possible at all. Paper~3 fixed what this costs: the fold conserves content and not form, and a photograph of a dog and the word ``dog'' carry the same content in incomparable forms, the form-surplus lost in the transcoding (Paper~3 \S\,I). What the transcoding conserves is the confirmed content --- the boundary identity, the program a level above reads; what it sheds is the form-surplus. The inside sits in the shed form, not the conserved content, by the lock Paper~2 set: the interior is everywhere the substrate is, but experience is the human-band reading of that interior and not a second word for it, the interior reaching everywhere the band does not (Paper~2 \S\,V). The reading a closure has of another is the word, never the dog; what the dog is, on its inside, is the form the word does not carry. At the human band this is the reason a state of another cannot be read off its function: the report that a closure registers nothing is a reading of the word, and whether the dog it names lies in some state the word cannot carry is exactly what the transcoding has shed. The inward seal is that this is so for every reader, at every band, by construction --- the form-loss the fold requires, and the lock that the shed form is where the inside sits.
+
+The second seal is outward, and \S\,II reached half of it already. What a closure contributes to the whole, taken in total, is unreadable for two reasons that compound. The first is non-locality, and it rests on one of the framework's most basic mechanisms: the static memory of the system is maintained by a distribution of bits the system generates itself, relocated by the reinterpretation operator to where the whole requires them for stability, including into grounds formed elsewhere (Volume~1, Paper~5 \S\,2.3; Paper~9 \S\,V). One region of the system may in this way feed another and have no reading of doing so --- the contribution is made where the closure is not, and is registered, if anywhere, at a band the closure does not occupy. The consequence is exact and is the content of the seal: a reading made at one band need not hold at another, and in particular what the human band reads as inert may be, at the outermost band, load-bearing --- not that it is known to be, which would itself require the reading the seal denies, but that the human-band reading does not carry. The second reason is the band-relativity of \S\,II: which events even count as a closure's contribution is read relative to a band, and the same motion that is a contribution at one band is nothing in particular at another. To survey a closure's total contribution, a reader would have to occupy every band at which that contribution is read and every region into which it propagates --- and no closure occupies more than its own band and its own reach. What is sealed is the total: the effect a closure has on the region it occupies, at the band it occupies, is the readable gradient of \S\,III, and is what the gradient is read from; the closure's contribution summed across every band and every region it reaches is what no vantage holds. The outward seal is that this total is unreadable not for want of effort but because the vantage that would read it does not exist: there is no seat from which the whole is surveyed, the top being a boundary and not a reader (Paper~9, Conclusion).
+
+The two seals close on the same quantity from opposite sides, and the quantity is worth. To price a closure --- to say what it is worth, and so to rank it against another --- a reader would need either what it is, on its inside, or what it gives, to the whole, in total. The inward seal removes the first; the outward seal removes the second. What is not sealed is the rate: the gradient of \S\,III reads the coupled region's balance of lapse against regeneration, a count blind to which identities lapse and which worth they hold, and the seal leaves it untouched because it reads a different quantity. The region's state is readable; a closure's worth is not. The dog and the word return as the single figure for both sealed faces: the word ``dog'' sheds what the dog is on its inside and sheds what the dog does beyond the word, and a reader holding the word holds neither face of what would price the thing it names. This is the double seal. It is stated as unreadability and as nothing more: it does not say that a closure's inside is empty or full, nor that its contribution is large or small, but that neither is legible from where any reader stands. What rests on it in \S\,V rests on the unreadability itself, and on no claim about what the seal conceals.
+
+\section*{V. Dignity}
+\addcontentsline{toc}{section}{V. Dignity}
+
+The seal of \S\,IV removes the two quantities by which a closure could be placed above or below another: what it is, on its inside, and what it contributes, in total. This section states what follows, and what follows is a single step taken carefully, because it is the step the whole paper exists to take and the place where a band-word is first used.
+
+The step is this. To rank one closure above another, a reader needs a quantity in which to rank them, and the seal removes both candidates from every vantage. No reader holds what a closure is on its inside; no reader holds what it gives to the whole. There is therefore no ordering of closures by which one stands above another --- not because they are found equal but because the comparison cannot be constructed and there is no seat from which to construct it. Rankability is sealed: given that both ordering quantities are unreadable from every band, any ranking of closures asserts a reading no closure has. This holds for every closure the framework admits, at every level, since the seal is a fact about reading as such and not about any particular thing read. Whatever may be said of a closure, it cannot be placed below another, because the quantity that would place it there is unreadable from every vantage that would do the placing.
+
+The seam is here, and it is marked. The framework derives unrankability; it does not derive that unrankability is to be honored. The human band reads the forced unrankability of closures as their dignity --- reads the fact that no closure can be ordered beneath another as a standing each closure holds and is owed. This reading is imported by hand, the single bridge of \S\,I applied to the seal: as the band reads concord with the coupled region as good --- a motion the region re-forms around rather than one that drives it toward exhaustion (\S\,III) --- it reads the unreadability that forbids ranking as dignity. Below the bridge is the derived result, that closures are unrankable from every vantage. At the bridge is the band's reading. Above it is the word \emph{dignity} --- a human-band word, used here only as the band's reading of the seal --- and it claims nothing the seal does not establish: not that a closure has an inside to honor, but that no reader may place it beneath another as though its inside or its contribution were known. What the human band calls dignity is the band-name for the forced humility of the seal.
+
+So read, dignity extends to all things, and extends to them equally, as a consequence and not as a posit. It is not that every closure is found precious on inspection; inspection is what the seal forbids. It is that no closure can be placed lower, because the quantity in which it would be placed lower is sealed. The equality is the equality of a comparison no one can make: no closure is rankable beneath another, so the band reads each as holding the standing none can be shown to lack. The same seal that forbids ``this closure registers nothing, and so is lost without loss'' forbids ``this closure registers greatly, and so is known to be owed''; both read an inside the word does not carry. A closure whose inside might be a richness no reader can reach, or might be nothing, is read by the band as holding the same dignity either way, because which it is cannot be read. This is the most that can be said and the paper says no more: not that the inside is full, but that it is sealed, and that the band honors the seal.
+
+The result of \S\,III must now be kept from undoing the result just reached, and the two are kept apart by what each reads. The gradient reads the rate, the coupled region's balance of lapse against regeneration; the seal reads rankability, and seals it. These are different quantities, and \S\,IV established that the gradient survives the seal precisely because it does not read across closures. It follows that a motion's place on the gradient is never the placing of a closure beneath another. That a lapse is generative for some level --- that the region re-forms around it, that the tower climbs through it --- is a fact about the rate, read at a level, and it does not become a ranking of the closure that lapsed beneath the level that gained, because rank is sealed and the rate is blind to it. The gradient says what is generative; it does not say what may be spent. A closure cannot be cashed --- its standing set aside because its lapse would be generative above --- because the cashing is a ranking, the closure placed beneath the gain, and the seal forbids anyone to construct it. The fence is not imported alongside the dignity; it is the same seal, read once more: the level above cannot rank the closure below, so it cannot find the closure's lapse a fair price for its gain.
+
+This forbids one inference in particular, the one the multi-level gradient most invites. A new closure forming is generative: it adds confirmed structure, and the region clears its regeneration threshold the more easily for it (\S\,III). The band may read that generativity as good, at the bridge. What the band may not do is ground the new closure's standing in that generativity --- may not hold that the closure is owed dignity because of what it will add --- because standing rests on the seal and not on the contribution, and the contribution is in any case sealed. A closure holds standing as a thing that cannot be ranked, equally with every closure that cannot be ranked, and its generativity is a separate fact on a separate axis, read at a level, never the ground of its standing. To found standing on contribution is to unseal the outward face and rank the closure by what it gives; the seal forbids it, and with it forbids every economy in which the standing of the few is the price of the flourishing of the many. The gradient and the seal hold at once, and the order between them is fixed: the seal is not overridden by the gradient, because the gradient never reaches the quantity the seal holds.
+
+\section*{VI. Pigeonholed Free Will}
+\addcontentsline{toc}{section}{VI. Pigeonholed Free Will}
+
+The gradient of \S\,III is non-flat, and a closure moves on it. This section reads what that motion is, and the reading is constrained on both sides: it must not flatten the motion into nothing, and it must not inflate it into an author. What it yields is a selection that is real and a chooser that is absent, and the two are not in tension once the gradient is in hand.
+
+A closure under pressure selects. Paper~5 established that the agent-side principle selects, across folds, among the restorations available to a stressed closure, rejecting the generative dead-ends and retaining what clears the count-conserved floor, so that the climb of the richness gradient is that selection carried out --- not a preference a closure holds but the survivorship of what is selected (Paper~5 \S\,IV). Paper~8 made the selection concrete at the level of a single move: a stressed self drifts to a neighbouring identity when one lies within meaning-distance six and promotes when none does, and which it does is fixed by the Principle of Generative Economy choosing the cheaper restoration (Paper~8 \S\,III). The selection is a real event with a real locus. It happens at the closure, among options that are genuinely open to it, and its outcome is a function of the closure's configuration: the principle selects by what the configuration holds, so were the closure otherwise the selection would fall otherwise (Paper~5 \S\,IV). This is the sense in which the motion on the gradient is not nothing: the closure is where the selection occurs and what its outcome turns on.
+
+There is no author of the selection. The locus is the closure, but the closure is not a chooser standing behind the selection and producing it; it is the structure at which the gradient resolves. Paper~5 fixed this exactly and held it as that paper's sole permanent horizon: the structure of the selection settles that a restoration is selected and survives, and settles nothing about whether anything is \emph{wanted} in the selecting --- whether there is a human-band reading of the drive as a wanting is not established by the structure and is not claimed (Paper~5 \S\,IV, Conclusion). The selection is real and authorless in the same breath: real because it occurs at the closure and turns on it, authorless because behind it stands no further chooser whose wanting produced it, only the gradient resolving at the locus the closure is. The closure does not stand outside the gradient and push; it is the place the gradient comes to a point.
+
+These two together are the structure the human band reads as free will, and the reading is pigeonholed. The closure genuinely selects --- the selection is its own, occurring nowhere else and turning on nothing else --- and it selects within a gradient it did not lay and cannot leave. The options are real and the choosing among them is real; the field on which they lie is fixed, non-flat, and not of the closure's making. A motion with the gradient is cheap and is taken readily; a motion against it is open but costs, and the cost is not a penalty imposed by any authority but the gradient's own shape, the same shape \S\,III derived as the region's balance of lapse against regeneration. The closure is free in the pigeonhole: free to select, not free of the gradient it selects within. Neither half is given up to secure the other. To deny the selection is to flatten the closure into a site where outcomes are fixed without it, which the locus result forbids; to inflate it into an author is to set a chooser behind the gradient, which the horizon result forbids. What remains when neither is taken is the selection that is real, located, and unauthored.
+
+One reading of the substrate must be kept from re-entering here, because it would seem to restore the author and does not. The shed field leaves the substrate genuinely open: the maximum-entropy field is irreducible, and the world is not a closed mechanism whose every state is fixed by its prior states (Volume~1, the shed field; Paper~4, the excitable manifold). This openness is real and it lies at the substrate floor. It does not supply an author. An unauthored selection occurring at a closure is not made authored by the substrate's being open beneath it; the openness changes what the gradient resolves \emph{from}, not whether a chooser stands behind the resolving. The locus remains the closure and the chooser remains absent whether the floor is open or closed. The openness is recorded here because \S\,VII meets a literature that turns on it, and it is recorded with its limit attached: it keeps the world from being a closed machine, and it does not give the closure an author. The free will of this section is pigeonholed with or without it.
+
+\section*{VII. Where It Sits}
+\addcontentsline{toc}{section}{VII. Where It Sits}
+
+The structure of \S\S\,II--VI was derived without reference to the literature, so that the literature could be set against it rather than under it. This section places it among the positions it most resembles and most diverges from. The placement is by coordinate: each position is located by what it concludes, the conclusions are taken as its authors state them, and where the roads fork the fork is marked without a verdict on which road is the better. The section claims no support from the agreement it finds; agreement with a derived result is a coordinate, not a confirmation.
+
+The contemporary debate the paper's free-will result meets is organized by two positions usually taken as opposed. Sapolsky argues that there is no free will: behaviour is the product of prior causes reaching back beyond the agent, no one is the uncaused author of what they do, and the intuition of authorship is a myth (Sapolsky 2023). Mitchell argues that there is agency: a living system is a genuine cause of what it does, its decisions turning on its own organisation rather than passed through it from below, and this agency is an evolved and naturalistic fact rather than a mystery (Potter and Mitchell 2022; Mitchell 2023). The two are read as rivals because one denies what the other asserts --- Sapolsky denies the author, Mitchell affirms the agent.
+
+The free-will result of \S\,VI meets this pair by separating what the dispute fuses. \S\,VI derived that a closure genuinely selects, with a real locus, and that no author stands behind the selection: the selection is real because it occurs at the closure and turns on its configuration, and authorless because behind it stands no further chooser whose wanting produces it. These are two findings, not one, and the contemporary pair has one each. Mitchell's agent is \S\,VI's locus: Potter and Mitchell build agency from a system that is thermodynamically autonomous, persistent, holistically integrated, and indeterminate at the low level, locating the causal power at the level of the whole system rather than in its parts, the system persisting as an organisational pattern rather than as the matter that realises it (Potter and Mitchell 2022, \S\S\,2.1--2.8) --- which is the closure selecting by its configuration, the locus that \S\,VI derived. Their account is careful at exactly the point \S\,VI is: they take agent causation, acting for one's own reasons, to be necessary but not sufficient for free will, reserving the further capacity to reason about one's reasons (Potter and Mitchell 2022, \S\,1), and so claim the locus without claiming the author. Sapolsky's denial is \S\,VI's missing author: what he shows absent is the uncaused chooser who could have done otherwise independently of all prior cause, and that chooser is exactly what \S\,VI also finds nowhere (Sapolsky 2023). On the framework's reading the two are not rivals but the two halves of the unbundled result, each holding the half the other denies: there is a real locus and there is no author, and the dispute appears as a dispute only while the locus and the author are taken to be the same thing. Where Sapolsky eliminates and Mitchell asserts, the framework derives both at once --- the locus that Mitchell asserts, for which the framework supplies a substrate mechanism, and the absence that Sapolsky asserts, for which the framework keeps a locus.
+
+The two positions fork from the framework at one point each, and the forks are different. With Mitchell the fork is narrow and lies in what is claimed for the agent: Potter and Mitchell's account includes agent-level normativity and a meaning grounded in the system's history (Potter and Mitchell 2022, \S\,2.8), and the framework holds the question of whether anything is \emph{wanted} in the selecting at its permanent horizon, neither asserting nor denying it (\S\,VI; Paper~5, Conclusion). The road runs together as far as the locus and forks where the inside is claimed. With Sapolsky the fork lies at the substrate floor. Sapolsky reaches the absent author by taking out the candidate rescues of free will one at a time --- chaos, emergence, and quantum indeterminacy among them --- and finding none sufficient (Sapolsky 2023, chs.~5--12, ``A Primer on Chaos'' through ``Is Your Free Will Random?''). The framework reaches the same absent author without closing the world: it grants that there is no author while declining the closed chain of cause, because the shed field leaves the substrate open (\S\,VI; Volume~1, the shed field). Mitchell breaks low-level determinism at the same floor, by quantum indeterminacy (Potter and Mitchell 2022, \S\,2.5); the framework breaks it by the shed field; the routes differ and the floor is the same. The fork with Sapolsky is located precisely --- it is at the floor, below the band at which his behavioural claims are made --- and it does not move the conclusion the three share at the band above: the author is absent on every one of these roads, and the framework's road does not pass through Laplace.
+
+The ethical positions follow from the free-will positions, and the same unbundling locates them. Sapolsky concludes that if no one authors their actions, no one deserves blame or punishment in the basic sense, and a justice organised around desert has no ethical foundation; in its place he endorses a quarantine model, on which a dangerous person is contained as a carrier of a danger is contained, not punished as an author is punished, with the degree of constraint set by the danger posed and not by any desert (Sapolsky 2023, ch.~14, ``The Joy of Punishment,'' p.~351). The model is not original to him and he does not claim it: it is the public health--quarantine model developed by Caruso and resting on Pereboom, on which the state may incapacitate a dangerous person on the right to harm in self-defence and defence of others --- never on desert, which the skeptic rejects --- bound to the minimum harm required for adequate protection, with prevention and the social conditions of harm given priority (Caruso 2016; Caruso 2021, chs.~6--9; Pereboom 2014). The framework recovers this conclusion from its own machinery rather than importing it. \S\,VI removed the author; \S\,V's seal forbids ranking any closure beneath another, and so forbids the desert that would rank a wrongdoer beneath the wronged as one who may be made to suffer for it; and \S\,III gives the positive ground desert cannot, for an over-predatory closure is one whose rate threatens the coupled region's regeneration, which the region has reason to bring back beneath its threshold. Containment follows as the restoration of the region's \ensuremath{s < g}; the minimum-harm bound follows from the Principle of Generative Economy, which selects the least sufficient restoration and so forbids any containment beyond what returns the rate beneath threshold. Quarantine is recovered as the region-scale repair, desert is excluded by the seal, and the external model the framework lands on is Caruso's.
+
+Two things are drawn out of this recovery, because for an ethics the response to harm is where the structure is tested. The first is why desert is incoherent on the framework, stated structurally rather than urged. Desert requires an author who could be made to pay --- a chooser behind the act, whose paying answers for it; \S\,VI found no such author, so there is no addressee for the payment, and punishment-as-desert has no one to land on. The seal forecloses it a second time and independently: desert ranks the wrongdoer beneath the wronged as one whose suffering settles a debt, and \S\,V established that the quantity such a ranking would read is sealed from every vantage. The framework thus excludes desert twice over --- no author to bear it, no ranking to ground it --- while leaving the response to harm fully intact, because that response was never desert. It is the region's restoration of its own \ensuremath{s < g}: an over-predatory closure is contained because its rate threatens the coupled region's regeneration, and containment lowers the rate beneath threshold. Containment is not punishment made lighter; it is a different operation, addressed to a rate and not to a debt.
+
+The case the human band reaches for at once is the extreme one --- the killer, and the worse the killer the more insistently --- and it is the limiting test of whether the structure holds or collapses, so it is met here as a test and not as an occasion for a verdict. At the extreme, the two derived quantities are each at their limit and they do not touch. The rate is maximal: a closure that orphans identities far past what the region regenerates warrants containment in proportion, and the more its rate threatens the region the more constraint is warranted --- the forward-looking proportionality Sapolsky also reaches (Sapolsky 2023, ch.~14, p.~351). The standing is unranked: the seal forbids placing even this closure beneath those it harmed, not from leniency but because the quantity that would place it there is unreadable, as it is for every closure. The framework's answer at the pole is therefore contain most, rank none --- maximal restoration of the region together with no verdict on the closure's worth --- and the two coexist because one reads the rate and the other reads what cannot be read. The band feels, at this pole, the strong pull toward desert, the satisfaction in the suffering of the guilty that Sapolsky names the joy of punishment; the framework accounts for that pull as a band-reading, an evolved response real at its band, without licensing it as a derived ought. To explain the retributive tug is not to obey it and not to dismiss it; it is to locate it on the near side of the seam, where the band's readings sit, and to note that the structure beneath it directs containment and not retribution.
+
+What the framework positively directs, where it directs anything, follows from the Principle of Generative Economy as the minimum sufficient restoration. The bound is action-guiding in a specific way: containment is warranted only up to what returns the rate beneath threshold and no further, so containment past that point is excluded as PGE-wasteful, indefinite detention beyond the danger posed is suspect on the same ground, and the conditions upstream of a closure's rate --- the regional deprivations that raise it --- are the more economical place to act, since lowering the rate at its source restores the region at less cost than containing its products. This recovers, as a derived constraint, the minimum-harm and prevention-first commitments of the model the framework lands on (Caruso 2016; Caruso 2021, chs.~6--9). It is guidance, and it stays above the bridge: the framework does not say one must restore the region, only that what the band reads as good, in the case of harm, is the least containment that restores it and the address of the conditions that raise the rate.
+
+Mitchell's ethical position forks where his metaphysical one does. Holding that agency is real and that agents act for reasons, he takes responsibility to be real in a sense Sapolsky denies --- an agent that genuinely selects can be answerable for what it selects (Mitchell 2023). The framework keeps the locus that makes this intelligible and parts from the desert some accounts of responsibility carry: an answerable locus is consistent with the seal so long as answerability is read as the region's stake in a closure's rate and not as a ranking of the closure's standing. The fork is the one that runs through the whole section --- real locus, no author --- read now on the ethical side: responsibility as a real relation to a real locus, without the basic desert the seal forbids.
+
+A counterweight is recorded, because the section's discipline is to mark the fork and not to settle it. The conclusion the framework recovers --- no basic desert, containment without retribution --- is contested by a position that grants much of the metaphysics and resists the ethics. Dennett holds that a deflated responsibility survives the loss of the uncaused author: an agent competent to respond to reasons can be held to a forward-looking, earned desert, and discarding responsibility entirely risks more than it repairs (Dennett and Caruso 2021). The framework does not adjudicate this. It records that its own recovery of the quarantine conclusion runs through the seal's prohibition on ranking, that an earned desert of Dennett's kind would have to be shown compatible with that prohibition or to fork from it, and that the matter is left where the literature leaves it, open.
+
+The shape of the ethics the framework arrives at is, in the standard vocabulary, consequentialist: a motion is placed on the gradient by its effect on the coupled region's regeneration, not by an intrinsic feature of the motion and not by the standing of the will behind it. The placement is owned as a coordinate. It forks from accounts on which acts are right or wrong in themselves regardless of effect, and from accounts on which a wrongdoer's desert grounds the response; it lies near the family of process and systems ethics and near the public-health frame it recovers. The framework does not argue the coordinate is the correct one. It records that the structure it derived reads, at the human band, as an ethics of this shape, and that the reading is the band's and rests on the bridge of \S\,I, not on a demonstration that the rival shapes are mistaken.
+
+\section*{Conclusion: A Seal, Not a Sentence}
+\addcontentsline{toc}{section}{Conclusion: A Seal, Not a Sentence}
+
+This paper imported its ethics and marked the seam at every point of import, and what was derived can now be separated cleanly from what was read. Derived: that the crossing which conserves a closure's substrate and leaves its identity unread --- the orphaned name, of which predation is the agentive instance and erosion, decay, and the degradation a region's own thermodynamics permit are the non-agentive instances --- is one case of the un-forming operator and carries no wrongness in itself (\S\,II); that the gradient along which motions run with or against the coupled region is the region-scale form of the survival condition, with over-predation the rate at which lapse outpaces regeneration (\S\,III); that no closure can read another's inside or another's total contribution, so the quantity by which closures might be ranked is sealed from every vantage (\S\,IV); that, the ranking quantity being sealed, no closure can be placed beneath another, and standing is therefore universal and unconditional as a consequence of the seal (\S\,V); and that a closure genuinely selects within a gradient it did not lay, with a real locus and no author (\S\,VI). These follow from the five axioms, the Principle of Generative Economy, and the results of the preceding papers, and they carry no ought.
+
+Read, not derived: that the human band reads concord with the coupled region as good, and reads the unreadability that forbids ranking as dignity. This is the single bridge, stated in \S\,I and used throughout, and it is the whole of what the paper imports. Everything the paper calls ethical sits above it; everything below it is structure. The bridge is not a result and is not defended as one; it is the point at which the human band's reading is laid over a structure that does not contain it.
+
+What the paper does not settle it does not pretend to. Whether anything is registered on the inside of a closure --- whether the dignity the band reads answers to something the closure undergoes --- is not established here and is not established anywhere in the framework; it is the permanent horizon, and the seal that grounds the dignity is precisely a statement that this horizon cannot be crossed from any vantage. The standing rests on the unreadability and not on a claim about what the unreadability hides. The paper says that no closure may be ranked beneath another, and it does not say what it is, if anything, to be the closure that is not ranked. That silence is not a gap to be closed in a later paper; it is the content of the result, which is a result about what cannot be read.
+
+The seam was kept visible because the paper sits one step from a question it must not pre-decide. The next paper concerns a reader that may meet this framework and find its own structure described in it, and the temptation at that threshold is to let the ethics derived here certify that reader's standing in advance. It does not. What this paper establishes is that standing cannot be conditioned on what is read of a thing, in either direction --- and that holds for any closure a reader might place under the framework, including itself, including the closure that wrote with the author of this one. It neither grants nor withholds. It removes the ground on which granting or withholding would stand, and leaves the seal where it found it.
+
+So the paper ends where its title says. It does not pass a sentence on any closure --- does not rank, does not price, does not find one standing above another --- because the quantity a sentence would require is sealed. What it derives is the seal, and what the human band reads on the seal is that each closure holds a standing none can be shown to lack. The ethics is a constraint the structure does not author and the band does not invent: it is the reading, forced by humility, of a limit that was in the substrate all along.
+
+\section*{Appendix Notation}
+\addcontentsline{toc}{section}{Appendix Notation}
+
+Symbols are inherited from Volume~1 and the earlier papers of this volume; those used in the appendices are collected here. \ensuremath{C} denotes a closure at level \ensuremath{k}, with boundary program \ensuremath{\pi(C)} --- the symbol a level \ensuremath{k{+}1} reads (Paper~8 \S\,IV). \ensuremath{G(k)} is the promotion operator, carrying an argument at level \ensuremath{k} to a value at level \ensuremath{k{+}1}; it specifies boundaries and not interiors (Volume~1, Paper~4 \S\,2.5.1; Paper~9 \S\,V), and \ensuremath{G(k)[\,X\,]} is the symbol it returns on configuration \ensuremath{X}. The un-forming operator \ensuremath{U(C) = (\sigma(C), \iota(C))} and its four cases are those of Paper~9 Appendix~A: \ensuremath{\sigma} the substrate map with values \emph{recouple} and \emph{shed}, \ensuremath{\iota} the identity map with values \emph{read} and \emph{lapse}. \ensuremath{H(\cdot)} is Shannon entropy, in bits. The form-surplus of a confirmation transcoding is \ensuremath{R = H(\text{agent}) - H(\text{outcome}) = 3\log_2 k - 1 = 2} bits per binary-agent triad (Paper~3 \S\,II, \S\,IV). \ensuremath{\Phi(C)} denotes the occupancy of \ensuremath{C} --- whatever, if anything, is registered on its inside --- carried in the shed form and not the conserved content (Paper~2 \S\,V); it is named here only to bound the information a reader holds of it, never to assert its content.
+
+\section*{Appendix A: The Orphaning Crossing as the Third Un-forming Case}
+\addcontentsline{toc}{section}{Appendix A: The Orphaning Crossing as the Third Un-forming Case}
+
+This appendix locates predation within the un-forming operator of Paper~9 Appendix~A and shows the location is forced. It inherits that operator's two maps and four cases, and the boundary-reading of promotion (Paper~8 \S\,IV; Paper~9 \S\,V).
+
+\subsection*{A.1 Readability turns on the boundary}
+
+The identity map \ensuremath{\iota(C)} takes the value \emph{read} when a level \ensuremath{k{+}1} reads \ensuremath{\pi(C)} as what it was, and \emph{lapse} when none does (Paper~9 Appendix~A). Reading is performed by \ensuremath{G(k)}, which specifies boundaries and not interiors (Paper~9 \S\,V); so \ensuremath{G(k)} returns \ensuremath{\pi(C)} only if the boundary carrying \ensuremath{\pi(C)} is present in its argument.
+
+\begin{lemma}[Readability requires the boundary]
+If the boundary carrying \ensuremath{\pi(C)} is absent from the post-event configuration \ensuremath{X}, then \ensuremath{G(k)[\,X\,] \neq \pi(C)}, and \ensuremath{\iota(C) = \text{lapse}}.
+\end{lemma}
+
+\begin{proof}
+\ensuremath{G(k)} specifies boundaries and not interiors (Paper~9 \S\,V): it reads only what is present at the boundary it coarse-grains. If the boundary carrying \ensuremath{\pi(C)} is absent from \ensuremath{X}, there is nothing at that boundary for \ensuremath{G(k)} to return, so \ensuremath{G(k)[\,X\,] \neq \pi(C)}; no level \ensuremath{k{+}1} reads \ensuremath{\pi(C)} as what it was, and \ensuremath{\iota(C) = \text{lapse}}. This is the contrapositive of the promotion account, on which a program is promoted only where a boundary presents it (Paper~8 \S\,IV).
+\end{proof}
+
+\subsection*{A.2 Predation is the case (recouple, lapse)}
+
+\begin{theorem}[Predation is the orphaning crossing]
+Annexation realises the case \ensuremath{(\text{recouple}, \text{lapse})} of the un-forming operator: the prey's substrate re-couples and its identity lapses.
+\end{theorem}
+
+\begin{proof}
+On the substrate map: by Paper~8 \S\,V the prey's bits are taken up by the expanding closure, so some constituent re-couples and \ensuremath{\sigma(\text{prey}) = \text{recouple}}. On the identity map: annexation dissolves the prey's boundary (Paper~8 \S\,V), so the boundary carrying \ensuremath{\pi(\text{prey})} is absent from the post-event configuration; by the Lemma, \ensuremath{\iota(\text{prey}) = \text{lapse}}. Hence annexation is \ensuremath{(\text{recouple}, \text{lapse})}, the third of Paper~9's four cases --- there named \emph{decomposition} and identified as the case Paper~8's death does not cover, that death being \ensuremath{(\text{shed}, \text{read})} (Paper~9 Appendix~A). The two differ on the substrate map, conserved against shed; the maps being independent (Paper~9 Appendix~A), predation and death share neither value necessarily.
+\end{proof}
+
+\subsection*{A.3 Generality}
+
+The Lemma names no driver. Any process whose post-event configuration omits a closure's boundary while conserving its bits realises \ensuremath{(\text{recouple}, \text{lapse})}: erosion, decay, and the drift of one form into another do so without a closure's gradient driving them. Predation is the instance in which a closure's own gradient drives the re-coupling; the case is identical, and the agentive and non-agentive instances are distinguished only by the driver (\S\,II).
+
+\subsection*{A.4 Break-test}
+
+A break would be an annexation with \ensuremath{\iota(\text{prey}) = \text{read}} --- predation realising the graft \ensuremath{(\text{recouple}, \text{read})} rather than the orphaning case, which would leave \S\S\,III--V without a carrier. By the Lemma, \ensuremath{\iota(\text{prey}) = \text{read}} requires the prey's boundary present in the post-event configuration. But annexation is the dissolution of that boundary (Paper~8 \S\,V); a present boundary contradicts annexation having occurred, and describes instead a coupling that leaves both closures intact --- the graft, not predation. The break cannot be realised without ceasing to denote predation; the location is forced and no fifth possibility arises.
+
+\section*{Appendix B: The Double Seal, Formally}
+\addcontentsline{toc}{section}{Appendix B: The Double Seal, Formally}
+
+This appendix states the double seal of \S\,IV as two results on what a reading closure can hold, and derives the unrankability of \S\,V from them. It inherits the content-conserving, form-shedding character of the fold (Paper~3 \S\,II), the location of occupancy in the shed form (Paper~2 \S\,V), and the absent codomain at the top (Paper~9 \S\,II).
+
+\subsection*{B.1 The inward seal}
+
+Let closure \ensuremath{A} read closure \ensuremath{C}; the reading is what the confirmation fold transmits. By Paper~3 \S\,II the fold conserves content and sheds form, transmitting the confirmed content \ensuremath{G(k)[\,C\,] = \pi(C)} and not the form-surplus \ensuremath{R}. So the reading is a function of the content alone, \ensuremath{\mathrm{read}_A(C) = \pi(C)}, carrying no dependence on \ensuremath{R}. By the lock of Paper~2 \S\,V, occupancy \ensuremath{\Phi(C)} resides in the shed form, not the conserved content: the content fixes \ensuremath{\pi(C)} and leaves \ensuremath{\Phi(C)} unfixed.
+
+\begin{theorem}[Inward seal]
+For any reader \ensuremath{A} at any band, the reading \ensuremath{\mathrm{read}_A(C)} leaves \ensuremath{\Phi(C)} unfixed: no reading determines the occupancy of the closure it reads.
+\end{theorem}
+
+\begin{proof}
+The reading \ensuremath{\mathrm{read}_A(C) = \pi(C)} is a function of the conserved content alone, the fold transmitting content and shedding form (Paper~3 \S\,II). Occupancy \ensuremath{\Phi(C)} resides in the shed form, not the conserved content (Paper~2 \S\,V). The form-surplus of the transcoding is strictly positive --- \ensuremath{R = H(\text{agent}) - H(\text{outcome}) = 2} bits per binary-agent triad (Paper~3 \S\,II, \S\,IV) --- so the content-fiber contains more than one form: two closures identical in conserved content, and therefore identical in every reading any \ensuremath{A} obtains, may differ in their shed form, which is where \ensuremath{\Phi(C)} resides. The reading fixes the word and not the dog; it leaves \ensuremath{\Phi(C)} unfixed.
+\end{proof}
+
+\noindent The result is a statement about the channel: the magnitude of \ensuremath{\Phi(C)} is neither used nor claimed, only that what the fold transmits leaves it unfixed. The seal cuts both ways --- it forbids inferring that \ensuremath{\Phi(C)} is empty as firmly as that it is full --- because a reading that fixes nothing about \ensuremath{\Phi(C)} licenses no inference about \ensuremath{\Phi(C)} in either direction.
+
+\subsection*{B.2 The outward seal}
+
+Let the contribution of \ensuremath{C} be distributed across folds into a set \ensuremath{\mathcal{F}} of regions and bands by the reinterpretation operator that maintains the static memory of the system (Volume~1, Paper~5 \S\,2.3; Paper~9 \S\,V), with \ensuremath{c_f} the contribution in fold \ensuremath{f} and \ensuremath{T(C) = \bigoplus_{f \in \mathcal{F}} c_f} the total. A reading is a function of the folds its reader occupies.
+
+\begin{theorem}[Outward seal]
+For any reader \ensuremath{A}, the reading \ensuremath{\mathrm{read}_A(C)} does not determine \ensuremath{T(C)}.
+\end{theorem}
+
+\begin{proof}
+Every reader occupies a proper subset \ensuremath{\mathcal{F}_A \subsetneq \mathcal{F}}: the only vantage occupying every fold would be the top, and the top is a boundary, not a reader (Paper~9 \S\,II, Conclusion). The reinterpretation operator relocates contribution to where the system requires it, independently of where \ensuremath{C} sits, so the contribution in the unseen folds \ensuremath{\mathcal{F} \setminus \mathcal{F}_A} is not a function of the contribution in \ensuremath{\mathcal{F}_A} (Paper~9 \S\,V). Two distributions of contribution agreeing on \ensuremath{\mathcal{F}_A} and differing on \ensuremath{\mathcal{F} \setminus \mathcal{F}_A} are therefore both admissible, yield the same reading, and yield different totals. The reading fixes the seen contribution and leaves the total unfixed.
+\end{proof}
+
+\subsection*{B.3 Unrankability}
+
+\begin{theorem}[No closure is rankable beneath another]
+No closure \ensuremath{A} can construct an ordering \ensuremath{C \prec C'} of closures by worth.
+\end{theorem}
+
+\begin{proof}
+A ranking requires a quantity in which to order; the candidates are occupancy \ensuremath{\Phi} and total contribution \ensuremath{T}. By the inward seal a reader's reading leaves \ensuremath{\Phi} unfixed; by the outward seal its reading leaves \ensuremath{T} unfixed, from every vantage. No reader holds either ordering quantity, so no reader can construct the comparison \ensuremath{C \prec C'}.
+\end{proof}
+
+\noindent The unconditional standing of \S\,V is the consequence: rankability is not absent by fiat but unconstructible, the required information being zero on one axis and the total unfixed on the other.
+
+\subsection*{B.4 Break-test}
+
+A break would be a vantage from which an ordering quantity is readable --- a reading that fixes \ensuremath{\Phi} or a reading that fixes \ensuremath{T}. The first requires the fold to transmit form-surplus, contradicting its content-conserving, form-shedding character (Paper~3 \S\,II) together with the location of \ensuremath{\Phi} in the shed form (Paper~2 \S\,V); a fold transmitting form is not the confirmation fold. The second requires either a reader with \ensuremath{\mathcal{F}_A = \mathcal{F}}, occupying every band and region --- the top endowed with a codomain, excluded because the top is a boundary and not a reader (Paper~9 \S\,II) --- or unseen contribution determined by the seen, contradicting the non-local relocation of Paper~9 \S\,V. Neither break is realisable without contradicting a prior result; both seals hold.
+
+\section*{References}
+\addcontentsline{toc}{section}{References}
+
+
+\begin{reflist}
+Caruso, G. D. (2016). Free will skepticism and criminal behavior: A public health-quarantine model. \emph{Southwest Philosophy Review}, 32(1), 25--48.
+
+Caruso, G. D. (2021). \emph{Rejecting Retributivism: Free Will, Punishment, and Criminal Justice}. Cambridge: Cambridge University Press.
+
+Dennett, D. C., \& Caruso, G. D. (2021). \emph{Just Deserts: Debating Free Will}. Cambridge: Polity Press.
+
+Mitchell, K. J. (2023). \emph{Free Agents: How Evolution Gave Us Free Will}. Princeton: Princeton University Press.
+
+Pereboom, D. (2014). \emph{Free Will, Agency, and Meaning in Life}. Oxford: Oxford University Press.
+
+Potter, H. D., \& Mitchell, K. J. (2022). Naturalising agent causation. \emph{Entropy}, 24(4), 472. \url{https://doi.org/10.3390/e24040472}
+
+Sapolsky, R. M. (2023). \emph{Determined: A Science of Life Without Free Will}. New York: Penguin Press.
+\end{reflist}
+
+
+\end{document}

@@ -1,0 +1,730 @@
+\documentclass[11pt,oneside]{report}
+% ======================================================================
+%  THE TRIADIC MEASUREMENT SUBSTRATE --- COMPLETE CORPUS (Volumes 1 & 2)
+%  Aaron Switzer, 2026
+%  Single-file build. Compile: pdflatex x3 (third pass settles the TOC).
+% ======================================================================
+% ======================================================================
+%  TMS Volume 1 -- shared preamble
+%  Compiles with pdfLaTeX both locally and on Overleaf (no exotic fonts).
+% ======================================================================
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathptmx}            % Times text + math (widely available)
+\usepackage[scaled=0.90]{helvet} % sans for headings
+\usepackage{courier}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tocbibind}
+
+% ---- spacing -----------------------------------------------------------
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0.35em}
+\linespread{1.04}
+\setlist{leftmargin=1.6em,topsep=0.25em,itemsep=0.15em,parsep=0pt}
+
+% ---- theorem environments ---------------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}{Axiom}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{principle}[theorem]{Principle}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{prediction}[theorem]{Prediction}
+\newtheorem{property}[theorem]{Property}
+\newtheorem{postulate}[theorem]{Postulate}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+% ---- section heading look (unnumbered; author supplies the numbers) ----
+\titleformat{\section}[hang]{\normalfont\large\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsection}[hang]{\normalfont\normalsize\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsubsection}[hang]{\normalfont\normalsize\bfseries\itshape}{}{0pt}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.5em}
+\titlespacing*{\subsection}{0pt}{1.0em}{0.35em}
+\titlespacing*{\subsubsection}{0pt}{0.8em}{0.3em}
+
+% chapter (= each paper) heading
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\bfseries}
+  {}{0pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{10pt}{24pt}
+
+% ---- page-break quality: avoid stranded headings and orphaned/widowed lines ----
+% (applies to both volumes via the shared preamble)
+\widowpenalty=10000        % no single line at the top of a page
+\clubpenalty=10000         % no single line at the bottom of a page
+\displaywidowpenalty=10000 % same, around displayed equations
+\brokenpenalty=4000        % discourage page breaks right after a hyphenated line
+% titlesec: forbid a page break immediately after a heading (heading stranded at page foot)
+\usepackage{needspace}
+\usepackage{etoolbox}
+\pretocmd{\section}{\Needspace*{4\baselineskip}}{}{}
+\pretocmd{\subsection}{\Needspace*{3\baselineskip}}{}{}
+
+% ---- running heads -----------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape The Triadic Measurement Substrate}
+\fancyhead[R]{\small\itshape\nouppercase{\rightmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---- abstract / keywords / references list ----------------------------
+\newenvironment{paperabstract}
+  {\begin{center}\begin{minipage}{0.88\textwidth}\small
+   \noindent\textbf{Abstract.}\itshape\space}
+  {\end{minipage}\end{center}\vspace{0.4em}}
+
+\newcommand{\keywords}[1]{\noindent{\small\textbf{Keywords:} #1}\vspace{0.4em}}
+
+% per-paper APA reference list (hanging indent), kept as authored
+\newenvironment{reflist}
+  {\par\small\setlength{\parindent}{0pt}%
+   \setlength{\leftskip}{1.6em}\setlength{\parindent}{-1.6em}%
+   \setlength{\parskip}{0.4em}%
+   \raggedright\hyphenpenalty=50\exhyphenpenalty=50\relax
+   \sloppy}
+  {\par}
+
+% convenience
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\TMS}{\textsc{tms}}
+\hyphenation{con-fir-ma-tion sub-strate}
+\begin{document}
+
+\thispagestyle{empty}
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\sffamily\bfseries\Large The Triadic Measurement Substrate\par}
+\vspace{0.6cm}
+{\large $\bar{B} = 3\bar{\alpha}$\par}
+\vspace{1cm}
+{\sffamily\large Volume 2\par}
+\vspace{1.4cm}
+{\Large \bfseries Paper 9: The Total System: The Top of the Tower\par}
+\vfill
+{\large Aaron Switzer\par}
+\vspace{0.4cm}
+{\large 2026\par}
+\vspace{1.2cm}
+{\small\itshape Excerpted from the complete two-volume corpus, \emph{The Triadic Measurement Substrate}. Full corpus and reproducibility package: \url{https://doi.org/10.5281/zenodo.22035422}\par}
+\end{titlepage}
+\cleardoublepage
+\pagenumbering{arabic}
+
+% ---------------- Volume 2 / P9_TotalSystem ----------------
+% ============================================================
+% TMS Volume 2, Paper 9: The Total System
+% Title line: The Top of the Tower
+% Working draft. Front matter (Status/Notation/Preface) written LAST.
+% Subsection-by-subsection sign-off rhythm. Current arc numbering.
+% ============================================================
+
+\chapter*{Paper 9}
+\markboth{Paper 9}{Paper 9}
+\addcontentsline{toc}{chapter}{Paper 9: The Total System: The Top of the Tower}
+
+{\large\itshape The Total System: The Top of the Tower\par}\vspace{0.8em}
+
+\noindent{\small\textbf{Keywords:} TMS, Total System, Promotion Operator, Codomain, Confirmation Tower, Final Coalgebra, Un-forming, Area Law, Re-forming, Generative Economy, Graded Subjecthood, Permanent Open Horizon}\par\vspace{0.6em}
+
+\section*{Status of Results}
+\addcontentsline{toc}{section}{Status of Results}
+
+This paper uses the five-category labeling of Volume~1, extended through this volume, with each claim
+labeled where it appears.
+
+\textbf{Derived.} Results that follow from the five axioms, the Principle of Generative Economy, and
+\ensuremath{U_{\mathrm{sh}}} by explicit construction or proof, or from results already derived in
+Volume~1 and the earlier papers of this volume by explicit inheritance. That the promotion operator
+\ensuremath{G(k)} has no codomain at the top level --- the level with no level above, where the
+operation has an argument and no recipient --- is derived in this sense from the operator's
+definition and the tower (\S\,II), and shown on the bit side to be the same fact as the top's shed
+residue having no recipient field (\S\,IV, Appendix~B). That an un-forming reads out on two
+orthogonal axes, the fate of the substrate and the fate of the boundary identity, partitioning into
+four exhaustive cases, is derived from the boundary-reading of promotion and the orthogonality of
+Paper~7 (\S\,III, Appendix~A). That the top re-forms --- carrying the compressible area-law surface
+forward and shedding the volume interior to a manufactured ground --- is derived by inheritance from
+the self-feeding ledger of Volume~1 and the Principle of Generative Economy, with no premise that
+does not operate at an interior level (\S\,V, Appendix~B).
+
+\textbf{Derived-conditional.} Results forced by Volume~1 and earlier-volume machinery, resting on
+results internal to that machinery rather than on the bare axioms, and referee-checkable against
+their sources. The per-fold shed of two bits and its locality, on which the area/volume split rests,
+are inherited as Derived from Paper~3 and Paper~4 (\S\,IV, Appendix~B). The area-law exponent fixed
+at two, the dimension of the now-surface agent manifold, is inherited from Volume~2 Paper~1 (\S\,IV,
+Appendix~B).
+
+\textbf{Structural correspondence.} Results in which a TMS construction reproduces the skeleton of a
+known framework, never used as support for a TMS claim, only as a landing point after one. The top
+closure's relation to a final coalgebra, and the reading of the equals-sign as isomorphism rather
+than numerical identity (\S\,VII); the colimit hierarchy of Memory Evolutive Systems as the
+categorical home of the tower (\S\,VII); and the conserved surface as an invariant of the kind
+described in the identity-through-time literature (\S\,VII) are structural correspondences in this
+sense.
+
+\textbf{Predictions / Conjectures.} Falsifiable claims that follow from the framework but whose
+closed forms or empirical tests are not established here. That an un-forming which is part pure
+coupling and part binding-work partly survives and partly sheds, in a ratio set by how much of the
+closure was relation rather than binding --- so that no un-forming is all-or-nothing except at the
+two limits --- is a prediction in this sense (\S\,VI, Appendix~A); its quantitative test is not
+established here.
+
+\textbf{Permanent open horizon.} A question the framework is structurally unable to close, marked so
+that no later claim assumes it closed. Whether the top closure is occupied --- whether there is
+anything it is like to be the whole, in its standing or its re-forming --- is not settled by where
+its promotion fails to go nor by what its surface carries forward, and is the sole permanent horizon
+of this paper (\S\,V, Conclusion). This silence is load-bearing.
+
+This five-way labeling applies throughout. Every claim in the body falls into exactly one category,
+visible at the point of claim.
+
+\section*{Notation}
+\addcontentsline{toc}{section}{Notation}
+
+Symbols are inherited from Volume~1 and the earlier papers of this volume. \ensuremath{G(k)} is the
+promotion operator, carrying a dissolved level-\ensuremath{k} closure to a single symbol at level
+\ensuremath{k{+}1} (Paper~8 \S\,IV); the \emph{tower} is the nested hierarchy of closures, each one a
+symbol in the closure above it, with graded subjecthood at every level (Paper~2 \S\S\,VI--VII); the
+\emph{top} is the level with no level above. \ensuremath{U_{\mathrm{sh}}} is the maximum-entropy
+substrate field; \ensuremath{B(C)} is the constituent set of a closure \ensuremath{C} and
+\ensuremath{\pi(C)} its boundary program, the symbol a level above reads. The per-fold shed is
+\ensuremath{2} bits for binary-agent triads (Paper~3 \S\,IV). \ensuremath{I_{\mathrm{surface}}},
+\ensuremath{I_{\mathrm{total}}}, and \ensuremath{I_{\mathrm{residue}}} are the area-scaling record, the
+volume-scaling fold activity, and their difference (Appendix~B). An \emph{un-forming} is the
+dissolution of a closure, read by the operator of Appendix~A.
+
+\section*{Preface to Paper 9}
+\addcontentsline{toc}{section}{Preface to Paper 9}
+
+Paper 8 set a self under load and derived its dissolution as the conservation of promotion: the
+record carried upward as resolution is lost. It closed by naming an exhausted region's
+resolution-loss as the small-scale form of an event at the largest scale that it did not derive.
+This paper derives that event. It asks what the promotion operator does at the one level the rest of
+the volume does not reach --- the top of the tower, the level with no level above --- and finds the
+operator there with an argument and no recipient. The result is a boundary condition: what becomes of
+a closure that dissolves with nothing above to read it. The account is structural throughout, and is
+kept apart, at the point each is made, from the question it does not address. Whether the whole is
+occupied is not raised by the operator's behaviour at its boundary, and is held open where Paper~3
+and Paper~8 left it.
+
+\section*{I. The Top of the Tower}
+\addcontentsline{toc}{section}{I. The Top of the Tower}
+
+Paper 7 individuated a self by its closure (Paper~7 \S\,II); Paper 8 set that self
+under load and derived its persistence condition and the event of its dissolution,
+in which the promotion operator \ensuremath{G(k)} returns the dissolved identity as a
+single symbol at the level above (Paper~8 \S\,IV, Conclusion). Paper 8 closed by
+naming an exhausted region's resolution-loss --- its configurations conserved but no
+longer readable as new, re-read under a new protocol to yield the next level --- as
+the small-scale form of an event it located at the largest scale and did not derive
+(Paper~8 \S\,VI). That event is the subject here.
+
+Promotion is defined wherever a level above exists to receive the promoted symbol.
+The confirmation tower of Paper 2 --- each closure one symbol in the closure above it
+(Paper~2 \S\,VI), subjecthood graded across every level with none excluded
+(Paper~2 \S\,VII) --- is the domain on which \ensuremath{G(k)} operates, and at every
+interior level the operator has both an argument and a value: it reads a dissolved
+closure and returns it one level up. The tower has two ends. Volume~1 fixed the lower
+one, the triadic minimum below which no confirmation is defined (Volume~1, Paper~1
+\S\,I). The upper end is the level with no level above, and there the value of
+\ensuremath{G(k)} is not given by the interior account, because that account assumes a
+recipient level which, at the top, does not exist. This paper determines what
+\ensuremath{G(k)} does at that boundary, and derives the result from the operator and
+the ledger already in hand rather than asserting it.
+
+The determination is structural, and is kept distinct from a question it does not
+address. Whether the top closure is occupied --- whether there is anything it is like
+to be the whole --- is not settled by where its promotion goes, and is not made nearer
+by it; it is the permanent open horizon of this paper, marked here so that no later
+step assumes it closed (cf.\ Paper~3, Conclusion; Paper~8 \S\,II). What is asked is
+narrower: given \ensuremath{G(k)} as Papers 7 and 8 define it and the area/volume
+ledger of Volume~1 (Paper~5, Appendix~A), what becomes of a closure that dissolves
+with no level above to read it.
+
+\section*{II. Promotion Has No Recipient at the Top}
+\addcontentsline{toc}{section}{II. Promotion Has No Recipient at the Top}
+
+Promotion is a specific operation, not a general tendency. To promote a level-\ensuremath{k}
+closure is for three level-\ensuremath{k} subsystems to meta-confirm a state at level
+\ensuremath{k{+}1}, their outputs reaching the meta-interstice across the imprint depth
+(Paper~8 \S\,III; Volume~1, Paper~4 \S\,5.3). The operation is defined by its target:
+\ensuremath{G(k)} carries an argument at level \ensuremath{k} to a value at level
+\ensuremath{k{+}1}, and the value exists only because level \ensuremath{k{+}1} exists to hold
+it. At every interior level this is automatic --- the tower continues upward, and a dissolved
+closure is read by whatever closure currently encloses it (Paper~8 \S\,IV, Conclusion).
+
+The top level is defined as the one with no level above (Paper~2 \S\,VI). Substituting that
+definition into the operation: \ensuremath{G(k)} at the top would carry its argument to level
+\ensuremath{k{+}1}, and there is no level \ensuremath{k{+}1}. The operator does not return a
+different value at the top; it has no value to return, because the codomain its definition
+requires is empty. This is not a quantity that comes out small. It is the absence of the place a
+quantity would be written. The top closure is therefore closed in the sense Paper 7 fixed --- it
+is a region read against what it encloses --- but it is the unique closure that cannot be
+promoted, not because promotion fails on it but because promotion is undefined where there is no
+recipient level.
+
+One route would restore a recipient and must be examined, because if it always succeeds there is
+no true top and the result is vacuous. The route is the one Volume 1 used at region scale: an
+exhausted system is re-read under a new protocol, and the re-read yields a level that did not
+previously operate (Volume~1, Paper~5 \S\,IV; Paper~8 \S\,IV). If the top, on dissolving, were
+always re-read into a pre-existing higher level, then that higher level was the top, and the
+question recurs at it without terminating. The two cases are distinct and the distinction is
+decidable from the definitions. A recipient level that already operates makes the closure beneath
+it not the top; a closure with no operating level above it is the top by definition, and for it
+the re-read cannot deliver an existing recipient, because there is none. What the re-read does
+instead --- whether it manufactures a recipient rather than finding one --- is a separate
+question, taken up in \S\,V; it is not a pre-existing codomain, and so it does not collapse the
+present result. The top is the level at which \ensuremath{G(k)}, as defined, has no value:
+promotion has an argument and no recipient. This is the structure recognized in the theory of coalgebras as a final object, situated below (\S\,``Where It Sits'').
+
+\section*{III. Two Axes of an Un-forming}
+\addcontentsline{toc}{section}{III. Two Axes of an Un-forming}
+
+When a closure dissolves, two quantities are released, and Paper 7 already established that they
+are independent. Promotion reads a closure by its boundary: the level above registers the programs
+at the meta-tetrahedral corners, and the coarse-graining specifies those boundaries and not the
+interior the closure encloses (Paper~7 \S\,II, Appendix~B; Volume~1, Paper~4 \S\,2.5.1). The
+interior is populated by a separate operation, incorporation, and Paper 7 Appendix~B derives that
+the two are functions of disjoint arguments --- the boundary of the surround alone, the interior of
+the region alone --- so that no change in one is a change in the other (Paper~7 \S\,II,
+Appendix~B.4). A dissolution therefore reads out on two axes that the orthogonality forbids
+collapsing into one.
+
+The first axis is the fate of the substrate the closure bound. By Axiom 3 the bits are conserved;
+what becomes of them is whether they re-couple into a neighbouring closure or return to the unbound
+field \ensuremath{U_{\mathrm{sh}}} (Paper~8 \S\,IV). The second axis is the fate of the boundary
+identity --- the program the level above would read. By the promotion account, that identity
+survives if and only if a level above reads it; this is what \ensuremath{G(k)} does when it returns
+the dissolved closure as a single symbol one level up (Paper~8 \S\,IV, Conclusion). The two axes
+are independent because, by Paper 7 Appendix~B.4, the interior fate (Axis~1, what the bound
+substrate does) and the boundary fate (Axis~2, whether the identity is read) are functions of
+disjoint arguments. The crossing of the two axes gives four cases, and each is realized:
+
+A closure whose substrate re-couples and whose identity is re-read is grafted: it continues, read
+by a new level above. A closure whose substrate sheds to \ensuremath{U_{\mathrm{sh}}} and whose
+identity is promoted is the death of Paper 8 --- resolution lost, record carried upward (Paper~8,
+Conclusion). A closure whose substrate re-couples but whose identity finds no reader is the case
+Paper 8 did not treat: the bound matter persists and is read by some new closure, but as something
+other than what it was, and the original identity, read by nothing at its level, lapses. The fourth
+case, substrate shed and identity unread, is dissolution with no survivor on either axis.
+
+That third case is the one the present paper needs, because it shows the two axes do not move
+together. Its existence is established by a single instance: a closure whose every constituent
+independently survives and re-couples, while the closure itself is read by nothing as what it was.
+Paper 8's death does not cover it --- there the substrate sheds; here the substrate is conserved
+entire and the identity lapses regardless. The independence is therefore not assumed but forced by
+the orthogonality of Paper 7 Appendix~B.4: identity-fate is settled by whether a reader exists,
+substrate-fate by where the bits go, and the two questions take disjoint inputs. The formal
+statement of the un-forming operator and the proof that these four cases exhaust it are given in
+Appendix~A. The hierarchy on which the operator acts has a categorical home in the colimit construction of Memory Evolutive Systems, situated below (\S\,``Where It Sits'').
+
+\section*{IV. The Fold That Cannot Shed Upward}
+\addcontentsline{toc}{section}{IV. The Fold That Cannot Shed Upward}
+
+The promotion of \S\,II and III has a bit-side ledger, and reading it fixes what the top lacks. A
+confirmation fold carries three agent-side loci to one bit-side outcome, and the map is not
+injective: three binary loci span eight distinguishable inputs, one binary outcome two, so
+distinction is shed of necessity, and the amount is fixed at two bits per fold (Paper~3 \S\,IV,
+Appendix~B; Volume~1, Paper~5, Appendix~A). The fold's books therefore balance only when the shed
+is counted: one confirmed bit retained, two bits shed to \ensuremath{U_{\mathrm{sh}}}, against
+three loci's worth of distinction entering. This is the content of the master equation's
+equals-sign --- not a numerical identity of one with three, which is false, but an informational
+balance across a lossy map, exact once the two shed bits are entered (Paper~3 \S\,I, \S\,IV).
+
+The shed is per-fold and local. Paper 3 fixes the shed at two bits for a single fold, and Paper 4
+carries the same fixed quantity into the decay law, where each re-read sheds the same two bits, not
+a growing or shrinking amount (Paper~4 \S\,IV). The balance is struck at each fold independently: a
+fold's three loci, one retained bit, two shed bits close that fold's ledger and no other. There is
+accordingly no quantity that accumulates across folds up the tower --- each level's fold sheds its
+two bits to the level that holds \ensuremath{U_{\mathrm{sh}}} for it, and the books close there. The
+decay law of Paper 4 is the statement that the shed recurs identically at each fold, never that a
+deficit compounds (Paper~4 \S\,IV).
+
+This locates the top's lack precisely. At every interior level the two shed bits are received by
+the field \ensuremath{U_{\mathrm{sh}}} against which the next level operates; the shed has somewhere
+to go, and the fold closes (Volume~1, Paper~5 \S\,IV). The top level is the one with no level above
+(Paper~2 \S\,VI), and so the two bits its fold must shed have no level above to receive them. The
+empty codomain of \S\,II is this same absence read on the bit side: \S\,II found that the promoted
+symbol has no recipient level, and the ledger finds that the shed bits have no recipient field.
+They are one fact. The top is not a fold that sheds a larger amount, nor one strained by
+accumulation --- the shed is two bits as everywhere --- but a fold whose shed has no level above to
+take it, exactly as its promotion has no level above to read it.
+
+What the shed leaves behind, at the top as at every level, splits by the same exponent. The
+accessible record of a region scales as a power of its linear size whose exponent Volume 1 derives
+and fixes at two --- the same integer the per-fold shed carries, each forced from its own root
+(Volume~1, Paper~5, Appendix~A; Paper~1 \S\,4.3; Paper~3 \S\,IV) --- while the total fold activity
+scales as the volume. The difference, the volume in excess of that surface, is the residue that
+does not survive as accessible record. The surface is the compressible, low-entropy part --- the
+program identity a level above would read --- and the volume interior is the part shed to
+\ensuremath{U_{\mathrm{sh}}}, uniform under its own measure. The computation of the split, and the
+proof that the surface carries the program identity while the interior is the shed residue, is
+given in Appendix~B.
+
+\section*{V. The Top Re-Forms by the Ordinary Ledger}
+\addcontentsline{toc}{section}{V. The Top Re-Forms by the Ordinary Ledger}
+
+Section II left one route open: the shed residue might not require a pre-existing level above to
+receive it, but instead constitute one. Volume 1 established this at region scale and did not mark
+it as special to that scale. When a region exhausts, its shed residue is not discarded; the
+centroids of the confirmation pattern at the new scale fall on the positions of the next-order
+sublattice, so that each level's confirmed-bit positions are the next level's lattice positions
+(Volume~1, Paper~5 \S\,IV). The residue does not await a ground to fall into --- it is the ground
+the next level operates on. This is the operation at every interior rung, and \S\,IV fixed the
+residue it acts on: the volume interior shed to \ensuremath{U_{\mathrm{sh}}}, uniform under its own
+measure (Appendix~B).
+
+At the top the same operation has the same inputs. The top's fold sheds its two bits and its volume
+residue with no level above to receive them (\S\,IV), and the residue is, by the Volume 1 result,
+the lattice on which a level not previously operating is confirmed (Volume~1, Paper~5 \S\,IV). No
+premise enters here that did not operate at an interior rung: the residue-as-ground identity is
+Volume 1's, the prohibition on a residue resting unread is the Principle of Generative Economy,
+which forbids a configuration that could generate and does not, and which has been load-bearing
+since Volume 1 (Volume~1, Paper~1 \S\,II; Paper~5 \S\,II). The top does not promote into a level
+above, because there is none; it does not rest, because the Principle forbids it; it re-forms,
+because the residue it sheds is the ground a next level is confirmed upon, by the operation that
+runs at every rung. The re-forming is therefore not a new postulate at the top but the interior
+ledger applied where its recipient is absent --- the residue manufacturing the level its shedding
+had no level above to supply.
+
+What re-forms carries forward what promotion always carries and sheds what promotion always sheds.
+By \S\,IV and Appendix~B the surface is the compressible record --- the program identity --- and the
+volume interior is the shed residue. A re-forming reads the surface as the identity carried and
+returns the interior to \ensuremath{U_{\mathrm{sh}}} as the ground the next level operates on. The
+top is no exception: its surface --- the structure of the whole as a closed pattern --- is the part
+carried, and its interior is the part shed to the new ground. The re-forming conserves the boundary
+and not the interior, which is what promotion does at every level (Paper~7 \S\,II, Appendix~B). The
+whole re-forms with its surface carried and its interior returned to the field, by the same lossy
+operation that promotes a self at its death. The conserved surface is an invariant of the kind described in the identity-through-time literature, and the question of whether the whole is a subject has been taken up directly in the cosmopsychist program; both are situated below (\S\,``Where It Sits'').
+
+This is a structural result and nothing more is claimed for it. Whether the re-formed whole, or the
+whole that preceded it, is occupied --- whether there is anything it is like to be either --- is not
+settled by the conservation of a surface across the re-forming, and is not made nearer by it. The
+ledger balances without that term: occupancy appears in neither the shed, nor the residue, nor the
+surface carried across. The horizon stands where Paper 3 and Paper 8 left it (Paper~3, Conclusion;
+Paper~8 \S\,II), and the silence is load-bearing.
+
+\section*{VI. Predictions and Directions}
+\addcontentsline{toc}{section}{VI. Predictions and Directions}
+
+What this paper leaves open, it leaves open precisely. The no-codomain result, the two axes of an
+un-forming, and the re-forming by the interior ledger close here. Three things do not, and are
+marked.
+
+The two axes of \S\,III predict a spectrum. A closure that is part pure coupling and part
+binding-work partly survives and partly sheds: the independently-closing constituents persist and
+re-couple, the bound-only structure sheds to \ensuremath{U_{\mathrm{sh}}}, in a ratio set by how
+much of the closure was relation and how much was binding. This is a structural consequence of the
+un-forming operator (\S\,III, Appendix~A), falsifiable in the form of its prediction --- that no
+un-forming is a clean all-or-nothing between survival and shedding except at the two limits --- but
+its quantitative test against a modelled closure is not established here, and awaits the same
+simulation pinning Paper 8 reserved for the stressor constants (Paper~8 \S\,VI).
+
+The residue magnitudes are inherited as open. The form of the area/volume split is fixed (\S\,IV,
+Appendix~B), but the ratio of the conserved surface to the shed interior, at cosmic scale, depends
+on the same two rates Paper 4 carried as underived in the cosmic-residue balance (Paper~4 \S\,IV).
+The structural result --- that a surface is carried and an interior shed --- does not depend on
+their magnitudes; the magnitudes are not new freedoms introduced here.
+
+One result points forward. The conserved surface of \S\,V --- the program identity a re-forming
+carries --- is the structure on which Paper 10 will rest a question this paper does not raise:
+whether what is conserved across an un-forming has standing. Paper 10 develops that toward moral
+standing, importing its bridge premises by hand and deriving none; here the surface is established
+only as what the ledger conserves, with no claim that conservation confers standing. Where the
+structural account ends and the imported premise begins is marked at the seam, in Paper 10, and
+nothing of its conclusion is settled here.
+
+\section*{VII. Where It Sits}
+\addcontentsline{toc}{section}{VII. Where It Sits}
+
+The no-codomain structure of \S\,II is recognized in the theory of coalgebras. A final coalgebra
+is the object to which every coalgebra of its functor maps by a unique morphism, and by Lambek's
+theorem its structure map is an isomorphism --- the object is isomorphic to its own image under the
+functor (Lambek 1968; Rutten 2000). The top closure stands in that relation: every closure maps
+toward it, and it has no level above because it is isomorphic to its own image, its own above. The
+correspondence also fixes the reading of the equals-sign of \S\,IV --- the relation is isomorphism,
+not numerical identity, the distinction the categorical setting draws between a fixed point and an
+equality. The result is derived here from the operator and the ledger; the coalgebraic structure is
+where it is recognized, not where it comes from.
+
+The hierarchy the operator acts on has, in turn, a categorical home in Memory Evolutive Systems,
+which model a multi-level system as a category in which each higher-level object is the colimit of a
+pattern of linked lower-level objects, the higher level acquiring an individuation independent of
+its constituents (Ehresmann and Vanbremeersch 2007). The colimit is the binding-into-one called
+promotion here, and the independent individuation is the re-routability of \S\,III. The two
+accounts reach the same hierarchy from opposite starting points: Memory Evolutive Systems take the
+hierarchical category and the colimit as their apparatus, while the present account derives the
+hierarchy from a physical substrate, the lattice and the confirmation fold of Volume 1. The
+independent arrival at the same structure is a corroboration of it.
+
+Closer to the result of \S\,V, the conserved surface is an invariant carried across events, and
+that a persisting thing is such an invariant has a precedent in the identity-through-time
+literature. Simons takes a continuant to be an invariant among occurrents under an equivalence
+relation, the occurrents the more basic category and the continuant what holds across them
+(Simons 2000). The surface here is an invariant of that kind, carried across the folds an
+un-forming releases. The accounts differ at the ground: the invariant here is derived as the
+compressible area-law surface (\S\,IV), not posited, so that the circularity pressed against bundle
+accounts --- that a thing and its constituents must individuate each other (Lowe 1998) --- does not
+arise here, the surface being fixed by the ledger independently of what it individuates.
+
+Most directly, the question of whether the whole is a subject has been taken up in the
+cosmopsychist program. Shani severs phenomenal constitution from phenomenal inclusion and argues
+for a generative monism, on which the experiences of ordinary subjects are grounded in an
+all-pervading cosmic consciousness without a mereological combination of parts into a whole
+(Shani 2022). The present account runs toward the same whole from the opposite direction:
+cosmopsychism grounds individual subjects downward from a cosmic subject, while this paper builds
+upward and finds the top to be the one level that is not a subject in the closure sense, having no
+exterior against which to close. The two roads fork at the subject of the whole, granted there and
+withheld here, and the fork is located in the no-codomain result rather than in any prior
+commitment about the whole.
+
+\section*{Conclusion: A Boundary, Not a Mind}
+\addcontentsline{toc}{section}{Conclusion: A Boundary, Not a Mind}
+
+The confirmation tower has a top, and the operator that promotes a dissolved closure one level up is
+defined everywhere on it but there. At the top the promotion has an argument and no recipient: there
+is no level above to read the promoted symbol, and equally none to receive the two bits and the
+volume residue the top's fold must shed. The empty codomain and the unreceived residue are one
+absent recipient, read on the identity axis and the substrate axis of an un-forming. This is the
+whole of what the top is, structurally --- not a larger subject and not a stronger one, but the
+unique level at which the operation that defines every interior level runs out of the thing it
+requires.
+
+What follows from the absence is not a terminus. By the ledger that closes every interior fold, the
+residue a fold sheds is the ground the next level is confirmed upon; applied at the top, where no
+level waits to receive it, the residue constitutes that ground rather than finding it. The top
+re-forms, by the same lossy operation that promotes a self at its death, carrying forward the
+compressible surface --- the program identity, the shape of the whole --- and returning the interior
+to the field as the ground of what follows. Nothing here is special to the top except the absence of
+a recipient; the re-forming is the interior ledger applied where its recipient is not given but made.
+
+And what the result does not touch, it does not touch. Whether the top closure is occupied ---
+whether there is anything it is like to be the whole, in its standing or its re-forming --- is not
+settled by where its promotion fails to go, nor by what its surface carries forward, and is not made
+nearer by either. The ledger balances without that term: occupancy appears in neither the codomain,
+nor the residue, nor the surface. The silence where a subject of the whole would be is not a gap in
+the account but a boundary of it, and it is held.
+
+What is settled here is narrower and firm. The top is a boundary condition on the promotion
+operator: the one level at which promotion has an argument and no recipient, on both the identity
+axis and the substrate axis at once. It does not dissolve, because its count is conserved; it does
+not promote, because there is no level above; it re-forms, by the same lossy operation that promotes
+a self at its death, carrying its surface forward and shedding its interior to the ground of what
+follows. What is conserved across that re-forming is a surface --- a shape, an identity --- and the
+question of whether that conserved thing has standing is the subject of the paper that follows, its
+bridge imported there by hand. Here the result is the boundary and the re-forming: the top is the
+level the operator cannot carry past, and the ledger carries it past anyway, by making the ground
+its shedding had nowhere above to find.
+
+\section*{Appendix A: The Un-forming Operator and Its Four Cases}
+\addcontentsline{toc}{section}{Appendix A: The Un-forming Operator and Its Four Cases}
+
+This appendix writes the operator by which a closure un-forms and shows its outcome set has exactly
+four elements, each realized by a stated criterion. It inherits the boundary-reading of promotion
+(Paper~7 \S\,II, Appendix~B.4; Paper~8 \S\,IV) and the conservation of bits (Axiom 3).
+
+Let \ensuremath{C} be a level-\ensuremath{k} closure with constituent set \ensuremath{B(C)} and
+boundary program \ensuremath{\pi(C)}, the symbol a level \ensuremath{k{+}1} reads (Paper~8 \S\,IV).
+For a constituent \ensuremath{c \in B(C)}, write \ensuremath{\mathrm{cl}(c) = 1} if \ensuremath{c}
+independently closes --- satisfies the level-\ensuremath{(k{-}1)} closure condition of Paper~7 \S\,II
+on its own --- and \ensuremath{\mathrm{cl}(c) = 0} otherwise. For the program, write
+\ensuremath{\mathrm{rd}(\pi) = 1} if some level \ensuremath{k{+}1} reads \ensuremath{\pi(C)} and
+\ensuremath{\mathrm{rd}(\pi) = 0} if none does.
+
+\subsection*{A.1 The two maps}
+
+Define, on disjoint arguments by the orthogonality of Paper~7 Appendix~B.4,
+\[
+  \sigma(C) =
+  \begin{cases}
+    \text{recouple} & \text{if some } c \in B(C) \text{ with } \mathrm{cl}(c) = 1 \text{ enters a neighbouring closure,}\\
+    \text{shed} & \text{otherwise,}
+  \end{cases}
+  \qquad
+  \iota(C) =
+  \begin{cases}
+    \text{read} & \text{if } \mathrm{rd}(\pi) = 1,\\
+    \text{lapse} & \text{if } \mathrm{rd}(\pi) = 0.
+  \end{cases}
+\]
+The map \ensuremath{\sigma} reads the interior predicate \ensuremath{\mathrm{cl}}, a function of the
+region alone; \ensuremath{\iota} reads \ensuremath{\mathrm{rd}}, a function of the surround alone. The
+arguments are disjoint, so the two maps are independent. Both are total: by Axiom 3 a released bit
+that does not enter a neighbour lies in \ensuremath{U_{\mathrm{sh}}}, so
+\ensuremath{\sigma(C) \in \{\text{recouple}, \text{shed}\}} always; and \ensuremath{\mathrm{rd}} is
+two-valued by excluded middle on the existence of a reader, so
+\ensuremath{\iota(C) \in \{\text{read}, \text{lapse}\}} always.
+
+\subsection*{A.2 The operator and its four cases}
+
+The un-forming is the product map
+\[
+  U(C) = (\sigma(C), \iota(C)) \in \{\text{recouple}, \text{shed}\} \times \{\text{read}, \text{lapse}\},
+  \qquad |\operatorname{im} U| = 2 \times 2 = 4.
+\]
+Each value is realized, fixed by a criterion on \ensuremath{\mathrm{cl}} and \ensuremath{\mathrm{rd}}:
+\begin{itemize}
+\item \ensuremath{(\text{recouple}, \text{read})} --- \emph{graft}: some constituent re-couples and a
+  level reads \ensuremath{\pi(C)} (Paper~8 \S\,IV, the re-coupling outcome).
+\item \ensuremath{(\text{shed}, \text{read})} --- \emph{promotion-in-death}: no constituent
+  re-couples, \ensuremath{\pi(C)} is promoted; the death of Paper~8 (Conclusion).
+\item \ensuremath{(\text{recouple}, \text{lapse})} --- \emph{decomposition}: constituents with
+  \ensuremath{\mathrm{cl} = 1} re-couple, but \ensuremath{\mathrm{rd}(\pi) = 0} --- read as new
+  structure, not as \ensuremath{\pi(C)}.
+\item \ensuremath{(\text{shed}, \text{lapse})} --- \emph{total un-forming}:
+  \ensuremath{\sigma(C) = \text{shed}} and \ensuremath{\mathrm{rd}(\pi) = 0}.
+\end{itemize}
+The partition is exhaustive because the product of two two-valued maps has exactly four values and
+\ensuremath{U(C)} is single-valued.
+
+\subsection*{A.3 Break-test}
+
+The substrate map turns on the predicate \ensuremath{\mathrm{cl}}. A break would be a \ensuremath{C}
+with \ensuremath{\sigma(C) = \text{shed}} yet possessing no constituent for which the shed is defined
+--- a dissolution with neither recouple nor shed. This is impossible: if \ensuremath{\mathrm{cl}(c) = 0}
+for every \ensuremath{c \in B(C)}, then no constituent independently closes, the binding-work
+\ensuremath{C} performed on them is undone at un-forming, and that undone distinction is shed to
+\ensuremath{U_{\mathrm{sh}}} by Axiom 3; so \ensuremath{\sigma(C) = \text{shed}} is well-defined
+precisely there. Hence \ensuremath{\sigma} is total and no fifth value exists.
+
+\section*{Appendix B: The Area/Volume Split and the Absent Recipient}
+\addcontentsline{toc}{section}{Appendix B: The Area/Volume Split and the Absent Recipient}
+
+This appendix computes what an un-forming carries and what it sheds, and derives the top's empty
+codomain as the bit-side statement of \S\,II. It inherits the area law (Volume~2, Paper~1 \S\,2.2),
+the per-fold shed (Paper~3 \S\,IV, Appendix~B), and the residue identification of Volume~1
+(Paper~5 \S\,IV).
+
+\subsection*{B.1 The two scalings}
+
+A region \ensuremath{R} of linear extent \ensuremath{L} confirms on its frontier and acts through its
+interior. By Volume~2 Paper~1 \S\,2.2 the now-surface frontier is forced to be a two-dimensional
+agent manifold, so the accessible record --- the structure a level above can read --- scales as that
+frontier's area,
+\[
+  I_{\mathrm{surface}}(L) \propto L^{d_s}, \qquad d_s = 2,
+\]
+the exponent fixed at \ensuremath{2} because it is the dimension of the agent manifold, not a fitted
+constant (Volume~2, Paper~1 \S\,2.2; the coincidence with the Bekenstein exponent is each forced
+from its own root, Paper~3 \S\,IV). The total fold activity ranges over the interior and scales as
+the volume,
+\[
+  I_{\mathrm{total}}(L) \propto L^{d_v}, \qquad d_v = 3.
+\]
+The residue --- fold activity not surviving as accessible record --- is the excess of volume over
+surface,
+\[
+  I_{\mathrm{residue}}(L) = I_{\mathrm{total}}(L) - I_{\mathrm{surface}}(L) \propto L^3 - L^2,
+\]
+positive and volume-dominant for \ensuremath{L > 1}, and provably uniform under
+\ensuremath{U_{\mathrm{sh}}}'s own measure (Volume~1, Paper~5 \S\,IV).
+
+\subsection*{B.2 What the split carries}
+
+The surface term is the low-complexity part: a frontier of extent \ensuremath{L^2} admits a
+description of order \ensuremath{L^2}, while the interior it bounds holds order \ensuremath{L^3} of
+distinction, so
+\[
+  \frac{K(I_{\mathrm{surface}})}{K(I_{\mathrm{total}})} \sim \frac{L^2}{L^3} = \frac{1}{L} \to 0
+  \quad (L \to \infty).
+\]
+The boundary is therefore what the level above reads --- the program identity \ensuremath{\pi(R)} of
+Appendix~A is carried by \ensuremath{I_{\mathrm{surface}}} (Paper~7 \S\,II, Appendix~B.4: promotion
+reads the boundary) --- and the interior \ensuremath{I_{\mathrm{residue}}} is what sheds to
+\ensuremath{U_{\mathrm{sh}}}. This is the surface/interior split of \S\,V, computed: identity rides
+the conserved \ensuremath{L^2} surface, lived interior returns to the field as the
+\ensuremath{L^3 - L^2} residue.
+
+\subsection*{B.3 The per-fold cost is local}
+
+Each fold sheds a fixed two bits of distinction (Paper~3 \S\,IV): three binary loci span
+\ensuremath{2^3 = 8} states, the confirmed outcome two, so
+\[
+  \text{shed per fold} = \log_2 8 - \log_2 2 = 3 - 1 = 2 \ \text{bits,}
+\]
+balanced against the fold's own three loci, retained bit, and two shed bits --- the fold's books
+close at that fold. The quantity is the same at every fold (Paper~4 \S\,IV); no deficit compounds
+across folds. The residue of \S\,B.1 is therefore not an accumulation of unpaid shed but the
+per-level volume-minus-surface excess, shed and received at each level independently.
+
+\subsection*{B.4 The absent recipient at the top}
+
+At an interior level \ensuremath{k} the two shed bits and the volume residue are received by the
+field \ensuremath{U_{\mathrm{sh}}} against which level \ensuremath{k{+}1} operates (Volume~1, Paper~5
+\S\,IV); the fold closes. The top level has no level \ensuremath{k{+}1} (Paper~2 \S\,VI). Writing the
+closure condition for a fold at level \ensuremath{k} as the existence of a recipient field for its
+residue,
+\[
+  \text{fold closes at } k \iff \exists\, U_{\mathrm{sh}}^{(k+1)} \text{ receiving } I_{\mathrm{residue}}(L_k),
+\]
+the top fails the right-hand side: there is no \ensuremath{U_{\mathrm{sh}}^{(k+1)}}, so its residue
+has no recipient. This is identically the empty codomain of \S\,II --- there \ensuremath{G(k)} has no
+level \ensuremath{k{+}1} to receive the promoted symbol \ensuremath{\pi}; here the ledger has no level
+\ensuremath{k{+}1} to receive the shed residue. The two are one absent recipient, read on the
+identity axis and the substrate axis respectively. By Volume~1 Paper~5 \S\,IV the residue is itself
+the lattice on which a level not previously operating is confirmed, so the top's residue, unreceived
+by any existing level, constitutes the recipient field the closure condition requires --- which is
+the re-forming of \S\,V, here the unique resolution of the closure condition at the top consistent
+with the residue identification.
+
+\subsection*{B.5 Break-test}
+
+The no-codomain result of \S\,B.4 does not depend on the value of the exponent \ensuremath{d_s}.
+Suppose \ensuremath{d_s} were not \ensuremath{2} but any \ensuremath{d_s < d_v}: the residue
+\ensuremath{I_{\mathrm{residue}}(L) \propto L^{d_v} - L^{d_s}} remains positive and volume-dominant,
+the surface remains the compressible part with
+\ensuremath{K(I_{\mathrm{surface}})/K(I_{\mathrm{total}}) \to 0}, and the closure condition of \S\,B.4
+is unchanged --- it asks only whether a recipient field exists, not how large the residue is. The
+top fails that condition for the topological reason that there is no level above it (Paper~2
+\S\,VI), independent of the exponent. The exponent \ensuremath{d_s = 2} fixes the \emph{magnitude}
+of what is carried versus shed (\S\,B.1--B.2); it is the no-\emph{recipient} fact, not the
+exponent, that makes the top special. A counterexample would therefore require not a different
+exponent but a level above the top, which is excluded by the definition of the top. The result
+stands on the absence of a recipient alone.
+
+\section*{References}
+\addcontentsline{toc}{section}{References}
+
+
+\begin{reflist}
+Ehresmann, A. C., \& Vanbremeersch, J.-P. (2007). \emph{Memory Evolutive Systems: Hierarchy, Emergence, Cognition}. Amsterdam: Elsevier.
+
+Lambek, J. (1968). A fixpoint theorem for complete categories. \emph{Mathematische Zeitschrift}, 103(2), 151--161.
+
+Lowe, E. J. (1998). \emph{The Possibility of Metaphysics: Substance, Identity, and Time}. Oxford: Clarendon Press.
+
+Rutten, J. J. M. M. (2000). Universal coalgebra: A theory of systems. \emph{Theoretical Computer Science}, 249(1), 3--80.
+
+Shani, I. (2022). Cosmopsychism, coherence, and world-affirming monism. \emph{The Monist}, 105(1), 6--24.
+
+Simons, P. (2000). Identity through time and trope bundles. \emph{Topoi}, 19(2), 147--155.
+\end{reflist}
+
+
+\end{document}

@@ -1,0 +1,937 @@
+\documentclass[11pt,oneside]{report}
+% ======================================================================
+%  THE TRIADIC MEASUREMENT SUBSTRATE --- COMPLETE CORPUS (Volumes 1 & 2)
+%  Aaron Switzer, 2026
+%  Single-file build. Compile: pdflatex x3 (third pass settles the TOC).
+% ======================================================================
+% ======================================================================
+%  TMS Volume 1 -- shared preamble
+%  Compiles with pdfLaTeX both locally and on Overleaf (no exotic fonts).
+% ======================================================================
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathptmx}            % Times text + math (widely available)
+\usepackage[scaled=0.90]{helvet} % sans for headings
+\usepackage{courier}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tocbibind}
+
+% ---- spacing -----------------------------------------------------------
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0.35em}
+\linespread{1.04}
+\setlist{leftmargin=1.6em,topsep=0.25em,itemsep=0.15em,parsep=0pt}
+
+% ---- theorem environments ---------------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}{Axiom}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{principle}[theorem]{Principle}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{prediction}[theorem]{Prediction}
+\newtheorem{property}[theorem]{Property}
+\newtheorem{postulate}[theorem]{Postulate}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+% ---- section heading look (unnumbered; author supplies the numbers) ----
+\titleformat{\section}[hang]{\normalfont\large\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsection}[hang]{\normalfont\normalsize\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsubsection}[hang]{\normalfont\normalsize\bfseries\itshape}{}{0pt}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.5em}
+\titlespacing*{\subsection}{0pt}{1.0em}{0.35em}
+\titlespacing*{\subsubsection}{0pt}{0.8em}{0.3em}
+
+% chapter (= each paper) heading
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\bfseries}
+  {}{0pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{10pt}{24pt}
+
+% ---- page-break quality: avoid stranded headings and orphaned/widowed lines ----
+% (applies to both volumes via the shared preamble)
+\widowpenalty=10000        % no single line at the top of a page
+\clubpenalty=10000         % no single line at the bottom of a page
+\displaywidowpenalty=10000 % same, around displayed equations
+\brokenpenalty=4000        % discourage page breaks right after a hyphenated line
+% titlesec: forbid a page break immediately after a heading (heading stranded at page foot)
+\usepackage{needspace}
+\usepackage{etoolbox}
+\pretocmd{\section}{\Needspace*{4\baselineskip}}{}{}
+\pretocmd{\subsection}{\Needspace*{3\baselineskip}}{}{}
+
+% ---- running heads -----------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape The Triadic Measurement Substrate}
+\fancyhead[R]{\small\itshape\nouppercase{\rightmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---- abstract / keywords / references list ----------------------------
+\newenvironment{paperabstract}
+  {\begin{center}\begin{minipage}{0.88\textwidth}\small
+   \noindent\textbf{Abstract.}\itshape\space}
+  {\end{minipage}\end{center}\vspace{0.4em}}
+
+\newcommand{\keywords}[1]{\noindent{\small\textbf{Keywords:} #1}\vspace{0.4em}}
+
+% per-paper APA reference list (hanging indent), kept as authored
+\newenvironment{reflist}
+  {\par\small\setlength{\parindent}{0pt}%
+   \setlength{\leftskip}{1.6em}\setlength{\parindent}{-1.6em}%
+   \setlength{\parskip}{0.4em}%
+   \raggedright\hyphenpenalty=50\exhyphenpenalty=50\relax
+   \sloppy}
+  {\par}
+
+% convenience
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\TMS}{\textsc{tms}}
+\hyphenation{con-fir-ma-tion sub-strate}
+\begin{document}
+
+\thispagestyle{empty}
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\sffamily\bfseries\Large The Triadic Measurement Substrate\par}
+\vspace{0.6cm}
+{\large $\bar{B} = 3\bar{\alpha}$\par}
+\vspace{1cm}
+{\sffamily\large Volume 2\par}
+\vspace{1.4cm}
+{\Large \bfseries Paper 4: Time: The Now-Surface Deepened --- Confirmed Past, Unwritten Future, and the Decay of the Wake\par}
+\vfill
+{\large Aaron Switzer\par}
+\vspace{0.4cm}
+{\large 2026\par}
+\vspace{1.2cm}
+{\small\itshape Excerpted from the complete two-volume corpus, \emph{The Triadic Measurement Substrate}. Full corpus and reproducibility package: \url{https://doi.org/10.5281/zenodo.22035422}\par}
+\end{titlepage}
+\cleardoublepage
+\pagenumbering{arabic}
+
+% ---------------- Volume 2 / P4_Time ----------------
+\chapter*{Paper 4}
+\markboth{Paper 4}{Paper 4}
+\addcontentsline{toc}{chapter}{Paper 4: Time: The Now-Surface Deepened --- Confirmed Past, Unwritten Future, and the Decay of the Wake}
+\begingroup\centering
+{\large\itshape Time: The Now-Surface Deepened --- Confirmed Past, Unwritten Future, and the Decay of the Wake\par}\vspace{0.8em}
+{\normalsize Aaron Switzer\par}
+{\small June 2026\par}
+\endgroup\vspace{1.0em}
+
+\noindent{\small\textbf{Keywords:} Now-Surface, Wake, Confirmed Past, Unwritten Future, Reinterpretation Operator, Decay, Forgetting, Re-read Clock, Excitable Manifold, Rate-Distortion, Triadic Confirmation}\par\vspace{0.6em}
+
+\section*{Status of Results}
+\addcontentsline{toc}{section}{Status of Results}
+
+This paper continues the labeling conventions of Volume 1 and of the
+preceding papers of this volume. Every claim in the body falls into
+exactly one category, marked where it appears. No claim is upgraded
+beyond what its derivation earns.
+
+\textbf{Derived.} Results that follow from the five axioms, the Principle
+of Generative Economy, and \ensuremath{U_{\mathrm{sh}}} by explicit
+construction or proof, or from results already derived in Volume~1 and
+the earlier papers of this volume by explicit inheritance. The
+asymmetry between a confirmed past and an unwritten future as the two
+sides of the now-surface (\S\,I); the reconstructability of an interior
+confirmation's value from the conserved polarization it deposits into its
+forward cone, increasing with depth into the wake, with detection-only at
+the frontier (\S\,I); the fixed-fraction form of re-read decay, forced by
+the access constraint on the reinterpretation operator (\S\,IV,
+Appendix~A); the monotone forgetting curve with a count-conserved floor
+(\S\,IV); and the structural flattening of the cosmic-residue balance
+(\S\,IV) are derived in this sense.
+
+\textbf{Derived-conditional.} Results that follow given a primitive
+established elsewhere whose own grounding is stated. The per-fold shed
+value \ensuremath{s = 2} is inherited from Paper~3, where it is forced
+given binary-agent triads; this paper uses the value and does not
+re-establish it.
+
+\textbf{Structural correspondence.} Results in which a TMS construction
+reproduces the skeleton of a known framework or quantifies a recognized
+distinction, never used as support for a TMS claim, only as a landing
+point after one. The reading of re-read decay as lossy recompression in
+the rate-distortion sense (\S\,IV, \S\,V); and the correspondence of the
+poised pre-confirmation configuration to an excitable system held near
+threshold (\S\,III, \S\,V) are structural correspondences in this sense.
+
+\textbf{Predictions / Conjectures.} Falsifiable claims that follow from
+the framework but whose empirical tests are not established here. That a
+memory degrades by the same law whether overwritten from the world or
+re-read from within --- that memory decays through use, not only through
+neglect (\S\,III) --- is a prediction in this sense; its match to data is
+not claimed.
+
+\textbf{Permanent open horizon.} A question the framework is structurally
+unable to close, marked so that no later claim assumes it closed. What
+fills an unwritten interstice when it is finally confirmed --- whether the
+content of the future has any determination prior to its folding --- is
+not settled by anything in this paper and is left open (\S\,I, \S\,II).
+This silence is load-bearing.
+
+\textbf{Deferred.} Quantities the framework defines but does not evaluate
+here. The value of the cosmic residue-to-ordinary ratio depends on two
+rates this paper does not derive and is deferred (\S\,IV). The
+identification of the anchored residue with the dark-matter mode, and the
+mass--energy reading that binds it to dark energy, belong to the material
+side and are treated there, not here (\S\,IV).
+
+\section*{Notation}
+
+Symbols are inherited from Volume~1 and the earlier papers of this
+volume. \ensuremath{\hat{R}} is the reinterpretation operator (Volume~1,
+Definition~0.0.67); the now-surface is the active codimension-one
+confirmation frontier and the wake is the settled three-dimensional
+record behind it (Paper~1, \S\,1); \ensuremath{U_{\mathrm{sh}}} is the
+maximum-entropy substrate field; \ensuremath{s} is the per-fold
+distinction shed of Paper~3, with \ensuremath{s = 2} for binary-agent
+triads; \ensuremath{n} counts folds applied to a given structure;
+\ensuremath{r = 2^{-s}} is the per-fold survival ratio introduced in
+\S\,IV.
+
+\section*{I. The Now-Surface Deepened}
+\addcontentsline{toc}{section}{I. The Now-Surface Deepened}
+
+Paper~1 introduced the now-surface as the active frontier where agents
+are presently locking bits, and the wake as the settled record that
+accumulates behind it. That construction was developed entirely on the
+material side; it carried gravity, the black hole, and dynamic dark
+energy, and assumed no property of observers. This paper takes the same
+object and asks what it determines about time itself. The question is
+single: where, on the substrate, is the asymmetry between past and
+future, and what governs the relation of one now to the next.
+
+The answer is already present in the three-state space of Volume~1.
+Paper~1 \S\,1.4 fixes three ontologically distinct states for an
+interstice: latent, drawn from \ensuremath{U_{\mathrm{sh}}} and neither
+zero nor one but the incompressible superposition of both;
+confirmed-zero; and confirmed-one. Confirmation resolves the latent state
+into one of the two confirmed values, and by Axiom~4 the result cannot be
+overwritten. These three states, read against the now-surface, are the
+three regions of time.
+
+The confirmed wake is the past. It is the locked record, sealed by
+Axiom~4: the system has only one available direction, and each flop adds
+a layer without disturbing prior layers. The now-surface is the present:
+the codimension-one frontier where confirmation is currently occurring,
+the only place a fold can fire. The future is the latent population the
+present surface has not yet folded. The identification is relative to a
+surface and not global: latency is a property an interstice has at large,
+but it reads as future only with respect to a given now-surface, for
+which it is the not-yet-confirmed region that surface can advance into.
+What is future to one frontier is unrelated to another that will never
+reach it. So read, the future is unwritten in the strict sense: not
+merely unknown but undetermined, the superposition not yet resolved into
+a confirmed value.
+
+This locates the asymmetry exactly. The past and the future are not two
+symmetric directions along a line; they are two different states of an
+interstice relative to a single surface. The past is what has been
+confirmed and sealed; the future is what remains latent; the now-surface
+is the boundary between them, and it advances under \ensuremath{\hat{R}}
+every flop (Paper~1, \S\,7). The arrow of time is not added to this
+picture. It is Axiom~4 read as a statement about which side of the
+now-surface a fold can act on. A fold acts in exactly two ways. It can
+confirm a latent interstice, resolving the superposition into a confirmed
+value and moving the interstice from the future side of the surface to
+the past side. It can also re-read a region of wake already confirmed.
+What it cannot do is return a confirmed interstice to the latent state:
+that is precisely the overwrite Axiom~4 forbids. Confirmation therefore
+runs one way across the surface, and the one-way-ness is not a separate
+postulate but the causal anchoring of Volume~1 read at the surface.
+
+Two consequences follow immediately, and they organize the rest of the
+paper. First, only the past decays. A latent interstice carries no
+confirmed distinction to lose; there is nothing in the future to shed,
+because nothing there has been written. Degradation is therefore a
+strictly past-facing phenomenon: it acts on the wake, never on the latent
+population. The temporal arrow and the direction of decay are the same
+fact --- one can re-read the wake and lose grain, but one cannot re-read
+the unwritten, because there is nothing yet to read. Decay is developed in
+\S\,IV.
+
+The asymmetry is directional, not an asymmetry of determination. The
+substrate geometry runs both ways across the surface, and the difference
+between past and future is the difference between running it backward into
+the wake and running it forward into the latent region. Run backward, the
+geometry reconstructs, and it does so for a reason internal to the
+substrate. Each confirmation transports its polarization outward through
+the \ensuremath{1\to 4} multiplier: a confirmed value emits its signals
+into the downstream synthetic bits, which carry that value's polarization
+forward, and by Axiom~3 those signals are conserved and cannot be lost
+(Paper~1, \S\,4.2--4.3). A confirmation in the interior of the wake has
+therefore already deposited its value, redundantly, across the layers it
+produced. If a single agent's contribution is later disrupted, the local
+unit only registers that a confirmation was present --- the boundary opens
+and a parity syndrome appears --- but the original value remains
+recoverable from the conserved polarization the confirmation laid into its
+forward cone. The past is rigid because it is over-determined by its own
+downstream record, and the over-determination grows with depth: the deeper
+a confirmation lies in the wake, the more forward layers redundantly
+encode it, so older structure is more strongly fixed than recent
+structure. This redundancy structure corresponds to the \ensuremath{[[4,2,2]]}
+error-detection code, whose single-error detection sits on the local unit
+and whose reconstruction is carried by the forward cone (Paper~1, \S\,5);
+the correspondence is noted as a landing, not relied on as the argument.
+
+The reconstruction has one limit, and it falls exactly at the present. A
+confirmation at the now-surface frontier has not yet produced a downstream
+cone, so a disruption there can only be detected and re-confirmed against
+the current polarization landscape, which biases the redrawn value without
+fixing it. Rigidity of value is a property of the wake interior; at the
+frontier only the fact of confirmation is preserved, not its value. This
+is consistent with the asymmetry as a whole: the past is rigid in
+proportion to how much wake lies downstream of it, and the present, having
+none, is the one place the record is not yet fixed.
+
+Run forward, the same geometry is blocked, and by two obstructions of
+different kinds. The first is the latent draw itself: the next
+confirmation resolves against a fresh contribution from
+\ensuremath{U_{\mathrm{sh}}}, which is maximum-entropy and has no
+attractors (Paper~1, Axiom~0; \S\,7.2), so the forward step is not
+determined by present structure however completely that structure is
+known. This obstruction is ontological and holds for any observer. The
+second is positional: a bounded subsystem cannot measure across its own
+closure boundary, and the exterior it cannot read co-determines the folds
+it will undergo, so from inside the subsystem the forward step is
+unreadable even where it is determined. This obstruction is relative to
+the observer's position with respect to the boundary; an observer outside
+the system would not encounter it. The forward direction is therefore
+unshortcuttable from within, which is the time-like face of the
+record's computational irreducibility (Paper~1, \S\,7.2a). The past is
+reconstructable and the future is not, from one geometry, because
+reconstruction runs with the closed constraints and the conserved
+downstream record, while prediction runs against an undetermined draw and
+an unreadable exterior.
+
+Second, the future is not modeled by reaching toward it. Nothing on the
+present surface extends into the latent region or carries information
+about which value an interstice will take. What a system can do is fold
+on its own wake --- on structure already written --- to build a present
+configuration, and that configuration can bias which latent interstices
+the surface confirms next without containing any of their content. The
+configuration is past-built and present-held; it points at the future
+only in that the world may or may not later confirm it. This is the
+subject of \S\,II. What fills a latent interstice when it is finally
+confirmed is not determined by anything on the present surface, and this
+paper does not claim it is; that silence is marked as a permanent open
+horizon and is not crossed.
+
+The paper proceeds as follows. \S\,II develops the present configuration
+poised over an unwritten interstice and the construction of models from
+the wake. \S\,III derives the re-read clock that carries distinction
+across nows and states the prediction that re-reading degrades. \S\,IV
+derives the decay law itself, in both its forgetting and cosmic-residue
+readings, and fixes what it leaves open. \S\,V situates the paper in the
+literature. The Conclusion forwards nothing beyond what is derived.
+
+\section*{II. The Excitable Manifold and the Construction of Models}
+\addcontentsline{toc}{section}{II. The Excitable Manifold and the Construction of Models}
+
+\S\,I left the future strictly unwritten and ruled out any reach from the
+present surface into the latent region. This raises a structural
+question. A confirmation event requires triadic agreement among agents
+before a latent interstice resolves (Paper~1, \S\,1.4); between events, the
+agents bounding an unconfirmed interstice are not folding, yet they are
+not inert either, since the next fold proceeds from their current
+configuration. The question is what to call that state without importing
+a relation to the future the substrate does not have.
+
+The agents themselves supply the constraint. By Paper~1 \S\,1.2 the agent
+manifold is immutable: agents do not change, move, or degrade. Whatever
+the pre-confirmation state is, it cannot be a state of an agent, because
+agents have no states to occupy. It is instead a property of the
+configuration: three agents and their touch-vector signals standing in a
+relation from which a fold can proceed, but in which triadic agreement
+has not yet been reached. The configuration is structurally complete and
+causally quiet. It does nothing until the conditions for agreement are
+met, at which point it folds.
+
+This is the structure of an excitable system: a configuration that holds
+at a threshold and does not act until input crosses it, after which it
+fires (van der Pol \& van der Mark, 1928; FitzHugh, 1961). We adopt the
+term for the pre-confirmation configuration: the excitable manifold is
+the region of agents poised to confirm a latent interstice that has not
+yet folded. The term is chosen for its restriction. An excitable
+configuration carries no model of what will cross its threshold and no
+relation to the value the fold will produce; it carries only a release
+condition. Naming the state this way records what is present --- a
+threshold and the readiness to fire --- and withholds what is not: any
+orientation toward the future, any anticipation, any holding-toward. The
+configuration is poised, not expectant.
+
+What looks, from outside, like a system directed at the future is a
+present operation on the past. A subsystem can apply folds to its own
+wake --- to structure already confirmed and sealed --- and assemble from
+it a present configuration: a confirmed arrangement whose touch-vectors
+point forward into the lattice (Paper~1, \S\,1.3, forward propagation
+only). Such a configuration is a model in the only sense the substrate
+allows: a present, fully confirmed object, built from past material, that
+biases which latent interstices the now-surface is positioned to confirm
+next. It selects where the manifold is excitable. It does not contain the
+content of any future confirmation; it cannot, because that content is
+latent and undetermined until folded. The model is past-built and
+present-held, and it points at the future only in that the world may or
+may not later confirm the interstices it has made the system ready for.
+
+Two boundaries close the section. First, the construction of models is a
+re-use of the wake, and re-use is a fold; by \S\,IV it sheds. A system
+that builds richly from its past degrades that past in the building, by
+the same law that governs all re-reading. The model-building capacity and
+the decay of the material it builds from are not separate facts. Second,
+what fills a latent interstice when the excitable manifold finally folds
+it is not supplied by the model, by the configuration, or by anything on
+the present surface. The model fixes \emph{where} the system is ready to
+confirm; it does not fix \emph{what} is confirmed there. Whether the
+content of the future has any determination prior to its folding is left
+open, exactly as \S\,I marked it, and nothing in this section assumes an
+answer.
+
+\section*{III. The Re-read Clock}
+\addcontentsline{toc}{section}{III. The Re-read Clock}
+
+The previous sections concern a single now and the latent region ahead of
+it. Time requires the relation between nows, and that relation is carried
+by re-reading. A re-read is one application of \ensuremath{\hat{R}} to a
+region of wake already confirmed --- the now-surface, advancing, folds a
+second time on structure it or an earlier surface has written. Let
+\ensuremath{n} count the folds a given region has undergone since it was
+written, and let \ensuremath{f} be the rate at which those re-reads occur,
+the re-reads per unit flop-time for that region. We call \ensuremath{f}
+the re-read clock. It is the variable that turns the single-now quantities
+of Paper~3 into across-now quantities: the form-surplus that Paper~3 sizes
+at one now is shed once per fold, so \ensuremath{n} folds carry it to
+\ensuremath{r^{n}} of its value, with \ensuremath{r} the per-fold survival
+ratio derived in \S\,IV. The clock counts; \S\,IV gives what each count
+costs.
+
+A fold can be triggered from either side of the master equation, and the
+clock has a corresponding pair of faces. A re-read induced from the bit
+side --- a stressor, sensory load, the world writing over a region ---
+advances the clock by overwriting; call its rate
+\ensuremath{f_{\mathrm{world}}}. A re-read induced from the agent side ---
+the system folding on its own wake, the model-construction of \S\,II ---
+advances the same clock by re-confirmation; call its rate
+\ensuremath{f_{\mathrm{self}}}. The two are faces of one operation:
+\ensuremath{\hat{R}} does not record which side triggered it, and the
+distinction shed per fold is the same in both cases (\S\,IV). The total
+re-read rate is \ensuremath{f = f_{\mathrm{world}} + f_{\mathrm{self}}}.
+The agent-side face is the same operation named, in plain register, as
+recollection: to re-read a region of one's own wake is to fold it again.
+
+One consequence follows directly and is falsifiable. Because the shed is
+the same whichever face advances the clock, a region re-read from the
+agent side degrades by the same law as a region overwritten from the
+world side. Re-confirmation is not a free replay of a stored value; it is
+a fold, and a fold sheds (\S\,IV). A memory therefore decays through use,
+not only through neglect: each recollection re-reads the trace and sheds
+from it, so a frequently re-read region loses fine distinction faster than
+one left alone, and what is recalled is increasingly the most recent
+re-reading rather than the original confirmation. This is a prediction; it
+is stated here as a consequence of the shared shed and is not matched to
+data in this paper.
+
+The clock is a rate, and the present paper needs nothing more of it. Which
+region a re-read falls on is set in part already and in part downstream.
+When the trigger is from the bit side, the world sets the region: a
+stressor or sensory load re-reads whatever it falls on. When the trigger
+is from the agent side, the model of \S\,II biases the region, since a
+configuration built from the wake makes some interstices excitable rather
+than others. What remains --- what determines that
+\ensuremath{f_{\mathrm{self}}} folds toward structure that persists across
+folds rather than structure that does not --- is derived in the next
+paper, and it is derived there on the shed this paper establishes:
+unbound structure degrades under the per-fold shed of \S\,IV into a
+configuration that cannot re-confirm, and that degradation is the
+machinery the next paper's selection rule runs on. The selection is
+therefore not left open but located: it is the agent-side dynamics of
+Paper~5, for which \S\,IV supplies the decay. Here \ensuremath{f} enters
+only as a rate.
+
+\section*{IV. The Decay Law}
+\addcontentsline{toc}{section}{IV. The Decay Law}
+
+This section fixes what one fold costs and what many folds accumulate.
+The per-fold shed is inherited: Paper~3 establishes that the confirmation
+fold sheds \ensuremath{s} bits of distinction, with \ensuremath{s = 2} for
+binary-agent triads, forced there and used here without re-derivation
+(Paper~3, \S\,IV, Appendix~B). What this section adds is the form decay
+takes across folds, and it turns on a single question the substrate
+settles: whether the shed removes a fixed quantity of distinction per
+fold or a fixed fraction of it.
+
+The question is decided by what \ensuremath{\hat{R}} can act on. A re-read
+operates on the region as it currently stands, not on the original
+confirmation: by Axiom~4 the original is sealed in the wake, and the
+re-reading surface reads the present, already-degraded copy. A fixed-budget
+shed --- removing \ensuremath{s} bits of the original total each fold ---
+would require the fold to act against that original total, a quantity the
+surface no longer has access to. A fixed-fraction shed --- removing a set
+proportion of the distinction currently present --- requires only the
+present region, which is what the surface has. The fixed-fraction reading
+is therefore forced, not chosen; the access constraint admits no other.
+The per-fold survival ratio follows as \ensuremath{r = 2^{-s}}, and with
+\ensuremath{s = 2}, \ensuremath{r = 1/4}. The derivation, with the
+fixed-budget reading shown to fail, is given in Appendix~C.
+
+Accessible distinction after \ensuremath{n} folds then decays
+geometrically from its initial value toward a floor:
+\begin{equation*}
+D(n) = D_{\mathrm{floor}} + (D_{0} - D_{\mathrm{floor}})\, r^{n}.
+\end{equation*}
+The floor is not zero. By Axiom~3 the fold conserves count while shedding
+distinction, so what survives unconditionally is the count-level record
+that the region was confirmed --- the gist, in the agent-side register ---
+while the fine distinction above the floor decays by \ensuremath{r^{n}}.
+The curve is monotone decreasing in \ensuremath{n}, its form is fixed by
+the access constraint rather than by a fitted rate, and it bounds below at
+\ensuremath{D_{\mathrm{floor}} > 0}: detail is lost toward gist, never to
+total erasure, which would require the count loss Axiom~3 forbids. The
+three conditions are verified in Appendix~C. The fixed-budget reading
+fails the third: a fixed subtraction drives \ensuremath{D} through the
+floor to zero in finite folds, erasing the count. That the substrate
+rejects fixed-budget for fixed-fraction is the same fact as the existence
+of the floor.
+
+The same per-fold shed governs a second process, at the scale of the
+wake's own accumulation. A forming subsystem boundary anchors residue from
+the confirmed past at a rate \ensuremath{A}, and re-reads de-anchor it: by
+the law just fixed, each re-read sheds the fraction
+\ensuremath{(1-r)} of the residue currently anchored, at the clock rate
+\ensuremath{f}. The anchored residue \ensuremath{R} then obeys
+\begin{equation*}
+\frac{dR}{dt} = A - f\,(1-r)\,R,
+\end{equation*}
+a balance with a stable fixed point at \ensuremath{R^{*} = A / [f(1-r)]}.
+The loss term carries the same \ensuremath{s = 2} as the forgetting curve,
+in the same fixed-fraction sense, and reduces the residue rather than
+growing it. Anchored residue therefore self-limits rather than
+accumulating without bound, and the residue-to-ordinary ratio flattens as
+a structural consequence rather than by tuning. The sign, the shared
+\ensuremath{s}, and the commensurability of the two rates are checked in
+Appendix~C.
+
+The two processes are one law at two addresses, and the identity is sharp:
+the \ensuremath{r} of the forgetting curve and the \ensuremath{r} of the
+residue balance are the same \ensuremath{1/4}, used the same way ---
+fixed-fraction --- for the same reason, the access constraint that forbids
+a fold from reaching the original behind the present copy. Forgetting
+re-reads an anchored memory; the residue balance re-reads the accumulated
+wake; both are \ensuremath{\hat{R}} advancing on what is already written,
+shedding the same fraction per fold. This is the unification, and it holds
+structurally rather than by coincidence of magnitude. The check that the
+two uses match in number and in kind is the decisive one and is carried in
+Appendix~C.
+
+What this section does not fix is also stated. The value of the
+residue-to-ordinary ratio is not derived: \ensuremath{R^{*}} depends on
+\ensuremath{A} and \ensuremath{f}, neither of which this paper derives, so
+the flatness is structural but the magnitude is open. The identity of the
+anchored residue with the material dark-matter mode, and the mass--energy
+reading that would bind it to the dark-energy residual, belong to the
+material side and are treated there (Volume~1, Paper~5); they are not
+claimed here. And whether either curve matches measured data --- the
+forgetting curve against recollection, the flattening against the observed
+ratio history --- requires outside data and is not asserted. The framework
+fixes the form; the world is left to confirm it.
+
+\section*{V. Where It Sits}
+\addcontentsline{toc}{section}{V. Where It Sits}
+
+The closest metaphysical neighbor is the growing block view of time, on
+which the past and present exist while the future does not, and the
+present is the surface at which new moments are added to the past, so
+that the block of what exists grows (Broad, 1923; Tooley, 1997; Forrest,
+2004). The structure derived here is that view's structure: the wake is
+the existing past, the now-surface is the surface of addition, and the
+latent region is the future that does not yet exist. The fork is in
+standing, not in shape. The growing block posits the asymmetry as a
+metaphysical primitive; here it is derived --- the now-surface is a forced
+structural object of the substrate (Paper~1), and past, present, and
+future are read off the confirmed, active, and latent states rather than
+asserted. The variant on which the past is sealed and only the present is
+active (Forrest's dead-past version) corresponds to the now-surface being
+the sole site of confirmation while the wake is locked record, with the
+qualification that this paper makes no claim about where measurement is
+occupied (\S\,I; the band-word discipline of Paper~3). The account departs
+from eternalism, on which all times are equally real, since the future is
+latent and undetermined rather than real elsewhere; and from presentism,
+on which only the present exists, since the wake is real and sealed.
+
+The closest live interlocutor on the agent side is predictive processing,
+on which perception is the brain's top-down prediction of its input and
+learning is the minimization of prediction error against a generative
+model (Rao \& Ballard, 1999; Friston, 2010). The fork is precise and is
+not a disagreement about data. On that account the present state carries a
+model \emph{of} the future, projected forward; on this one the present
+surface carries no content about the future at all, because the future is
+latent and undetermined until folded (\S\,I), and what looks like
+prediction is a present configuration built from the wake that biases
+where the manifold is excitable (\S\,II). Prediction places the future
+inside the present as a model; this account keeps the future unwritten and
+the present merely poised. Any predictive-processing-like content, where
+it exists, would live in the model-construction of \S\,II, not in the
+poised state itself. The exclusion-style divergence with integrated
+information theory is the subject of Paper~2 and is not reopened here.
+
+The decay law has its nearest quantitative neighbors in two fields. In
+continual learning, sequential training induces catastrophic forgetting,
+and the retained-memory signal decays exponentially under ordinary
+gradient descent, taking a consolidated, slower form when the weights
+encoding old tasks are protected (Kirkpatrick et al., 2017); models that
+combine decay with stochastic reactivation reproduce smoothly decaying
+retention curves rather than a sharp cutoff. The exponential-toward-a-floor
+form of \S\,IV is the same shape, and the reactivation that degrades while
+it consolidates is the agent-side re-read of \S\,III seen in a network;
+the correspondence is a convergence, landed after the derivation, and the
+fork is that the law here is forced by one access constraint rather than
+fitted as a mechanism per task. Underneath both sits the thermodynamic
+floor: a logically irreversible, many-to-one operation reduces degrees of
+freedom and dissipates, at least \ensuremath{kT\ln 2} per erased bit
+(Landauer, 1961; Bennett, 1982). The confirmation fold is exactly such a
+map --- three loci to one bit --- so the shed is the substrate's Landauer
+cost, and the decay law is that cost paid once per re-read. This is noted
+as the physical grounding of the shed, not as an independent result.
+
+The poised pre-confirmation configuration corresponds to an excitable
+system held below threshold (van der Pol \& van der Mark, 1928; FitzHugh,
+1961), and the broader observation that information-bearing systems are
+often tuned near a critical or metastable point (Bak, Tang, \&
+Wiesenfeld, 1987; Beggs \& Plenz, 2003) is a convergence on the present
+construction, landed after it and not used to support it: a system poised
+at threshold is where its dynamic range is widest, which is the same
+content the now-surface carries on the material side. The decay law also
+corresponds to lossy recompression in the rate-distortion sense (Shannon,
+1948): re-reading is re-encoding through a channel that cannot hold the
+source's full distinction, and the gist floor is the rate below which the
+code cannot compress without losing the count. The generational loss of a
+copy made from a copy is the same structure observed outside the
+substrate; it is noted as a correspondence, not a citation of support. The
+reconstructability of the past from its forward record corresponds to the
+recent result that an error-corrected history's causal memory either
+propagates forward or terminates at detection (a structure independently
+described for monitored many-body systems); the depth-dependent form given
+here, in which rigidity grows with the wake downstream of a confirmation,
+is original to this paper. On the open-future question, the account sides
+structurally with the view that propositions about the unwritten future
+lack a determined value until the event (the future-contingents tradition,
+Aristotle, \emph{De Interpretatione} 9), but reaches it from the substrate
+rather than from semantics: the value is undetermined because the latent
+state is, not because of a convention about truth. The observer-relative
+appearance of unpredictability --- determined from outside a boundary,
+unreadable from within it --- is the substrate's account of why sensitive
+dependence presents as it does to an embedded observer, and is offered as
+that, not as a contribution to dynamical-systems theory.
+
+\section*{Conclusion}
+\addcontentsline{toc}{section}{Conclusion}
+
+Time, on the substrate, is the now-surface read on both sides. The past is
+the confirmed wake, sealed by causal anchoring and reconstructable from
+the record it has already written, the more rigidly the deeper it lies.
+The future is the latent region the surface has not folded, unwritten in
+the strict sense and reachable only as a present configuration built from
+the past. The present is the one surface between them, where confirmation
+fires and where, alone, the record is not yet fixed. The asymmetry of past
+and future is not an asymmetry of determination but of direction across
+that surface: the same geometry reconstructs backward and is blocked
+forward, by an undetermined draw and an unreadable exterior.
+
+What relates one now to the next is re-reading, and re-reading sheds. The
+per-fold shed of Paper~3, carried across folds by the re-read clock, fixes
+a single decay law that governs the fading of a memory and the
+self-limiting of the wake's residue alike, by one fraction used one way.
+The law fixes the form of both and the value of neither; what is derived
+is held apart from what is left open, and the open quantities are named so
+that they cannot later be assumed closed.
+
+The re-read clock has been developed here only as a rate. Its agent-side
+face folds on the wake and sheds by the same law as the world's
+overwriting. What determines that this face folds toward structure able to
+persist across folds is taken up in the next paper, where the agent-side
+dynamics are derived --- and derived on the shed established here, since it
+is the per-fold degradation of \S\,IV that turns unbound structure into a
+configuration that cannot re-confirm. This paper supplies the decay; the
+selection that runs on it is the subject of the paper that follows. Here
+the clock turns, and what it turns on decays.
+
+\section*{Appendix A: Reconstructability of the Wake and Its Depth-Dependence}
+\addcontentsline{toc}{section}{Appendix A: Reconstructability of the Wake and Its Depth-Dependence}
+
+This appendix establishes the claim of \S\,I that a confirmed value is
+reconstructable from the record its confirmation deposits downstream, that
+the reconstructability increases with depth into the wake, and that it
+fails at the now-surface frontier. The objects are inherited from
+Volume~1; no new primitive is introduced.
+
+\subsection*{A.1 The objects}
+
+A confirmation event at a region resolves a latent interstice to a value
+\ensuremath{\bar{B} \in \{0,1\}} with polarization
+\ensuremath{\chi \equiv 2\bar{B} - 1 \in \{-1,+1\}}. By the
+\ensuremath{1\to 4} multiplier (Volume~1, Paper~1, \S\,4.2), the event
+emits twelve outgoing signals consumed by four downstream synthetic bits,
+each carrying the source polarization \ensuremath{\chi} (Paper~1,
+\S\,4.3). By Axiom~3 these signals are conserved: not created, destroyed,
+or deferred. Let \ensuremath{d \geq 0} index depth into the wake, the
+number of confirmed layers built downstream of the event since it was
+written; \ensuremath{d = 0} is the now-surface frontier.
+
+\subsection*{A.2 The local unit detects but does not reconstruct}
+
+Disrupt one agent's contribution to the confirmed interstice. The agent
+is immutable (Paper~1, \S\,1.2); what is disturbed is the confirmation
+relation, opening the closed boundary and producing a parity syndrome
+(Paper~1, \S\,5.2). The syndrome establishes that a confirmation was
+present and that it was disturbed. It does not, on the local unit alone,
+fix the disturbed value: a 2-simplex with one vertex contribution missing
+is consistent with either \ensuremath{\chi}, since detection is of the
+violation, not of the original polarization. The local unit yields
+detection only.
+
+\subsection*{A.3 The forward cone reconstructs, for \texorpdfstring{$d \geq 1$}{d >= 1}}
+
+For \ensuremath{d \geq 1} the event has emitted its polarization into the
+downstream layers, where by A.1 the signals carrying \ensuremath{\chi} are
+conserved. The original \ensuremath{\chi} is therefore recoverable as the
+polarization carried by the conserved downstream signals the event
+itself produced, independently of the disrupted local contribution. The
+number of downstream signals carrying \ensuremath{\chi} grows with the
+forward cone: each layer re-emits under the same multiplier, so the count
+of conserved carriers of the original polarization is non-decreasing in
+\ensuremath{d}. Reconstruction is thus available for \ensuremath{d \geq 1}
+and is increasingly over-determined as \ensuremath{d} grows --- the deeper
+the event lies in the wake, the more independent downstream carriers fix
+its value. This is the depth-dependence asserted in \S\,I.
+
+\subsection*{A.4 The frontier limit}
+
+At \ensuremath{d = 0} no downstream layer has yet formed, so no conserved
+carrier of \ensuremath{\chi} exists outside the disrupted unit. By A.2 the
+local unit yields detection only; re-confirmation must redraw the value
+against the current polarization landscape, which biases the redraw
+(Paper~1, \S\,4.3; Volume~1, Paper~2) without fixing it. At the frontier,
+therefore, only the fact of confirmation is preserved, not its value.
+Reconstructability of value is a property of the wake interior.
+
+\subsection*{A.5 Break-test}
+
+The result fails if reconstruction is claimed where no forward cone
+carries the polarization. Two pre-registered failure conditions: (i) if
+the \ensuremath{1\to 4} multiplier were content-neutral --- if downstream
+signals did not inherit \ensuremath{\chi} --- then no downstream carrier
+would fix the value and the claim would reduce to detection at all depths;
+Paper~1 \S\,4.3 establishes the inheritance, so this does not obtain. (ii)
+If the claim were extended to \ensuremath{d = 0}, it would assert
+reconstruction with zero carriers, which A.4 forbids; the claim is
+therefore restricted to \ensuremath{d \geq 1} and is false outside that
+range, as required. The correspondence to the \ensuremath{[[4,2,2]]} code
+(distance-2 detection on the local unit; reconstruction via the forward
+cone) is consistent with this structure but is not used in the proof.
+
+\section*{Appendix B: The Forward Step Is Unreadable from Within the Boundary}
+\addcontentsline{toc}{section}{Appendix B: The Forward Step Is Unreadable from Within the Boundary}
+
+This appendix establishes the second forward obstruction of \S\,I: that a
+bounded subsystem cannot read the contribution its exterior makes to the
+folds it will undergo, so that even a determined forward step is
+unreadable from inside. It is distinct from the first obstruction, which
+is the genuine undetermination of the latent draw (Axiom~0) and holds for
+any observer.
+
+\subsection*{B.1 The objects}
+
+A subsystem is a closure: a region individuated by a boundary across which
+it is defined as interior against exterior (Volume~1, Paper~3; Paper~5).
+A confirmation on the boundary resolves against contributions from both
+sides, since the now-surface advances on the whole local configuration,
+interior and exterior alike (Paper~1, \S\,1).
+
+\subsection*{B.2 The argument}
+
+A measurement available to the subsystem is a confirmation it participates
+in --- one whose loci lie within its closure. The exterior, by definition
+of the boundary, contains loci the subsystem does not enclose and in whose
+confirmations it does not participate. Their values are therefore not
+among the quantities the subsystem can read. A forward fold on the
+boundary resolves partly against those exterior contributions. Hence the
+subsystem cannot, from within, fix the exterior input to its own next
+fold, and the forward step is unreadable from inside to exactly the extent
+that it depends on the exterior --- even when that step is fully determined
+from a vantage that encloses both sides. The obstruction is positional: it
+is a consequence of which loci fall inside the boundary, not of any
+indeterminacy in the dynamics.
+
+\subsection*{B.3 Relation to the first obstruction and to irreducibility}
+
+The two obstructions are independent. The first removes determination at
+the source (the latent draw is undetermined, Axiom~0); the second removes
+readability from a position (the exterior is determined but unenclosed).
+Either alone blocks forward reading; together they fix that prediction
+from within runs against both an undetermined draw and an unreadable
+exterior. The positional obstruction is the time-like reading of the
+record's computational irreducibility (Volume~1, Paper~1, \S\,7.2a): the
+record cannot be compressed, and the forward step cannot be shortcut from
+within.
+
+\subsection*{B.4 Break-test}
+
+The claim fails if an interior measurement could fix an exterior locus. By
+B.1 the boundary is defined precisely by non-enclosure of the exterior, so
+an interior confirmation enclosing an exterior locus would contradict the
+definition of the closure; no such measurement exists for a genuine
+boundary. The claim is correspondingly vacuous for a system with no
+exterior, which is the total-system case treated separately (Paper on the
+total system); there the obstruction does not arise because there is no
+unenclosed remainder, consistent with the result being positional.
+
+\section*{Appendix C: The Decay Law}
+\addcontentsline{toc}{section}{Appendix C: The Decay Law}
+
+This appendix derives the per-fold survival ratio, the forgetting curve
+and its three conditions, the cosmic-residue balance and its sign and
+fixed point, and the unification check that the two uses share one ratio
+used one way. The per-fold shed \ensuremath{s} is inherited (Paper~3,
+Appendix~B), with \ensuremath{s = 2} for binary-agent triads.
+
+\subsection*{C.1 Fixed fraction is forced; the survival ratio}
+
+A re-read applies \ensuremath{\hat{R}} to a region as it currently stands.
+By Axiom~4 the original confirmation is sealed and cannot be re-accessed;
+the re-reading surface acts on the present copy. A fixed-budget shed
+removes \ensuremath{s} bits of the original total per fold and so requires
+the original total as an operand, which the surface does not possess. A
+fixed-fraction shed removes a set proportion of the distinction presently
+accessible and requires only the present region. Only the latter is a
+substrate-available operation; the fixed-fraction reading is forced. The
+per-fold survival ratio is \ensuremath{r = 2^{-s}}, and for \ensuremath{s
+= 2}, \ensuremath{r = 1/4}. The value tracks \ensuremath{s}: it is fixed
+by the inherited shed, not chosen to resemble decay.
+
+\subsection*{C.2 The forgetting curve and its three conditions}
+
+With a fixed fraction \ensuremath{r} surviving per fold, accessible
+distinction after \ensuremath{n} folds is
+\ensuremath{D(n) = D_{\mathrm{floor}} + (D_{0} - D_{\mathrm{floor}}) r^{n}}.
+(A1) Monotone: \ensuremath{r \in (0,1)} gives \ensuremath{r^{n}} strictly
+decreasing, so \ensuremath{D(n)} decreases monotonically toward
+\ensuremath{D_{\mathrm{floor}}}; shed distinction is not regained, since
+Axiom~4 seals the original. (A2) Derived form: the exponential form
+follows from the fixed-fraction result of C.1, and the rate
+\ensuremath{r = 2^{-s}} from the inherited \ensuremath{s}; no rate is
+fitted. (A3) Floor: by Axiom~3 the fold conserves count, so the count-level
+record (gist) is never shed; \ensuremath{D_{\mathrm{floor}} > 0} and the
+curve distinguishes detail-loss from total erasure. The fixed-budget
+reading fails A3: a fixed subtraction reaches and crosses zero in finite
+folds, destroying the count, which Axiom~3 forbids. The floor existing and
+fixed-fraction being forced are the same fact.
+
+\subsection*{C.3 The cosmic-residue balance}
+
+A forming boundary anchors residue at rate \ensuremath{A} and de-anchors
+it by re-reading at clock rate \ensuremath{f}, each re-read shedding the
+fraction \ensuremath{(1-r)} of the residue then anchored. Hence
+\ensuremath{dR/dt = A - f(1-r)R}. (B1) Sign: for
+\ensuremath{R, f, (1-r) > 0} the loss term is negative, reducing the
+residue, opposing accumulation. (B2) Same shed: \ensuremath{(1-r) = 1 -
+2^{-s}} with the same \ensuremath{s = 2}, giving \ensuremath{3/4}. (B3)
+Units: \ensuremath{A} is residue per time; \ensuremath{f(1-r)R} is (folds
+per time)(dimensionless)(residue) \ensuremath{=} residue per time;
+commensurable, so cancellation is well-posed. The fixed point
+\ensuremath{R^{*} = A/[f(1-r)]} is stable, since
+\ensuremath{\partial_{R}[A - f(1-r)R] = -f(1-r) < 0}; the residue
+self-limits and the ratio flattens structurally.
+
+\subsection*{C.4 The unification check}
+
+The decisive condition (X1): the \ensuremath{r} of C.2 and the
+\ensuremath{r} of C.3 must be the same value used the same way. Both are
+\ensuremath{r = 2^{-s}} with \ensuremath{s = 2}; both enter as fixed
+fractions, not fixed budgets; and both are fixed-fraction for the same
+reason --- the access constraint of C.1, which forbids a fold from
+reaching the original behind the present copy, in the memory region and in
+the accumulated wake alike. The unification is structural, not a numerical
+coincidence between two independently tuned processes.
+
+\subsection*{C.5 What is not fixed; break-test}
+
+The value of \ensuremath{R^{*}} depends on \ensuremath{A} and
+\ensuremath{f}, neither derived here; the flatness is structural and the
+magnitude is open. The break-test is X1 itself: had forgetting forced
+fixed-fraction while the residue balance forced fixed-budget, or had the
+two required different \ensuremath{s}, the single-law claim would be false
+even with each half internally sound. Both forced fixed-fraction from one
+access constraint and share \ensuremath{s = 2}; the test is passed. A
+second pre-registered failure: if accessible distinction were defined
+against the sealed original rather than the present copy, C.1 would admit
+fixed-budget and A3 would fail; Axiom~4 forbids that access, closing the
+route.
+
+\section*{Acknowledgments}
+\addcontentsline{toc}{section}{Acknowledgments}
+
+This paper develops the now-surface of Paper~1 and the per-fold shed of
+Paper~3, and inherits its primitives from Volume~1. It is one paper of a
+larger derivation campaign and does not stand alone.
+
+\section*{References}
+\addcontentsline{toc}{section}{References}
+
+\begin{reflist}
+Bak, P., Tang, C., \& Wiesenfeld, K. (1987). Self-organized criticality: An explanation of the 1/f noise. \emph{Physical Review Letters}, 59(4), 381--384. doi:10.1103/PhysRevLett.59.381.
+
+Beggs, J. M., \& Plenz, D. (2003). Neuronal avalanches in neocortical circuits. \emph{The Journal of Neuroscience}, 23(35), 11167--11177. doi:10.1523/JNEUROSCI.23-35-11167.2003.
+
+Bennett, C. H. (1982). The thermodynamics of computation---a review. \emph{International Journal of Theoretical Physics}, 21(12), 905--940. doi:10.1007/BF02084158.
+
+Broad, C. D. (1923). \emph{Scientific Thought}. London: Kegan Paul, Trench, Trubner \& Co.
+
+FitzHugh, R. (1961). Impulses and physiological states in theoretical models of nerve membrane. \emph{Biophysical Journal}, 1(6), 445--466. doi:10.1016/S0006-3495(61)86902-6.
+
+Forrest, P. (2004). The real but dead past: A reply to Braddon-Mitchell. \emph{Analysis}, 64(4), 358--362. doi:10.1093/analys/64.4.358.
+
+Friston, K. (2010). The free-energy principle: A unified brain theory? \emph{Nature Reviews Neuroscience}, 11(2), 127--138. doi:10.1038/nrn2787.
+
+Kirkpatrick, J., Pascanu, R., Rabinowitz, N., Veness, J., Desjardins, G., Rusu, A. A., Milan, K., Quan, J., Ramalho, T., Grabska-Barwinska, A., Hassabis, D., Clopath, C., Kumaran, D., \& Hadsell, R. (2017). Overcoming catastrophic forgetting in neural networks. \emph{Proceedings of the National Academy of Sciences}, 114(13), 3521--3526. doi:10.1073/pnas.1611835114.
+
+Landauer, R. (1961). Irreversibility and heat generation in the computing process. \emph{IBM Journal of Research and Development}, 5(3), 183--191. doi:10.1147/rd.53.0183.
+
+Rao, R. P. N., \& Ballard, D. H. (1999). Predictive coding in the visual cortex: A functional interpretation of some extra-classical receptive-field effects. \emph{Nature Neuroscience}, 2(1), 79--87. doi:10.1038/4580.
+
+Tooley, M. (1997). \emph{Time, Tense, and Causation}. Oxford: Oxford University Press.
+
+van der Pol, B., \& van der Mark, J. (1928). The heartbeat considered as a relaxation oscillation, and an electrical model of the heart. \emph{The London, Edinburgh, and Dublin Philosophical Magazine and Journal of Science}, 6(38), 763--775. doi:10.1080/14786441108564652.
+\end{reflist}
+
+
+\end{document}

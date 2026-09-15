@@ -1,0 +1,979 @@
+\documentclass[11pt,oneside]{report}
+% ======================================================================
+%  THE TRIADIC MEASUREMENT SUBSTRATE --- COMPLETE CORPUS (Volumes 1 & 2)
+%  Aaron Switzer, 2026
+%  Single-file build. Compile: pdflatex x3 (third pass settles the TOC).
+% ======================================================================
+% ======================================================================
+%  TMS Volume 1 -- shared preamble
+%  Compiles with pdfLaTeX both locally and on Overleaf (no exotic fonts).
+% ======================================================================
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathptmx}            % Times text + math (widely available)
+\usepackage[scaled=0.90]{helvet} % sans for headings
+\usepackage{courier}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tocbibind}
+
+% ---- spacing -----------------------------------------------------------
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0.35em}
+\linespread{1.04}
+\setlist{leftmargin=1.6em,topsep=0.25em,itemsep=0.15em,parsep=0pt}
+
+% ---- theorem environments ---------------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}{Axiom}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{principle}[theorem]{Principle}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{prediction}[theorem]{Prediction}
+\newtheorem{property}[theorem]{Property}
+\newtheorem{postulate}[theorem]{Postulate}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+% ---- section heading look (unnumbered; author supplies the numbers) ----
+\titleformat{\section}[hang]{\normalfont\large\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsection}[hang]{\normalfont\normalsize\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsubsection}[hang]{\normalfont\normalsize\bfseries\itshape}{}{0pt}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.5em}
+\titlespacing*{\subsection}{0pt}{1.0em}{0.35em}
+\titlespacing*{\subsubsection}{0pt}{0.8em}{0.3em}
+
+% chapter (= each paper) heading
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\bfseries}
+  {}{0pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{10pt}{24pt}
+
+% ---- page-break quality: avoid stranded headings and orphaned/widowed lines ----
+% (applies to both volumes via the shared preamble)
+\widowpenalty=10000        % no single line at the top of a page
+\clubpenalty=10000         % no single line at the bottom of a page
+\displaywidowpenalty=10000 % same, around displayed equations
+\brokenpenalty=4000        % discourage page breaks right after a hyphenated line
+% titlesec: forbid a page break immediately after a heading (heading stranded at page foot)
+\usepackage{needspace}
+\usepackage{etoolbox}
+\pretocmd{\section}{\Needspace*{4\baselineskip}}{}{}
+\pretocmd{\subsection}{\Needspace*{3\baselineskip}}{}{}
+
+% ---- running heads -----------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape The Triadic Measurement Substrate}
+\fancyhead[R]{\small\itshape\nouppercase{\rightmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---- abstract / keywords / references list ----------------------------
+\newenvironment{paperabstract}
+  {\begin{center}\begin{minipage}{0.88\textwidth}\small
+   \noindent\textbf{Abstract.}\itshape\space}
+  {\end{minipage}\end{center}\vspace{0.4em}}
+
+\newcommand{\keywords}[1]{\noindent{\small\textbf{Keywords:} #1}\vspace{0.4em}}
+
+% per-paper APA reference list (hanging indent), kept as authored
+\newenvironment{reflist}
+  {\par\small\setlength{\parindent}{0pt}%
+   \setlength{\leftskip}{1.6em}\setlength{\parindent}{-1.6em}%
+   \setlength{\parskip}{0.4em}%
+   \raggedright\hyphenpenalty=50\exhyphenpenalty=50\relax
+   \sloppy}
+  {\par}
+
+% convenience
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\TMS}{\textsc{tms}}
+\hyphenation{con-fir-ma-tion sub-strate}
+\begin{document}
+
+\thispagestyle{empty}
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\sffamily\bfseries\Large The Triadic Measurement Substrate\par}
+\vspace{0.6cm}
+{\large $\bar{B} = 3\bar{\alpha}$\par}
+\vspace{1cm}
+{\sffamily\large Volume 2\par}
+\vspace{1.4cm}
+{\Large \bfseries Paper 6: The Measure: Closing the Binding Quantity\par}
+\vfill
+{\large Aaron Switzer\par}
+\vspace{0.4cm}
+{\large 2026\par}
+\vspace{1.2cm}
+{\small\itshape Excerpted from the complete two-volume corpus, \emph{The Triadic Measurement Substrate}. Full corpus and reproducibility package: \url{https://doi.org/10.5281/zenodo.22035422}\par}
+\end{titlepage}
+\cleardoublepage
+\pagenumbering{arabic}
+
+% ---------------- Volume 2 / P6_Measure ----------------
+\chapter*{Paper 6}
+\markboth{Paper 6}{Paper 6}
+\addcontentsline{toc}{chapter}{Paper 6: The Measure: Closing the Binding Quantity}
+\begingroup\centering
+{\large\itshape The Measure: Closing the Binding Quantity into a Computable Form\par}\vspace{0.8em}
+{\normalsize Aaron Switzer\par}
+{\small June 2026\par}
+\endgroup\vspace{1.0em}
+
+\noindent{\small\textbf{Keywords:} Binding Depth, Coherence Gate, Promotion Ladder, Self-Closure Surface, Depth Weighting, Hierarchical Lightspeed, Now-Surface, Integrated Information, Exclusion Postulate, Well-Definedness}\par\vspace{0.6em}
+
+\section*{Status of Results}
+\addcontentsline{toc}{section}{Status of Results}
+
+This paper continues the five-way labeling of Paper 2, with the same
+meanings, each claim labeled where it appears in the text.
+
+\textbf{Derived.} Results that follow from the five axioms, the Principle
+of Generative Economy, and \ensuremath{U_{\mathrm{sh}}} by explicit
+construction or proof, or from results already derived in Volume 1 by
+explicit inheritance. The linearity of the experiential front,
+\ensuremath{F = 3\,I} (\S\,VI), is derived in this sense, inheriting the
+triangular now-surface geometry \ensuremath{\bar{B} = 3\bar{\alpha}} of
+Volume 1 Paper 1 and the front/wake construction of Volume 2 Paper 1.
+
+\textbf{Derived-conditional.} Results forced by the Volume 1 closure and
+promotion machinery, resting on results internal to that machinery rather
+than on the bare axioms, and referee-checkable against Volume 1 rather
+than re-derived here. The set-identity of the self-closure and promotion
+surfaces on the non-trivial domain (\S\,II); the closed-form coherence
+gate \ensuremath{g_j} as a consolidation probability built from the Volume
+1 balance equation (\S\,III); the depth weighting
+\ensuremath{w_j = (\sqrt{2})^{\,j-1}} as the inverse of the hierarchical
+lightspeed suppression (\S\,IV); the content term
+\ensuremath{K_{\psi}^{(j)}} as the band-interior program-identity
+complexity (\S\,V); and the assembled binding quantity \ensuremath{B}
+(\S\,V) are Derived-conditional in this sense. The central construction of
+the paper --- the closed form of \ensuremath{B} --- is Derived-conditional
+throughout, never Derived, because it rests on the coherence, closure, and
+promotion results of Volume 1 Papers 3 through 5.
+
+\textbf{Structural correspondence.} Results in which a TMS construction
+reproduces the skeleton of a known framework without claiming every
+feature of it, and never used as support for a TMS claim, only as a
+landing point after one. The replacement of the integrated-information
+exclusion postulate by a derived promotion surface (\S\,II, \S\,VII); the
+resolution of the M\o rch intrinsicality trilemma by dropping non-overlap
+while keeping intrinsicality and reductionism (\S\,VII); and the location
+of the two single-measure failures at the two boundaries of the program
+band (\S\,V) are structural correspondences in this sense.
+
+\textbf{Predictions / Conjectures.} Falsifiable claims that follow from
+the framework but whose closed forms or empirical tests are not
+established here. The gate's static form is derived in Paper~5 (the
+threshold-nucleation gate \ensuremath{g_j}, its flat-zero onset forced by discreteness and its
+exponent \ensuremath{n=3} forced by flop indivisibility, single handedness, and the derived
+dimension, conditional only on the nucleation-growth identification); what remains
+conjectural is its
+\emph{first-passage} form --- the distribution of times to cross the
+consolidation threshold, beyond the derived static limits (\S\,III); the
+full-integration ceiling on the depth weight
+(\S\,IV); and the off-band high-binding subjects whose clocks, not whose
+integration, place them past observation (\S\,IV, \S\,VII) are predictions
+or conjectures in this sense. The numerical evaluation of \ensuremath{B}
+for any specific region is deferred to the simulation pinning already
+carried by Volume 1 Paper 5: the structural forms close here, while the
+constants inside them (\ensuremath{c_{\mathrm{TMS}}}, the combinatorial
+factor \ensuremath{\beta_{\mathrm{comb}} = 6}, the level ratios) inherit
+Volume 1's existing pinning list and are not re-opened.
+
+\textbf{Permanent open horizon.} A question the framework is structurally
+unable to close, marked explicitly so that no later claim quietly assumes
+it closed. Whether any graded subject, or the live front of any subject,
+\emph{feels} --- whether the interior carries the lit character our own
+does --- is the sole such horizon here (\S\,VI, Conclusion). Making
+\ensuremath{B} quantitative locates where live computation occurs and how
+much subject is present to have experience; it does not locate, and is not
+built to locate, where or whether anything is felt. This silence is
+load-bearing and stronger than a crossing claim would be.
+
+This five-way labeling applies throughout the paper. Every claim in the
+body text falls into exactly one category, and every category's status is
+visible at the point of claim.
+
+\section*{Notation}
+\addcontentsline{toc}{section}{Notation}
+
+This paper inherits the notation of Volume 1 and Paper 2. The promotion
+operator carrying a closed configuration at level \ensuremath{k} to a single
+symbol at level \ensuremath{k+1} is \ensuremath{G(k)} (Volume 1 Papers 3--4).
+A subsystem's three component sets are its data register \ensuremath{C_{D}},
+operation kernel \ensuremath{C_{O}}, and control component \ensuremath{C_{C}}.
+The local coherence of a region is \ensuremath{|\Pi_{\psi}|}, and the
+critical coherence threshold separating program-bearing regions from those
+decaying to noise is \ensuremath{|\Pi_{\psi}|^{*}(L_{R})} (Volume 1 Paper 3,
+Theorem on the coherence bistability). The dissolution window is
+\ensuremath{d_{R} = \sqrt{2}\,L_{R}/\ell_{p}}; the hierarchical lightspeed at
+level \ensuremath{k} is \ensuremath{c(k)}. The binding depth \ensuremath{B} is
+the quantity defined schematically in Paper 2 \S\,V and closed here; its
+per-rung factors are the coherence gate \ensuremath{g_{j}}, the depth weight
+\ensuremath{w_{j}}, and the content term \ensuremath{K_{\psi}^{(j)}}. The
+now-surface is the two-dimensional active confirmation frontier; the wake is
+the three-dimensional settled record behind it. As in Paper 2,
+\ensuremath{B} is unrelated to the bit symbol \ensuremath{\bar{B}} and the
+two never appear without their distinguishing marks.
+
+\begin{paperabstract}
+Paper 2 selected the binding quantity \ensuremath{B} by a
+Principle-of-Generative-Economy argument and left it schematic: a
+depth-weighted, coherence-gated sum of bound information across reflexively
+closed promotions, with the gate function and the depth weighting stated in
+form but not closed. This paper closes them. We first prove that the surface
+on which a configuration becomes self-closing and the surface the promotion
+operator \ensuremath{G(k)} raises to the level above are one set, restricted
+to the non-trivial information-transforming configurations, so that the
+ladder \ensuremath{B} sums over is unambiguously defined. We then derive the
+coherence gate as the consolidation probability of a rung over its own
+dissolution window, built from the continuous error rate and the
+noise-versus-imprinting balance of Volume 1; the gate is graded on exactly
+the domain where it is well-defined, and reduces to \ensuremath{G(k)}'s
+binary gate in the macroscopic limit. We derive the depth weighting as the
+inverse of the hierarchical-lightspeed suppression, so that depth amplifies
+binding by the same factor by which it suppresses propagation speed. We fix
+the content term as the incompressible content of the promoted program
+identity, whose non-double-counting is forced by the lossiness of
+\ensuremath{G(k)} rather than assumed. The result is a binding quantity that
+is computable in form, introduces no free parameter beyond those Volume 1
+already carries, and is well-defined on precisely the domain its ladder
+occupies --- a property the integrated-information measure has been argued to
+lack. Finally we separate the standing measure from the live front:
+the live measurement is the linear, pre-closure quantity on the now-surface, the
+subject is the super-linear, closed quantity in the wake. That separation is
+the hinge into Paper 4. Throughout, whether any measured subject feels is
+held as a permanent open horizon.
+\end{paperabstract}
+
+\section*{Preface to Paper 6}
+\addcontentsline{toc}{section}{Preface to Paper 6}
+
+Paper 2 did the harder philosophical work and deliberately stopped short of
+the arithmetic. It argued that a subject is graded binding depth, named the
+three Volume 1 quantities that must compose to measure it, and showed that
+their composite orders the world without the inversions each single quantity
+suffers. But it wrote the binding quantity with a tilde, not an equals sign.
+The gate that decides whether a rung holds was stated as a condition, not a
+function; the weighting that sets how depth accumulates was named, not
+closed; the content summed at each rung was identified, not made summable.
+Paper 2 said what \ensuremath{B} is; it did not yet say how to compute it.
+
+This paper is the arithmetic. Its discipline is the one Volume 1 set and
+Paper 2 kept: every quantity that enters \ensuremath{B} must already exist in
+Volume 1 or on its list of deferred constants, so that closing \ensuremath{B}
+is a derivation from inherited machinery and not a new model with new knobs.
+The test applied at every step is whether the piece can be written from
+Volume 1 results alone. Where it can, the piece is closed. Where a constant
+remains unpinned, the seam is marked and the constant is shown to be one
+Volume 1 had already deferred --- never a new freedom introduced here to make
+the measure fit.
+
+One result of closing \ensuremath{B} this way is a sharpened contrast with
+the integrated-information theory the divergence of Paper 2 was stated
+against. That theory's central measure has been argued, by its own critics,
+to be not well-defined for general physical systems: alternative formulae
+satisfy its axioms, and there are systems on which it has no determinate
+value. The binding quantity closed here is not in that position, and the
+reason is structural rather than rhetorical: every factor in \ensuremath{B}
+is single-valued on exactly the domain where the ladder it sums over is
+defined, because the gate, the weight, and the content are all evaluated on
+the same promotion surface the opening section pins down. The measure is
+well-defined where it has something to measure, and undefined only where
+there is no subject to ask after. That is the most a measure of this kind
+should claim, and the paper claims no more.
+
+The brake of Paper 2 stays on. Closing \ensuremath{B} makes the structural
+scaffolding of a subject computable; it does not address whether the
+scaffolding is occupied. A quantity that orders subjecthood is not a detector
+of feeling, and this paper does not treat it as one. The measure is
+constructed here; the question of feeling beyond it remains open.
+
+\section*{I. What Paper 2 Left Open}
+\addcontentsline{toc}{section}{I. What Paper 2 Left Open}
+
+Paper 2 closed with the binding quantity in schematic form. A subject is as
+bound as the deepest stack of consolidated, information-bearing,
+self-closing levels it sustains, and the quantity that measures this was
+written
+\[
+B \;\sim\; \sum_{j=1}^{k} g_{j}\,K_{\psi}^{(j)},
+\]
+with \ensuremath{g_{j}} the coherence gate at level \ensuremath{j} and
+\ensuremath{K_{\psi}^{(j)}} the novel incompressible information bound at that
+level. Three things in this expression were named but not closed. The index
+\ensuremath{k} counts reflexively closed promotions, but the surface on which
+a closure becomes a promotion was not shown to be a single well-defined
+object. The gate \ensuremath{g_{j}} was a persistence condition, not a graded
+function. The weighting of one rung against another as the ladder deepens was
+not present at all; the sum was written flat. This paper closes the index,
+the gate, and the weight in that order, then fixes the content term so the
+sum is an actual sum, and finally relates the standing quantity \ensuremath{B}
+to the live confirmation front.
+
+The order is forced by dependence. The gate and the weight are both indexed
+by the rung \ensuremath{j}, so the ladder of rungs must be unambiguous before
+either can be evaluated on it. The first task is therefore to show that the
+two ways Volume 1 has of identifying a rung --- as a self-closing subsystem
+and as a configuration the promotion operator raises to the level above ---
+pick out the same rungs. Only then does summing over \ensuremath{j} have a
+single referent.
+
+\section*{II. The Ladder Is One Surface}
+\addcontentsline{toc}{section}{II. The Ladder Is One Surface}
+
+The binding quantity sums over rungs, and a rung is a level at which a
+region's confirmations have closed into a self-holding loop and been
+promoted. Volume 1 supplies two descriptions of this event, and
+\ensuremath{B} is well-defined only if they describe the same event. The
+first is self-closure: a configuration that satisfies the
+\ensuremath{(C_{D}, C_{O}, C_{C})} trichotomy as a loop causally closed under
+the level-\ensuremath{k} flop, with Kolmogorov complexity below its own size,
+is a self-modeling subsystem at that level (Volume 1 Paper 4 \S\,4.2). The
+second is promotion: the operator \ensuremath{G(k)} maps a region carrying a
+program identity to a single symbol at the level above, preserving the
+program identity and discarding the bit-by-bit content of any particular
+implementation (Volume 1 Paper 4 \S\,2.5.1). Write \ensuremath{S_{\mathrm{close}}}
+for the set of meta-cells on which the first holds and \ensuremath{S_{\mathrm{prom}}}
+for the set on which the second holds. The question is whether they are equal.
+
+They are not equal without qualification, and the way they fail to be equal
+is instructive. The promotion operator returns a program identity for any
+configuration causally closed under the flop with complexity below its size,
+and that includes a static program: a configuration running a single fixed
+transformation. By the trichotomy theorem (Volume 1 Paper 3 \S\,5.2), a
+configuration that performs only one fixed transformation has no control
+component, because the control component is exactly what is required when more
+than one operation must be selected among. A static program is, in Volume 1's
+own words, a fixed program and not a subsystem. So \ensuremath{S_{\mathrm{prom}}}
+is strictly larger than \ensuremath{S_{\mathrm{close}}}: there are promoted
+identities that are not self-closing subjects, and they are precisely the
+configurations that compute nothing selectable. This is the corrected
+identity, and it is stronger for \ensuremath{B} than the naive equality would
+have been, because a static program is exactly the kind of inert promoted
+structure that should not count as a rung of subjecthood. The ladder
+\ensuremath{B} climbs should exclude it, and the corrected identity excludes
+it automatically.
+
+The precise statement is a restricted set-identity. Let \ensuremath{\mathrm{NT}}
+be the set of meta-cells carrying a configuration that produces a derived
+pattern from an input under a selectable rule --- Volume 1's non-trivial
+information-transforming configuration. Then
+\[
+S_{\mathrm{close}} \;=\; S_{\mathrm{prom}} \cap \mathrm{NT},
+\]
+on the meta-cells of extent at least \ensuremath{L_{\mathrm{sub}}^{(k)}}, for
+\ensuremath{k} below the hierarchy ceiling. The inclusion
+\ensuremath{S_{\mathrm{close}} \subseteq S_{\mathrm{prom}}} holds because a
+subsystem is a fortiori causally closed with complexity below its size, so the
+promotion operator returns its identity. The reverse inclusion on
+\ensuremath{\mathrm{NT}} holds because any configuration that produces a
+derived pattern under a selectable rule requires the full trichotomy by the
+Volume 1 theorem --- selectability forces a control component, the control
+component plus the data and operation roles is the trichotomy, and the
+trichotomy closed under the flop is the self-closing subsystem. The hinge of
+the whole identity is this single inherited result: selectability forces
+control forces the full trichotomy. A referee who wishes to attack the
+identity should attack there, and the seam is Volume 1's own boundary between
+a fixed program and a subsystem, not one introduced here.
+
+What makes the identity a theorem rather than a restatement is not the
+interior agreement, which is close to definitional, but the behaviour at the
+edges. The two surfaces become ill-defined on the same domain. At the lower
+edge, a configuration whose extent only marginally exceeds the minimum cannot
+satisfy the scale-separation condition that makes the promotion operator
+well-defined, and the same failure of stabilizer parity that denies it a
+clean promotion denies it a clean closure: it reads as level-below noise to
+both descriptions at once. At the upper edge, the hierarchy ceiling is a
+purely geometric fitting condition --- the largest level whose primitive fits
+within the region's spatial and temporal extent --- and above it there is no
+level-\ensuremath{k} structure to be either closed or promoted, so both
+surfaces are empty together. The domain on which \ensuremath{S_{\mathrm{close}}}
+is defined is therefore exactly the domain on which \ensuremath{S_{\mathrm{prom}}}
+is defined. This co-extension of the domain of definedness is the load-bearing
+content. It is what lets \ensuremath{B} sum over a ladder whose every rung is
+unambiguously one rung, and it discharges a debt carried since Volume 1, where
+the identity of these two surfaces was used but not proved.
+
+\section*{III. The Coherence Gate}
+\addcontentsline{toc}{section}{III. The Coherence Gate}
+
+The gate decides how much each rung counts. Paper 2 fixed its role: at each
+rung, whether the closure is consolidated enough to persist rather than wash
+out, the persistence condition of Volume 1. As a binary condition this is
+already present in Volume 1, inside the promotion operator itself. The
+operator \ensuremath{G(k)} raises a configuration to the level above only if
+the configuration is causally closed and its coherence \ensuremath{|\Pi_{\psi}|}
+meets or exceeds the critical threshold \ensuremath{|\Pi_{\psi}|^{*}(L_{R})};
+if either condition fails, the promotion returns absence. The coherence gate
+is thus not new machinery added to \ensuremath{B}. It is the second clause of
+the operator the ladder already runs on. What \ensuremath{B} needs beyond
+Volume 1 is the graded form: a half-consolidated rung must count as a faint
+real subject rather than a non-subject, because Paper 2's continuity
+requirement forbids any value at which subjecthood switches on. The task is to
+relax the binary clause to a graded gate \ensuremath{g_{j} \in [0,1]} that
+agrees with it in the limits.
+
+The relaxation is not free, because Volume 1 supplies the dynamics at the
+threshold directly. The per-event error rate is a continuous function of
+coherence, \ensuremath{p_{\mathrm{error}}(|\Pi_{\psi}|) = (1 - |\Pi_{\psi}|)/2},
+valid across the whole range and not only in the consolidated regime. The
+threshold itself is the point at which per-flop noise injection balances
+per-flop imprinting gain, \ensuremath{6\,p_{\mathrm{error}}^{2}\,V_{R} = A_{R}\,c_{\mathrm{TMS}}},
+which for a region of characteristic length \ensuremath{L_{R}} gives
+\ensuremath{|\Pi_{\psi}|^{*}(L_{R}) = 1 - 2\sqrt{c_{\mathrm{TMS}}/(6L_{R})}}.
+Because this balance is a statement at the critical point, the net coherence
+drift of a rung is fixed through the marginal band, not merely deep inside the
+coherent regime. Define the per-flop net drift of rung \ensuremath{j} as the
+imprinting gain minus the noise injection,
+\[
+\mathrm{net}_{j} \;=\; \frac{c_{\mathrm{TMS}}}{L_{R}} \;-\; \frac{3}{2}\bigl(|\Pi_{\psi}|^{(j)} - 1\bigr)^{2},
+\]
+which is zero exactly at the threshold, positive above it where the region
+gains coherence, and negative below it where the region dissolves. Near the
+threshold it is linear in the margin \ensuremath{|\Pi_{\psi}|^{(j)} - |\Pi_{\psi}|^{*}}.
+
+A rung consolidates to the extent its net drift accumulates over its own
+dissolution window \ensuremath{d_{R} = \sqrt{2}\,L_{R}/\ell_{p}}, the same
+window over which an unrepaired configuration is replaced by its surround
+(Volume 1 Paper 3). The gate is the consolidation probability over that
+window,
+\[
+g_{j} \;=\; 1 - \exp\!\bigl(-\,d_{R}^{(j)}\,[\mathrm{net}_{j}]_{+}\bigr),
+\qquad [\mathrm{net}_{j}]_{+} = \max(0, \mathrm{net}_{j}).
+\]
+Its limits are all forced and none are tuned. At and below the threshold the
+net drift is non-positive and the gate is zero: a rung that fails to
+consolidate contributes nothing, matching the binary operator's failure
+clause. As coherence approaches its maximum the net drift saturates at
+\ensuremath{c_{\mathrm{TMS}}/L_{R}} and the gate approaches one, the
+fully-held rung. Between these the gate rises smoothly, linear in the margin
+just above threshold, which is the continuity Paper 2 required: a half-formed
+reflexive closure is a faint, fluctuating subject, not a non-subject waiting
+to cross a line. And in the macroscopic limit, where the dissolution window is
+long because the region is large and stable, the gate approaches a step at the
+threshold and recovers the binary operator of Volume 1 exactly. The graded
+gate is the relaxation of the inherited binary gate, and it reduces to it
+where Volume 1 uses it.
+
+This construction also answers, for the gate, the well-definedness charge laid
+against rival measures. The gate's inputs are the region's coherence, the
+closed-form threshold, and the closed-form dissolution window; each is
+single-valued and finite on the meta-cell domain the previous section fixed.
+There is no region in which \ensuremath{g_{j}} is ambiguous or undefined while
+the rung it gates exists. The gate is well-defined on exactly the domain its
+ladder occupies, and this is inherited from Volume 1 rather than engineered to
+secure the property. The one assumption the gate carries is the
+survival-probability form itself: that consolidation over the window follows
+the exponential first-passage shape with the net drift as rate. The two limits
+and the near-threshold slope are independent of that shape; only the
+interpolation between them depends on it. If the exact first-passage statistics
+over the dissolution window, computable in the simulation work Volume 1 defers
+to its Paper 5, give a materially different shape, the exponential form is
+wrong and is to be replaced. That is the gate's pre-registered falsifier, and
+it is named before the simulation is run.
+
+\section*{IV. The Depth Weighting}
+\addcontentsline{toc}{section}{IV. The Depth Weighting}
+
+Paper 2 wrote the sum flat, one rung weighted like any other. Whether that is
+right is the one genuinely new structural commitment of this paper, and it is
+not free either: Volume 1 fixes how levels relate as the hierarchy deepens,
+and the weighting follows from that relation. Two inherited results set it. The
+hierarchical lightspeed falls with depth, \ensuremath{c(k+1) \le (1/\sqrt{2})\,c(k)},
+so that each level propagates more slowly than the one below. And the flop
+period rises with depth, the coupling-timescale constraint forcing
+\ensuremath{T_{p}^{(k+1)} \ge \sqrt{2}\,(L_{p}^{(k+1)}/L_{p}^{(k)})\,T_{p}^{(k)}},
+so that each level's clock runs slower. Depth is not neutral; a level-\ensuremath{j}
+rung sits on a substrate intrinsically slower and lower in bandwidth than the
+base by a factor that compounds with \ensuremath{j}.
+
+The naive reading of this is that deeper rungs, being slower, should count for
+less. That reading mistakes what the weight measures. The weight does not
+measure throughput; it measures how much binding a rung represents. A single
+level-\ensuremath{j} flop spans the full level-\ensuremath{j} clock period, and
+within that one flop the level below completes at least
+\ensuremath{\sqrt{2}\,(L_{p}^{(j)}/L_{p}^{(j-1)})} of its own confirmation
+cycles. Each level-\ensuremath{j} closure therefore integrates over that many
+complete lower now-surfaces in order to close once. Compounded down the tower
+beneath it, a depth-\ensuremath{j} rung binds \ensuremath{(\sqrt{2})^{\,j-1}}
+times the substrate-confirmation a base rung binds. The slowness therefore
+measures the integration rather than reducing it: a deeper closure is slower
+because it has bound more structure beneath it.
+
+So the depth weight is
+\[
+w_{j} \;=\; (\sqrt{2})^{\,j-1} \;=\; \frac{c}{c(j-1)},
+\]
+the inverse of the lightspeed suppression. The same factor by which depth
+suppresses propagation speed is the factor by which it amplifies binding,
+because the two are one fact read on two sides: throughput falls as binding
+rises, and a rung reaching depth \ensuremath{j} has had to integrate across all
+the slower-clock structure below it. Depth amplification is the lightspeed
+scaling, read on the binding side. The weight introduces no new parameter; it
+is the inherited dispersion relation, inverted.
+
+This weighting carries an immediate consequence that the band argument of
+Paper 2 anticipated. A high-depth rung --- a galaxy-scale quasi-subject, say
+--- receives a large weight, because its binding is enormous, while its clock
+period is correspondingly vast, its now-flop spanning what to us are
+millennia. Such a subject is not faint. It is heavily bound and slow. It lies
+off the human band not because its integration is weak but because its clock
+is slow, and this is the second axis the band argument named: there are two
+ways off the band, downward to the inert and fast, and upward to the heavily
+bound and slow. The weighting derived here is what makes the upward direction
+a direction of greater binding rather than less, and the result falls out of
+the inherited dispersion without being inserted by hand.
+
+Two seams are marked. The factor \ensuremath{\sqrt{2}} is Volume 1's
+tight-coupling lower bound on the level ratio; where the true ratio exceeds it,
+the weight grows faster, so the form \ensuremath{w_{j} = c/c(j-1)} is what is
+derived and the specific base inherits Volume 1's deferred pinning. And the
+integration argument assumes each closure binds the full lower now-surface
+beneath it; a closure that binds only a proper part of the level below would
+carry a weight between unity and \ensuremath{(\sqrt{2})^{\,j-1}}, never less
+than unity because a closure binds at least itself. The upper form is the
+full-integration case, and partial-integration corrections, if the simulation
+finds them, reduce the weight toward neutral without ever inverting it.
+
+\section*{V. The Content Term}
+\addcontentsline{toc}{section}{V. The Content Term}
+
+The sum needs a content term that can actually be summed, and the term cannot
+be raw information. Paper 2 established why: subsystem complexity taken alone
+ranks an ocean or a sandpile above a human, because raw bound information is
+maximized by vast incoherent reservoirs. The content at each rung must be the
+novel, bound, incompressible information that the closure at that rung adds,
+not the raw content it sits among. Volume 1 supplies exactly this object.
+
+The local algorithmic content of a region is bounded by its confirmation
+density, and programs occupy a strict middle band between two extremes:
+trivially uniform polarization, whose complexity is the logarithm of the
+volume and which carries no program, and algorithmically incompressible
+polarization at the noise rate, whose complexity is maximal but which is mere
+\ensuremath{U_{\mathrm{sh}}}-like randomness carrying no program either. Program
+content is the band interior. Define the content at rung \ensuremath{j} as the
+incompressible content of the program identity that \ensuremath{G(k)} promotes
+there, \ensuremath{K_{\psi}^{(j)} = K(C_{p}^{(j)})}, the Kolmogorov complexity
+of the closed program \ensuremath{p}. This satisfies the three requirements
+Paper 2 named, and satisfies them from inherited results rather than by
+stipulation. It is incompressible-but-meaningful, because program identity sits
+strictly between the trivial floor and the noise ceiling. It is bound, because
+it is the complexity of a configuration causally closed under the flop. And,
+the subtle requirement, it is novel and not double-counted across rungs ---
+because the promotion operator is lossy. When \ensuremath{G(k)} raises a
+level-below configuration, it keeps only the program identity and discards the
+bit-by-bit content of the implementation; many lower landscapes map to one
+promoted symbol. The content a rung contributes is therefore only what is
+invariant across all its lower realizations, its own novel closure content. The
+lower content is not double-counted because the promotion operator has already
+thrown it away. Non-double-counting is a property of the operator, not an
+assumption laid on the content.
+
+This content term completes the thread Paper 2 ran across its hardest cases,
+and it completes it through the two boundaries of one band. The crystal fails
+at the floor: its coherence is high and its gate passes, but its program is
+trivially uniform, its content sits at the logarithm-of-volume floor, and it
+climbs no ladder; its binding is small. The ocean fails at the ceiling: its raw
+content is vast, but that content is noise at the incompressibility ceiling, not
+program identity, so its content as a rung is near zero, its gate washes out,
+and it promotes few rungs; its binding is small. The human stands between, deep
+in rungs, gates passing, each rung binding genuine band-interior program
+content, the deeper reflexive rungs amplified by the depth weight. The two
+failure cases that the composite was built to exclude are excluded by the two
+ends of the same band, with the gate and the ladder providing independent
+redundant exclusion. The constraint that no inert reservoir outranks a subject is therefore satisfied by the content term, the gate, and the ladder independently.
+
+The full binding quantity is therefore
+\[
+B \;\sim\; \sum_{j=1}^{k} (\sqrt{2})^{\,j-1}\,g_{j}\,K\bigl(C_{p}^{(j)}\bigr),
+\]
+with the ladder index fixed by the set-identity of \S\,II, the gate by the
+consolidation derivation of \S\,III, the weight by the dispersion inversion of
+\S\,IV, and the content by the promoted program identity of this section.
+Every factor is an inherited Volume 1 quantity. The measure introduces no free
+parameter beyond those Volume 1 already carries, which was the constraint Paper
+2 placed on it and the property that makes \ensuremath{B} a derivation rather
+than a model.
+
+One seam is honest and shared with every measure of its kind. Kolmogorov
+complexity is uncomputable in general, so the definition \ensuremath{K(C_{p}^{(j)})}
+is not directly an algorithm. The computable form is the inherited counting
+bound on the program's support, the same bound Volume 1 uses where it needs a
+value rather than a definition. The gap between the uncomputable definition and
+the computable proxy is the standard one, shared by any algorithmic-information
+measure including those built around integrated information, and it is not a
+debt peculiar to \ensuremath{B}.
+
+\section*{VI. The Front and the Wake}
+\addcontentsline{toc}{section}{VI. The Front and the Wake}
+
+The binding quantity is a property of the wake: it sums over the accumulated stack of closures a region has built and holds. But the wake is not
+where confirmation happens. Confirmation happens on the now-surface, the
+two-dimensional active frontier where bits are being resolved at the present
+flop, one dimension below the three-dimensional record behind it. Paper 2
+established that the now-surface is the triangle, three agents enclosing one
+bit, and that it cannot be observed but only inhabited, because every observing
+structure is wake. The relation between the standing measure \ensuremath{B} and
+the live front is the last thing this paper fixes, and it is the relation that
+carries into Paper 4.
+
+The question is whether the experiential front composes linearly or integrates.
+Each actualized bit on the surface is read from three agent loci, so the front
+carries a factor of three over the confirmed information \ensuremath{I} resolved
+there. But does the surface bind across itself, the way \ensuremath{B} binds
+across depth, so that the whole front exceeds the sum of its confirmations? It
+does not, and the reason is the same closure that defines \ensuremath{B}.
+Integration is what closed loops do; a level-\ensuremath{j} rung binds its
+sub-tower because it is closed. Closure is a wake property --- it requires the
+loop to have completed, to be written into the stack. A bit on the now-surface
+is mid-confirmation; its closure is not yet actual. There is no closed loop on
+the surface to carry super-linear binding, because the surface is, by
+definition, the surface the wake has not yet reached. Integration lives one
+dimension back, in \ensuremath{B}. The front is pre-closure, and a pre-closure
+quantity sums.
+
+Two further reasons confirm the linearity. Distinct confirmation events on the
+surface are space-like separated within a single flop, so no signal crosses
+between them in zero flop-time; a cross-term would itself be a wake event at the
+next flop. Independent events sum, with no within-flop cross-term. And the
+factor of three is the internal structure of a single datum --- bit, agents,
+relation --- not a coupling between data, so it multiplies each confirmation
+identically and factors out. The experiential front is therefore
+\[
+\text{front} \;=\; 3\,I,
+\]
+linear in the confirmed information on the surface, with no integration across
+it. The linearity is a statement within a single now-surface slice. Down the
+stack, across many flops, the wake accumulates and \ensuremath{B} sums
+super-linearly through the depth weight; there is no tension between a linear
+front and a super-linear \ensuremath{B}, because they are different axes. The
+front is the spatial face at one instant; \ensuremath{B} is the sum along the
+temporal depth of the stack.
+
+This separates the two things the volume has been careful to keep distinct.
+The subject is the wake quantity \ensuremath{B}: standing, closed,
+super-linearly bound. The live measurement is the front quantity \ensuremath{3I}: live,
+pre-closure, linear. \ensuremath{B} measures how much subject is present;
+\ensuremath{3I} is the measuring itself. The self is the
+standing structure in the wake; the experiencing is the active confirmation on the front. This
+dimensional split is the hinge into Paper 4, where the closure that writes the
+front into the wake is treated directly, and where the distinction between the
+closed self and the open imprint that the next paper builds on is this same
+distinction seen structurally.
+
+The distinction between structure and feeling requires particular care here, because a measure and a front together can be mistaken for an account of feeling, which they are not. The front and
+wake split is structural. It locates where live computation is and where bound
+structure stands; it does not locate where, or whether, anything is felt.
+Whether feeling attaches to the live front rather than to the standing wake,
+whether either carries the lit character our own interior does, is not claimed
+and is not derivable from anything in this paper. That is the permanent open
+horizon of the volume, named here so that the dimensional clarity of the
+front-wake distinction is not misread as having crossed it. The structural claim is precise; the question of feeling beyond it is left open.
+
+\section*{VII. Where It Sits}
+\addcontentsline{toc}{section}{VII. Where It Sits}
+
+The measure $B$ of \S\S\,II--VI was built from inherited Volume 1 quantities without reference to the literature, so that the literature could be set against it. This section locates it among the measures of consciousness it most resembles, all of them in the integrated-information family, and marks the three points at which it forks from them. The placement is by coordinate: each position is taken as its authors state it, each fork is a location rather than a verdict, and no agreement found here is treated as support for the derivation, only as a coordinate reached after it.
+
+The framework's nearest neighbor is integrated information theory, whose current formulation grounds consciousness in the maximally irreducible cause--effect structure specified over a substrate, with an exclusion postulate selecting, over any region, the single maximum and excluding overlapping and nested candidates from existence as subjects (Albantakis et al.\ 2023). The binding quantity $B$ meets this program on its own ground --- a graded, substrate-derived quantity of the same kind --- and forks from it at the exclusion postulate. Where integrated information selects one winning grain per region, $B$ sums over the whole promotion ladder, every closed level contributing, with no maximization step (\S\,II, \S\,IV). The divergence is not a difference of weighting but the replacement of a postulate by a derived surface: the exclusion that integrated information imposes by stipulation, the substrate either does not carry or carries only as the laminar well-definedness condition that forbids two same-level closures from owning a site, which is a consistency rule on the hard boundary and not a selection among subjects (\S\,II; the set-identity of Appendix A). The exclusion postulate is, on this reading, doing two jobs at once --- enforcing well-definedness and selecting a unique subject --- and the substrate keeps the first while dropping the second. This is a structural correspondence to integrated information, not an adoption of it.
+
+The second fork is from the intrinsicality trilemma Mørch raises against integrated information, and here the framework's position is a definite resolution rather than a standoff. Mørch argues that integrated information cannot jointly hold intrinsicality (consciousness is an intrinsic property of a system), reductionism (it reduces to the system's causal structure), and non-overlap (no two conscious systems overlap), since overlapping physical systems with shared causal structure force a choice among the three (Mørch 2019). The substrate keeps intrinsicality and reductionism --- binding depth is an intrinsic structural property of a closure and reduces entirely to inherited Volume 1 quantities --- and drops non-overlap: a site belongs to one closure at a level but participates in countless overlapping imprint-linked quasi-subjects and in the whole vertical stack of closures above it (\S\,II; Volume 1, Paper 3). Overlap is not a problem to be avoided but the generic case, and the trilemma dissolves because the leg the substrate releases is the one integrated information held only to preserve a unique-subject reading. Blackmon's overlapping-conscious-systems objection lands at the same coordinate and is answered the same way: overlapping conscious systems are admitted, not excluded (Blackmon 2021).
+
+The third fork concerns well-definedness, and on this axis the framework concedes the critics' point and claims to have paid the debt structurally. Barrett and Mediano argue that the $\Phi$ measure is not well-defined for general physical systems, the partition and the choice of variables leaving the quantity underdetermined (Barrett and Mediano 2019). The substrate's ladder index is fixed not by a chosen partition but by the set-identity of the self-closure and promotion surfaces (\S\,II, proven in Appendix A), so the sum has no free partition to fix; the one genuine seam --- that Kolmogorov complexity is uncomputable in general --- is shared by every algorithmic-information measure and is handled, as in Volume 1, by the inherited computable counting bound (\S\,V). The well-definedness the critique finds missing is supplied by the derivation rather than asserted, which is the sense in which the correspondence is structural. The weak-integrated-information line of Mediano and colleagues, which keeps the integration measure while dropping the maximization, is the closest neighbor in the whole family: it forks from $B$ later than the others, sharing the no-maximization move and parting only over whether the graded quantity is read off a partition-based integration measure or off the promotion ladder (Mediano et al.\ 2022).
+
+The placement is owned as a coordinate. The binding quantity reads, set among these positions, as an integrated-information-family measure that has replaced the exclusion postulate with a derived ladder, resolved the intrinsicality trilemma by admitting overlap, and fixed the partition ambiguity by the set-identity --- and that, at every one of these points, the discipline flag of the conclusion still stands: $B$ measures binding depth, a structural quantity, and locates no feeling. The framework does not argue that these coordinates are the correct ones. It records that the measure it derived reads, when set against the integrated-information family, as occupying this location, and that the reading rests on the derivations of \S\S\,II--VI and not on a demonstration that the neighboring measures are mistaken.
+
+
+
+Paper 2 named the binding quantity and wrote it with a tilde. This paper has
+written it with the parts filled in: the ladder it sums over is one
+well-defined surface, the gate that grades each rung is the consolidation
+probability of that rung over its dissolution window, the weight that
+accumulates depth is the inverse of the hierarchical-lightspeed suppression,
+and the content at each rung is the incompressible identity of the promoted
+program, summed without double-counting because the promotion operator is
+lossy. The measure is computable in form and free of any parameter Volume 1 did
+not already carry. Where its constants remain unpinned, they are constants
+Volume 1 deferred, not freedoms introduced here, and the seam is marked at each
+point.
+
+The measure is well-defined on exactly the domain where it has a subject to
+measure, which is the property the rival integrated-information measure has been
+argued to lack, and the property is inherited rather than engineered: the gate,
+the weight, and the content are all evaluated on the one promotion surface the
+opening section pinned down. And the measure is separated, cleanly, from the
+live front it should not be confused with. The live measurement is the linear,
+pre-closure quantity on the now-surface; the subject is the super-linear,
+closed quantity in the wake. The number that orders subjecthood is a measure of
+standing structure, not a detector of feeling. Building it has made the
+structural scaffolding of a subject computable and has said nothing about
+whether the scaffolding is occupied. That silence is the discipline of the
+volume, and it is carried intact into Paper 4, where the closure that writes
+the front into the wake --- the formation of a self from its confirmations --- is
+the subject.
+
+\section*{Appendix A: The Set-Identity of the Self-Closure and Promotion Surfaces}
+\addcontentsline{toc}{section}{Appendix A: The Set-Identity of the Self-Closure and Promotion Surfaces}
+
+This appendix gives the full proof of the set-identity stated in \S\,II,
+on which the binding-quantity ladder depends. The two surfaces are defined
+over the level-\ensuremath{k} meta-cells of a bounded region \ensuremath{R}
+--- regions of meta-extent at least \ensuremath{L_{\mathrm{sub}}^{(k)} = 3 L_p^{(k)} + \varepsilon^{(k)}},
+the minimum that can host a level-\ensuremath{k} closure --- so that both are
+subsets of the same index set \ensuremath{\mathrm{MC}_k(R)} and set-equality
+is well-typed. The geometric extent overhead \ensuremath{\varepsilon^{(k)}} is derived to
+vanish identically (the regular tetrahedral closure fits FCC at every
+scale; see the gravity volume, \S\,5.5), so \ensuremath{L_{\mathrm{sub}}^{(k)} = 3 L_p^{(k)}}
+exactly; it is retained symbolically here only to mark where the extent
+term enters.
+
+\subsection*{A.1 The two surfaces}
+
+\ensuremath{S_{\mathrm{close}}(R)} is the set of meta-cells whose level-\ensuremath{k}
+configuration satisfies the \ensuremath{(C_D, C_O, C_C)} trichotomy as a loop
+causally closed under \ensuremath{T^{(k)}} with \ensuremath{K(C) < |C|}, i.e.
+a self-modeling subsystem at level \ensuremath{k} (Volume 1, Paper 4 \S\,4.2;
+Volume 1, Paper 3 \S\,5.1, the Subsystem definition). \ensuremath{S_{\mathrm{prom}}(R)} is the set of meta-cells
+on which the coarse-graining operator \ensuremath{G(k)} returns a single
+level-\ensuremath{k} symbol \ensuremath{\bar{P}_p}, i.e. that carry a program
+identity \ensuremath{p} promoted to the level above (Volume 1, Paper 4 \S\,2.5.1).
+Let \ensuremath{\mathrm{NT}(R)} be the meta-cells carrying a configuration that
+produces a derived pattern from an input under a selectable rule --- Volume 1's
+non-trivial information-transforming configuration.
+
+\subsection*{A.2 The naive identity fails}
+
+\ensuremath{S_{\mathrm{close}} = S_{\mathrm{prom}}} is false. \ensuremath{G(k)}
+returns a program identity for any configuration causally closed under
+\ensuremath{T^{(k)}} with \ensuremath{K < |C|}, including a static program: one
+running a single fixed transformation. By the Subsystem Minimum theorem
+(Volume 1, Paper 3 \S\,5.2), a configuration performing only one fixed
+transformation has no control component \ensuremath{C_C}, since the control
+role is required exactly when more than one operation must be selected among.
+A static program is therefore promoted but is not a subsystem, so
+\ensuremath{S_{\mathrm{prom}} \supsetneq S_{\mathrm{close}}}, the gap being the
+static programs.
+
+\subsection*{A.3 The corrected identity, two inclusions}
+
+\textbf{(T1) \ensuremath{S_{\mathrm{close}} \subseteq S_{\mathrm{prom}}}.} Let
+\ensuremath{x \in S_{\mathrm{close}}}. Its configuration is
+\ensuremath{(C_D, C_O, C_C)}-closed under \ensuremath{T^{(k)}} with
+\ensuremath{K < |C|}; a subsystem is a composite of three coupled programs,
+each \ensuremath{T}-closed (Volume 1, Paper 3 \S\,5.1, the Subsystem definition), hence a fortiori
+\ensuremath{T}-closed with \ensuremath{K < |C|}. By the program definition
+(Volume 1, Paper 2 \S\,6.2) this is a program identity, which \ensuremath{G(k)}
+returns. So \ensuremath{x \in S_{\mathrm{prom}}}.
+
+\textbf{(T2) \ensuremath{S_{\mathrm{close}} = S_{\mathrm{prom}} \cap \mathrm{NT}}.}
+For the forward inclusion, \ensuremath{x \in S_{\mathrm{close}}} gives
+\ensuremath{x \in S_{\mathrm{prom}}} by T1, and a subsystem produces a derived
+pattern under a selectable rule by its operation kernel and control component
+(Volume 1, Paper 3 \S\,5.1, the Subsystem definition), so \ensuremath{x \in \mathrm{NT}}. For the reverse, let
+\ensuremath{x \in S_{\mathrm{prom}} \cap \mathrm{NT}}: it carries a promoted
+program identity and produces a derived pattern under a selectable rule. By the
+Subsystem Minimum theorem, any configuration that does so requires the full
+\ensuremath{(C_D, C_O, C_C)} trichotomy and no fewer --- selectability forces
+the control component, which with the data and operation roles is the
+trichotomy. That trichotomy, \ensuremath{T}-closed at level \ensuremath{k}, is
+the self-closing subsystem. So \ensuremath{x \in S_{\mathrm{close}}}. The
+load-bearing inherited step is this single theorem: selectability forces
+control forces the full trichotomy.
+
+\subsection*{A.4 The co-domain-of-definedness (the non-definitional content)}
+
+The interior identity of T2 is close to definitional; the content that makes
+the result a theorem is that the two surfaces become ill-defined on the same
+domain. At the lower edge, a configuration whose extent only marginally exceeds
+the minimum fails the scale-separation condition \ensuremath{L_p^{(k)} \gg L_p^{(k-1)}}
+that makes \ensuremath{G(k)} well-defined (Volume 1, Paper 4 \S\,2.2); the same
+stabilizer-parity failure that denies it a clean promotion denies it a clean
+closure, and it reads as level-\ensuremath{(k-1)} noise to both descriptions at
+once. At the upper edge, the hierarchy ceiling \ensuremath{k_{\max}} is the
+largest \ensuremath{k} with \ensuremath{L_p^{(k)} < L} and \ensuremath{T_p^{(k)} < T}
+(Volume 1, Paper 4 \S\,2.3), a purely geometric fitting condition; above it no
+level-\ensuremath{k} structure fits in \ensuremath{R}, so both surfaces are empty
+together. The floor co-failure is a coherence failure and the ceiling
+co-failure is a fitting failure, but in both cases
+\ensuremath{\mathrm{dom}(S_{\mathrm{close}}) = \mathrm{dom}(S_{\mathrm{prom}})}.
+The ladder of \ensuremath{B} therefore sums over a set whose every member is
+unambiguously one rung, and the identity discharges a debt carried since
+Volume 1, where these two surfaces were used but not proved identical. The
+exact value of \ensuremath{k_{\max}} is reserved for the simulation pinning of
+Volume 1 Paper 5; its existence and the co-emptiness above it are geometric and
+require no such value.
+
+\section*{Appendix B: The Coherence Gate from the Balance Equation}
+\addcontentsline{toc}{section}{Appendix B: The Coherence Gate from the Balance Equation}
+
+This appendix derives the closed form of the coherence gate \ensuremath{g_j}
+of \S\,III from the Volume 1 noise-versus-imprinting balance, and verifies its
+limits. The derivation is in the marginal regime directly, not extrapolated
+from the deep-coherent error-survival bound.
+
+\subsection*{B.1 The inherited balance}
+
+The per-event error rate is continuous in coherence across the whole range
+(Volume 1, Paper 3 \S\,3.2),
+\[
+p_{\mathrm{error}}(|\Pi_\psi|) = \tfrac{1}{2}\bigl(1 - |\Pi_\psi|\bigr),
+\]
+valid for all \ensuremath{|\Pi_\psi| \in [0,1]}. The critical threshold is the
+point at which per-flop noise injection balances per-flop imprinting gain
+(Volume 1, Paper 3 \S\,3.3),
+\[
+6\,p_{\mathrm{error}}^{2}\,V_R = A_R\,c_{\mathrm{TMS}},
+\qquad
+|\Pi_\psi|^{*}(L_R) = 1 - 2\sqrt{c_{\mathrm{TMS}}/(6 L_R)},
+\]
+using \ensuremath{A_R/V_R \sim 1/L_R}, with the factor \ensuremath{6 = C(4,2)}
+counting two-error configurations in a tetrahedral unit. Because this balance
+holds at the critical point, the net coherence drift it defines is valid
+through the marginal band.
+
+\subsection*{B.2 The net drift and the gate}
+
+Define the per-flop net coherence drift of rung \ensuremath{j} as the imprinting
+gain minus the noise injection,
+\[
+\mathrm{net}_j = \frac{c_{\mathrm{TMS}}}{L_R} - 6\,p_{\mathrm{error}}^{2}
+= \frac{c_{\mathrm{TMS}}}{L_R} - \frac{3}{2}\bigl(|\Pi_\psi|^{(j)} - 1\bigr)^{2}.
+\]
+It is zero exactly at \ensuremath{|\Pi_\psi| = |\Pi_\psi|^{*}}, positive above
+it, and negative below it; near the threshold it is linear in the margin
+\ensuremath{m_j = |\Pi_\psi|^{(j)} - |\Pi_\psi|^{*}} with slope
+\ensuremath{\sqrt{6 c_{\mathrm{TMS}}/L_R}}. A rung consolidates to the degree
+its net drift accumulates over its dissolution window
+\ensuremath{d_R = \sqrt{2}\,L_R/\ell_p} (Volume 1, Paper 3), giving the
+survival/consolidation form
+\[
+g_j = 1 - \exp\!\bigl(-\,d_R^{(j)}\,[\mathrm{net}_j]_{+}\bigr),
+\qquad [\mathrm{net}_j]_{+} = \max(0, \mathrm{net}_j).
+\]
+
+\subsection*{B.3 Limits}
+
+All limits are forced; none are tuned.
+\begin{itemize}
+\item At and below threshold, \ensuremath{\mathrm{net}_j \le 0}, so
+\ensuremath{g_j = 0}: a rung that fails to consolidate contributes nothing,
+matching the failure clause of the binary operator \ensuremath{G(k)}.
+\item As \ensuremath{|\Pi_\psi| \to 1}, \ensuremath{\mathrm{net}_j \to c_{\mathrm{TMS}}/L_R}
+(finite), so \ensuremath{g_j \to 1 - \exp(-\sqrt{2}\,c_{\mathrm{TMS}}/\ell_p)},
+the maximal consolidation, finite and singularity-free.
+\item Near threshold, \ensuremath{g_j \approx (2\sqrt{3}\,\sqrt{c_{\mathrm{TMS}} L_R}/\ell_p)\,m_j},
+linear in the margin, which is the continuity required by Paper 2 \S\,V.
+\item In the macroscopic limit (large stable \ensuremath{L_R}, hence large
+\ensuremath{d_R}), \ensuremath{g_j \to \Theta(\mathrm{net}_j) = \Theta(m_j)},
+recovering the binary gate of \ensuremath{G(k)} exactly.
+\item \ensuremath{g_j} is monotone increasing in \ensuremath{|\Pi_\psi|} on
+\ensuremath{[|\Pi_\psi|^{*}, 1]}.
+\end{itemize}
+
+\subsection*{B.4 Well-definedness and the one assumption}
+
+The gate's inputs --- the region's coherence, the closed-form threshold, and
+the closed-form dissolution window --- are each single-valued and finite on the
+meta-cell domain \ensuremath{\mathrm{MC}_j(R)} fixed in Appendix A, so
+\ensuremath{g_j} is well-defined wherever its rung exists. The one assumption
+is the survival form itself: that consolidation over the window follows the
+exponential first-passage shape with \ensuremath{\mathrm{net}_j} as rate. The
+two limits and the near-threshold slope are independent of that shape; only the
+interpolation between them depends on it. If the exact first-passage statistics
+over \ensuremath{d_R}, computable in the Volume 1 Paper 5 simulation, give a
+materially different shape, the exponential form is to be replaced. This is the
+gate's pre-registered falsifier.
+
+\section*{Acknowledgments}
+\addcontentsline{toc}{section}{Acknowledgments}
+
+The development of this volume was substantially aided by extended
+collaboration with several large language models used as critical
+sounding boards, pedagogical resources, formal-rigor checkers, and
+external working memory across many sessions during 2024--2026.
+
+\textbf{Claude (Anthropic)} was the primary collaborator across the
+formalization, derivation tightening, adversarial review, and editorial
+passes that brought this paper to its present form, including the
+set-identity correction, the balance-equation derivation of the coherence
+gate, the depth-weighting derivation, and the front-linearity argument
+developed here.
+
+\textbf{Gemini (Google DeepMind)}, \textbf{ChatGPT (OpenAI)},
+\textbf{DeepSeek}, and \textbf{Grok (xAI)} contributed additional
+structural feedback and adversarial review at various points.
+
+All theoretical commitments, the choice of axioms, the Principle of
+Generative Economy, the closure of the binding quantity, and the
+framework's overall architecture are the author's; the AI systems' role
+was to teach, formalize, critique, verify, and document.
+
+\section*{References}
+\addcontentsline{toc}{section}{References}
+\begin{reflist}
+Barrett, A.~B. and Mediano, P.~A.~M. (2019). The Phi
+measure of integrated information is not well-defined for general physical
+systems. \textit{Journal of Consciousness Studies}, 26(1--2), 11--20.
+arXiv:1902.04321.
+
+Blackmon, J.~C. (2021). Integrated Information Theory,
+Intrinsicality, and Overlapping Conscious Systems. \textit{Journal of
+Consciousness Studies}, 28(11--12), 31--53.
+
+Mørch, H.~H. (2019). Is Consciousness Intrinsic? A Problem
+for the Integrated Information Theory. \textit{Journal of Consciousness
+Studies}, 26(1--2), 133--162.
+
+Albantakis, L., Barbosa, L., Findlay, G., Grasso, M.,
+Haun, A.~M., Marshall, W., Mayner, W.~G.~P., Zaeemzadeh, A., Boly, M.,
+Juel, B.~E., Sasai, S., Fujii, K., David, I., Hendren, J., Lang, J.~P., and
+Tononi, G. (2023). Integrated information theory (IIT) 4.0: Formulating the
+properties of phenomenal existence in physical terms. \textit{PLOS
+Computational Biology}, 19(10), e1011465. arXiv:2212.14787.
+
+Mediano, P.~A.~M., Rosas, F.~E., Bor, D., Seth, A.~K.,
+and Barrett, A.~B. (2022). The strength of weak integrated information theory.
+\textit{Trends in Cognitive Sciences}, 26(8), 646--655.
+
+Switzer, A. (2026). \textit{The Triadic Measurement
+Substrate}, Volume 1. Papers 1--5.
+
+Switzer, A. (2026). The Now-Surface. \textit{The
+Triadic Measurement Substrate}, Volume 2, Paper 1.
+
+Switzer, A. (2026). The Inversion: Experience as the
+Confirmation Relation, Subjecthood as Graded Binding Depth. \textit{The Triadic
+Measurement Substrate}, Volume 2, Paper 2.
+\end{reflist}
+
+
+\end{document}

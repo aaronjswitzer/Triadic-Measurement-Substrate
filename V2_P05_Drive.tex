@@ -1,0 +1,668 @@
+\documentclass[11pt,oneside]{report}
+% ======================================================================
+%  THE TRIADIC MEASUREMENT SUBSTRATE --- COMPLETE CORPUS (Volumes 1 & 2)
+%  Aaron Switzer, 2026
+%  Single-file build. Compile: pdflatex x3 (third pass settles the TOC).
+% ======================================================================
+% ======================================================================
+%  TMS Volume 1 -- shared preamble
+%  Compiles with pdfLaTeX both locally and on Overleaf (no exotic fonts).
+% ======================================================================
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathptmx}            % Times text + math (widely available)
+\usepackage[scaled=0.90]{helvet} % sans for headings
+\usepackage{courier}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tocbibind}
+
+% ---- spacing -----------------------------------------------------------
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0.35em}
+\linespread{1.04}
+\setlist{leftmargin=1.6em,topsep=0.25em,itemsep=0.15em,parsep=0pt}
+
+% ---- theorem environments ---------------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}{Axiom}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{principle}[theorem]{Principle}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{prediction}[theorem]{Prediction}
+\newtheorem{property}[theorem]{Property}
+\newtheorem{postulate}[theorem]{Postulate}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+% ---- section heading look (unnumbered; author supplies the numbers) ----
+\titleformat{\section}[hang]{\normalfont\large\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsection}[hang]{\normalfont\normalsize\bfseries\sffamily}{}{0pt}{}
+\titleformat{\subsubsection}[hang]{\normalfont\normalsize\bfseries\itshape}{}{0pt}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.5em}
+\titlespacing*{\subsection}{0pt}{1.0em}{0.35em}
+\titlespacing*{\subsubsection}{0pt}{0.8em}{0.3em}
+
+% chapter (= each paper) heading
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\bfseries}
+  {}{0pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{10pt}{24pt}
+
+% ---- page-break quality: avoid stranded headings and orphaned/widowed lines ----
+% (applies to both volumes via the shared preamble)
+\widowpenalty=10000        % no single line at the top of a page
+\clubpenalty=10000         % no single line at the bottom of a page
+\displaywidowpenalty=10000 % same, around displayed equations
+\brokenpenalty=4000        % discourage page breaks right after a hyphenated line
+% titlesec: forbid a page break immediately after a heading (heading stranded at page foot)
+\usepackage{needspace}
+\usepackage{etoolbox}
+\pretocmd{\section}{\Needspace*{4\baselineskip}}{}{}
+\pretocmd{\subsection}{\Needspace*{3\baselineskip}}{}{}
+
+% ---- running heads -----------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape The Triadic Measurement Substrate}
+\fancyhead[R]{\small\itshape\nouppercase{\rightmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---- abstract / keywords / references list ----------------------------
+\newenvironment{paperabstract}
+  {\begin{center}\begin{minipage}{0.88\textwidth}\small
+   \noindent\textbf{Abstract.}\itshape\space}
+  {\end{minipage}\end{center}\vspace{0.4em}}
+
+\newcommand{\keywords}[1]{\noindent{\small\textbf{Keywords:} #1}\vspace{0.4em}}
+
+% per-paper APA reference list (hanging indent), kept as authored
+\newenvironment{reflist}
+  {\par\small\setlength{\parindent}{0pt}%
+   \setlength{\leftskip}{1.6em}\setlength{\parindent}{-1.6em}%
+   \setlength{\parskip}{0.4em}%
+   \raggedright\hyphenpenalty=50\exhyphenpenalty=50\relax
+   \sloppy}
+  {\par}
+
+% convenience
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\TMS}{\textsc{tms}}
+\hyphenation{con-fir-ma-tion sub-strate}
+\begin{document}
+
+\thispagestyle{empty}
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\sffamily\bfseries\Large The Triadic Measurement Substrate\par}
+\vspace{0.6cm}
+{\large $\bar{B} = 3\bar{\alpha}$\par}
+\vspace{1cm}
+{\sffamily\large Volume 2\par}
+\vspace{1.4cm}
+{\Large \bfseries Paper 5: The Drive: Persistence Under the Shed as the Climb of the Richness Gradient\par}
+\vfill
+{\large Aaron Switzer\par}
+\vspace{0.4cm}
+{\large 2026\par}
+\vspace{1.2cm}
+{\small\itshape Excerpted from the complete two-volume corpus, \emph{The Triadic Measurement Substrate}. Full corpus and reproducibility package: \url{https://doi.org/10.5281/zenodo.22035422}\par}
+\end{titlepage}
+\cleardoublepage
+\pagenumbering{arabic}
+
+% ---------------- Volume 2 / P5_Drive ----------------
+\chapter*{Paper 5}
+\markboth{Paper 5}{Paper 5}
+\addcontentsline{toc}{chapter}{Paper 5: The Drive: Persistence Under the Shed as the Climb of the Richness Gradient}
+\begingroup\centering
+{\large\itshape The Drive: Persistence Under the Shed as the Climb of the Richness Gradient\par}\vspace{0.8em}
+{\normalsize Aaron Switzer\par}
+{\small June 2026\par}
+\endgroup\vspace{1.0em}
+
+\noindent{\small\textbf{Keywords:} Triadic Confirmation, Principle of Generative Economy, Agent-Side Reading, Per-Fold Shed, Persistence, Binding Depth, Richness Gradient, Generative Non-Triviality, Reinterpretation, Survivorship, Drive}\par\vspace{0.6em}
+
+\section*{Status of Results}
+\addcontentsline{toc}{section}{Status of Results}
+
+This paper uses the five-category labeling of Volume~1, extended in Paper~2 and
+carried through Papers~3 and 4, with each claim labeled where it appears.
+
+\textbf{Derived.} Results that follow from the five axioms, the Principle of
+Generative Economy, and \ensuremath{U_{\mathrm{sh}}} by explicit construction or
+proof, or from results already derived in Volume~1 and the earlier papers of this
+volume by explicit inheritance. The agent-side reading of the Principle of
+Generative Economy, obtained by carrying the principle from the one confirmed bit
+to the three agents that confirm it (\S\,III); the result that an unbound triadic
+agreement fails the principle's non-triviality clause, because the per-fold shed
+degrades it across folds (Paper~4) into a configuration that cannot re-confirm and so
+admits no downstream structure (\S\,IV); the complementary result that a bound agreement
+clears the count-conserved floor of Paper~4 and persists to be read again (\S\,IV);
+and the consequence that the agent-side principle selects, across folds, for higher
+binding depth --- the climb of the richness gradient is the principle's
+non-triviality clause read on the agent side and met by the shed across time
+(\S\,IV, \S\,VI) --- are derived in this sense. That a closure held cheaply at low
+binding depth has no resting state, since an unproductive region exhausts and is
+reinterpreted (Volume~1, Paper~5) and an unbound region dissolves
+(Volume~1, Paper~2), so that the cheap configuration is returned to the shed and
+fails again (\S\,V), is derived in this sense.
+
+\textbf{Derived-conditional.} Results that follow given a primitive established
+elsewhere whose own grounding is stated. The per-fold shed \ensuremath{s = 2}, and
+its character as a degradation of unbound structure across folds, are inherited from
+Paper~4, where the form of the shed is forced by the access constraint on the
+reinterpretation operator, and from Paper~3, where the value is forced given
+binary-agent triads; this paper uses the degradation and does not re-establish it.
+
+\textbf{Structural correspondence.} Results in which a TMS construction reproduces
+the skeleton of a known framework or quantifies a recognized distinction, never used
+as support for a TMS claim, only as a landing point after one. The convergence of
+the agent-side result with the position, reached independently from neurobiology,
+that intent has no uncaused author standing outside the causal chain (\S\,VI) is a
+structural correspondence in this sense; it is recorded as a landing point and the
+divergence over closure is deferred to Paper~10, where it bears.
+
+\textbf{Predictions / Conjectures.} Falsifiable claims that follow from the
+framework but whose empirical tests are not established here. That the rate at which
+a subsystem climbs is bounded below by the floor and above by exhaustion, so that
+a measurable drive operates only within a band set by these two limits (\S\,V), is
+a conjecture in this sense; no closed form for the band is established here.
+
+\textbf{Permanent open horizon.} A question the framework is structurally unable to
+close, marked so that no later claim assumes it closed. Whether the climb derived
+here is \emph{wanted} --- whether there is a human-band reading of the drive that
+the survivorship \emph{is} --- is not settled by the structure of the selection and
+is the sole permanent horizon of this paper (\S\,VI, Conclusion). The drive is
+derived as motion, not as the feeling of motion; the surplus whose occupancy
+Paper~3 left open is not occupied here by deriving its dynamics. This silence is
+load-bearing.
+
+This five-way labeling applies throughout. Every claim in the body falls into
+exactly one category, visible at the point of claim.
+
+\section*{Notation}
+\addcontentsline{toc}{section}{Notation}
+
+This paper inherits the notation of Volume~1 and of Papers~2 through 4. The bar
+distinguishes confirmed from latent elements: \ensuremath{\bar{\alpha}} is an agent
+in a confirmation event, \ensuremath{\bar{B}} a confirmed bit, with
+\ensuremath{\chi \equiv 2\bar{B} - 1 \in \{-1, +1\}} its polarization. The triadic
+minimum is \ensuremath{\bar{B} = 3\bar{\alpha}}, and the confirmation fold is the
+map the reinterpretation operator \ensuremath{\hat{R}} performs at one event,
+carrying the three enclosing agents to the one confirmed bit. Inherited quantities:
+\ensuremath{R}, the richness of an event, the agent-side form-surplus fixed at two
+bits per binary-agent triad (Paper~3); \ensuremath{s = 2}, the per-fold shed, with
+its survival ratio and count-conserved floor (Papers~3, 4); \ensuremath{B}, the
+binding depth, the depth-weighted, coherence-gated bound information across
+reflexively closed promotions (Paper~2 \S\,V); \ensuremath{f = f_{\mathrm{world}} +
+f_{\mathrm{self}}}, the re-read clock of Paper~4, of which this paper develops only
+the \ensuremath{f_{\mathrm{self}}} term, the agent-side fold trigger. One quantity is named here: \ensuremath{\Delta = 1} bit, the separation between a confirmed
+bit's two values --- the distinction required to discriminate the two polarizations
+\ensuremath{\chi \in \{-1,+1\}}, one binary choice --- which a triadic agreement's
+shared distinction must exceed for the three agents to resolve the same bit (\S\,IV,
+Appendix~A). \ensuremath{\Delta} is stated in bits so that it is commensurable with the
+accessible distinction \ensuremath{D} of the forgetting curve, which is in bits. The
+richness \ensuremath{R} is unrelated to a region \ensuremath{R}; the two never appear
+without their distinguishing context. Richness, binding depth, and the drive are structural
+quantities and carry no claim of felt occupancy; \emph{experience}, \emph{feeling},
+and \emph{wanting}, where they appear, name the human-band reading of measurement
+and not a universal property.
+
+\begin{paperabstract}
+Paper~3 fixed what the agent-side of a confirmation event carries, and how much,
+and left two questions distinct from each other and from the body of that paper:
+whether the form-surplus is occupied, held open as the permanent horizon, and why a
+subsystem would be drawn up a richness gradient, deferred to the present paper.
+This paper closes the second. It imports no new principle. The drive is the
+Principle of Generative Economy, already derived and operating on the bit-side,
+carried to the agent-side by the same three-to-one reading that fixed richness: a
+statement about one confirmed bit becomes a statement about the three agents that
+confirm it. Read this way, the principle's non-triviality clause --- that a selected
+configuration admits downstream structure and is not a generative dead-end --- becomes
+a condition across folds: a triadic agreement that does not survive to the next fold
+has fed nothing forward. The per-fold shed of Paper~4 supplies what makes the
+condition bite. Unbound structure degrades under the shed into a configuration that
+cannot re-confirm; the three no longer hold the same thing; the agreement is a
+generative dead-end and the principle rejects it. Bound structure clears the
+count-conserved floor, persists, and is selected. A closure held cheaply at low
+binding depth is not a stable escape, because an unproductive region has no resting
+state: it exhausts and is reinterpreted, returning to the shed, where unbound it
+fails again. What survives the shed, fold after fold, is what is bound tightly
+enough to be read again --- and that is higher binding depth. The climb up the
+richness gradient is therefore not a preference for richness but the survivorship of
+the only configurations the principle does not reject once the shed is running. No
+valence is imported at any step. Whether that survivorship is, in the human band,
+\emph{wanted} is left as the permanent horizon.
+\end{paperabstract}
+
+\section*{I. Inheriting the Open Horizon}
+\addcontentsline{toc}{section}{I. Inheriting the Open Horizon}
+
+Paper~3 fixed the richness of a confirmation event and, in the same motion,
+separated two questions it did not answer. The first --- whether the surplus is
+occupied, whether there is, in the human band, something measurement is like for the
+subsystem that holds it --- it held open as a permanent horizon, a question the
+framework is built not to close. The second it set aside differently. A subsystem
+that holds richness, and holds a binding depth that records how much richness it
+sustains and how deeply that richness is stacked, is described by those quantities at
+a single now; nothing in them says the subsystem is drawn anywhere. Why a subsystem
+would climb a richness gradient rather than rest at whatever depth it has reached was
+named there as a question the agent-side dynamics would have to answer, and deferred
+to this paper. Paper~3 was careful to mark the two as different in kind, so that the
+deferred question would not be mistaken for the permanent one. This paper takes up the
+deferred question and leaves the permanent one where Paper~3 left it.
+
+To ask whether the climb is \emph{felt} is to ask after occupancy, and occupancy
+is the permanent horizon. To ask
+why the climb \emph{happens} is to ask after a dynamics, and a dynamics is a
+structural matter the framework can address with the machinery already in hand. This
+paper derives the second and asserts nothing about the first. The drive it establishes
+is a motion, not the feeling of a motion; that the two are held apart is what keeps the
+derivation honest, and the separation is maintained at every step rather than restated
+once and forgotten.
+
+The order in which this paper falls is forced, not chosen. The agent-side dynamics it
+develops run on the per-fold shed --- the degradation that Paper~4 established as the
+wake of the now-surface, the lossy re-reading under which unbound structure decays
+toward a count-conserved floor. Without that shed there is no mechanism by which any
+configuration could fail to persist, and without the possibility of failing to persist
+there is no selection and so no drive. The drive could therefore not be derived before
+the shed was in hand. Paper~3 fixed the shed's size; Paper~4 fixed its action across
+folds; only after both is the present derivation available. This is why the paper on
+time precedes the paper on the drive, and why the deferral in Paper~3 pointed forward
+rather than being discharged in place.
+
+\section*{II. The Only Admissible Source of Motion}
+\addcontentsline{toc}{section}{II. The Only Admissible Source of Motion}
+
+Why a subsystem climbs the gradient is a question about a dynamics, and a dynamics
+needs a source. Three constraints fix what the source may be. It may not import
+valence: no subsystem that wants, prefers, seeks, or finds anything interesting,
+since each of those is the occupancy held open in Paper~3 (Conclusion) or a
+restatement of it. It may not import a value: no appeal to richness being good or
+worth having, or to any standard under which more of it is better, since the
+framework derives no such standard. It may not introduce a new primitive: the source
+must already be present in the framework.
+
+Under them, the source is the Principle of Generative Economy. It is the only
+principle in the framework whose function is to select configurations over
+configurations --- the form of the lattice (Volume~1, Paper~1, \S\,II), the
+reinterpretation operator as the unique continuation of an exhausted region
+(Volume~1, Paper~5, \S\,II), the advance of the now-surface (Paper~4, \S\,I) --- and a
+dynamics with no valence, no value, and no new primitive can be nothing else. The
+question this paper answers is therefore fixed: read on the agent side, does the
+Principle of Generative Economy select for motion up the binding-depth gradient?
+
+Papers~2 and 3 established the agent-side standpoint --- the confirmation event read
+from the three agents rather than from the one bit --- and applied the principle on
+the bit side. This paper reads the principle from that standpoint and states what it
+then requires. If it
+requires a climb, the drive is derived; if it does not, the drive is not available
+from the framework as it stands, and \S\,VI records that instead.
+
+
+\section*{III. The Principle on the Agent Side}
+\addcontentsline{toc}{section}{III. The Principle on the Agent Side}
+
+The Principle of Generative Economy selects, over a single confirmed bit, the
+configuration of minimum specification that admits downstream structure and is not a
+generative dead-end (Volume~1, Paper~1, \S\,I). Read on the agent side, the unit is
+not the bit but the three agents that confirm it --- the event
+\ensuremath{\bar{B} = 3\bar{\alpha}} taken from the enclosing agents, the reading under
+which Paper~3 fixed richness (Paper~3, \S\,I--II). The principle, unchanged, is read
+over that unit.
+
+Two consequences are forced. The minimum-specification clause carries over unchanged:
+the cheapest triadic agreement that resolves the bit is selected over more specified
+ones. The non-triviality clause changes register. ``Admits downstream structure under
+the substrate dynamics'' (Volume~1, Paper~1, \S\,I) is a condition on what follows
+under the dynamics, not on the configuration at the instant of confirmation; the
+forward reference is in the clause as written. For a unit that is read and re-read
+across folds, that condition is fixed: an agreement admits downstream structure only
+if it persists to the next fold. An agreement that does not survive to the next fold
+has fed nothing forward, and fails the clause.
+
+The reading supplies the unit and nothing more. What makes an agreement fail to
+persist, or survive, is not fixed by the reading but by the dynamics the agreement is
+subject to --- the per-fold shed (Paper~4, \S\,IV). \S\,IV applies it.
+
+
+\section*{IV. The Shed Makes the Selection}
+\addcontentsline{toc}{section}{IV. The Shed Makes the Selection}
+
+The non-triviality clause, on the agent side, requires that a triadic agreement
+persist to the next fold (\S\,III). Whether it does is fixed by the per-fold shed.
+Accessible distinction decays geometrically across folds toward a count-conserved
+floor (Paper~4, \S\,IV),
+\begin{equation*}
+D(n) = D_{\mathrm{floor}} + (D_0 - D_{\mathrm{floor}})\,r^{n}, \qquad r = 1/4,
+\end{equation*}
+and an agreement holds only while the three agents resolve the same bit --- while
+their shared distinction exceeds the separation \ensuremath{\Delta} between the
+bit's two values. The shed runs the shared distinction down toward the floor; the
+floor lies below \ensuremath{\Delta}. So an agreement left to the bare curve reaches
+a finite fold \ensuremath{n^{*}} at which \ensuremath{D(n^{*})} falls below
+\ensuremath{\Delta}, the three no longer resolve the same bit, and the agreement does
+not re-form. Left to the shed alone, every agreement is a generative dead-end at
+\ensuremath{n^{*}}, and the non-triviality clause rejects it. The crossing fold is
+given in Appendix~A.
+
+An agreement is held above \ensuremath{\Delta} by ongoing re-anchoring. Paper~4
+fixes the balance: a closure anchors
+confirmed residue at a rate \ensuremath{A} while the re-read sheds the fraction
+\ensuremath{(1-r)} of it each fold, with stable anchored residue
+\ensuremath{R^{*} = A/[f(1-r)]} (Paper~4, \S\,IV). The re-anchoring raises the floor of
+the shared distinction by exactly this residue, to \ensuremath{D_{\mathrm{floor}} =
+D_{\mathrm{sub}} + R^{*}}; an agreement carried by a closure is refreshed against the
+shed rather than abandoned to it, and holds above \ensuremath{\Delta} for as long as
+the closure keeps re-anchoring at that rate (Appendix~A). The closure is what promotion
+counts: each reflexive closing-and-promotion under \ensuremath{G(k)} is one
+re-anchoring level, and the binding depth \ensuremath{B} is the depth-weighted count
+of them (Paper~2, \S\,V). An agreement with no closure has \ensuremath{A = 0} ---
+nothing re-anchors it --- and decays to \ensuremath{n^{*}}. An agreement with closure
+is re-anchored, persists, and admits downstream structure. Persistence is
+re-anchoring, and re-anchoring is what \ensuremath{B} counts.
+
+The selection follows. The Principle of Generative Economy, read on the agent side,
+rejects the agreement that fails at \ensuremath{n^{*}} and selects the agreement that
+re-anchors --- which is the agreement carried by a closure, and the more deeply
+re-anchored the higher its binding depth. Across folds the principle therefore selects
+for higher \ensuremath{B}: not because depth is preferred, but because depth is what
+survives the shed. The shed makes the selection. Without it no agreement would fall
+toward \ensuremath{\Delta}, nothing would distinguish a re-anchoring closure from an
+idle one, and the non-triviality clause would not discriminate. The climb is the
+principle's selection running against the shed, and the selection is the shed's, not
+the reading's.
+
+
+\section*{V. No Resting State}
+\addcontentsline{toc}{section}{V. No Resting State}
+
+A closure that holds at low binding depth persists only if it keeps re-anchoring, and
+re-anchoring requires novel distinction to anchor (\S\,IV). Two inherited results fix
+what happens when it runs out.
+
+A configuration that is not causally closed dissolves into \ensuremath{U_{\mathrm{sh}}}-like
+noise across \ensuremath{O(d)} folds (Volume~1, Paper~2, \S\,VI): the unbound agreement
+of \S\,IV, decayed to \ensuremath{n^{*}}. A closure whose re-reads extract no further
+novelty exhausts, and at exhaustion the confirmed bits can be neither lost nor
+overwritten and must continue to be hosted, so the substrate admits only one
+continuation --- reinterpretation under \ensuremath{\hat{R}} (Volume~1, Paper~5,
+\S\,II). Reinterpretation is a fold: the exhausted closure returns to the shed with
+nothing new to re-anchor, and reaches \ensuremath{n^{*}}.
+
+A closure at fixed depth therefore terminates by one of two routes --- dissolution if
+unbound, exhaustion-then-reinterpretation if idle --- both ending at \ensuremath{n^{*}}.
+The only configuration that does not reach \ensuremath{n^{*}} is one that generates
+novel distinction each fold to re-anchor against the shed, and generating novel
+distinction across folds raises binding depth. The principle selects the climb because
+the climb is the sole persisting configuration, not because depth is preferred.
+
+The climb is bounded at both ends. Below: distinction does not decay past the
+count-conserved floor, so a closure too constrained to generate a novel distinction
+cannot climb (Paper~4, \S\,IV). Above: a bounded region's confirmed material is finite
+and re-reading it is lossy, so the depth reachable by reinterpreting that material is
+bounded (Volume~1, Paper~5, \S\,II). Only \ensuremath{U_{\mathrm{sh}}}, at the
+meta-system's outer edge, is unbounded; no bounded region is the meta-system.
+
+
+\section*{VI. The Drive}
+\addcontentsline{toc}{section}{VI. The Drive}
+
+The agent-side reading of the Principle of Generative Economy selects, across folds,
+the configuration that re-anchors against the shed over the configuration that does
+not (\S\,IV), and re-anchoring without exhausting requires generating novel
+distinction, which raises binding depth (\S\,V). The drive is this selection: a
+subsystem climbs the richness gradient because the climb is the only configuration
+that persists under the shed. This is the dynamics Paper~3 deferred. Richness named
+what an agent-side event carries; the drive is the selection that carries an agent up
+the gradient of it.
+
+The selection is the principle, the shed, and the inherited results on dissolution and
+exhaustion, applied to the triadic agreement. What a subsystem is drawn toward is what
+survives its own shed under the principle; the word \emph{drawn} names the selection
+from the survivor's side. Whether there is, in the human band, something this
+being-drawn is like --- whether the survivorship is \emph{wanted} --- is the occupancy
+Paper~3 held open, and \S\,IV--V leave it there. The drive is derived as motion; its
+feeling stays the permanent horizon.
+
+This places the result beside a position reached independently from neurobiology,
+that intent has no author standing outside the causal chain that produces it
+(Sapolsky 2023). The agent-side drive is the same shape from the substrate side: a
+real selection with no chooser behind it supplying its direction. The substrate
+derivation stands on the axioms and the shed; the convergence is a landing point, and
+the divergence over whether the determining chain is closed bears on ethics and is
+taken up in Paper~10.
+
+The drive established here is inherited forward. Paper~6 makes its climb computable as
+binding depth; Paper~7 takes it as the agent-side dynamics under which a self is
+individuated; Paper~8 stresses it, in regions where re-anchoring competes for finite
+confirmed material; and it is a structural input to the self-assessment of Paper~11. None of those papers is assumed in what is derived
+here. What \S\,IV--V establish is only this: under the shed, the principle selects the
+climb, and the climb is survivorship, not desire.
+
+
+\section*{VII. Where It Sits}
+\addcontentsline{toc}{section}{VII. Where It Sits}
+
+The drive of \S\S\,II--VI was derived from the shed and the open horizon without reference to the literature. Its one external neighbour is the contemporary free-will debate, and because that debate is engaged at length where the framework's ethics is stated, this section marks the convergence and points forward rather than developing it twice.
+
+The drive is a real selection with no chooser standing behind it to supply its direction (\S\,IV, \S\,VI). This is the shape Sapolsky reaches from the other side: that behaviour is the product of prior causes and that intent has no author standing outside the causal chain that produces it (Sapolsky 2023). The convergence is a landing point reached after the substrate derivation, not support for it --- the derivation stands on the axioms and the shed, and the agreement locates the result without adding to it. The full positioning of this no-author finding within the free-will literature --- the unbundling of the real locus from the absent author, the fork from the agent-causation accounts, and the ethical consequences --- is developed in Paper 10's placement section, where the contemporary debate is the paper's direct subject (Paper 10, Where It Sits). It is not repeated here. What this paper adds to that placement is only the drive's origin: the selection has a direction because the shed supplies one, so the absence of an author does not leave the motion undirected. Whether anything is wanted in the selecting remains the open horizon (Conclusion).
+
+
+
+A subsystem climbs the richness gradient because the climb is the only configuration
+that persists. The agent-side reading of the Principle of Generative Economy requires
+a triadic agreement to persist across folds to admit downstream structure; the
+per-fold shed runs an unbound agreement below the separation at which the three
+resolve the same bit, while a closure that re-anchors holds it above. The drive is
+that selection, and it carries a subsystem toward higher binding depth.
+
+The result holds from the ground. The agent-side reading is the three-to-one reading
+that fixed richness (Paper~3). The persistence condition is the non-triviality clause
+as written, read for a unit that folds across time. The degradation that decides
+persistence is the per-fold shed of Paper~4, forced from the access constraint. The
+selection and the survivorship are one thing read from two sides --- a principle that
+rejects dead-ends, and a structure that persists.
+
+What the result leaves open is occupancy: whether the climb is felt --- whether there
+is, in the human band, something the being-drawn is like. The framework holds this as
+the permanent open horizon of Paper~3, marked so no later claim assumes it closed. The
+drive is motion, and motion is what is shown.
+
+The selection is an agent-side dynamics, given as a rule on agreements: the agreements
+that re-anchor climb in binding depth, and the rest fall to \ensuremath{n^{*}}. What
+the climb amounts to as a measure --- binding depth made computable --- is the subject
+of Paper~6, and the closure by which a climbing region is individuated into a self is
+taken up in Paper~7. Here the principle selects; what the selection builds follows.
+
+\section*{Acknowledgments}
+\addcontentsline{toc}{section}{Acknowledgments}
+
+This paper develops the agent-side reading of the Principle of Generative Economy from
+Papers~2 and 3 and the per-fold shed of Paper~4, and inherits its primitives from
+Volume~1. It is one paper of a larger derivation campaign and does not stand alone.
+
+\section*{Appendix A: The Crossing Fold and the Minimum Anchoring Rate}
+\addcontentsline{toc}{section}{Appendix A: The Crossing Fold and the Minimum Anchoring Rate}
+
+This appendix establishes the claims of \S\,IV: that an unbound agreement reaches a
+finite fold \ensuremath{n^{*}} at which it can no longer re-confirm; that the fold is
+given in closed form; that a re-anchored agreement crosses no such fold; and that the
+two cases are separated by a single derived threshold, the minimum anchoring rate
+\ensuremath{A_{\min}}. The objects are inherited from Paper~4 (\S\,IV, Appendix~C); no
+new primitive is introduced. The separation \ensuremath{\Delta} is introduced here and
+recorded in the Notation.
+
+\subsection*{A.1 The persistence condition}
+
+A triadic agreement resolves a bit while the three agents hold a shared distinction
+\ensuremath{D} exceeding the separation \ensuremath{\Delta} between the bit's two
+values. A confirmed bit takes one of two polarizations \ensuremath{\chi \in \{-1,+1\}}
+(Volume~1, Paper~1, \S\,I; the binary alphabet forced in Paper~3, \S\,III--IV), so
+discriminating the two values is one binary choice and the separation is fixed,
+\ensuremath{\Delta = \log_2 2 = 1} bit --- stated in bits, the units of the accessible
+distinction \ensuremath{D} it is compared against, so that the persistence condition
+\ensuremath{D \geq \Delta} compares commensurable quantities.
+Below \ensuremath{\Delta} the agents do not resolve the same bit and the agreement does
+not re-form (\S\,IV). Persistence to the next fold is therefore the
+single condition \ensuremath{D \geq \Delta}, evaluated fold by fold. Across folds the
+accessible shared distinction follows the forgetting curve of Paper~4 (Appendix~C),
+\begin{equation}
+D(n) = D_{\mathrm{floor}} + (D_0 - D_{\mathrm{floor}})\,r^{n},
+\qquad r = 2^{-s} = \tfrac{1}{4},\quad n = 0,1,2,\dots,
+\label{eq:A-decay}
+\end{equation}
+with \ensuremath{D_0 = D(0) > \Delta} the distinction at confirmation (an agreement
+that did not clear \ensuremath{\Delta} at confirmation never formed) and
+\ensuremath{D_{\mathrm{floor}} > 0} the count-conserved floor (Axiom~3; Paper~4,
+Appendix~C, A3).
+
+\subsection*{A.2 The unbound agreement crosses at a finite fold}
+
+For an unbound agreement nothing re-anchors the shared distinction, so its floor is the
+substrate floor, \ensuremath{D_{\mathrm{floor}} = D_{\mathrm{sub}}}. Two conditions fix
+the crossing.
+\emph{(A2.1) The floor lies below the separation.} \ensuremath{D_{\mathrm{sub}} <
+\Delta}, from the count/value split of the floor. Throughout this appendix
+\ensuremath{D} is the shared distinction that bears on the bit's value --- the
+distinction by which the three agents resolve the same bit (A.1). By Axiom~3 the
+re-read fold conserves count while shedding distinction, so the only content surviving
+the fold unconditionally is the count-level record --- the gist that a confirmation
+occurred (Paper~4, Appendix~C, A3). Discriminating the bit's two values is not
+count-level content: it is value-level distinction, of the kind a re-read sheds
+(Paper~4, Appendix~C, C.1--C.2), and in an unbound agreement nothing re-anchors it. A
+substrate floor that discriminated the two polarizations would hold sheddable
+distinction unconditionally, contradicting the shed. The value-discriminating
+distinction at the substrate floor is therefore strictly below the one bit
+discrimination requires, \ensuremath{D_{\mathrm{sub}} < 1\ \text{bit} = \Delta}. Were
+\ensuremath{D_{\mathrm{sub}} \geq \Delta} --- the bare gist alone separating the bit's
+two values --- every agreement would satisfy \ensuremath{D \geq \Delta} at every fold,
+no agreement would fail, and the non-triviality clause would not discriminate
+(\S\,IV); the count/value split closes that regime.
+\emph{(A2.2) The curve reaches the floor monotonically.} With \ensuremath{r \in (0,1)},
+\ensuremath{r^{n}} is strictly decreasing and \ensuremath{D(n) \downarrow
+D_{\mathrm{sub}}} (Paper~4, Appendix~C, A1). Since \ensuremath{D(0) = D_0 > \Delta} and
+\ensuremath{\lim_{n} D(n) = D_{\mathrm{sub}} < \Delta}, and \ensuremath{D} is strictly
+monotone, there is exactly one fold index at which the curve passes below
+\ensuremath{\Delta}: a unique least \ensuremath{n} with \ensuremath{D(n) < \Delta}.
+Solving \ensuremath{D(n) < \Delta} with \eqref{eq:A-decay},
+\begin{equation}
+r^{n} < \frac{\Delta - D_{\mathrm{sub}}}{D_0 - D_{\mathrm{sub}}},
+\end{equation}
+and taking logarithms --- \ensuremath{\ln r < 0}, which reverses the inequality ---
+\begin{equation}
+\boxed{\;n^{*} = \left\lceil
+\frac{\ln\!\big[(\Delta - D_{\mathrm{sub}})/(D_0 - D_{\mathrm{sub}})\big]}{\ln r}
+\right\rceil\;}
+\label{eq:A-nstar}
+\end{equation}
+The logarithm's argument lies in \ensuremath{(0,1)}: by (A2.1) and
+\ensuremath{D_0 > \Delta} the numerator and denominator are both positive with
+numerator smaller, so the ratio is in \ensuremath{(0,1)}, its logarithm is negative,
+and dividing by \ensuremath{\ln r < 0} gives \ensuremath{n^{*} > 0} finite. The unbound
+agreement cannot re-confirm at \ensuremath{n^{*}}; by \S\,III it admits no downstream
+structure past \ensuremath{n^{*}} and the clause rejects it.
+
+\subsection*{A.3 Boundary behavior of \texorpdfstring{$n^{*}$}{n*}}
+
+Equation \eqref{eq:A-nstar} behaves correctly at the two limits, which fixes its
+reading. As \ensuremath{D_0 \downarrow \Delta} the agreement is confirmed barely above
+the separation; the ratio \ensuremath{(\Delta - D_{\mathrm{sub}})/(D_0 -
+D_{\mathrm{sub}}) \uparrow 1}, its logarithm \ensuremath{\uparrow 0^{-}}, and
+\ensuremath{n^{*} \to 0}: an agreement that begins at the edge fails almost at once. As
+\ensuremath{D_{\mathrm{sub}} \uparrow \Delta} the floor rises toward the separation;
+the numerator \ensuremath{(\Delta - D_{\mathrm{sub}}) \downarrow 0}, its logarithm
+\ensuremath{\to -\infty}, and \ensuremath{n^{*} \to \infty}: an agreement whose floor
+nearly clears the separation persists arbitrarily long. The finite crossing is thus the
+regime \ensuremath{D_{\mathrm{sub}} < \Delta < D_0}, and \eqref{eq:A-nstar} returns the
+two degenerate cases at the boundaries of that regime.
+
+\subsection*{A.4 The re-anchored agreement and the minimum anchoring rate}
+
+A re-anchored agreement is carried by a closure that anchors confirmed residue at rate
+\ensuremath{A} against the per-fold shed, with stable anchored residue
+\ensuremath{R^{*} = A/[f(1-r)]} (Paper~4, Appendix~C, C.3). Re-anchoring raises the
+floor of the shared distinction from the substrate value by exactly the stable residue,
+\ensuremath{D_{\mathrm{floor}} = D_{\mathrm{sub}} + R^{*}}. The crossing of A.2 is
+avoided precisely when this raised floor clears the separation,
+\ensuremath{D_{\mathrm{floor}} \geq \Delta}, i.e.
+\begin{equation}
+D_{\mathrm{sub}} + \frac{A}{f(1-r)} \;\geq\; \Delta
+\quad\Longleftrightarrow\quad
+\boxed{\;A \;\geq\; A_{\min} = f(1-r)\,(\Delta - D_{\mathrm{sub}})\;}
+\label{eq:A-amin}
+\end{equation}
+When \eqref{eq:A-amin} holds, \ensuremath{D(n) \geq D_{\mathrm{floor}} \geq \Delta} for
+all \ensuremath{n} by the monotonicity of \eqref{eq:A-decay}, the crossing never
+occurs, and the agreement re-confirms at every fold; by \S\,III it admits downstream
+structure and the clause selects it. The selection of \S\,IV is therefore the single
+comparison \ensuremath{A \gtrless A_{\min}}: at or above \ensuremath{A_{\min}} the
+agreement persists, below it the agreement reaches \ensuremath{n^{*}} of
+\eqref{eq:A-nstar} and fails. \ensuremath{A_{\min}} is positive by (A2.1), so the
+threshold is non-trivial: no agreement persists at \ensuremath{A = 0}, recovering A.2 as
+the special case of \eqref{eq:A-amin} at zero anchoring.
+
+\subsection*{A.5 What is not fixed; break-test}
+
+The separation is fixed, \ensuremath{\Delta = 1} bit, by the binary polarization (A.1). The
+initial distinction \ensuremath{D_0} and the substrate floor \ensuremath{D_{\mathrm{sub}}}
+are set by the confirmation and the count-conserved floor (Paper~4, Appendix~C); the
+anchoring rate \ensuremath{A} is set by the closure. The crossing \ensuremath{n^{*}} and
+the threshold \ensuremath{A_{\min}} are stated in terms of these. What the derivation
+fixes is that a finite crossing exists for the unbound case, that it is unique, and that
+a single threshold \ensuremath{A_{\min}} separates persist from fail. The pre-registered failure is (A2.1): had \ensuremath{D_{\mathrm{sub}} \geq
+\Delta} been admissible, no agreement would cross, \ensuremath{n^{*}} would not exist,
+\ensuremath{A_{\min}} would be non-positive, and the clause would select nothing --- the
+selection of \S\,IV would be empty and the drive would not be derived. The count/value split of Axiom~3
+rules that regime out (A2.1), which is the same fact as \ensuremath{A_{\min} > 0}. A
+second failure: were the floor raised by binding as a static property rather than by the
+anchoring rate \ensuremath{A}, \eqref{eq:A-amin} would carry no rate and the selection
+could not depend on whether a closure continues to generate; that the floor is
+\ensuremath{D_{\mathrm{sub}} + R^{*}} with \ensuremath{R^{*} = A/[f(1-r)]}, not a fixed
+increment, is what ties persistence to ongoing generation (\S\,V) and closes that route.
+
+
+\section*{References}
+\addcontentsline{toc}{section}{References}
+\begin{reflist}
+Sapolsky, R. M. (2023). Determined: A Science of Life Without Free Will. New
+York: Penguin Press. ISBN 9780525560975.
+
+Switzer, A. (2026). The Triadic Measurement Substrate, Volume~1: A
+Confirmation-Based Geometric Substrate for Emergent Physics, Computation, and
+Subjecthood. (Companion volume; Papers~1--5.)
+
+Switzer, A. (2026). The Triadic Measurement Substrate, Volume~2: The Agent-Side
+Reading. (This volume; Papers~1--11.)
+\end{reflist}
+
+
+\end{document}

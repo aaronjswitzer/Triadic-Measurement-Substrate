@@ -3,7 +3,6 @@ The Triadic Measurement Substrate
 A two-volume theoretical framework deriving physics, computation, and observation from a single primitive: three agents confirming one bit.
 
 The claim underneath it all is that the smallest structure capable of measuring itself, run long enough, generates a universe. Volume 1 works out the physics from that claim. Volume 2 works out what it is to be the thing doing the measuring. Neither introduces a free dimensionless parameter.
-What it derives
 
 From the primitive, the framework derives — as counting, not as fitting — the FCC lattice and the binary alphabet; the wave equation as the substrate's necessary large-scale behavior; the color gauge group SU(3) from the three-agent triality of the confirmation event; the periodic table's noble-gas atomic numbers (2, 10, 18, 36, 54, 86, 118) and the full subshell and Madelung skeleton from a triadic recoupling that reconstructs the rotation group with no space presupposed; gravity as cross-level dispersion, with Newton's constant as a structural ratio and the equivalence principle as a depth-suppression theorem; and the Big Bang's structural signatures from a reinterpretation event at the exhaustion of a parent substrate.
 

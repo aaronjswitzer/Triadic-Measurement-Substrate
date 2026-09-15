@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use or cite this work, please cite both the Zenodo deposit and this repository."
+title: "The Triadic Measurement Substrate"
+abstract: "A two-volume theoretical framework deriving physics, computation, and observation from a single confirmation primitive: three agents confirming one bit. Volume 1 develops the geometric and physical structure; Volume 2 extends the framework to agent-side structure, time, and questions of selfhood. Includes the complete LaTeX source, compiled PDF, and 53 deterministic Python verification scripts."
+authors:
+  - family-names: Switzer
+    given-names: Aaron
+    affiliation: Independent Researcher
+version: v1
+date-released: 2026-08-20
+license: CC-BY-4.0
+repository-code: "https://github.com/aaronjswitzer/Triadic-Measurement-Substrate"
+doi: "10.5281/zenodo.22035423"
+url: "https://zenodo.org/records/22035423"
+keywords:
+  - triadic confirmation
+  - emergent physics
+  - emergent spacetime
+  - digital physics
+  - it from bit
+  - FCC lattice
+  - quantum error correction
+  - quantum gravity
+  - causal sets
+  - foundations of physics
+  - cellular automata
+  - philosophy of mind
+  - panpsychism
+  - Russellian monism
+  - conscious agents
+  - integrated information theory
+  - subjecthood
+  - binding depth
+  - self-model theory

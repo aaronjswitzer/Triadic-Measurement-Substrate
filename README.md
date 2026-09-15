@@ -9,27 +9,20 @@ From the primitive, the framework derives — as counting, not as fitting — th
 The same primitive carries a second volume on subjecthood as graded binding depth — the formation, time, drive, death, and ethical standing of a self — with the question of what it is like to be one held open rather than closed by stipulation.
 
 The framework has no free dimensionless parameters. Every dimensionless quantity is fixed by five axioms and one organizing principle. It takes exactly one dimensionful input, an action scale, and from that the speed of light and Newton's constant follow.
-How claims are labeled
 
 Every substantive claim in the text is marked as one of: Derived (follows from the axioms by construction or proof), Derived-conditional (follows given a stated sub-assumption), Structural correspondence (reproduces the skeleton of a known framework without claiming all of its features), Prediction / Conjecture (falsifiable, closed form not yet derived), or Permanent open horizon (a boundary the framework marks and does not cross). A reader sees at each claim how much weight it is meant to bear. Several claims failed adversarial testing during the corpus's development; the failure and revision are documented next to the corrected result.
 
 This is not a sketch or a proposal. The derivations are worked out, the numerical claims are verified by executable scripts, and the framework names its falsifiers.
-What's here
-Path	Contents
+
+What's here:
+
 complete-corpus/	The full two-volume corpus as a single PDF with table of contents and glossary, plus its LaTeX source
 individual-papers/	All 16 papers as individual PDFs and their LaTeX sources
 verification/	53 deterministic Python scripts and their captured output logs
-Build
-
-pdflatex TMS_Complete_Corpus.tex
-pdflatex TMS_Complete_Corpus.tex
-pdflatex TMS_Complete_Corpus.tex # third pass settles the TOC
-
-Or open the .tex on Overleaf. No exotic fonts or packages.
-Verify
 
 Each script runs standalone under Python 3 with NumPy and SciPy. See verification/TMS_reproducibility_package.zip. Every script is deterministic; the captured logs sit beside the source.
-Citation
+
+Citation:
 
     Switzer, A. (2026). The Triadic Measurement Substrate (Version v1). Zenodo. https://doi.org/10.5281/zenodo.22035423
 
